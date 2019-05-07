@@ -1056,7 +1056,7 @@ def ReadFavourites(mode):
 #	ID: ARD, ZDF - Podcasts entspr. ARD
 # Es wird nur die Webseite ausgewertet, nicht die json-Inhalte der Ladekette.
 # Cache: 
-#		Text wird in ../resources/data/Dict gespeichert, Dateiname aus path generiert.
+#		Text wird in TEXTSTORE gespeichert, Dateiname aus path generiert.
 #
 # Aufrufer: ZDF: 	ZDF_get_content (für alle ZDF-Rubriken)
 #			ARD: 	ARDStart	-> ARDStartRubrik 

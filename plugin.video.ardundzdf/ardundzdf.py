@@ -47,8 +47,8 @@ import resources.lib.ARDnew
 
 # +++++ ARDundZDF - Addon Kodi-Version, migriert von der Plexmediaserver-Version +++++
 
-VERSION =  '1.4.0'		 
-VDATE = '04.05.2019'
+VERSION =  '1.4.2'		 
+VDATE = '07.05.2019'
 
 # 
 #	
@@ -215,6 +215,7 @@ USERDATA		= xbmc.translatePath("special://userdata")
 ADDON_DATA		= os.path.join("%sardundzdf_data") % USERDATA
 PLog(ADDON_DATA)
 
+M3U8STORE 		= os.path.join("%s/m3u8") % ADDON_DATA
 DICTSTORE 		= os.path.join("%s/Dict") % ADDON_DATA
 SLIDESTORE 		= os.path.join("%s/slides") % ADDON_DATA
 SUBTITLESTORE 	= os.path.join("%s/subtitles") % ADDON_DATA
@@ -684,7 +685,8 @@ def ARDSportBilder(title, path, img):
 			os.mkdir(fpath)
 		except OSError:  
 			msg1 = 'Bildverzeichnis konnte nicht erzeugt werden:'
-			msg2 = "../resources/data/slides/%s" % fname
+			msg2 = "%s/%s" % (SLIDESTORE, fname)
+			PLog(msg1); PLog(msg2); 
 			xbmcgui.Dialog().ok(ADDON_NAME, msg1, msg2, '')
 			return li	
 				
@@ -2580,7 +2582,7 @@ def DownloadsMove(dfname, textname, dlpath, destpath, single):
 # mode = 'Favs' für Favoriten  oder 'Merk' für Merkliste
 # 	Datenbasen (Einlesen in ReadFavourites (Modul util) :
 #		Favoriten: special://profile/favourites.xml 
-#		Merkliste: ../resources/data/merkliste.xml (WATCHFILE)
+#		Merkliste: ADDON_DATA/merkliste.xml (WATCHFILE)
 # 	Verarbeitung:
 #		Favoriten: Kodi's Favoriten-Menü, im Addon_listing
 #		Merkliste: zusätzl. Kontextmenmü (s. addDir Modul util) -> Watch
@@ -3732,11 +3734,12 @@ def ParseMasterM3u(li, url_m3u8, thumb, title, descr, tagline='', sub_path=''):
 	PLog('page: ' + page[:100])
 
 	fname = sname + ".m3u8"
-	fpath = fname = '%s/resources/data/m3u8/%s' % (PluginAbsPath, fname)
+	fpath = os.path.join("%s/%s") % (M3U8STORE, fname)
 	PLog('fpath: ' + fpath)
 	msg = RSave(fpath, page)			# 3.  Inhalt speichern -> resources/m3u/
 	if 'Errno' in msg:
 		msg1 = msg1 + " gespeichert werden." # msg1 s.o.
+		PLog(msg1); PLog(msg2)
 		xbmcgui.Dialog().ok(ADDON_NAME, msg1, msg2, msg3)
 		return li
 	else:				
@@ -4118,22 +4121,34 @@ def ZDFSendungenAZList(title, element):			# ZDF-Sendereihen zum gewählten Buchs
 #	möglich (Übergabe Objectcontainer in Callback nicht möglich - kommt als String an)
 #	Hinw.: Drei-Stufen-Test - Genehmigungsverfahren für öffentlich-rechtliche Telemedienangebote
 #		s.  https://www.zdf.de/zdfunternehmen/drei-stufen-test-100.html
-def ZDF_Sendungen(url, title, ID, page_cnt=0):
+# 	06.05.2019 Anpassung an RubrikSingle (neue ZDF-Struktur): Vorprüfung auf einz. Videobeitrag,
+#		Durchreichen von tagline + thumb an ZDF_getVideoSources
+#
+def ZDF_Sendungen(url, title, ID, page_cnt=0, tagline='', thumb=''):
 	PLog('ZDF_Sendungen:')
 	PLog(title); PLog(ID); 
 	title_org 	= title
 	page_cnt_org= int(page_cnt)
 	
 	li = xbmcgui.ListItem()
-	li = home(li, ID='ZDF')						# Home-Button
 				
 	page, msg = get_page(path=url)	
 	if page == '':
 		msg1 = 'Beitrag kann nicht geladen werden.'
 		msg2, msg3 = msg.split('|')
 		xbmcgui.Dialog().ok(ADDON_NAME, msg1, msg2, msg3)
-		return li 						
-					
+		return li 
+
+	if 	'class="artdirect"' not in page:		# Vorprüfung auf einz. Videobeitrag	
+		if page.find('class="b-playerbox') > 0 and page.find('class="item-caption') > 0:
+			ZDF_getVideoSources(url=url, title=title, thumb=thumb, tagline=tagline)
+		else:
+			msg1 = 'Leider kein Video gefunden in:'
+			msg2 = title
+			xbmcgui.Dialog().ok(ADDON_NAME, msg1, msg2, '')
+		return li	
+						
+	li = home(li, ID='ZDF')						# Home-Button			
 	li, page_cnt = ZDF_get_content(li=li, page=page, ref_path=url, ID='VERPASST')
 
 	PLog(page_cnt)
@@ -4172,7 +4187,7 @@ def Rubriken(name):								# ZDF-Bereich, Liste der Rubriken
 		return li 						
 
 	listblock =  stringextract('<li class=\"dropdown-block x-left\">', 'link js-track-click icon-104_live-tv', page)
-	rubriken =  blockextract('class=\"dropdown-item', listblock)
+	rubriken =  blockextract('class="dropdown-item', listblock)
 	
 	for rec in rubriken:											# leider keine thumbs enthalten
 		path = stringextract('href=\"', '\"', rec)
@@ -4187,8 +4202,16 @@ def Rubriken(name):								# ZDF-Bereich, Liste der Rubriken
 	
 	xbmcplugin.endOfDirectory(HANDLE, cacheToDisc=False)
 #-------------------------
-def RubrikSingle(title, path):							# ZDF-Bereich, Sendungen einer Rubrik (unbegrenzt)
-	PLog('RubrikSingle'); 
+# ZDF-Bereich, Sendungen einer Rubrik (unbegrenzt, anders als A-Z Beiträge)
+#	2-facher Aufruf - Unterscheidung nach Cluster-Titeln (clus_title):
+#		1. Übersichtseite (Cluster)			- Rücksprung hierher
+#		2. Zielseite (z.B. einzelne Serie) 	- Sprung -> ZDF_Sendungen
+# 	ZDF_Sendungen macht eine Vorprüfung auf Einzelvideos vor Aufruf von
+#		ZDF_get_content. Einzelvideos -> ZDF_getVideoSources
+def RubrikSingle(title, path, clus_title=''):							
+	PLog('RubrikSingle:'); PLog(title); PLog(clus_title)
+	path_org = path
+	title=UtfToStr(title); clus_title=UtfToStr(clus_title);
 	
 	title_org = title
 	li = xbmcgui.ListItem()
@@ -4200,15 +4223,104 @@ def RubrikSingle(title, path):							# ZDF-Bereich, Sendungen einer Rubrik (unbe
 		msg2, msg3 = msg.split('|')
 		xbmcgui.Dialog().ok(ADDON_NAME, msg1, msg2, msg3)
 		return li 
-								
-	# unbegrenzt (anders als A-Z Beiträge):
-	li, page_cnt = ZDF_get_content(li=li, page=page, ref_path=path, ID='Rubriken')
 	
-	PLog(page_cnt)
-	#if offset:	Code entfernt, in Kodi nicht nutzbar
+	cluster =  blockextract('class="cluster-title"', page)
+	PLog(len(cluster))
+	if clus_title:								# Beiträge zu gesuchtem Cluster auswerten
+		for clus in cluster:								
+			clustertitle = stringextract('cluster-title" >', '</', clus)
+			if clustertitle in clus_title:		# Cluster gefunden
+				PLog('clustertitle gefunden: ' + clustertitle)
+				break
+		content =  blockextract('class="b-cluster-teaser', clus) # Beiträge des Clusters
+		for rec in content:	
+			if 'class="loader"' in rec:							# Nachlade-Beiträge, escaped
+				rec = unescape(rec)
+				PLog('loader_Beitrag')
+				# PLog(rec); 	# bei Bedarf
+				img_src = stringextract('teaserImageId":"', '"', rec) # kann leer sein
+				if img_src == '':
+					img_src = R('icon-bild-fehlt.png')
+				else:		
+					img_src = 'https://www.zdf.de/assets/' + img_src +	'~384x216'
+				# Pfadbestandteile Auswertung chrome:
+				title 	= stringextract('teaserHeadline":"', '"', rec)	
+				sophId 	= stringextract('"sophoraId":"', '"', rec)
+				path 	= ZDF_get_rubrikpath(page, sophId)		# in json-Listen suchen
+				if path == '':
+					continue
+		
+				lable 	= stringextract('manualLabel":"', '"', rec)	
+				descr 	= stringextract('teasertext":"', '"', rec)	
+				descr = "%s | %s:\n\n%s" % (clustertitle, title, descr)
 
-	xbmcplugin.endOfDirectory(HANDLE, cacheToDisc=False)
+			else:
+				img_src =  stringextract('data-srcset="', ' ', rec)	
+				href = 	stringextract('<a href', '</a>', rec)	   # href + Titel	
+				path = stringextract('="', '"', href)
+				if path == '' or 'skiplinks' in path:
+					continue	
+				path = ZDF_BASE + path	
+				title = stringextract('title="', '"', href)
+				title = unescape(title)
+				
+				descr = stringextract('teaser-text" >', '</', rec)
+				descr = "%s | %s:\n\n%s" % (clustertitle, title, descr)
+				
+				lable = stringextract('teaser-label">', '</div>', rec)
+				lable = cleanhtml(lable)							# Bsp. <strong>2 Staffeln</strong>
+				
+			if lable == '':
+				lable = title
+			else:
+				lable = "%s | %s" % (title, lable)
+			
+			descr = unescape(descr)
+			title = repl_json_chars(title)
+			descr = repl_json_chars(descr)
+			descr_par = descr.replace('\n', '||')
+			
+			PLog('Satz:')
+			PLog(title);PLog(path);PLog(img_src);PLog(descr);
+			fparams="&fparams={'title': '%s', 'url': '%s', 'ID': '%s', 'tagline': '%s', 'thumb': '%s'}"	%\
+				(urllib2.quote(title),  urllib2.quote(path), 'VERPASST', urllib2.quote(descr_par),
+				urllib2.quote(img_src))
+			addDir(li=li, label=lable, action="dirList", dirID="ZDF_Sendungen", fanart=img_src, 
+				thumb=img_src, tagline=descr, fparams=fparams)
+		
+		xbmcplugin.endOfDirectory(HANDLE, cacheToDisc=False)
 	
+			
+	else:										# nur Cluster listen, ohne Bilder
+		for clus in cluster:					# Cluster				
+			clustertitle = stringextract('cluster-title" >', '</', clus)
+			PLog(clustertitle);
+			clustertitle = UtfToStr(clustertitle); title = UtfToStr(title)
+			img_src = R(ICON_DIR_FOLDER)
+			fparams="&fparams={'title': '%s', 'path': '%s', 'clus_title': '%s'}" % (urllib2.quote(clustertitle),
+				urllib2.quote(path), urllib2.quote(clustertitle))
+			addDir(li=li, label=clustertitle, action="dirList", dirID="RubrikSingle", fanart=img_src, 
+				thumb=img_src, fparams=fparams)				
+
+	#if offset:	Code entfernt, in Kodi nicht nutzbar
+	xbmcplugin.endOfDirectory(HANDLE, cacheToDisc=False)
+
+#-------------------------
+# ermittelt html-Pfad in json-Listen für RubrikSingle
+#	 sophId s.o. 
+def ZDF_get_rubrikpath(page, sophId):
+	PLog('ZDF_get_rubrikpath:')
+	path=''
+	if sophId == '':	# Sicherung
+		return path
+	content =  blockextract('"@type":"ListItem"', page) # Beiträge des Clusters
+	PLog(len(content))
+	for rec in content:
+		path =  stringextract('"url":"', '"', rec)
+		if sophId in path:
+			PLog("path: " + path)
+			return path	
+	return	path 
 ####################################################################################################
 def MeistGesehen(name):							# ZDF-Bereich, Beiträge unbegrenzt
 	PLog('MeistGesehen'); 
@@ -4349,7 +4461,7 @@ def ZDFSportLive(title):
 	li = home(li, ID='ZDF')						# Home-Button
 
 	path = 'https://www.zdf.de/sport/sport-im-zdf-livestream-live-100.html'	 # Leitseite		
-	page, msg = get_page(path=path)		
+	page, msg = get_page(path=path, header="{'Pragma': 'no-cache'}")		
 	if page == '':
 		msg1 = 'Seite kann nicht geladen werden.'
 		msg2, msg3 = msg.split('|')
@@ -4420,7 +4532,7 @@ def ZDFSportLive(title):
 	#img = R("zdf-sportlive.png")	
 	#SenderLiveListe(title=channel, listname=channel, fanart=img, onlySender=onlySender)
 		
-	xbmcplugin.endOfDirectory(HANDLE)
+	xbmcplugin.endOfDirectory(HANDLE, cacheToDisc=False)
 
 #-------------------------
 # holt von der aufgerufenen Seite den Titelbeitrag. Die restl. Videos der Seite
@@ -4445,7 +4557,7 @@ def ZDFSportLiveSingle(title, path, img):
 	page = UtfToStr(page)
 	
 	videomodul = stringextract('class="b-video-module">', '</article>', page)
-	if 'Beitragslänge:' not in videomodul:							# Titelvideo fehlt 
+	if 'Beitragslänge:' not in videomodul:	 						# Titelvideo fehlt 
 		descr = stringextract('"description": "', '"', page) 		# json-Abschnitt
 		descr = unescape(descr)
 		msg1 = 'Leider noch kein Video verfügbar. Vorabinfo:'
@@ -4518,6 +4630,8 @@ def International(title):
 # Auswertung aller ZDF-Seiten
 #	 
 # 	ID='Search' od. 'VERPASST' - Abweichungen zu Rubriken + A-Z
+#	Seiten mit Einzelvideos werden hier nicht erfasst - ev. vor
+#		Aufruf Vorprüfung 'class="artdirect"' durchführen
 
 def ZDF_get_content(li, page, ref_path, ID=None):	
 	PLog('ZDF_get_content:'); PLog(ID); PLog(ref_path)					
@@ -4526,7 +4640,7 @@ def ZDF_get_content(li, page, ref_path, ID=None):
 	# max_count = int(SETTINGS.getSetting('pref_maxZDFContent')) # max. Anzahl Elemente 
 	max_count = 0
 	PLog(max_count)
-	page = UtfToStr(page)
+	page = UtfToStr(page)										# für Suche mit Umlauten
 	
 	Bilderserie = False	
 	if ID == 'Bilderserien':									# Aufruf: ZDF_Search
@@ -4544,12 +4658,11 @@ def ZDF_get_content(li, page, ref_path, ID=None):
 		if page_title:
 			msg_notfound = 'Leider kein Video verfügbar zu: ' + page_title
 		
-	pos = page.find('class="content-box"')					# ab hier verwertbare Inhalte 
-	PLog('pos: ' + str(pos))
-	if pos >= 0:
-		page = page[pos:]
+#	pos = page.find('class="content-box"')					# ab hier verwertbare Inhalte 
+#	PLog('pos: ' + str(pos))
+#	if pos >= 0:
+#		page = page[pos:]
 				
-	page = UtfToStr(page)										# für Suche mit Umlauten
 	content =  blockextract('class="artdirect"', page)
 	if ID == 'NeuInMediathek':									# letztes Element entfernen (Verweis Sendung verpasst)
 		content.pop()	
@@ -5153,7 +5266,8 @@ def ZDF_Bildgalerie(li, page, mode, title):	# keine Bildgalerie, aber ähnlicher
 			os.mkdir(fpath)
 		except OSError:  
 			msg1 = 'Bildverzeichnis konnte nicht erzeugt werden:'
-			msg2 = "../resources/data/slides/%s" % fname
+			msg2 = "%s/%s" % (SLIDESTORE, fname)
+			PLog(msg1); PLog(msg2)
 			xbmcgui.Dialog().ok(ADDON_NAME, msg1, msg2, '')
 			return li	
 
@@ -5249,9 +5363,9 @@ def ZDF_Bildgalerie(li, page, mode, title):	# keine Bildgalerie, aber ähnlicher
 	xbmcplugin.endOfDirectory(HANDLE, cacheToDisc=True)  # ohne Cache, um Neuladen zu verhindern
 	
 #-----------------------
-#  PhotoObject fehlt in kodi - wir speichern die Bilder in resources/data/slides und
+#  PhotoObject fehlt in kodi - wir speichern die Bilder in SLIDESTORE und
 #	übergeben an xbmc.executebuiltin('SlideShow..
-#  ClearUp in resources/data/slides s. Modulkopf
+#  ClearUp in SLIDESTORE s. Modulkopf
 #  S.a. ARD_Bildgalerie/Hub + SlideShow
 def ZDFSlideShow(path, single=None):
 	PLog('SlideShow: ' + path)
