@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings>
+    <category label="30001">
+        <setting id="1_enabled" type="bool" label="30010" default="true" />
+        <setting id="1_switchable" type="bool" label="30011" default="true" enable="eq(-1,true)" />
+        <setting id="1_ip" type="ipaddress" label="30012" default="0.0.0.0" enable="eq(-2,true)" />
+        <setting id="1_channels" type="enum" label="30016" values="1|2|3|4" default="0" enable="eq(-3,true)" />
+        <setting id="1_name_0" type="text" label="30013" default="Sonoff Switch #1, channel #1" enable="eq(-4,true)" />
+        <setting id="1_name_1" type="text" label="30013" default="Sonoff Switch #1, channel #2" enable="eq(-5,true)" visible="gt(-2,0)" />
+        <setting id="1_name_2" type="text" label="30013" default="Sonoff Switch #1, channel #3" enable="eq(-6,true)" visible="gt(-3,1)" />
+        <setting id="1_name_3" type="text" label="30013" default="Sonoff Switch #1, channel #4" enable="eq(-7,true)" visible="gt(-4,2)" />
+    </category>
+    <category label="30002">
+        <setting id="2_enabled" type="bool" label="30010" default="false" />
+        <setting id="2_switchable" type="bool" label="30011" default="true" enable="eq(-1,true)" />
+        <setting id="2_ip" type="ipaddress" label="30012" default="0.0.0.0" enable="eq(-2,true)" />
+        <setting id="2_channels" type="enum" label="30016" values="1|2|3|4" default="0" enable="eq(-3,true)" />
+        <setting id="2_name_0" type="text" label="30013" default="Sonoff Switch #2, channel #1" enable="eq(-4,true)" />
+        <setting id="2_name_1" type="text" label="30013" default="Sonoff Switch #2, channel #2" enable="eq(-5,true)" visible="gt(-2,0)" />
+        <setting id="2_name_2" type="text" label="30013" default="Sonoff Switch #2, channel #3" enable="eq(-6,true)" visible="gt(-3,1)" />
+        <setting id="2_name_3" type="text" label="30013" default="Sonoff Switch #2, channel #4" enable="eq(-7,true)" visible="gt(-4,2)" />
+    </category>
+    <category label="30003">
+        <setting id="3_enabled" type="bool" label="30010" default="false" />
+        <setting id="3_switchable" type="bool" label="30011" default="true" enable="eq(-1,true)" />
+        <setting id="3_ip" type="ipaddress" label="30012" default="0.0.0.0" enable="eq(-2,true)" />
+        <setting id="3_channels" type="enum" label="30016" values="1|2|3|4" default="0" enable="eq(-3,true)" />
+        <setting id="3_name_0" type="text" label="30013" default="Sonoff Switch #3, channel #1" enable="eq(-4,true)" />
+        <setting id="3_name_1" type="text" label="30013" default="Sonoff Switch #3, channel #2" enable="eq(-5,true)" visible="gt(-2,0)" />
+        <setting id="3_name_2" type="text" label="30013" default="Sonoff Switch #3, channel #3" enable="eq(-6,true)" visible="gt(-3,1)" />
+        <setting id="3_name_3" type="text" label="30013" default="Sonoff Switch #3, channel #4" enable="eq(-7,true)" visible="gt(-4,2)" />
+    </category>
+    <category label="30004">
+        <setting id="4_enabled" type="bool" label="30010" default="false" />
+        <setting id="4_switchable" type="bool" label="30011" default="true" enable="eq(-1,true)" />
+        <setting id="4_ip" type="ipaddress" label="30012" default="0.0.0.0" enable="eq(-2,true)" />
+        <setting id="4_channels" type="enum" label="30016" values="1|2|3|4" default="0" enable="eq(-3,true)" />
+        <setting id="4_name_0" type="text" label="30013" default="Sonoff Switch #4, channel #1" enable="eq(-4,true)" />
+        <setting id="4_name_1" type="text" label="30013" default="Sonoff Switch #4, channel #2" enable="eq(-5,true)" visible="gt(-2,0)" />
+        <setting id="4_name_2" type="text" label="30013" default="Sonoff Switch #4, channel #3" enable="eq(-6,true)" visible="gt(-3,1)" />
+        <setting id="4_name_3" type="text" label="30013" default="Sonoff Switch #4, channel #4" enable="eq(-7,true)" visible="gt(-4,2)" />
+    </category>
+    <category label="30005">
+        <setting id="5_enabled" type="bool" label="30010" default="false" />
+        <setting id="5_switchable" type="bool" label="30011" default="true" enable="eq(-1,true)" />
+        <setting id="5_ip" type="ipaddress" label="30012" default="0.0.0.0" enable="eq(-2,true)" />
+        <setting id="5_channels" type="enum" label="30016" values="1|2|3|4" default="0" enable="eq(-3,true)" />
+        <setting id="5_name_0" type="text" label="30013" default="Sonoff Switch #5, channel #1" enable="eq(-4,true)" />
+        <setting id="5_name_1" type="text" label="30013" default="Sonoff Switch #5, channel #2" enable="eq(-5,true)" visible="gt(-2,0)" />
+        <setting id="5_name_2" type="text" label="30013" default="Sonoff Switch #5, channel #3" enable="eq(-6,true)" visible="gt(-3,1)" />
+        <setting id="5_name_3" type="text" label="30013" default="Sonoff Switch #5, channel #4" enable="eq(-7,true)" visible="gt(-4,2)" />
+    </category>
+    <category label="30006">
+        <setting id="6_enabled" type="bool" label="30010" default="false" />
+        <setting id="6_switchable" type="bool" label="30011" default="true" enable="eq(-1,true)" />
+        <setting id="6_ip" type="ipaddress" label="30012" default="0.0.0.0" enable="eq(-2,true)" />
+        <setting id="6_channels" type="enum" label="30016" values="1|2|3|4" default="0" enable="eq(-3,true)" />
+        <setting id="6_name_0" type="text" label="30013" default="Sonoff Switch #6, channel #1" enable="eq(-4,true)" />
+        <setting id="6_name_1" type="text" label="30013" default="Sonoff Switch #6, channel #2" enable="eq(-5,true)" visible="gt(-2,0)" />
+        <setting id="6_name_2" type="text" label="30013" default="Sonoff Switch #6, channel #3" enable="eq(-6,true)" visible="gt(-3,1)" />
+        <setting id="6_name_3" type="text" label="30013" default="Sonoff Switch #6, channel #4" enable="eq(-7,true)" visible="gt(-4,2)" />
+    </category>
+    <category label="30007">
+        <setting id="7_enabled" type="bool" label="30010" default="false" />
+        <setting id="7_switchable" type="bool" label="30011" default="true" enable="eq(-1,true)" />
+        <setting id="7_ip" type="ipaddress" label="30012" default="0.0.0.0" enable="eq(-2,true)" />
+        <setting id="7_channels" type="enum" label="30016" values="1|2|3|4" default="0" enable="eq(-3,true)" />
+        <setting id="7_name_0" type="text" label="30013" default="Sonoff Switch #7, channel #1" enable="eq(-4,true)" />
+        <setting id="7_name_1" type="text" label="30013" default="Sonoff Switch #7, channel #2" enable="eq(-5,true)" visible="gt(-2,0)" />
+        <setting id="7_name_2" type="text" label="30013" default="Sonoff Switch #7, channel #3" enable="eq(-6,true)" visible="gt(-3,1)" />
+        <setting id="7_name_3" type="text" label="30013" default="Sonoff Switch #7, channel #4" enable="eq(-7,true)" visible="gt(-4,2)" />
+    </category>
+    <category label="30008">
+        <setting id="8_enabled" type="bool" label="30010" default="false" />
+        <setting id="8_switchable" type="bool" label="30011" default="true" enable="eq(-1,true)" />
+        <setting id="8_ip" type="ipaddress" label="30012" default="0.0.0.0" enable="eq(-2,true)" />
+        <setting id="8_channels" type="enum" label="30016" values="1|2|3|4" default="0" enable="eq(-3,true)" />
+        <setting id="8_name_0" type="text" label="30013" default="Sonoff Switch #8, channel #1" enable="eq(-4,true)" />
+        <setting id="8_name_1" type="text" label="30013" default="Sonoff Switch #8, channel #2" enable="eq(-5,true)" visible="gt(-2,0)" />
+        <setting id="8_name_2" type="text" label="30013" default="Sonoff Switch #8, channel #3" enable="eq(-6,true)" visible="gt(-3,1)" />
+        <setting id="8_name_3" type="text" label="30013" default="Sonoff Switch #8, channel #4" enable="eq(-7,true)" visible="gt(-4,2)" />
+    </category>
+</settings>

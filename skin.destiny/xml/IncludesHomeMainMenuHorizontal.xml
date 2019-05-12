@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+  
+  <include name="HomeMainMenuHorizontal">
+	<control type="group">
+	<control type="list" id="9000">	
+	  <left>535</left>
+      <top>720</top>
+      <width>1400</width>
+	  <height>350</height>
+	  <ondown>9001</ondown>		
+	  <onright>9000</onright> 
+	  <onleft>709051</onleft> 		  
+	  <onup condition="Container(9000).Hasfocus(1)">43446</onup><!-- LiveTV -->
+	  <onup condition="Container(9000).Hasfocus(2)">18305</onup><!-- Radio -->
+	  <onup condition="Container(9000).Hasfocus(3)">300001</onup><!-- Filme -->
+	  <onup condition="Container(9000).Hasfocus(4)">300001</onup><!-- Videos -->
+	  <onup condition="Container(9000).Hasfocus(5) | Container(9000).Hasfocus(6) | Container(9000).Hasfocus(7) | Container(9000).Hasfocus(19) | Container(9000).Hasfocus(20) | Container(9000).Hasfocus(41) | Container(9000).Hasfocus(42) | Container(9000).Hasfocus(43) | Container(9000).Hasfocus(44) | Container(9000).Hasfocus(45)">18309</onup><!-- Playlisten -->
+	  <onup condition="Container(9000).Hasfocus(8)">300002</onup><!-- Serien -->
+	  <onup condition="Container(9000).Hasfocus(9)">1860</onup><!-- SimplePlaylists -->
+	  <onup condition="Container(9000).Hasfocus(10)">300005</onup><!-- Music -->  
+	  <onup condition="Container(9000).Hasfocus(11)">18501</onup><!-- Apps -->
+	  <onup condition="Container(9000).Hasfocus(12)">18310</onup><!-- Musicvideos -->
+	  <onup condition="Container(9000).Hasfocus(13)">1860</onup><!-- Pictures -->
+	  <onup condition="Container(9000).Hasfocus(15)">1860</onup><!-- Settings -->
+	  <onup condition="Container(9000).Hasfocus(16)">300001</onup><!-- PlayDisc -->
+	  <onup condition="Container(9000).Hasfocus(17)">1860</onup><!-- Games -->
+	  <onup condition="Container(9000).Hasfocus(18)">88306</onup><!-- Watchlist -->
+	  <onup condition="Container(9000).Hasfocus(31)">709030</onup><!-- AVM Addon --> 
+	  <onup condition="Container(9000).Hasfocus(32)">300001</onup><!-- Search Addon -->	    
+	  <onup condition="Container(9000).Hasfocus(33)">1860</onup><!-- Power -->  
+	  <onup condition="Container(9000).Hasfocus(50)">300001</onup><!-- Emby Movies -->
+	  <onup condition="Container(9000).Hasfocus(51)">300002</onup><!-- Emby TVShows --> 
+	  <onup condition="Container(9000).Hasfocus(52)">300001</onup><!-- Collection --> 
+	  <onup condition="Container(9000).Hasfocus(53)">300001</onup><!-- Emby Collection --> 
+	  <onup condition="Container(9000).Hasfocus(54)">300005</onup><!-- Emby Music -->
+      <scrolltime tween="Quadratic" easing="out">500</scrolltime>
+	  <orientation>horizontal</orientation>
+	  <focusposition>0</focusposition>
+      <movement>1</movement>
+      <itemlayout height="351" width="144">
+	    <control type="group">
+	    <animation effect="slide" end="0,400" time="1000" tween="back" easing="inout" condition="ControlGroup(9001).HasFocus | Control.Hasfocus(888809) | Control.HasFocus(888810) | Control.HasFocus(43644) | Control.HasFocus(43944) | ControlGroup(140500).HasFocus">Conditional</animation>
+	    <control type="group">
+		  <left>0</left>
+		  <top>40</top>
+		  <width>200</width>
+		  <height>305</height>
+		  <include>WebOSNoFocusButton</include>
+		</control>
+		<control type="image">
+          <left>70</left>
+          <top>150</top>
+          <width>60</width>
+          <height>60</height>
+          <texture background="true">$INFO[ListItem.Property(MenuIcon)]</texture>
+		  <colordiffuse>$VAR[ColorFontNormalHomemenu]</colordiffuse>
+        </control>
+		<control type="label">
+          <left>15</left>
+          <top>300</top>
+          <width>120</width>
+          <height>36</height>
+          <font>primal_16</font>
+          <label>$INFO[ListItem.Label]</label>
+		  <textcolor>$VAR[ColorFontNormalHomemenu]</textcolor>
+	      <shadowcolor>$VAR[ColorFontShadowHomemenu]</shadowcolor>
+		  <align>center</align>
+		  <aligny>center</aligny>	  
+        </control>
+	   </control>
+      </itemlayout>
+      <focusedlayout height="351" width="144">
+	    <control type="group">
+	    <animation effect="slide" end="0,400" time="1000" tween="back" easing="inout" condition="ControlGroup(9001).HasFocus | Control.Hasfocus(888809) | Control.HasFocus(888810) | Control.HasFocus(43644) | Control.HasFocus(43944) | ControlGroup(140500).HasFocus">Conditional</animation>
+	    <animation effect="slide" end="5.5,-30" center="auto" time="200">Focus</animation>
+		<control type="group">
+		  <left>0</left>
+		  <top>40</top>
+		  <width>200</width>
+		  <height>305</height>
+		  <include>WebOSNoFocusButton</include>
+		</control>	
+		<control type="image">
+          <left>70</left>
+          <top>150</top>
+          <width>60</width>
+          <height>60</height>
+          <texture background="true">$INFO[ListItem.Property(MenuIcon)]</texture>
+		  <colordiffuse>$VAR[ColorFontNormalHomemenu]</colordiffuse>
+        </control>
+		<control type="label">
+          <left>15</left>
+          <top>300</top>
+          <width>120</width>
+          <height>36</height>
+          <font>primal_16</font>
+          <label>$INFO[ListItem.Label]</label>
+		  <textcolor>$VAR[ColorFontNormalHomemenu]</textcolor>
+	      <shadowcolor>$VAR[ColorFontShadowHomemenu]</shadowcolor>
+		  <align>center</align>
+		  <aligny>center</aligny>	  
+        </control>
+	   </control>
+      </focusedlayout>
+      <content>	   
+	      <include>HomeMenuContent</include>
+      </content>
+     </control>	
+  </control> 
+  </include>
+  
+  
+  
+  <include name="HomeSubmenu">
+    <control type="group" id="9001">
+      <left>0</left>
+      <top>0</top>
+	  <animation effect="fade" start="0" time="500" condition="[ControlGroup(9001).HasFocus | Control.HasFocus(43644) | Control.HasFocus(43944)]">Conditional</animation>
+	  <animation effect="slide" end="0,-450" time="1000" tween="Back" easing="inout" condition="[ControlGroup(9001).HasFocus | Control.HasFocus(43644) | Control.HasFocus(43944)]">Conditional</animation>
+      <control type="list" id="9010">
+	    <left>535</left>
+		<top>1170</top>
+		<width>1400</width>
+		<height>350</height>
+		<onleft>709051</onleft>
+		<onright>9010</onright>
+		<ondown>9000</ondown>
+		<onup condition="Container(9000).Hasfocus(3) | Container(9000).Hasfocus(5) | Container(9000).Hasfocus(6) | Container(9000).Hasfocus(7) | Container(9000).Hasfocus(8) | Container(9000).Hasfocus(10) | Container(9000).Hasfocus(12) | Container(9010).HasFocus(260090) | Container(9010).HasFocus(260091) | Container(9010).HasFocus(260092) | Container(9010).HasFocus(260093)">43944</onup>      
+        <scrolltime tween="Quadratic" easing="out">500</scrolltime>
+		<focusposition>0</focusposition>
+		<orientation>horizontal</orientation>
+        <movement>1</movement>
+        <itemlayout height="351" width="144">
+		<animation effect="fade" start="0" time="100" condition="ControlGroup(9001).HasFocus | Control.HasFocus(43644) | Control.HasFocus(43944)">Conditional</animation>
+		<control type="group">
+		  <left>0</left>
+		  <top>40</top>
+		  <width>200</width>
+		  <height>305</height>
+		  <include>WebOSNoFocusButton</include>
+		</control>
+		<control type="image">
+          <left>70</left>
+          <top>150</top>
+          <width>60</width>
+          <height>60</height>
+          <texture background="true">$INFO[ListItem.Property(MenuIcon)]</texture>
+		  <colordiffuse>$VAR[ColorFontNormalHomemenu]</colordiffuse>
+        </control>
+		<control type="label">
+          <left>15</left>
+          <top>300</top>
+          <width>130</width>
+          <height>36</height>
+          <font>primal_15</font>
+          <label>$INFO[ListItem.Label]</label>
+		  <textcolor>$VAR[ColorFontNormalHomemenu]</textcolor>
+	      <shadowcolor>$VAR[ColorFontShadowHomemenu]</shadowcolor>
+		  <align>center</align>
+		  <aligny>center</aligny>	  
+        </control>
+      </itemlayout>
+      <focusedlayout height="351" width="144">
+	    <control type="group">
+	    <animation effect="slide" end="5.5,-30" center="auto" time="200">Focus</animation>
+		<control type="group">
+		  <left>0</left>
+		  <top>40</top>
+		  <width>200</width>
+		  <height>305</height>
+		  <include>WebOSNoFocusButton</include>
+		</control>	
+		<control type="image">
+          <left>70</left>
+          <top>150</top>
+          <width>60</width>
+          <height>60</height>
+          <texture background="true">$INFO[ListItem.Property(MenuIcon)]</texture>
+		  <colordiffuse>$VAR[ColorFontNormalHomemenu]</colordiffuse>
+        </control>
+		<control type="label">
+          <left>15</left>
+          <top>300</top>
+          <width>130</width>
+          <height>36</height>
+          <font>primal_15</font>
+          <label>$INFO[ListItem.Label]</label>
+		  <textcolor>$VAR[ColorFontNormalHomemenu]</textcolor>
+	      <shadowcolor>$VAR[ColorFontShadowHomemenu]</shadowcolor>
+		  <align>center</align>
+		  <aligny>center</aligny>  
+        </control>
+	   </control>
+      </focusedlayout>
+         <include>FallbackSubMenu</include>
+      </control>	 
+   </control>  
+  
+  
+	<control type="group">
+	<left>-247</left>
+	<top>762</top>
+	  <control type="image">
+		<left>0</left>
+		<top>0</top>
+		<width>440</width>
+		<height>300</height>
+		<texture background="true">home/button/sb_infopanel.png</texture>
+		<colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
+	  </control>
+	  <control type="image">
+		<left>0</left>
+		<top>0</top>
+		<width>440</width>
+		<height>300</height>
+		<texture background="true">home/button/sb_infopanel.png</texture>
+		<colordiffuse>$VAR[ColorFontNormal]</colordiffuse>
+	  </control>
+	  <control type="button" id="9110">
+		<left>295</left>
+		<top>100</top>
+		<width>60</width>
+		<height>60</height>
+		<onup>888111</onup>
+		<ondown>9000</ondown>	  
+		<onright>709051</onright> 
+		<onleft>888111</onleft>
+		<texturenofocus colordiffuse="FF201f1f">home/homeicons/addons.png</texturenofocus>
+		<texturefocus colordiffuse="$VAR[BackColorButton]">home/homeicons/addons.png</texturefocus>
+		<onclick>SetFocus(888809)</onclick>
+	  </control>
+	  <control type="label">
+		<description>Title label</description>
+		<left>255</left>
+		<top>260</top>
+		<height>34</height>
+		<width>160</width>
+		<label>My Channel</label>
+		<align>left</align>
+		<aligny>left</aligny>
+		<font>primal_13_Title</font>
+		<textcolor>FF201f1f</textcolor>
+	  </control>
+	 </control>
+	 
+</include>
+	
+</includes>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.homematic.sonoff" name="Sonoff WLAN Switcher" version="0.0.5" provider-name="Birger Jesch">
+  <requires>
+    <import addon="xbmc.python" version="2.25.0" />
+    <import addon="xbmc.json" version="7.0.0" />
+    <import addon="script.module.requests" version="2.9.1" />
+  </requires>
+  <extension point="xbmc.python.script" library="default.py" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Switch your devices with Sonoff WLAN modules and Kodi</summary>
+    <summary lang="de">Schalte Deine Geräte mit den Sonoff WLAN Modulen und Kodi</summary>
+    <description lang="en">Switch with Kodi your illuminations or devices with the Sonoff WLAN modules. Be a couch potato and control up to eight devices via remote.</description>
+    <description lang="de">Schalte mit Kodi Deine Beleuchtung oder Deine Geräte mit den Sonoff WLAN Modulen. Sei eine Couchkartoffel und steuere bis zu acht Geräte mit der Fernbedienung.</description>
+    <disclaimer lang="en">Use at your own risk.</disclaimer>
+    <disclaimer lang="de">Benutzung auf eigene Gefahr.</disclaimer>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+    <forum></forum>
+    <website></website>
+    <email>birger.jesch@gmail.com</email>
+    <source>https://github.com/b-jesch/script.homematic.sonoff</source>
+    <assets>
+      <icon>resources/icon.png</icon>
+      <fanart>resources/fanart.jpg</fanart>
+    </assets>
+    <news>[B]0.0.5:[/B][CR]- JSON responses changed due Tasmota firmware updates[CR][B]0.0.4:[/B][CR]- Icons updated[CR]- Sonoff multiswitch implemented</news>
+  </extension>
+</addon>

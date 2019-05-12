@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="30001">
+		<setting label="30002" type="slider" id="lesezeit" default="8" range="5,1,60" option="int"/>
+		<setting label="30003" type="bool" id="greyout" default="true"/>
+		<setting label="30004" type="bool" id="bild" default="true"/>
+		<setting label="30005" type="number" id="anzahlmeldungen" default="100"/>
+		<setting type="sep"/>
+		<setting label="30333" type="slider" id="max_events" default="30" range="20,10,100" option="int"/>
+		<setting label="30334" type="text" option="readable"/>
+	</category>
+	<category label="30006">
+		<setting label="30007" type="bool" id="spielzeit" default="true"/>
+		<setting label="30008" type="bool" id="karten" default="true"/>
+		<setting label="30009" type="bool" id="tor" default="true"/>
+		<setting label="30010" type="bool" id="elfmeter" default="true"/>
+		<setting label="30011" type="bool" id="spielerwechsel" default="true"/>
+		<setting label="30012" type="bool" id="oldmessages" default="true"/>
+	</category>
+	<category label="30013">
+		<setting label="30014" type="bool" id="custom" default="false" />
+		<setting label="30015" type="text" id="font" default="font14" enable="eq(-1,true)"/>
+		<setting label="30016" type="text" id="fontcolor" default="FFFFD700" enable="eq(-2,true)"/>
+		<setting label="30017" type="number" id="x-message" default="0" enable="eq(-3,true)"/>
+		<setting label="30018" type="number" id="y-message" default="0" enable="eq(-4,true)"/>
+		<setting label="30335" type="bool" id="enableManual" default="false" enable="eq(-5,true)"/>
+		<setting label="30336" type="number" id="breite-message" default="1280" enable="eq(-1,true)+eq(-6,true)"/>
+		<setting label="30020" type="number" id="hoehe-message" default="100" enable="eq(-7,true)"/>
+		<setting label="30021" type="number" id="breite-bild1" default="100" enable="eq(-8,true)"/>
+		<setting label="30022" type="number" id="hoehe-bild1" default="100" enable="eq(-9,true)"/>
+		<setting label="30023" type="number" id="breite-bild2" default="100" enable="eq(-10,true)" />
+		<setting label="30024" type="number" id="hoehe-bild2" default="100" enable="eq(-11,true)"/>
+	</category>
+</settings>

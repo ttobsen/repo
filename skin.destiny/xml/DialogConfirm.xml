@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<coordinates>
+		<system>1</system>
+		<left>510</left>
+		<top>352</top>
+	  </coordinates>
+	  <include>dialogeffect</include>
+	  <controls>
+		<control type="image">
+		  <left>-510</left>
+		  <top>-352</top>
+		  <width>1920</width>
+		  <height>1080</height>
+		  <texture background="true">background.png</texture>
+		</control>
+		<control type="image">
+		  <description>background image</description>
+		  <left>-60</left>
+		  <top>-40</top>
+		  <width>1000</width>
+		  <height>430</height>
+		  <texture background="true">skin/button_klein.png</texture>
+		  <bordertexture border="10">ThumbShadow2.png</bordertexture>
+		  <bordersize>7</bordersize>
+		  <colordiffuse>$VAR[BackColorFront]</colordiffuse>
+		</control>
+		<control type="image">
+		  <description>background image</description>
+		  <left>-55</left>
+		  <top>-35</top>
+		  <width>990</width>
+		  <height>420</height>
+		  <texture background="true">skin/button_klein.png</texture>
+		  <bordertexture border="10">-</bordertexture>
+		  <bordersize>7</bordersize>
+		  <colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
+		</control>
+		<control type="textbox" id="9">
+		  <left>30</left>
+		  <top>82</top>
+		  <width>855</width>
+		  <height>150</height>
+		  <label>-</label>
+		  <autoscroll time="3000" delay="4000" repeat="5000">true</autoscroll>
+		</control>
+		<control type="progress" id="20">
+		  <left>45</left>
+		  <top>252</top>
+		  <width>825</width>
+		  <height>15</height>
+		  <info>System.Progressbar</info>
+		</control>
+		<control type="grouplist" id="9000">
+			<orientation>horizontal</orientation>
+			<left>0</left>
+			<top>280</top>
+			<width>915</width>
+			<align>center</align>
+			<control type="button" id="11">
+				<description>OK button</description>
+				<width>200</width>
+				<height>60</height>
+				<label>107</label>
+				<align>center</align>
+			</control>
+			<control type="button" id="10">
+				<description>Cancel button</description>
+				<width>200</width>
+				<height>60</height>
+				<label>106</label>
+				<align>center</align>
+			</control>
+			<control type="button" id="12">
+				<description>Custom button</description>
+				<width>200</width>
+				<height>60</height>
+				<label>106</label>
+				<align>center</align>
+			</control>
+		</control>
+	</controls>
+</window>
+

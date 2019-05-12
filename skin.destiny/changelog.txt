@@ -1,0 +1,36 @@
+Changelog:
+1.0.0
+- kleinere Änderungen am Design
+- neue Ansicht fuer Addons, Filme und Serien
+- gefundene Fehler behoben
+- Namensänderung
+
+4.0.1
+- Fehler bei der Homemenu sortierung behoben
+- Collection Button konnte man nicht ausblenden
+- Video Button ausblenden sollte jetzt gehen
+
+4.0.0
+- Es wurde viel geändert wie z.B. das komplette Home
+- Home jetzt naeher an WebOS dran
+- Einstellungs-Ansichten angepasst
+- viele Video und Musik-Addons brauch man nur Installieren und sie werden unter My Channels angezeigt
+- einige Dinge wurden auch entfernt um den Skin leichter zu machen
+- wer embycon installiert hat bekommt gleich Button für Filme, Serien und Moviesets angezeigt (ist das nicht gewünscht, einfach deinstallieren oder deaktivieren)
+- gibt bestimmt noch das ein oder andere was neu oder geändert wurde aber habs mir nicht aufgeschrieben 
+
+3.3.0
+- Ansicht Liste im LiveTV wieder verfuegbar
+- Kleinere Designanpassungen an sen Home-Widgets
+- Videofenster jetzt im Hintergrund und Vollbild
+
+3.1.1
+- Ansichten Fehler behoben
+
+3.1.0
+- Design verändert bei alternativen Ansicht
+- Fehlerbehebung
+
+3.0.0
+- for Kodi 17
+- Fehlerbehebung

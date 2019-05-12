@@ -1,0 +1,15 @@
+[B]Version 0.4.1 - 2018-01-21[/B]
+fix for the path
+[B]Version 0.4.0 - 2018-01-21[/B]
+add yathzee logic
+add give me a hint
+fixed bug after one game
+[B]Version 0.3.0 - 2018-01-07[/B]
+add bonus rule (upper area, +50)
+add libs
+[B]Version 0.2.0 - 2018-01-06[/B]
+fixed bug in small straight
+warning if game exit
+[B]Version 0.1.0 - 2018-01-05[/B]
+initial version
+

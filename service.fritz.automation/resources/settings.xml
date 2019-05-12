@@ -1,0 +1,24 @@
+<settings>  
+       <category label="Settings">
+	    <setting label="30001" type="action" action="RunPlugin(plugin://service.fritz.automation/?mode=clear)"/>	
+		<setting label="30004" type="ipaddress" id="ip" default="" />	
+		<setting label="30002" type="text" id="username" default="" />
+		<setting label="30003" type="text" id="password" default="" option="hidden" />	
+      </category>
+      <category label="Einstellungen">	  
+	    <setting label="TV ON (Aktion)" type="text" id="tvon" default="" enable='false' />
+	    <setting label="TV On ID" type="text" id="idtvon" default="" enable='false' />
+	    <setting label="TV OFF (Aktion)" type="text" id="tvoff" default="" enable='false' />
+		<setting label="TV OFF ID" type="text" id="idtvoff" default="" enable='false' />   
+	    <setting label="TV Pause" type="text" id="pausetv" default="" enable='false' />
+		<setting label="TV Pause ID" type="text" id="idpausetv" default="" enable='false' />
+		<setting label="Video ON (Aktion)" type="text" id="videoon" default="" enable='false' />
+	    <setting label="Video On ID" type="text" id="idvideoon" default="" enable='false' />
+	    <setting label="Video OFF (Aktion)" type="text" id="videooff" default="" enable='false' />
+		<setting label="Video OFF ID" type="text" id="idvideooff" default="" enable='false' />   
+	    <setting label="Video Pause" type="text" id="pausevideo" default="" enable='false' />
+		<setting label="Video Pause ID" type="text" id="idpausevideo" default="" enable='false' />
+
+     </category>
+</settings>
+ 

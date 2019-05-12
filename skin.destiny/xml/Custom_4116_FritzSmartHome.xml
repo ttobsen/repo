@@ -1,0 +1,1057 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<window id="4116" type="dialog">
+  <defaultcontrol always="true">709000</defaultcontrol>
+  <coordinates>
+    <system>1</system>
+    <left>0</left>
+    <top>0</top>
+  </coordinates>
+  <controls> 
+    <include>CommonAllForSmartHome</include>
+	<control type="group">
+	<left>50</left>
+	<top>0</top>
+	  <control type="image">
+		<left>55</left>
+		<top>35</top>
+		<width>60</width>
+		<height>60</height>
+		<texture background="true" diffuse="home/button/shadowbutton.png">default/AVMFritz/fritzlogo.png</texture>
+	  </control>
+	  <control type="button" id="709030">
+		<left>130</left>
+		<top>45</top>
+		<width>1770</width>
+		<height>36</height>
+		<font>primal_18_Title</font>
+		<align>left</align>
+		<aligny>center</aligny>	
+		<texturefocus>-</texturefocus>
+		<texturenofocus>-</texturenofocus>
+		<label>Smart Home - Einstellung</label>
+		<textcolor>$VAR[ColorFontNormal]</textcolor>
+		<focusedcolor>$VAR[BackColorButton]</focusedcolor>
+		<textoffsetx></textoffsetx>
+		<textoffsety></textoffsety>
+		<onclick>Addon.OpenSettings(plugin.program.fritzact)</onclick>
+		<onup>1860</onup>
+		<ondown>709000</ondown>
+		<onleft>709031</onleft>
+		<onright>709031</onright>
+      </control>
+	  <control type="button" id="709031">
+		<left>395</left>
+		<top>560</top>
+		<width>477</width>
+		<height>36</height>
+		<font>primal_18_Title</font>
+		<align>right</align>
+		<aligny>center</aligny>	
+		<texturefocus>-</texturefocus>
+		<texturenofocus>-</texturenofocus>
+		<label>Heizungssteuerung</label>
+		<textcolor>$VAR[ColorFontNormal]</textcolor>
+		<focusedcolor>$VAR[BackColorButton]</focusedcolor>
+		<textoffsetx></textoffsetx>
+		<textoffsety></textoffsety>
+		<onclick>Addon.OpenSettings(plugin.program.fritzact)</onclick>
+		<onup>1860</onup>
+		<ondown>709050</ondown>
+		<onleft>709030</onleft>
+		<onright>709030</onright>
+		<angle>90</angle>
+      </control>
+	  <control type="button" id="709031">
+		<left>60</left>
+		<top>810</top>
+		<width>477</width>
+		<height>36</height>
+		<font>primal_18_Title</font>
+		<align>left</align>
+		<aligny>center</aligny>	
+		<texturefocus>-</texturefocus>
+		<texturenofocus>-</texturenofocus>
+		<label>Gruppenschaltung</label>
+		<textcolor>$VAR[ColorFontNormal]</textcolor>
+		<focusedcolor>$VAR[BackColorButton]</focusedcolor>
+		<textoffsetx></textoffsetx>
+		<textoffsety></textoffsety>
+		<onclick>Addon.OpenSettings(plugin.program.fritzact)</onclick>
+		<onup>1860</onup>
+		<ondown>709050</ondown>
+		<onleft>709030</onleft>
+		<onright>709030</onright>
+      </control>
+	  <!-- ============================ UEBERWACHUNG ================================== -->
+	  <control type="group">
+	    <control type="grouplist" id="704000">
+		  <left>875</left>
+		  <top>68</top>
+		  <height>40</height>
+		  <width>500</width>
+		  <itemgap>5</itemgap>
+		  <pagecontrol>25</pagecontrol>
+		  <scrolltime tween="sine" easing="out">200</scrolltime>
+		  <orientation>horizontal</orientation>
+		  <onup>2</onup>
+		  <ondown>3</ondown>
+		  <onleft>1</onleft>
+		  <onright>1</onright>
+		  <align>right</align>
+		  <control type="button" id="704001">
+			<width>150</width>
+			<align>center</align>
+			<aligny>center</aligny>	
+			<texturenofocus colordiffuse="$VAR[ColorButtonDialogeBack]">skin/button_klein_tranz80.png</texturenofocus>
+			<texturefocus colordiffuse="$VAR[BackColorButton]">skin/button_klein.png</texturefocus>
+			<label>Kamera 1</label>
+			<onclick>Addon.OpenSettings(plugin.program.fritzact)</onclick>
+		  </control>
+		  <control type="button" id="704002">
+			<width>150</width>
+			<align>center</align>
+			<aligny>center</aligny>	
+			<texturenofocus colordiffuse="$VAR[ColorButtonDialogeBack]">skin/button_klein_tranz80.png</texturenofocus>
+			<texturefocus colordiffuse="$VAR[BackColorButton]">skin/button_klein.png</texturefocus>
+			<label>Kamera 2</label>
+			<onclick>Addon.OpenSettings(plugin.program.fritzact)</onclick>
+		  </control>
+		  <control type="button" id="704003">
+			<width>150</width>
+			<align>center</align>
+			<aligny>center</aligny>	
+			<texturenofocus colordiffuse="$VAR[ColorButtonDialogeBack]">skin/button_klein_tranz80.png</texturenofocus>
+			<texturefocus colordiffuse="$VAR[BackColorButton]">skin/button_klein.png</texturefocus>
+			<label>Kamera 3</label>
+			<onclick>Addon.OpenSettings(plugin.program.fritzact)</onclick>
+		  </control>
+		</control>
+		<control type="image">
+		  <left>900</left>
+		  <top>100</top>
+		  <width>880</width>
+		  <height>430</height>
+		  <texture background="true" fallback="special://skin/backgrounds/FALLBACK.jpg">skin/button_klein.png</texture>
+		  <bordertexture border="10">ThumbShadow.png</bordertexture>
+		  <bordersize>6</bordersize>
+		  <colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
+		</control>
+		<control type="image">
+		  <left>909</left>
+		  <top>109</top>
+		  <width>722</width>
+		  <height>412</height>
+		  <texture background="true">special://skin/backgrounds/fallback_addons.jpg</texture>
+		  <bordertexture border="10">ThumbShadow.png</bordertexture>
+		  <bordersize>6</bordersize>
+		</control>
+		<!--<control type="videowindow">
+		  <left>870</left>
+		  <top>115</top>
+		  <width>800</width>
+		  <height>400</height>
+		  <align>left</align>
+		  <visible>Player.HasVideo</visible>
+		</control>-->
+		<control type="label">
+		  <left>1145</left>
+		  <top>160</top>
+		  <width>550</width>
+		  <height>36</height>
+		  <font>primal_70_Title</font>
+		  <label>Kamera</label>
+		  <textcolor>$VAR[BackColorBackground]</textcolor>
+		  <angle>90</angle>
+		  <align>right</align>
+		  <aligny>center</aligny>	  
+		</control>
+	  </control>
+	  
+	  
+	  <!-- ============================ EINZELSCHALTUNG ================================== -->
+	  <control type="panel" id="709000">
+	    <include>Animation.ZoomIn</include>
+		<left>50</left>
+		<top>100</top>
+		<width>780</width>
+		<height>705</height>
+		<onright>709050</onright> 
+		<onleft>709001</onleft> 
+		<onup>709030</onup>
+		<orientation>vertical</orientation>
+		<focusposition>0</focusposition>
+		<movement>1</movement>
+		<itemlayout height="235" width="390">
+		    <control type="image">
+			  <left>0</left>
+			  <top>0</top>
+			  <width>390</width>
+			  <height>230</height>
+			  <texture background="true">skin/button_klein_tranz90.png</texture>
+			  <bordertexture border="10">ThumbShadow.png</bordertexture>
+		      <bordersize>6</bordersize>
+			  <colordiffuse>$VAR[BackColorFront]</colordiffuse>			  
+			</control>
+		    <control type="image">
+			  <left>10</left>
+			  <top>10</top>
+			  <width>370</width>
+			  <height>38</height>
+			  <texture background="true">skin/button_klein_tranz90.png</texture>
+			  <colordiffuse>FF2e6718</colordiffuse>
+			  <visible>SubString(ListItem.Property(b_state), true)</visible>
+			</control>
+			<control type="image">
+			  <left>10</left>
+			  <top>10</top>
+			  <width>370</width>
+			  <height>38</height>
+			  <texture background="true">skin/button_klein_tranz90.png</texture>
+			  <colordiffuse>FF62161a</colordiffuse>
+			  <visible>SubString(ListItem.Property(b_state), false)</visible>
+			</control>
+			<control type="image">
+			  <left>0</left>
+			  <top>60</top>
+			  <width>150</width>
+			  <height>150</height>
+			  <texture background="true">$INFO[ListItem.Icon]</texture>
+			  <aspectratio scalediffuse="false" align="center" aligny="center">keep</aspectratio>
+			</control>
+			<control type="label">
+			  <left>20</left>
+			  <top>10</top>
+			  <width>450</width>
+			  <height>36</height>
+			  <font>primal_18_Title</font>
+			  <label>$INFO[ListItem.Label]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>150</left>
+			  <top>60</top>
+			  <width>420</width>
+			  <height>36</height>
+			  <font>primal_13</font>
+			  <label>$ADDON[plugin.program.fritzact 30026] $INFO[ListItem.Property(mode)]</label>
+			  <textcolor>$VAR[ColorFontSelected]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>150</left>
+			  <top>90</top>
+			  <width>420</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>$ADDON[plugin.program.fritzact 30024] $INFO[ListItem.Property(temperature)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>150</left>
+			  <top>120</top>
+			  <width>410</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>$ADDON[plugin.program.fritzact 30025] $INFO[ListItem.Property(power)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>150</left>
+			  <top>150</top>
+			  <width>420</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>$ADDON[plugin.program.fritzact 30027] $INFO[ListItem.Property(energy)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>150</left>
+			  <top>180</top>
+			  <width>420</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>Aktor-Typ: $INFO[ListItem.Property(type)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+		 </itemlayout>
+		 <focusedlayout height="235" width="390">
+			<control type="image">
+			  <left>0</left>
+			  <top>0</top>
+			  <width>390</width>
+			  <height>230</height>
+			  <texture background="true">skin/button_klein_tranz90.png</texture>
+			  <bordertexture border="10">ThumbShadow.png</bordertexture>
+		      <bordersize>6</bordersize>
+			  <colordiffuse>$VAR[BackColorButton]</colordiffuse>
+			</control>
+		    <control type="image">
+			  <left>10</left>
+			  <top>10</top>
+			  <width>370</width>
+			  <height>38</height>
+			  <texture background="true">skin/button_klein_tranz90.png</texture>
+			  <colordiffuse>FF2e6718</colordiffuse>
+			  <visible>SubString(ListItem.Property(b_state), true)</visible>
+			</control>
+			<control type="image">
+			  <left>10</left>
+			  <top>10</top>
+			  <width>370</width>
+			  <height>38</height>
+			  <texture background="true">skin/button_klein_tranz90.png</texture>
+			  <colordiffuse>FF62161a</colordiffuse>
+			  <visible>SubString(ListItem.Property(b_state), false)</visible>
+			</control>
+			<control type="image">
+			  <left>0</left>
+			  <top>60</top>
+			  <width>150</width>
+			  <height>150</height>
+			  <texture background="true">$INFO[ListItem.Icon]</texture>
+			  <aspectratio scalediffuse="false" align="center" aligny="center">keep</aspectratio>
+			</control>
+			<control type="label">
+			  <left>20</left>
+			  <top>10</top>
+			  <width>450</width>
+			  <height>36</height>
+			  <font>primal_18_Title</font>
+			  <label>$INFO[ListItem.Label]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>150</left>
+			  <top>60</top>
+			  <width>420</width>
+			  <height>36</height>
+			  <font>primal_13</font>
+			  <label>$ADDON[plugin.program.fritzact 30026] $INFO[ListItem.Property(mode)]</label>
+			  <textcolor>$VAR[ColorFontSelected]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>150</left>
+			  <top>90</top>
+			  <width>420</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>$ADDON[plugin.program.fritzact 30024] $INFO[ListItem.Property(temperature)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>150</left>
+			  <top>120</top>
+			  <width>410</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>$ADDON[plugin.program.fritzact 30025] $INFO[ListItem.Property(power)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>150</left>
+			  <top>150</top>
+			  <width>420</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>$ADDON[plugin.program.fritzact 30027] $INFO[ListItem.Property(energy)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>150</left>
+			  <top>180</top>
+			  <width>420</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>Aktor-Typ: $INFO[ListItem.Property(type)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+		 </focusedlayout>
+			 <onclick>RunScript(plugin.program.fritzact,action=toggle&amp;ain=$INFO[ListItem.Label2])</onclick>
+			 <content>plugin://plugin.program.fritzact?ts=$INFO[Window(Home).Property(fritzact.timestamp)]&amp;type=switch</content>
+	</control>
+	<!-- ============================ GRUPPENSCHALTUNG ================================== -->
+	<control type="list" id="709001">
+	    <include>Animation.ZoomIn</include>
+		<left>50</left>
+		<top>860</top>
+		<width>780</width>
+		<height>705</height>
+		<onright>709001</onright> 
+		<onleft>709001</onleft> 
+		<onup>709000</onup>
+		<orientation>horizontal</orientation>
+		<focusposition>0</focusposition>
+		<movement>1</movement>
+		<itemlayout height="235" width="260">
+		    <control type="image">
+			  <left>0</left>
+			  <top>0</top>
+			  <width>260</width>
+			  <height>170</height>
+			  <texture background="true">skin/button_klein_tranz90.png</texture>
+			  <bordertexture border="10">ThumbShadow.png</bordertexture>
+		      <bordersize>6</bordersize>
+			  <colordiffuse>$VAR[BackColorFront]</colordiffuse>
+			</control>
+		    <control type="image">
+			  <left>10</left>
+			  <top>10</top>
+			  <width>240</width>
+			  <height>38</height>
+			  <texture background="true">skin/button_klein_tranz90.png</texture>
+			  <colordiffuse>FF2e6718</colordiffuse>
+			  <visible>SubString(ListItem.Property(b_state), true)</visible>
+			</control>
+			<control type="image">
+			  <left>10</left>
+			  <top>10</top>
+			  <width>240</width>
+			  <height>38</height>
+			  <texture background="true">skin/button_klein_tranz90.png</texture>
+			  <colordiffuse>FF164662</colordiffuse>
+			  <visible>SubString(ListItem.Property(b_state), false)</visible>
+			</control>
+			<control type="image">
+			  <left>0</left>
+			  <top>60</top>
+			  <width>90</width>
+			  <height>90</height>
+			  <texture background="true">$INFO[ListItem.Icon]</texture>
+			  <aspectratio scalediffuse="false" align="center" aligny="center">keep</aspectratio>
+			</control>
+			<control type="label">
+			  <left>20</left>
+			  <top>10</top>
+			  <width>220</width>
+			  <height>36</height>
+			  <font>primal_15_Title</font>
+			  <label>$INFO[ListItem.Label]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>85</left>
+			  <top>60</top>
+			  <width>160</width>
+			  <height>36</height>
+			  <font>primal_13</font>
+			  <label>$ADDON[plugin.program.fritzact 30026] $INFO[ListItem.Property(mode)]</label>
+			  <textcolor>$VAR[ColorFontSelected]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>85</left>
+			  <top>85</top>
+			  <width>160</width>
+			  <height>36</height>
+			  <font>primal_13</font>
+			  <label>$ADDON[plugin.program.fritzact 30025] $INFO[ListItem.Property(power)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>85</left>
+			  <top>110</top>
+			  <width>160</width>
+			  <height>36</height>
+			  <font>primal_13</font>
+			  <label>$ADDON[plugin.program.fritzact 30027] $INFO[ListItem.Property(energy)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+		 </itemlayout>
+		 <focusedlayout height="235" width="260">
+		    <control type="image">
+			  <left>0</left>
+			  <top>0</top>
+			  <width>260</width>
+			  <height>170</height>
+			  <texture background="true">skin/button_klein_tranz90.png</texture>
+			  <bordertexture border="10">ThumbShadow.png</bordertexture>
+		      <bordersize>6</bordersize>
+			  <colordiffuse>$VAR[BackColorFront]</colordiffuse>
+			  <visible>!Control.HasFocus(709001)</visible>
+			</control>
+			<control type="image">
+			  <left>0</left>
+			  <top>0</top>
+			  <width>260</width>
+			  <height>170</height>
+			  <texture background="true">skin/button_klein_tranz90.png</texture>
+			  <bordertexture border="10">ThumbShadow.png</bordertexture>
+		      <bordersize>6</bordersize>
+			  <colordiffuse>$VAR[BackColorButton]</colordiffuse>
+			  <visible>Control.HasFocus(709001)</visible>
+			</control>
+		    <control type="image">
+			  <left>10</left>
+			  <top>10</top>
+			  <width>240</width>
+			  <height>38</height>
+			  <texture background="true">skin/button_klein_tranz90.png</texture>
+			  <colordiffuse>FF2e6718</colordiffuse>
+			  <visible>SubString(ListItem.Property(b_state), true)</visible>
+			</control>
+			<control type="image">
+			  <left>10</left>
+			  <top>10</top>
+			  <width>240</width>
+			  <height>38</height>
+			  <texture background="true">skin/button_klein_tranz90.png</texture>
+			  <colordiffuse>FF164662</colordiffuse>
+			  <visible>SubString(ListItem.Property(b_state), false)</visible>
+			</control>
+			<control type="image">
+			  <left>0</left>
+			  <top>60</top>
+			  <width>90</width>
+			  <height>90</height>
+			  <texture background="true">$INFO[ListItem.Icon]</texture>
+			  <aspectratio scalediffuse="false" align="center" aligny="center">keep</aspectratio>
+			</control>
+			<control type="label">
+			  <left>20</left>
+			  <top>10</top>
+			  <width>220</width>
+			  <height>36</height>
+			  <font>primal_15_Title</font>
+			  <label>$INFO[ListItem.Label]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>85</left>
+			  <top>60</top>
+			  <width>160</width>
+			  <height>36</height>
+			  <font>primal_13</font>
+			  <label>$ADDON[plugin.program.fritzact 30026] $INFO[ListItem.Property(mode)]</label>
+			  <textcolor>$VAR[ColorFontSelected]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>85</left>
+			  <top>85</top>
+			  <width>160</width>
+			  <height>36</height>
+			  <font>primal_13</font>
+			  <label>$ADDON[plugin.program.fritzact 30025] $INFO[ListItem.Property(power)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>85</left>
+			  <top>110</top>
+			  <width>160</width>
+			  <height>36</height>
+			  <font>primal_13</font>
+			  <label>$ADDON[plugin.program.fritzact 30027] $INFO[ListItem.Property(energy)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+		 </focusedlayout>
+			 <onclick>RunScript(plugin.program.fritzact,action=toggle&amp;ain=$INFO[ListItem.Label2])</onclick>
+			 <content>plugin://plugin.program.fritzact?ts=$INFO[Window(Home).Property(fritzact.timestamp)]&amp;type=group</content>
+	</control>
+
+	<control type="panel" id="709050">
+	  <include>Animation.ZoomIn</include>
+      <left>900</left>
+      <top>565</top>
+      <width>1100</width>
+	  <height>480</height>
+	  <onright>83000</onright> 
+	  <onleft>709000</onleft> 
+	  <onup>709031</onup>
+	  <onup>709031</onup>
+      <orientation>vertical</orientation>
+	  <focusposition>0</focusposition>
+      <movement>1</movement>
+          <itemlayout height="235" width="440">
+		    <control type="image">
+			  <left>0</left>
+			  <top>0</top>
+			  <width>440</width>
+			  <height>230</height>
+			  <texture background="true">skin/button_klein_tranz90.png</texture>
+			  <bordertexture border="10">ThumbShadow.png</bordertexture>
+		      <bordersize>6</bordersize>
+			  <colordiffuse>$VAR[BackColorFront]</colordiffuse>
+			</control>
+		    <control type="image">
+			  <left>10</left>
+			  <top>50</top>
+			  <width>420</width>
+			  <height>170</height>
+			  <texture background="true">skin/button_klein.png</texture>
+			  <colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
+			</control>
+			<control type="image">
+			  <left>0</left>
+			  <top>65</top>
+			  <width>140</width>
+			  <height>140</height>
+			  <texture background="true">$INFO[ListItem.Icon]</texture>
+			  <aspectratio scalediffuse="false" align="center" aligny="center">keep</aspectratio>
+			</control>
+			<control type="label">
+			  <left>20</left>
+			  <top>10</top>
+			  <width>220</width>
+			  <height>36</height>
+			  <font>primal_15_Title</font>
+			  <label>$INFO[ListItem.Label]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>130</left>
+			  <top>60</top>
+			  <width>250</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>$ADDON[plugin.program.fritzact 30024] $INFO[ListItem.Property(temperature)]</label>
+			  <textcolor>$VAR[ColorFontSelected]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>130</left>
+			  <top>90</top>
+			  <width>250</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>Solltemperatur: $INFO[ListItem.Property(set_temp)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>130</left>
+			  <top>120</top>
+			  <width>250</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>Komforttemperatur: $INFO[ListItem.Property(comf_temp)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>130</left>
+			  <top>150</top>
+			  <width>250</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>Absenktemperatur: $INFO[ListItem.Property(lowering_temp)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+		 </itemlayout>
+		 <focusedlayout height="235" width="390">
+			<control type="image">
+			  <left>0</left>
+			  <top>0</top>
+			  <width>440</width>
+			  <height>230</height>
+			  <texture background="true">skin/button_klein_tranz90.png</texture>
+			  <bordertexture border="10">ThumbShadow.png</bordertexture>
+		      <bordersize>6</bordersize>
+			  <colordiffuse>$VAR[BackColorButton]</colordiffuse>
+			</control>
+		    <control type="image">
+			  <left>10</left>
+			  <top>50</top>
+			  <width>420</width>
+			  <height>170</height>
+			  <texture background="true">skin/button_klein.png</texture>
+			  <colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
+			</control>
+			<control type="image">
+			  <left>0</left>
+			  <top>65</top>
+			  <width>140</width>
+			  <height>140</height>
+			  <texture background="true">$INFO[ListItem.Icon]</texture>
+			  <aspectratio scalediffuse="false" align="center" aligny="center">keep</aspectratio>
+			</control>
+			<control type="label">
+			  <left>20</left>
+			  <top>10</top>
+			  <width>220</width>
+			  <height>36</height>
+			  <font>primal_15_Title</font>
+			  <label>$INFO[ListItem.Label]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>130</left>
+			  <top>60</top>
+			  <width>250</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>$ADDON[plugin.program.fritzact 30024] $INFO[ListItem.Property(temperature)]</label>
+			  <textcolor>$VAR[ColorFontSelected]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>130</left>
+			  <top>90</top>
+			  <width>250</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>Solltemperatur: $INFO[ListItem.Property(set_temp)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>130</left>
+			  <top>120</top>
+			  <width>250</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>Komforttemperatur: $INFO[ListItem.Property(comf_temp)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>130</left>
+			  <top>150</top>
+			  <width>250</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>Absenktemperatur: $INFO[ListItem.Property(lowering_temp)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+		 </focusedlayout>
+             <onclick>RunScript(plugin.program.fritzact,action=temp&ain=$INFO[ListItem.Label2])</onclick>
+			 <content>plugin://plugin.program.fritzact?ts=$INFO[Window(Home).Property(fritzact.timestamp)]&amp;type=thermostat</content>
+    </control>
+	
+	<control type="list" id="709060">
+	  <include>Animation.ZoomIn</include>
+      <left>1350</left>
+      <top>565</top>
+      <width>880</width>
+	  <height>665</height>
+	  <onright>709060</onright> 
+	  <onleft>709060</onleft> 
+	  <onup>709031</onup>
+      <orientation>horizontal</orientation>
+	  <focusposition>0</focusposition>
+      <movement>1</movement>
+         <itemlayout height="235" width="785">
+		 </itemlayout>
+		 <focusedlayout height="235" width="785">
+			<control type="image">
+			  <left>0</left>
+			  <top>0</top>
+			  <width>430</width>
+			  <height>470</height>
+			  <texture background="true">skin/button_klein_tranz90.png</texture>
+			  <bordertexture border="10">ThumbShadow.png</bordertexture>
+		      <bordersize>6</bordersize>
+			  <colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
+			</control>
+			<control type="multiimage">
+			  <left>10</left>
+			  <top>10</top>
+			  <width>410</width>
+			  <height>450</height>
+			  <imagepath background="true">$INFO[ListItem.Property(Background)]</imagepath>
+			  <timeperimage>10000</timeperimage>
+			  <randomize>true</randomize>
+			  <fadetime>1000</fadetime>
+			  <include>VisibleFadeEffect</include>
+			  <aspectratio scalediffuse="false" align="left" aligny="top">scale</aspectratio>
+			  <animation effect="fade" time="150">WindowClose</animation>
+			  <visible>System.HasAddon(resource.images.weatherfanart.multi)</visible>			  
+			</control>
+			<control type="image">
+			  <left>5</left>
+			  <top>5</top>
+			  <width>420</width>
+			  <height>460</height>
+			  <texture background="true">skin/button_klein_tranz50.png</texture>
+			  <colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
+			</control>
+			<control type="image">
+			  <left>0</left>
+			  <top>80</top>
+			  <width>430</width>
+			  <height>300</height>
+			  <texture background="true">skin/button_klein_tranz90.png</texture>
+			  <colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
+			  <bordertexture border="10">ThumbShadow.png</bordertexture>
+		      <bordersize>6</bordersize>
+			</control>	
+			<control type="image">
+			  <left>25</left>
+			  <top>10</top>
+			  <width>190</width>
+			  <height>190</height>
+			  <texture background="true">$INFO[ListItem.Icon]</texture>
+			  <aspectratio scalediffuse="false" align="center" aligny="center">keep</aspectratio>
+			</control>
+			<control type="label">
+			  <left>220</left>
+			  <top>95</top>
+			  <width>190</width>
+			  <height>36</height>
+			  <font>primal_15_Bold</font>
+			  <label>$INFO[ListItem.Label]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>center</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>220</left>
+			  <top>130</top>
+			  <width>190</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>$INFO[ListItem.Property(Location)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>center</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>50</left>
+			  <top>200</top>
+			  <width>420</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>$INFO[ListItem.Property(FeelsLike)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="image">
+			  <left>42</left>
+			  <top>245</top>
+			  <width>30</width>
+			  <height>30</height>
+			  <texture background="true">button/weatherplus.png</texture>
+			  <aspectratio>keep</aspectratio>
+			</control>
+			<control type="label">
+			  <left>70</left>
+			  <top>242</top>
+			  <width>410</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>$INFO[ListItem.Property(HighTemperature)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="image">
+			  <left>117</left>
+			  <top>245</top>
+			  <width>30</width>
+			  <height>30</height>
+			  <texture background="true">button/weatherminus.png</texture>
+			  <aspectratio>keep</aspectratio>
+			</control>
+			<control type="label">
+			  <left>145</left>
+			  <top>242</top>
+			  <width>410</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>$INFO[ListItem.Property(LowTemperature)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>50</left>
+			  <top>280</top>
+			  <width>420</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>$INFO[ListItem.Property(Temperature)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>220</left>
+			  <top>200</top>
+			  <width>420</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>$INFO[ListItem.Property(Humidity)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>220</left>
+			  <top>240</top>
+			  <width>420</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>$INFO[ListItem.Property(DayOutlook)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="label">
+			  <left>50</left>
+			  <top>325</top>
+			  <width>420</width>
+			  <height>36</height>
+			  <font>primal_15</font>
+			  <label>$INFO[ListItem.Property(Wind)]</label>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>	  
+			</control>
+			<control type="image">
+			  <left>200</left>
+			  <top>320</top>
+			  <width>200</width>
+			  <height>200</height>
+			  <texture background="true">$INFO[ListItem.Property(ProviderLogo)]</texture>
+			  <aspectratio>keep</aspectratio>
+			</control>
+		 </focusedlayout>
+	    <content>
+		   <item id="1">
+			  <label>$INFO[Window(weather).Property(Daily.1.LongDay)], $INFO[Window(weather).Property(Daily.1.LongDate)]</label>
+			  <onclick>ActivateWindow(4115)</onclick>
+			  <icon>$VAR[VarWeatherHomeIcon]$INFO[Window(Weather).Property(Current.OutlookIcon)]</icon>
+			  <thumb></thumb>
+			  <property name="Temperature">$LOCALIZE[143] $INFO[Window(Weather).Property(Current.Temperature)]°</property>
+			  <property name="Humidity">$LOCALIZE[406]: $INFO[Window(Weather).Property(Current.Humidity)]</property> 
+			  <property name="FeelsLike">$LOCALIZE[402]: $INFO[Window(Weather).Property(Current.FeelsLike)]°</property>
+			  <property name="HighTemperature">$INFO[Window(weather).Property(Current.HighTemperature)]</property>	 
+			  <property name="LowTemperature">$INFO[Window(weather).Property(Current.LowTemperature)]</property>	
+			  <property name="DayOutlook">$INFO[Window(Weather).Property(Current.Condition)]</property>
+			  <property name="Wind">$LOCALIZE[383]: $INFO[Window(Weather).Property(Current.Wind)]</property>
+			  <property name="Location">$INFO[Window(Weather).Property(Current.Location)]</property>
+			  <property name="Provider">$INFO[Window(Weather).Property(WeatherProvider)]</property>
+			  <property name="ProviderLogo">$INFO[Window(Weather).Property(WeatherProviderLogo)]</property>
+			  <property name="Background">resource://resource.images.weatherfanart.multi/$INFO[Window(Weather).Property(Current.FanartCode)]</property>
+		   </item>
+		   <item id="2">
+			  <label>$INFO[Window(weather).Property(Daily.2.LongDay)], $INFO[Window(weather).Property(Daily.2.LongDate)]</label>
+			  <onclick>ActivateWindow(4115)</onclick>
+			  <icon>$VAR[VarWeatherHomeIcon]$INFO[Window(Weather).Property(Daily.2.OutlookIcon)]</icon>
+			  <thumb></thumb>
+			  <property name="Humidity">$LOCALIZE[406]: $INFO[Window(Weather).Property(Daily.2.Humidity)]</property> 
+			  <property name="FeelsLike">$LOCALIZE[402]: $INFO[Window(Weather).Property(Daily.2.FeelsLike)]</property>
+			  <property name="HighTemperature">$INFO[Window(weather).Property(Daily.2.HighTemperature)]</property>
+			  <property name="LowTemperature">$INFO[Window(weather).Property(Daily.2.LowTemperature)]</property>	
+			  <property name="DayOutlook">$INFO[Window(weather).Property(Day1.Outlook)]</property>
+			  <property name="Background">special://skin/backgrounds/WETTERDEFAULT.jpg</property>
+		   </item>
+		   <item id="3">
+			  <label>$INFO[Window(weather).Property(Daily.3.LongDay)], $INFO[Window(weather).Property(Daily.3.LongDate)]</label>
+			  <onclick>ActivateWindow(4115)</onclick>
+			  <icon>$VAR[VarWeatherHomeIcon]$INFO[Window(Weather).Property(Daily.3.OutlookIcon)]</icon>
+			  <thumb></thumb>
+			  <property name="Humidity">$LOCALIZE[406]: $INFO[Window(Weather).Property(Daily.3.Humidity)]</property> 
+			  <property name="FeelsLike">$LOCALIZE[402]: $INFO[Window(Weather).Property(Daily.3.FeelsLike)]</property>
+			  <property name="HighTemperature">$INFO[Window(weather).Property(Daily.3.HighTemperature)]</property>
+			  <property name="LowTemperature">$INFO[Window(weather).Property(Daily.3.LowTemperature)]</property>	
+			  <property name="DayOutlook">$INFO[Window(weather).Property(Day2.Outlook)]</property>
+			  <property name="Background">special://skin/backgrounds/WETTERDEFAULT.jpg</property>
+		   </item>
+		   <item id="4">
+			  <label>$INFO[Window(weather).Property(Daily.4.LongDay)], $INFO[Window(weather).Property(Daily.4.LongDate)]</label>
+			  <onclick>ActivateWindow(4115)</onclick>
+			  <icon>$VAR[VarWeatherHomeIcon]$INFO[Window(Weather).Property(Daily.4.OutlookIcon)]</icon>
+			  <thumb></thumb>
+			  <property name="Humidity">$LOCALIZE[406]: $INFO[Window(Weather).Property(Daily.4.Humidity)]</property> 
+			  <property name="FeelsLike">$LOCALIZE[402]: $INFO[Window(Weather).Property(Daily.4.FeelsLike)]</property>
+			  <property name="HighTemperature">$INFO[Window(weather).Property(Daily.4.HighTemperature)]</property>
+			  <property name="LowTemperature">$INFO[Window(weather).Property(Daily.4.LowTemperature)]</property>	
+			  <property name="DayOutlook">$INFO[Window(weather).Property(Day3.Outlook)]</property>
+			  <property name="Background">special://skin/backgrounds/WETTERDEFAULT.jpg</property>
+		   </item>
+		</content>
+    </control>
+   </control>
+  </controls>
+</window>

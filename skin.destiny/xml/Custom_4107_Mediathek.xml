@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="dialog" id="4107">
+  <defaultcontrol always="true">140500</defaultcontrol>
+  <controls>
+  <control type="image">
+	<left>980</left>
+	<top>155</top>
+	<width>810</width>
+	<height>743</height>
+	<texture background="true">skin/button_klein.png</texture>
+	<bordertexture border="10">ThumbShadow2.png</bordertexture>
+	<bordersize>7</bordersize>
+	<colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
+  </control>
+  <control type="button" id="140499">
+	<description>Close Window button</description>
+	<left>1710</left>
+	<top>175</top>
+	<width>60</width>
+	<height>60</height>
+	<label></label>
+	<onclick>PreviousMenu</onclick>
+	<texturefocus>default/close_selected.png</texturefocus>
+	<texturenofocus>default/close.png</texturenofocus>
+	<onleft>4107</onleft>
+	<onright>4107</onright>
+	<onup>1860</onup>
+	<ondown>140500</ondown>
+  </control>
+  <control type="grouplist" id="140500">
+	<left>995</left>
+	<top>250</top>
+	<width>790</width>
+	<height>632</height>
+	<itemgap>2</itemgap>
+	<pagecontrol>2640</pagecontrol>
+	<onleft>140499</onleft>
+	<onright>140499</onright>
+	<onup>140500</onup>
+	<ondown>140500</ondown>
+	<!--<control type="button" id="3060">
+	  <width>780</width>
+	  <height>51</height>
+	  <font>primal_20</font>
+	  <label>$LOCALIZE[50122] 1</label>
+	  <label2>[COLOR=selected]$INFO[system.addontitle(Skin.String(HomeVideosButton1))][/COLOR]</label2>
+	  <textoffsetx>30</textoffsetx>
+	  <onclick>Skin.SetAddon(HomeVideosButton1,xbmc.addon.executable,xbmc.addon.image,xbmc.addon.video,xbmc.addon.audio)</onclick>
+	</control>-->
+	<control type="button" id="3071">
+	  <width>780</width>
+	  <height>51</height>
+	  <font>primal_20</font>
+	  <label>$LOCALIZE[50238] 1</label>
+	  <label2>[COLOR=selected]$INFO[Skin.String(Menu_HomeVideosButtonfavourite1.Path)][/COLOR]</label2>
+	  <textoffsetx>30</textoffsetx>
+	  <onclick>RunScript(script.favourites,property=Menu_HomeVideosButtonfavourite1)</onclick>
+	</control>
+	<control type="button" id="3072">
+	  <width>780</width>
+	  <height>51</height>
+	  <font>primal_20</font>
+	  <label>$LOCALIZE[50238] 2</label>
+	  <label2>[COLOR=selected]$INFO[Skin.String(Menu_HomeVideosButtonfavourite2.Path)][/COLOR]</label2>
+	  <textoffsetx>30</textoffsetx>
+	  <onclick>RunScript(script.favourites,property=Menu_HomeVideosButtonfavourite2)</onclick>
+	</control>
+	<control type="button" id="3073">
+	  <width>780</width>
+	  <height>51</height>
+	  <font>primal_20</font>
+	  <label>$LOCALIZE[50238] 3</label>
+	  <label2>[COLOR=selected]$INFO[Skin.String(Menu_HomeVideosButtonfavourite3.Path)][/COLOR]</label2>
+	  <textoffsetx>30</textoffsetx>
+	  <onclick>RunScript(script.favourites,property=Menu_HomeVideosButtonfavourite3)</onclick>
+	</control>
+	<control type="button" id="3074">
+	  <width>780</width>
+	  <height>51</height>
+	  <font>primal_20</font>
+	  <label>$LOCALIZE[50238] 4</label>
+	  <label2>[COLOR=selected]$INFO[Skin.String(Menu_HomeVideosButtonfavourite4.Path)][/COLOR]</label2>
+	  <textoffsetx>30</textoffsetx>
+	  <onclick>RunScript(script.favourites,property=Menu_HomeVideosButtonfavourite4)</onclick>
+	</control>
+	<control type="button" id="3075">
+	  <width>780</width>
+	  <height>51</height>
+	  <font>primal_20</font>
+	  <label>$LOCALIZE[50238] 5</label>
+	  <label2>[COLOR=selected]$INFO[Skin.String(Menu_HomeVideosButtonfavourite5.Path)][/COLOR]</label2>
+	  <textoffsetx>30</textoffsetx>
+	  <onclick>RunScript(script.favourites,property=Menu_HomeVideosButtonfavourite5)</onclick>
+	</control>
+	<control type="button" id="3076">
+	  <width>780</width>
+	  <height>51</height>
+	  <font>primal_20</font>
+	  <label>$LOCALIZE[50238] 6</label>
+	  <label2>[COLOR=selected]$INFO[Skin.String(Menu_HomeVideosButtonfavourite6.Path)][/COLOR]</label2>
+	  <textoffsetx>30</textoffsetx>
+	  <onclick>RunScript(script.favourites,property=Menu_HomeVideosButtonfavourite6)</onclick>
+	</control>
+	<control type="button" id="3077">
+	  <width>780</width>
+	  <height>51</height>
+	  <font>primal_20</font>
+	  <label>$LOCALIZE[50238] 7</label>
+	  <label2>[COLOR=selected]$INFO[Skin.String(Menu_HomeVideosButtonfavourite7.Path)][/COLOR]</label2>
+	  <textoffsetx>30</textoffsetx>
+	  <onclick>RunScript(script.favourites,property=Menu_HomeVideosButtonfavourite7)</onclick>
+	</control>
+	<control type="button" id="3078">
+	  <width>780</width>
+	  <height>51</height>
+	  <font>primal_20</font>
+	  <label>$LOCALIZE[50238] 8</label>
+	  <label2>[COLOR=selected]$INFO[Skin.String(Menu_HomeVideosButtonfavourite8.Path)][/COLOR]</label2>
+	  <textoffsetx>30</textoffsetx>
+	  <onclick>RunScript(script.favourites,property=Menu_HomeVideosButtonfavourite8)</onclick>
+	</control>
+	<control type="button" id="3079">
+	  <width>780</width>
+	  <height>51</height>
+	  <font>primal_20</font>
+	  <label>$LOCALIZE[50238] 9</label>
+	  <label2>[COLOR=selected]$INFO[Skin.String(Menu_HomeVideosButtonfavourite9.Path)][/COLOR]</label2>
+	  <textoffsetx>30</textoffsetx>
+	  <onclick>RunScript(script.favourites,property=Menu_HomeVideosButtonfavourite9)</onclick>
+	</control>
+	<control type="button" id="3080">
+	  <width>780</width>
+	  <height>51</height>
+	  <font>primal_20</font>
+	  <label>$LOCALIZE[50238] 10</label>
+	  <label2>[COLOR=selected]$INFO[Skin.String(Menu_HomeVideosButtonfavourite10.Path)][/COLOR]</label2>
+	  <textoffsetx>30</textoffsetx>
+	  <onclick>RunScript(script.favourites,property=Menu_HomeVideosButtonfavourite10)</onclick>
+	</control>
+  </control>
+  <control type="scrollbar" id="2640">
+	<include>SlideInAndOutAnimationRNL</include>
+	<left>1850</left>
+	<top>165</top>
+	<width>10</width>
+	<height>810</height>
+	<texturesliderbackground>button/ScrollBarV.png</texturesliderbackground>
+	<texturesliderbar colordiffuse="$VAR[BackColorFront]">button/ScrollBarV_bar.png</texturesliderbar>
+	<texturesliderbarfocus colordiffuse="$VAR[BackColorButton]">button/ScrollBarV_bar_focus.png</texturesliderbarfocus>
+	<textureslidernib>button/ScrollBarNib.png</textureslidernib>
+	<textureslidernibfocus>button/ScrollBarNib.png</textureslidernibfocus>
+	<onleft>9002</onleft>
+	<onright>1860</onright>
+	<showonepage>true</showonepage>
+	<orientation>vertical</orientation>
+	<visible>Container(9000).Hasfocus(4)</visible>
+  </control>
+  
+  </controls>
+</window>

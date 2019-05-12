@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+  <include name="HomePlaying">
+<!-- ============================================================================================================ -->
+<!-- ============================================= HOME MUSICSEKTION ============================================ -->
+<!-- ============================================================================================================ -->   	 
+      <control type="group">
+	  <visible>Window.IsVisible(Home) | !Skin.HasSetting(NoHomeDBCounter)</visible>
+		<control type="label">
+          <visible>!VideoPlayer.Content(Movies) + !VideoPlayer.Content(Episodes) + !VideoPlayer.Content(LiveTV) + !Skin.HasSetting(Use_Startup_DreamVideo)</visible>
+		  <visible>Player.HasVideo</visible>
+          <left>665</left>
+          <top>18</top>
+          <height>45</height>
+          <width>1200</width>
+          <label>[B]$INFO[VideoPlayer.Artist]$INFO[VideoPlayer.Title, - ]$INFO[VideoPlayer.Year, (,)][/B] - $INFO[Player.Time]$INFO[Player.Duration, / ] - $LOCALIZE[50012]: $INFO[VideoPlayer.FinishTime]</label>
+          <align>right</align>
+          <font>primal_16_Title</font>
+          <textcolor>$VAR[ColorFontNormal]</textcolor>
+	      <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+          <scroll>true</scroll>
+		  <scrollspeed>30</scrollspeed>
+          <scrollsuffix> - </scrollsuffix>
+        </control>
+        <!-- NOW PLAYING INFO MOVIES -->
+		<control type="label">
+          <visible>VideoPlayer.Content(Movies)</visible>
+		  <visible>Player.HasVideo</visible>
+          <left>665</left>
+          <top>18</top>
+          <height>45</height>
+          <width>1200</width>
+          <label>[B]$INFO[VideoPlayer.Title]$INFO[VideoPlayer.Year, (,)][/B] - $INFO[Player.Time]$INFO[Player.Duration, / ] - $LOCALIZE[50012]: $INFO[VideoPlayer.FinishTime]</label>
+          <align>right</align>
+          <font>primal_16_Title</font>
+          <textcolor>$VAR[ColorFontNormal]</textcolor>
+	      <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+          <scroll>true</scroll>
+		  <scrollspeed>30</scrollspeed>
+          <scrollsuffix> - </scrollsuffix>
+        </control>
+        <!-- NOW PLAYING INFO LiveTV -->
+		<control type="label">
+          <visible>VideoPlayer.Content(LiveTV)</visible>
+		  <visible>Player.HasVideo</visible>
+          <left>665</left>
+          <top>18</top>
+          <height>45</height>
+          <width>1200</width>
+          <label>$INFO[VideoPlayer.ChannelName]$INFO[VideoPlayer.Title, - ]</label>
+          <align>right</align>
+          <font>primal_16_Title</font>
+          <textcolor>$VAR[ColorFontNormal]</textcolor>
+	      <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+          <scroll>true</scroll>
+		  <scrollspeed>30</scrollspeed>
+          <scrollsuffix> - </scrollsuffix>
+        </control>
+        <!-- NOW PLAYING EPISODES -->
+		<control type="label">
+          <visible>VideoPlayer.Content(Episodes)</visible>
+		  <visible>Player.HasVideo</visible>
+          <left>665</left>
+          <top>18</top>
+          <height>45</height>
+          <width>1200</width>
+          <label>$INFO[VideoPlayer.TVShowTitle] - S$INFO[VideoPlayer.Season] E$INFO[VideoPlayer.episode] - $INFO[VideoPlayer.Title] - $INFO[Player.Time]$INFO[Player.Duration, / ]</label>
+          <align>right</align>
+          <font>primal_16_Title</font>
+          <textcolor>$VAR[ColorFontNormal]</textcolor>
+	      <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+          <scroll>true</scroll>
+		  <scrollspeed>30</scrollspeed>
+          <scrollsuffix> - </scrollsuffix>
+        </control>
+		<!-- NOW PLAYING MUSIC -->
+		<control type="label">
+		  <visible>Player.HasAudio</visible>
+		  <left>665</left>
+		  <top>18</top>
+		  <height>45</height>
+		  <width>1200</width>
+		  <label>[B]$INFO[MusicPlayer.Artist]$INFO[MusicPlayer.Title, - ]$INFO[MusicPlayer.Year, (,)][/B] - $INFO[Player.Time]$INFO[Player.Duration, / ] - $LOCALIZE[50012]: $INFO[MusicPlayer.FinishTime]</label>
+		  <align>right</align>
+		  <font>primal_16_Title</font>
+		  <textcolor>$VAR[ColorFontNormal]</textcolor>
+		  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+		  <scroll>true</scroll>
+		</control>
+	</control>
+
+
+</include>
+
+</includes>

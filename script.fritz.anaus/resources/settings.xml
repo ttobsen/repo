@@ -1,0 +1,12 @@
+<settings>  
+       <category label="Settings">
+	    <setting label="30001" type="action" action="RunPlugin(plugin://script.fritz.anaus/?mode=clear)"/>	
+		<setting label="30004" type="ipaddress" id="ip" default="" />	
+		<setting label="30002" type="text" id="username" default="" />
+		<setting label="30003" type="text" id="password" default="" option="hidden" />	
+      </category>
+      <category label="Einstellungen">	  
+	    <setting label="Device id" type="text" id="ids" default="" enable='false' />
+     </category>
+</settings>
+ 

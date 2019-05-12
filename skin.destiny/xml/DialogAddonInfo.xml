@@ -1,0 +1,396 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<window id="146">
+  <defaultcontrol always="true">9000</defaultcontrol>
+  <coordinates>
+    <system>1</system>
+    <left>0</left>
+    <top>0</top>
+  </coordinates>
+  <controls>
+    <control type="group">
+      <include>Animation.ZoomIn</include>
+	  <include>Animation.ZoomOut</include>
+      <visible>!Window.isVisible(AddonSettings) + !Window.IsActive(TextViewer)</visible>
+	  <control type="image">
+		<left>50</left>
+		<top>50</top>
+		<width>1830</width>
+		<height>980</height>
+		<texture background="true">skin/button_klein.png</texture>
+		<bordertexture border="10">ThumbShadow.png</bordertexture>
+		<bordersize>6</bordersize>
+		<colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
+	  </control>
+	  <control type="image">
+		<left>420</left>
+		<top>300</top>
+		<width>1440</width>
+		<height>710</height>
+		<texture background="true">skin/button_klein_tranz50.png</texture>
+		<colordiffuse>$VAR[BackColorFront]</colordiffuse>
+	  </control>
+	  <control type="button">
+		<description>Close Window button</description>
+		<left>1820</left>
+		<top>65</top>
+		<width>48</width>
+		<height>48</height>
+		<onclick>PreviousMenu</onclick>
+		<texturefocus>default/close.png</texturefocus>
+		<texturenofocus>default/close.png</texturenofocus>
+		<onleft>2</onleft>
+		<onright>2</onright>
+		<onup>2</onup>
+		<ondown>2</ondown>
+	  </control>
+	  <control type="panel" id="50">
+		<left>415</left>
+		<top>60</top>
+		<width>1315</width>
+		<height>233</height>
+		<ondown>9000</ondown>
+		<onup>9000</onup>
+		<orientation>horizontal</orientation>
+		<itemlayout height="225" width="390">
+			<control type="image">
+				<width>385</width>
+				<height>220</height>
+				<texture border="2" fallback="home/no_lastplayed.jpg" background="true">$INFO[ListItem.Icon]</texture>
+                <aspectratio>scale</aspectratio>
+				<bordertexture border="10">ThumbShadow.png</bordertexture>
+		        <bordersize>6</bordersize>
+			</control>
+		</itemlayout>
+		<focusedlayout height="225" width="390">
+			<control type="image">
+				<width>385</width>
+				<height>220</height>
+				<texture border="2" fallback="home/no_lastplayed.jpg" background="true">$INFO[ListItem.Icon]</texture>
+				<aspectratio>scale</aspectratio>
+				<bordertexture border="10">ThumbShadow.png</bordertexture>
+		        <bordersize>6</bordersize>
+			</control>
+			<control type="image">
+				<width>385</width>
+				<height>220</height>
+				<texture border="1" colordiffuse="$VAR[BackColorButton]">skin/button_klein_tranz50.png</texture>
+			</control>
+		</focusedlayout>
+	  </control>
+	  <control type="image">
+        <left>1710</left>
+        <top>60</top>
+        <width>20</width>
+        <height>220</height>
+        <aspectratio>stretch</aspectratio>
+        <texture background="true">default/panel_schatten_rechts.png</texture>
+      </control>
+      <control type="image">
+        <left>60</left>
+        <top>60</top>
+        <width>340</width>
+        <height>340</height>
+        <aspectratio>stretch</aspectratio>
+        <texture background="true">$INFO[ListItem.Icon]</texture>
+		<bordertexture border="10">ThumbShadow.png</bordertexture>
+		<bordersize>6</bordersize>
+      </control>
+      <control type="label">
+        <description>Addon Title value</description>
+        <left>440</left>
+        <top>315</top>
+        <width>870</width>
+        <height>45</height>
+        <align>left</align>
+        <aligny>center</aligny>
+        <font>primal_26_Bold</font>
+        <label>[B]$INFO[ListItem.AddonName][/B]</label>
+        <textcolor>$VAR[ColorFontSelected]</textcolor>
+	    <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+        <scroll>true</scroll>
+      </control>
+      <control type="group">
+        <left>440</left>
+        <top>365</top>
+        <control type="label">
+          <description>Type</description>
+          <left>0</left>
+          <top>0</top>
+          <width>1000</width>
+          <height>38</height>
+          <label>$INFO[ListItem.AddonType,$LOCALIZE[146] ]</label>
+          <align>left</align>
+          <aligny>center</aligny>
+          <font>primal_16</font>
+          <textcolor>$VAR[ColorFontNormal]</textcolor>
+	    <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+        </control>
+        <control type="label">
+          <description>Author</description>
+          <left>0</left>
+          <top>45</top>
+          <width>1000</width>
+          <height>38</height>
+          <label>$INFO[ListItem.AddonCreator,$LOCALIZE[21863]: ]</label>
+          <align>left</align>
+          <aligny>center</aligny>
+          <font>primal_16</font>
+          <textcolor>$VAR[ColorFontNormal]</textcolor>
+	      <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+        </control>
+        <control type="label">
+          <description>Version</description>
+          <left>0</left>
+          <top>90</top>
+          <width>1000</width>
+          <height>38</height>
+          <label>$INFO[ListItem.AddonVersion,$LOCALIZE[24051]  ]</label>
+          <align>left</align>
+          <aligny>center</aligny>
+          <font>primal_16</font>
+          <textcolor>$VAR[ColorFontNormal]</textcolor>
+	      <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+        </control>
+        <control type="label">
+          <description>Rating label</description>
+          <left>0</left>
+          <top>135</top>
+          <width>150</width>
+          <height>38</height>
+          <label>$LOCALIZE[563]:</label>
+          <align>left</align>
+          <aligny>center</aligny>
+          <font>primal_16</font>
+          <textcolor>$VAR[ColorFontNormal]</textcolor>
+	      <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+        </control>
+        <control type="image">
+          <description>Rating value</description>
+          <left>140</left>
+          <top>140</top>
+          <width>170</width>
+          <height>30</height>
+          <texture>$INFO[ListItem.Rating]</texture>
+        </control>
+        <control type="label">
+          <description>Summary</description>
+          <left>0</left>
+          <top>180</top>
+          <width>1000</width>
+          <height>38</height>
+          <label>$INFO[ListItem.AddonSummary,$LOCALIZE[20037]:  ]</label>
+          <align>left</align>
+          <aligny>center</aligny>
+          <font>primal_16</font>
+          <textcolor>$VAR[ColorFontNormal]</textcolor>
+	      <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+        </control>
+        <control type="label">
+          <description>Description txt</description>
+          <left>0</left>
+          <top>255</top>
+          <width>450</width>
+          <height>38</height>
+          <label>$LOCALIZE[21821]</label>
+          <align>left</align>
+          <aligny>center</aligny>
+          <font>primal_16</font>
+          <textcolor>$VAR[ColorFontSelected]</textcolor>
+	      <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+        </control>
+        <control type="group">
+          <visible>!IsEmpty(ListItem.AddonDisclaimer)</visible>
+          <control type="label">
+            <description>Description Page Count</description>
+            <left>840</left>
+            <top>255</top>
+            <width>550</width>
+            <height>38</height>
+            <label>$INFO[Container(400).CurrentPage, $LOCALIZE[50215] (]$INFO[Container(400).NumPages,/,)]</label>
+            <align>right</align>
+            <aligny>center</aligny>
+            <font>primal_16</font>
+            <textcolor>$VAR[ColorFontSelected]</textcolor>
+	        <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+          </control>
+          <control type="textbox" id="400">
+            <description>Description</description>
+            <left>0</left>
+            <top>300</top>
+            <width>1370</width>
+            <height>147</height>
+            <font>primal_15</font>
+            <align>left</align>
+            <textcolor>$VAR[ColorFontNormal]</textcolor>
+	        <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+            <label>$INFO[ListItem.AddonDescription]</label>
+            <pagecontrol>60</pagecontrol>
+			<autoscroll time="2000" delay="15000" repeat="5000">!Skin.HasSetting(NoPlotScroll)</autoscroll>
+          </control>
+          <control type="scrollbar" id="60">
+            <left>1400</left>
+            <top>270</top>
+            <width>10</width>
+            <height>150</height>
+            <texturesliderbackground>button/ScrollBarV.png</texturesliderbackground>
+			<texturesliderbar colordiffuse="$VAR[BackColorFront]">button/ScrollBarV_bar.png</texturesliderbar>
+			<texturesliderbarfocus colordiffuse="$VAR[BackColorButton]">button/ScrollBarV_bar_focus.png</texturesliderbarfocus>
+			<textureslidernib>button/ScrollBarNib.png</textureslidernib>
+			<textureslidernibfocus>button/ScrollBarNib.png</textureslidernibfocus>
+            <onleft>50</onleft>
+            <onright>61</onright>
+            <showonepage>false</showonepage>
+            <orientation>vertical</orientation>
+          </control>
+          <control type="label">
+            <description>Disclaimer txt</description>
+            <left>0</left>
+            <top>450</top>
+            <width>1370</width>
+            <height>38</height>
+            <label>$LOCALIZE[24052]</label>
+            <align>left</align>
+            <aligny>center</aligny>
+            <font>primal_15</font>
+            <textcolor>$VAR[ColorFontSelected]</textcolor>
+	        <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+          </control>
+          <control type="textbox">
+            <description>Disclaimer</description>
+            <left>0</left>
+            <top>490</top>
+            <width>1370</width>
+            <height>60</height>
+            <font>primal_15</font>
+            <align>left</align>
+            <textcolor>$VAR[ColorFontNormal]</textcolor>
+	        <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+            <label>$INFO[ListItem.AddonDisclaimer]</label>
+            <autoscroll time="2000" delay="15000" repeat="5000">!Skin.HasSetting(NoPlotScroll)</autoscroll>
+          </control>
+        </control>
+        <control type="group">
+          <visible>IsEmpty(ListItem.AddonDisclaimer)</visible>
+          <control type="label">
+            <description>Description Page Count</description>
+            <left>900</left>
+            <top>255</top>
+            <width>450</width>
+            <height>38</height>
+            <label>$INFO[Container(401).CurrentPage, $LOCALIZE[50215] (]$INFO[Container(401).NumPages,/,)]</label>
+            <align>right</align>
+            <aligny>center</aligny>
+            <font>primal_15</font>
+            <textcolor>$VAR[ColorFontNormal]</textcolor>
+	        <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+          </control>
+          <control type="textbox" id="401">
+            <description>Description</description>
+            <left>0</left>
+            <top>297</top>
+            <width>870</width>
+            <height>100</height>
+            <font>primal_15</font>
+            <align>left</align>
+            <textcolor>$VAR[ColorFontNormal]</textcolor>
+	        <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+            <label>$INFO[ListItem.AddonDescription]</label>
+            <pagecontrol>61</pagecontrol>
+			<autoscroll time="2000" delay="15000" repeat="5000">!Skin.HasSetting(NoPlotScroll)</autoscroll>
+          </control>
+          <control type="scrollbar" id="61">
+            <left>900</left>
+            <top>270</top>
+            <width>10</width>
+            <height>390</height>
+            <texturesliderbackground>button/ScrollBarV.png</texturesliderbackground>
+			<texturesliderbar colordiffuse="$VAR[BackColorFront]">button/ScrollBarV_bar.png</texturesliderbar>
+			<texturesliderbarfocus colordiffuse="$VAR[BackColorButton]">button/ScrollBarV_bar_focus.png</texturesliderbarfocus>
+			<textureslidernib>button/ScrollBarNib.png</textureslidernib>
+			<textureslidernibfocus>button/ScrollBarNib.png</textureslidernibfocus>
+            <onleft>60</onleft>
+            <onright>9000</onright>
+            <showonepage>false</showonepage>
+            <orientation>vertical</orientation>
+          </control>
+        </control>
+      </control>
+      <control type="grouplist" id="9000">
+        <left>65</left>
+        <top>420</top>
+		<width>340</width>
+		<onleft>60</onleft>
+		<onright>50</onright>
+		<onup>9000</onup>
+		<ondown>9000</ondown>
+		<itemgap>2</itemgap>  
+		<orientation>vertical</orientation>     
+        <control type="button" id="9">
+          <description>Addon Settings</description>
+          <width>330</width>
+          <height>80</height>
+          <textoffsetx>25</textoffsetx>
+		  <align>center</align>
+          <label>24020</label>
+        </control>
+        <control type="button" id="8">
+          <description>Update Addon button</description>
+          <width>330</width>
+          <height>80</height>
+          <textoffsetx>25</textoffsetx>
+		  <align>center</align>
+          <label>24069</label>
+        </control>
+		<control type="radiobutton" id="13">
+		  <description>Auto-update button</description>
+          <width>330</width>
+          <height>80</height>
+          <textoffsetx>25</textoffsetx>
+		  <align>center</align>
+		  <label>21340</label>
+	    </control>
+		<control type="button" id="12">
+          <description>Launch Addon button</description>
+          <width>330</width>
+          <height>80</height>
+          <textoffsetx>25</textoffsetx>
+		  <align>center</align>
+          <label>518</label>
+        </control>
+		<control type="button" id="6">
+          <description>Enable Addon button</description>
+          <width>330</width>
+          <height>80</height>
+          <textoffsetx>25</textoffsetx>
+		  <align>center</align>
+          <label>24022</label>
+        </control>
+        <control type="button" id="7">
+          <description>Disable Addon button</description>
+          <width>330</width>
+          <height>80</height>
+          <textoffsetx>25</textoffsetx>
+		  <align>center</align>
+          <label>24021</label>
+        </control>
+      </control>
+      <control type="group">
+        <visible>!IsEmpty(ListItem.AddonBroken)</visible>
+        <left>420</left>
+        <top>850</top>
+        <control type="textbox">
+          <description>Reason label</description>
+          <left>0</left>
+          <top>30</top>
+          <width>1200</width>
+          <height>75</height>
+          <font>primal_13</font>
+          <label>$INFO[ListItem.AddonBroken]</label>
+          <align>left</align>
+          <textcolor>$VAR[ColorFontSelected]</textcolor>
+	      <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+        </control>
+      </control>
+    </control>
+  </controls>
+</window>

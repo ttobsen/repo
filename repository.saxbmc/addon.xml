@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="repository.saxbmc" name="SaXBMC Addon Repo" version="1.0.1" provider-name="Birger Jesch">
+	<extension point="xbmc.addon.repository" name="SaXBMC Addon Repo">
+		<info compressed="true">https://raw.githubusercontent.com/b-jesch/SaXBMC/master/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/b-jesch/SaXBMC/master/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/b-jesch/SaXBMC/master/zip/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Some useful services and scripts for use within Kodi</summary>
+		<description lang="en">Get some useful services and scripts that makes life with kodi easier.</description>
+		<summary lang="de">Nützliche Dienste und Programme für Kodi</summary>
+		<description lang="de">Installiere nützliche Dienste oder Programme, die Dir das Leben mit Kodi einfacher machen.</description>
+		<disclaimer></disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>

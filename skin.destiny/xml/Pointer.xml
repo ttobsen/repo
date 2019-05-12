@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<window id="105">
+	<defaultcontrol>-</defaultcontrol>
+	<coordinates>
+		<left>0</left>
+		<top>0</top>
+	</coordinates>
+	<controls>
+		<control type="image" id="1">
+			<description>Pointer Image</description>
+			<left>0</left>
+			<top>0</top>
+			<width>80</width>
+			<height>80</height>
+			<texture>maus/pointer-nofocus.png</texture>
+			<colordiffuse>$VAR[ColorFontSelected]</colordiffuse>
+		</control>
+		<control type="image" id="2">
+			<description>Pointer Focus Image</description>
+			<left>0</left>
+			<top>0</top>
+			<width>80</width>
+			<height>80</height>
+			<texture>maus/pointer-focus.png</texture>
+			<colordiffuse>$VAR[BackColorButton]</colordiffuse>
+		</control>
+		<control type="image" id="3">
+			<description>Pointer Drag Image</description>
+			<left>0</left>
+			<top>0</top>
+			<width>80</width>
+			<height>80</height>
+			<texture>maus/pointer-focus-drag.png</texture>
+			<colordiffuse>$VAR[BackColorButton]</colordiffuse>
+		</control>
+		<control type="image" id="4">
+			<description>Pointer Click Image</description>
+			<left>0</left>
+			<top>0</top>
+			<width>80</width>
+			<height>80</height>
+			<texture>maus/pointer-focus-click.png</texture>
+			<colordiffuse>$VAR[BackColorButton]</colordiffuse>
+		</control>
+	</controls>
+</window>

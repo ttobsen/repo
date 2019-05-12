@@ -1,0 +1,12 @@
+Changelog:
+
+1.1.0
+- Homemenue Button koennen jetzt farblich veraendert werden
+- kleiner Fehler behoben
+- Neue Hintergrund im Home
+
+1.0.0
+- kleinere Änderungen am Design
+- neue Ansicht fuer Addons, Filme und Serien
+- gefundene Fehler behoben
+- Namensänderung
