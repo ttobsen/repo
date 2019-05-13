@@ -776,13 +776,13 @@ class EPG(xbmcgui.WindowXML):
         self._clearEpg()
 
         channels = self.db.getChannelList(self.favourites)
-        
-        #if channelStart < 0:
-            #channelStart = len(channels) - (int((float(len(channels))/8 - len(channels)/8)*8))
-        #elif channelStart > len(channels) -1: channelStart = 0
+        debug(channelStart)
         if channelStart < 0:
-            channelStart = 0
-        elif channelStart > len(channels) -1: channelStart = len(channels) - 2
+            channelStart = len(channels) - (int((float(len(channels))/8 - len(channels)/8)*8))
+        elif channelStart > len(channels) - 8: channelStart = 0
+        # if channelStart < 0:
+            # channelStart = 0
+        # elif channelStart > len(channels) -1: channelStart = len(channels) - 2
         self.channelIdx = channelStart
 
         

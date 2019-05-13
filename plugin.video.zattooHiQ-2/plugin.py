@@ -829,13 +829,15 @@ def skip_channel(skipDir):
   currentChannel = _zattooDB_.get_playing()['channel']
   nr=channelList[currentChannel]['nr']
   nr += skipDir
-
-  if nr<len(channelList) and nr>-1:
-    watch_channel(channelList['index'][nr], '0', '0')
-    return nr
-  else:
-    xbmc.executebuiltin('XBMC.Action(FullScreen)')
-    return channelList[currentChannel]['nr']
+  debug(nr)
+  debug(len(channelList))
+  if nr==len(channelList)-1:
+    nr=0    
+  elif nr<0:
+    nr=len(channelList)-2
+  debug(nr)
+  watch_channel(channelList['index'][nr], '0', '0')
+  return nr
 
 def  toggle_channel():
   _zattooDB_=ZattooDB()
