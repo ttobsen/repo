@@ -47,7 +47,11 @@ msgctxt "#30112"
 msgid "     [COLOR orangered]<<< >>> DELETE Cache = CLICK HERE <<< >>>[/COLOR]"
 msgstr ""
 
-#empty strings from id 30113 to 30229
+msgctxt "#30113"
+msgid "     Show Addon-Settings in the overview"
+msgstr ""
+
+#empty strings from id 30114 to 30229
 # SETTINGS-TITLES
 
 msgctxt "#30230"
@@ -58,7 +62,11 @@ msgctxt "#30231"
 msgid "[B][COLOR ff0099ff]CACHE[/COLOR][/B]"
 msgstr ""
 
-#empty strings from id 30232 to 30349
+msgctxt "#30232"
+msgid "[B][COLOR ff0099ff]SETTINGS[/COLOR][/B]"
+msgstr ""
+
+#empty strings from id 30233 to 30349
 # SETTINGS-DESCRIPTIONS
 
 msgctxt "#30350"
@@ -147,5 +155,9 @@ msgid "[B][COLOR orangered]•  •  •  •  •  •  •  •  •  [/COLOR]
 msgstr ""
 
 msgctxt "#30612"
-msgid "[B][COLOR orangered]* * *  [/COLOR]Overview Videos = {0:s}[COLOR orangered]  * * *[/COLOR][/B]"
+msgid "[B][COLOR orangered]* * *  [/COLOR]Selection: {0:s}[COLOR orangered]  * * *[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30613"
+msgid "[B][COLOR orangered]* * *  [/COLOR]Selection: {0:s} = {1:s}[COLOR orangered]  * * *[/COLOR][/B]"
 msgstr ""

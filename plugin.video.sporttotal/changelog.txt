@@ -2,7 +2,7 @@
 - Initial release
 ...
 
-[B]Version 0.40  (16.09.2018)[/B] by realvito
+[B]Version 0.40  (16.09.2018)[/B] by realvito[CR]
 - fixed: In der Rubrik "LIVE" werden nicht alle Spiele gelistet
 - fixed: Die Auswahlfunktion in der Rubrik "Highlights" ist fehlerhaft und es werden nicht alle Ergebnisse angezeigt
 - fixed: In der Rubrik "Topclips" werden nur Fehler produziert
@@ -10,10 +10,16 @@
 - added: Rubriken = Ligen mit Auswahlfunktion, Archiv mit Auswahlfunktion, Übersicht - Highlights, Übersicht - Aufzeichnungen
 - optimized: Icon aktualisiert und Fanart hinzugefügt
 
-[B]Version 0.5.0  (11.11.2018)[/B] by realvito
+[B]Version 0.5.0  (11.11.2018)[/B] by realvito[CR]
 - optimized: In der Rubrik = LIVE andere Sportarten hinzugefügt (Volleyball, Eishockey, Basketball ...)
 - added: Rubrik = Alle Sportarten mit Topclips und Wiederholungen aus versch. Sportbereichen (Volleyball, Eishockey, Basketball ...)
 
-[B]Version 1.0.1  (30.12.2018)[/B] by realvito
+[B]Version 1.0.1  (30.12.2018)[/B] by realvito[CR]
 - fixed: Addon an die Webseiten-Veränderungen von "https://www.sporttotal.tv/" angepasst und komplett umgeschrieben
 - added: Hauptrubriken = Live-Übertragungen, Sportarten, Ligen und AMATor
+
+[B]Version 1.0.2  (16.05.2019)[/B] by realvito[CR]
+- fixed: In der Rubrik = Live-Übertragungen werden die verfügbaren Sportarten als kryptischer Text ausgegeben
+- fixed: In der Rubrik = Sportarten werden NICHT alle verfügbaren Sportarten gelistet und Links NICHT richtig weitergereicht
+- fixed: In der Rubrik = Ligen werden die verfügbaren Sportarten als kryptischer Text ausgegeben und Links NICHT richtig weitergereicht
+- fixed: Videos werden NICHT abgespielt (Link verändert)

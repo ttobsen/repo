@@ -41,6 +41,7 @@ dataPath    = xbmc.translatePath(addon.getAddonInfo('profile')).encode('utf-8').
 defaultFanart = os.path.join(addonPath, 'fanart.jpg')
 icon = os.path.join(addonPath, 'icon.png')
 enableInputstream = addon.getSetting("inputstream") == "true"
+enableAdjustment = addon.getSetting("show_settings") == "true"
 if PY2:
 	cachePERIOD = int(addon.getSetting("cacheTime"))
 	cache = StorageServer.StorageServer(addon.getAddonInfo('id'), cachePERIOD) # (Your plugin name, Cache time in hours)
@@ -92,7 +93,7 @@ def getUrl(url, header=None, referer=None):
 		if header:
 			req.add_header = header
 		else:
-			req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:55.0) Gecko/20100101 Firefox/55.0')
+			req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0')
 			req.add_header('Accept-Encoding', 'gzip, deflate')
 		if referer:
 			req.add_header = ('Referer', referer)
@@ -145,12 +146,13 @@ def index():
 	addDir(translation(30602), baseURL, "Sportarts_Overview", icon, ffilter="Anderes")
 	addDir(translation(30603), baseURL+"/ligen", "Sportarts_Overview", icon, ffilter="Ligen")
 	addDir(translation(30604), baseURL+"/amator", "Clips_Categories", icon, category="AMATor")
-	addDir(translation(30605), "", "aSettings", icon)
-	if enableInputstream:
-		if ADDON_operate('inputstream.adaptive'):
-			addDir(translation(30606), "", "iSettings", icon)
-		else:
-			addon.setSetting("inputstream", "false")
+	if enableAdjustment:
+		addDir(translation(30605), "", "aSettings", icon)
+		if enableInputstream:
+			if ADDON_operate('inputstream.adaptive'):
+				addDir(translation(30606), "", "iSettings", icon)
+			else:
+				addon.setSetting("inputstream", "false")
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def Sportarts_Overview(url, ffilter=""):
@@ -160,14 +162,13 @@ def Sportarts_Overview(url, ffilter=""):
 	if ffilter == "Anderes":
 		result = content[content.find('<h1>SPORTARTEN</h1>')+1:]
 		result = result[:result.find('<h1>')]
-		selection = re.findall('<a href="(.+?)"><i class="fal.*?</i>(.+?)</a>', result, re.DOTALL)
 	else:
-		result = content[content.find('<nav class="sport-selector">')+1:]
+		result = content[content.find('<nav class="sport-selector"')+1:]
 		result = result[:result.find('</nav>')]
-		selection = re.findall('a href="(.+?)">(.+?)</a>', result, re.DOTALL)
+	selection = re.findall('a href="([^"]+?)".*?<i class="([^"]+?)".*?</a>', result, re.DOTALL)
 	for url2, title in selection:
 		if title != "":
-			name = cleanTitle(title)
+			name = title.replace('far fa-futbol', 'Fussball').replace('fal fa-volleyball-ball', 'Volleyball').replace('fal fa-field-hockey', 'Feldhockey').replace('fal fa-hockey-sticks', 'Eishockey').replace('far fa-football-ball', 'American Football').replace('fal fa-futbol', 'Futsal').replace('fal fa-basketball-ball', 'Basketball')
 			if ffilter == "Uebertragungen":
 				if url2[:4] != "http":
 					url2 = baseURL+"/live"+url2
@@ -327,7 +328,7 @@ def Livegames_Videos(url, category=""):
 def Clips_Categories(url, ffilter="", category=""):
 	debug("(Clips_Categories) -------------------------------------------------- START = Clips_Categories --------------------------------------------------")
 	debug("(Clips_Categories) ### URL = {0} ### FFILTER = {1} ### CATEGORY = {2} ###".format(url, ffilter, category))
-	Supported = ['highlights', 'top clips', 'wiederholungen', 'monats-gewinner', 'monats-kandidaten', 'jahres-gewinner']
+	Supported = ['top clips', 'highlights', 'wiederholungen', 'monats-gewinner', 'monats-kandidaten', 'jahres-gewinner']
 	CHOICE = category
 	FOUND = False
 	content = makeREQUEST(url)
@@ -349,8 +350,8 @@ def Clips_Categories(url, ffilter="", category=""):
 				photo = baseURL+"/assets/no_thumb_placeholder.jpg"
 			if title !="":
 				FOUND = True
-				name = "[B][COLOR orangered]* * *[/COLOR]  Auswahl: "+title+"  [COLOR orangered]* * *[/COLOR][/B]"
-				addLink(name, vidURL, "playVideo", photo)
+				name = title.replace("HIGHLIGHTS", "").replace("Highlights", "").replace("HIGHLIGHT", "").replace("Highlight", "").replace("HYUNDAI-", "").replace("Hyundai-", "").replace("HYUNDAI ", "").replace("Hyundai ", "")
+				addLink((translation(30612).format(name)), vidURL, "playVideo", photo)
 		except: pass
 	match = re.findall('<h1 class="grid-header max-width-padding">(.*?)</h1>', content, re.DOTALL)
 	for title in match:
@@ -401,6 +402,7 @@ def Clips_Videos(url, ffilter="", category=""):
 					title = re.compile('<h1>(.+?)</h1>', re.DOTALL).findall(video)[0]
 					if "Wiederholungen" in RUBRIK or "Weiderholungen" in RUBRIK:
 						title = title.replace(' - ', ' : ')
+					title = title.replace("HIGHLIGHTS", "").replace("Highlights", "").replace("HIGHLIGHT", "").replace("Highlight", "").replace("HYUNDAI-", "").replace("Hyundai-", "").replace("HYUNDAI ", "").replace("Hyundai ", "")
 					title = cleanTitle(title)
 					if title =="":
 						continue
@@ -471,6 +473,7 @@ def Leagues_Overview(url):
 def Leagues_Teams(url, category=""):
 	debug("(Leagues_Teams) -------------------------------------------------- START = Leagues_Teams --------------------------------------------------")
 	debug("(Leagues_Teams) ### URL = {0} ### CATEGORY = {1} ###".format(url, category))
+	Supported = ['top clips', 'highlights', 'wiederholungen']
 	CHOICE = category
 	FOUND = False
 	COMBINATION = []
@@ -511,22 +514,17 @@ def Leagues_Teams(url, category=""):
 				if pos1 > 1 and count == 0:
 					count += 1
 					xbmcgui.Dialog().notification((translation(30521).format('DISPLAY')), translation(30523), icon, 8000)
+	match = re.findall('<h1 class="grid-header max-width-padding">(.*?)</h1>', content, re.DOTALL)
+	for title in match:
+		name = title.replace('Weiderholungen', 'Wiederholungen')
+		if name !="" and any(x in name.lower() for x in Supported):
+			FOUND = True
+			addDir((translation(30613).format(name.upper(), CHOICE)), url, "Clips_Videos", icon, ffilter="umdrehen", category=title)
+			debug("(Leagues_Teams) TITLE = {0} #####".format(title))
 	if COMBINATION:
 		FOUND = True
-		match = re.findall('<h1 class="grid-header max-width-padding">(.*?)</h1>', content, re.DOTALL)
-		for title in match:
-			name = title.replace('Weiderholungen', 'Wiederholungen')
-			if name !="" and 'Wiederholungen' in name:
-				addDir((translation(30612).format(CHOICE)), url, "Clips_Videos", icon, ffilter="umdrehen", category=title)
 		for name, url2, photo in sorted(COMBINATION, key=lambda item:item[0], reverse=False):
 			addDir(name, url2, "Clips_Categories", photo, ffilter="umdrehen", category=name, background="KEIN HINTERGRUND")
-	else:
-		match = re.findall('<h1 class="grid-header max-width-padding">(.*?)</h1>', content, re.DOTALL)
-		for title in match:
-			name = title.replace('Weiderholungen', 'Wiederholungen')
-			if name !="" and 'Wiederholungen' in name:
-				FOUND = True
-				addDir((translation(30612).format(CHOICE)), url, "Clips_Videos", icon, ffilter="umdrehen", category=title)
 	if not FOUND:
 		return xbmcgui.Dialog().notification((translation(30522).format('Einträge')), (translation(30525).format(CHOICE)), icon, 8000)
 	xbmcplugin.endOfDirectory(pluginhandle)
@@ -538,14 +536,14 @@ def playVideo(url):
 	testURL = False
 	content = getUrl(url)
 	try:
-		stream = re.compile('file: "(https?://[^"]+?)"', re.DOTALL|re.UNICODE).findall(content)[0].replace('\n', '')
+		stream = re.compile('playerSource = decodeHtml.+?(https?://[^"]+?)"', re.DOTALL|re.UNICODE).findall(content)[0].replace('\n', '')
 		fileURL = True
 	except: 
 		failing("(playVideo) ##### Abspielen des Streams NICHT möglich ##### URL : {0} #####\n   ########## KEINEN Stream-Eintrag auf der Webseite von *sporttotal.tv* gefunden !!! ##########".format(url))
 		xbmcgui.Dialog().notification((translation(30521).format('URL 1')), translation(30526), icon, 8000)
 		return
-	standardSTREAM = re.compile(r'(?:/[^/]+?\.mp4|/[^/]+?\.m3u8)', re.DOTALL).findall(stream)[0]
-	correctSTREAM = quote(standardSTREAM)
+	standardSTREAM = re.compile(r'(?:/[^/]+?\.mp4|/[^/]+?\.m3u8|/[^/]+?\.ism/manifest)', re.DOTALL).findall(stream)[0]
+	correctSTREAM = quote(cleanTitle(standardSTREAM))
 	debug("(playVideo) no.2 ### standardSTREAM = {0} ### correctSTREAM = {1} ###".format(standardSTREAM, correctSTREAM))
 	finalURL = stream.replace(standardSTREAM, correctSTREAM)
 	try:
@@ -580,7 +578,6 @@ def cleanTitle(title):
 	title = title.replace('&#352;', 'Š').replace('&#353;', 'š').replace('&#376;', 'Ÿ').replace('&#402;', 'ƒ')
 	title = title.replace('&#8211;', '–').replace('&#8212;', '—').replace('&#8226;', '•').replace('&#8230;', '…').replace('&#8240;', '‰').replace('&#8364;', '€').replace('&#8482;', '™').replace('&#169;', '©').replace('&#174;', '®')
 	title = title.replace("&Auml;", "Ä").replace("&Uuml;", "Ü").replace("&Ouml;", "Ö").replace("&auml;", "ä").replace("&uuml;", "ü").replace("&ouml;", "ö").replace('&quot;', '"').replace('&szlig;', 'ß').replace('&ndash;', '-')
-	title = title.replace("HIGHLIGHTS", "").replace("Highlights", "").replace("HIGHLIGHT", "").replace("Highlight", "").replace("HYUNDAI-", "").replace("Hyundai-", "").replace("HYUNDAI ", "").replace("Hyundai ", "")
 	title = title.strip()
 	return title
 
