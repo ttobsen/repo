@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.rtlnow" name="TV Now" version="0.6.8" provider-name="L0RE">
+<addon id="plugin.video.rtlnow" name="TV Now" version="0.6.10" provider-name="L0RE">
  <requires>
         <import addon="xbmc.python" version="2.1.0"/>   
         <import addon="script.common.plugin.cache" version="2.5.5"/> # Add this    
-          <import addon="inputstream.adaptive" version="1.0.8"/>
-         <import addon="script.module.inputstreamhelper" version="0.2.2"/>
+          <import addon="inputstream.adaptive" version="2.2.21"/>
+         <import addon="script.module.inputstreamhelper" version="0.3.4"/>
 
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
@@ -18,7 +18,10 @@
     <website>https://www.tvnow.de/</website>
     <email>andreas at vogler dot name</email>
     <platform>all</platform>
-    <news>0.4.24
+    <news>0.6.10
+- Update from https://widevine.rtl.de to https://widevine.tvnow.de    
+- Added is Widevine installed check 
+0.4.24
 - Update Logo
 0.4.23
 -Update von frong73 um anbindung in PVR zu ermöglichen</news>

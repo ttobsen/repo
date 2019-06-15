@@ -56,6 +56,12 @@ if not is_addon and not inputstreamcomp=="true":
         dialog.notification("Inpuitstream Fehler", 'Inputstream nicht eingeschaltet', xbmcgui.NOTIFICATION_ERROR)
         exit    
 
+is_helper = Helper('mpd', drm='widevine')
+if not is_helper.check_inputstream():
+  debug('is_helper.check_inputstream() No Widevine installed')
+  dialog = xbmcgui.Dialog()
+  dialog.notification("Widevine nicht gefunden", 'Ohne Widevine können keine\nDRM geschützten Inhalte\nwiedergegeben werden', xbmcgui.NOTIFICATION_ERROR)
+
 profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
 if not xbmcvfs.exists(temp):  
@@ -308,7 +314,7 @@ def playdash(xstream,xlink,xdrm):
                 xbmcgui.Dialog().ok("TV-NOW Login Fehler", "[COLOR orangered]ACHTUNG : ... Für diese Sendung ist ein Login mit *Benutzername* und *Passwort* erforderlich !!![/COLOR]", "Es ist mindestens „WATCHBOX-Free-Account“ Vorraussetzung !!!", "Bitte einen Account unter: „https://www.watchbox.de/registrieren“ oder: „https://www.tvnow.de/?registration“ erstellen !!!")
             else:
                 pos += 1
-                licstring = "https://widevine.rtl.de/index/proxy|x-auth-token="+token+"&"+headerfelder+"&Content-Type=|R{SSM}|"
+                licstring = "https://widevine.tvnow.de/index/proxy|x-auth-token="+token+"&"+headerfelder+"&Content-Type=|R{SSM}|"
                 listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
                 listitem.setProperty('inputstream.adaptive.license_key', licstring)
                 listitem.setProperty("inputstream.adaptive.manifest_update_parameter", "full")
@@ -675,7 +681,7 @@ def playfolge(url,nummer):
                     dialog = xbmcgui.Dialog()
                     dialog.notification("Login Notwendig", 'Es ist min. Ein Freier Watchbox account Notwendig', xbmcgui.NOTIFICATION_ERROR)
               else:               
-                licstring='https://widevine.rtl.de/index/proxy|x-auth-token='+token+"&"+headerfelder+"&Content-Type=|R{SSM}|"
+                licstring='https://widevine.tvnow.de/index/proxy|x-auth-token='+token+"&"+headerfelder+"&Content-Type=|R{SSM}|"
                 debug(licstring)
                 listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')                
                 listitem.setProperty('inputstream.adaptive.license_key', licstring)                
@@ -733,7 +739,7 @@ def hashplay(idd):
                     dialog = xbmcgui.Dialog()
                     dialog.notification("Login Notwendig", 'Es ist min. Ein Freier Watchbox account Notwendig', xbmcgui.NOTIFICATION_ERROR)
               else:               
-                licstring='https://widevine.rtl.de/index/proxy|x-auth-token='+token+"&"+headerfelder+"&Content-Type=|R{SSM}|"
+                licstring='https://widevine.tvnow.de/index/proxy|x-auth-token='+token+"&"+headerfelder+"&Content-Type=|R{SSM}|"
                 debug(licstring)
                 listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')                
                 listitem.setProperty('inputstream.adaptive.license_key', licstring)                
@@ -919,7 +925,7 @@ def playchannel_dash(url,name,image):
     listitem.setInfo(type="Video", infoLabels={"Title": name })                 
     listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
     listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')                        
-    licstring='https://widevine.rtl.de/index/proxy|x-auth-token='+token+"&"+headerfelder+"&Content-Type=|R{SSM}|"
+    licstring='https://widevine.tvnow.de/index/proxy|x-auth-token='+token+"&"+headerfelder+"&Content-Type=|R{SSM}|"
     listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')                
     listitem.setProperty('inputstream.adaptive.license_key', licstring)
     listitem.setProperty('inputstream.adaptive.manifest_update_parameter',  "full")
@@ -976,7 +982,7 @@ def livetv():
        listitem.setInfo(type="Video", infoLabels={"Title": name })                 
        listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
        listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')                        
-       licstring='https://widevine.rtl.de/index/proxy|x-auth-token='+token+"&"+headerfelder+"&Content-Type=|R{SSM}|"
+       licstring='https://widevine.tvnow.de/index/proxy|x-auth-token='+token+"&"+headerfelder+"&Content-Type=|R{SSM}|"
        listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')                
        listitem.setProperty('inputstream.adaptive.license_key', licstring)                
        debug("LICENSE: " + licstring)                              
