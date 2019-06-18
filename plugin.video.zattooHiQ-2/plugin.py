@@ -173,6 +173,7 @@ else: SWISS = False
 
 stream_type = __addon__.getSetting('stream_type')
 RECREADY = __addon__.getSetting('rec_ready')
+RECNOW = __addon__.getSetting('rec_now')
 VERSION = __addon__.getAddonInfo('version')
 
 KEYMAP = __addon__.getSetting('keymap')
@@ -512,8 +513,12 @@ def build_recordingsList(__addonuri__, __addonhandle__):
   
     if (now>start): color='gold'
     if (now>end): color='lime'
+    
     if RECREADY == "true":
-      if color != "lime": continue
+        if RECNOW == "false":
+          if color == "gold": continue
+        if color == "crimson": continue
+        
     if __addon__.getSetting('rec_name') == '0':
         label=datetime.datetime.fromtimestamp(st).strftime('%Y.%m.%d. %H:%M')+' ' 
     elif __addon__.getSetting('rec_name') == '1':
@@ -647,8 +652,17 @@ def watch_recording(__addonuri__, __addonhandle__, recording_id, start=0):
 def setup_recording(program_id):
   #print('RECORDING: '+program_id)
   params = {'program_id': program_id}
+  # test ob Aufnahme existiert
+  playlist = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist', None)
+  for record in playlist['recordings']:
+      if int(params['program_id']) == int(record['program_id']):
+          xbmcgui.Dialog().ok(__addonname__, __addon__.getLocalizedString(31906))
+          return
+       
   resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist/program', params)
-  #debug('Recording:'+str(params)+'  '+str(resultData))
+  
+  debug('Recording: '+str(params)+'  '+str(resultData))
+
   if resultData is not None:
     xbmcgui.Dialog().ok(__addonname__, __addon__.getLocalizedString(31903), __addon__.getLocalizedString(31904))
   else:

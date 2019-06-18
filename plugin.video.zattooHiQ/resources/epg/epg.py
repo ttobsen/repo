@@ -121,8 +121,15 @@ def debug(s):
 
 
 def setup_recording(params):
-    
+    # test ob Aufnahme existiert
+    playlist = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist', None)
+    for record in playlist['recordings']:
+        if int(params['program_id']) == int(record['program_id']):
+            xbmcgui.Dialog().ok(__addonname__, __addon__.getLocalizedString(31906))
+            return
+            
     resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist/program', params)
+    #debug('Recording: '+str(params)+'  '+str(resultData))
     if resultData is None:
         xbmcgui.Dialog().ok(__addonname__, __addon__.getLocalizedString(31905))
     else:

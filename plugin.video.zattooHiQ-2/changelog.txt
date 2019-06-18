@@ -1,4 +1,10 @@
 ===================================================
+[B]ZattooHiQ v1.7.0.6 [/B]18.06.2019 Steffen Rolapp
+===================================================
+- prüfen ob Aufnahme existiert
+- Anzeige der Aufnahmen überarbeitet
+
+===================================================
 [B]ZattooHiQ v1.7.0 [/B]14.04.2019 Steffen Rolapp
 ===================================================
 - Streamtype um dash_widewine erweitert

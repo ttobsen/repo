@@ -42,6 +42,7 @@
         <setting label="310171" id="livetv" type="bool" default="false"/>
         <setting type="sep"/>
         <setting label="31016" type="bool" id="rec_ready" default="false"/>
+        <setting label="310161" type="bool" id="rec_now" default="false" enable="eq(-1,true)" />
         <setting label="31013" type="folder" id="library_dir" source="video" option="writeable"/>
         <setting label="31014" type="action" id="reset_dir" enable="!eq(-1,)" action="RunPlugin(plugin://plugin.video.zattooHiQ/?mode=resetdir)"/>
         <setting label="31015" type="action" option="hidden" enable="!eq(-2,)" action="RunPlugin(plugin://plugin.video.zattooHiQ/?mode=makelibrary)"/>

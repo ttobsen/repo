@@ -470,6 +470,10 @@ msgctxt "#31016"
 msgid "Only finished recordings"
 msgstr "nur fertige Aufnahmen anzeigen"
 
+msgctxt "#310161"
+msgid "show ongoing recording"
+msgstr "laufende Aufnahme anzeigen"
+
 msgctxt "#31017"
 msgid "Date format in the recording list"
 msgstr "Datumsformat in der Aufnahmelliste"
@@ -657,6 +661,10 @@ msgstr "Die Sendung sollte nun in den Aufnahmen sein!"
 msgctxt "#31905"
 msgid "There was an error in the transfer!"
 msgstr "Es hat einen Fehler in der Übertragung gegeben !"
+
+msgctxt "#31906"
+msgid "The recording already exists!"
+msgstr "Die Aufnahme existiert schon!"
 
 msgctxt "#31907"
 msgid "Set the channel as the start channel"
