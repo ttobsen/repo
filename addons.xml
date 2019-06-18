@@ -368,7 +368,7 @@
 </addon>
 
 
-<addon id="plugin.video.zattooHiQ-2" version="1.7.0.5" name="Zattoo HiQ-2" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ-2" version="1.7.0.6" name="Zattoo HiQ-2" provider-name="Steffen Rolapp">
 
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
@@ -2632,7 +2632,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
   </extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ" version="1.7.0.5" name="Zattoo HiQ" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ" version="1.7.0.6" name="Zattoo HiQ" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
