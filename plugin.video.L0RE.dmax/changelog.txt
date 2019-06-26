@@ -18,3 +18,6 @@
 [B]Version 1.0.2  (21.01.2019)[/B] by realvito[CR]
 - fixed: Fehler bei Auflistung der Serien, wenn KEIN Plot vorhanden ist
 - fixed: Rubrik "Highlights" - Fehler beim Öffnen vereinzelter Sendungen, da KEINE ID vorhanden ist (Sendungen ohne ID werden herausgefiltert)
+
+[B]Version 1.0.3  (26.06.2019)[/B] by mobsean[CR]
+- fixed: Some Series got Special Episodes, they are now listed in the normal Episodelist (Issue #102 on Github)

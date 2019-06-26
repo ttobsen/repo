@@ -252,7 +252,7 @@ def listepisodes(idd, originalSERIE):
 						date = newDate[2]+'.'+newDate[1]+'.'+newDate[0]
 					except: date=""
 					COMBINATION.append([title1, title2, idd2, image, plot, duration, season, episode, genstr, date])
-	elif not "episode" in DATA["videos"] and "standalone" in DATA["videos"]:
+	if "standalone" in DATA["videos"]:
 		subelement = DATA["videos"]["standalone"]
 		for item in subelement:
 			if "isPlayable" in item and item["isPlayable"] == True:
@@ -279,7 +279,8 @@ def listepisodes(idd, originalSERIE):
 					date = newDate[2]+'.'+newDate[1]+'.'+newDate[0]
 				except: date=""
 				COMBINATION.append([title1, title2, idd2, image, plot, duration, season, episode, genstr, date])
-	else:
+	debug("COMBINATION LENGTH:  " + str(len(COMBINATION)))
+	if len(COMBINATION)==0:
 		debug("(listepisodes) ##### Keine COMBINATION-List - Kein Eintrag gefunden #####")
 		return xbmcgui.Dialog().notification(translation(30521), (translation(30522).format(originalSERIE)), icon, 8000)
 	if showNewTop:
