@@ -21,3 +21,9 @@
 
 [B]Version 1.0.3  (26.06.2019)[/B] by mobsean[CR]
 - fixed: Some Series got Special Episodes, they are now listed in the normal Episodelist (Issue #102 on Github)
+
+[B]Version 1.0.4  (29.06.2019)[/B] by realvito[CR]
+- fixed: Rubrik = Alle Sendungen und Sendungen sortiert nach Beliebtheit - Fehler beim öffnen der Ordner (verirrte Sendungen die es gar nicht gibt)
+- fixed: Mehrfache Favoriteneinträge möglich, obwohl schon gespeichert
+- fixed: Laufzeitanzeige in der Bibliothek für Episoden die länger als 60 Minuten sind
+- optimized: Kleine Nachbesserrung für den Fix von User @mobsean für die Bibliothekfunktion: Sobald reguläre Episoden einer Serie vorhanden waren wurden die Specials nicht mehr angezeigt

@@ -3,7 +3,7 @@
 	<category label="30000">
 		<setting label="30230" type="lsep"/>
 		<setting label="30110" type="bool" id="inputstream" default="false"/>
-		<setting label="30350" type="text" option="readable"/>
+		<setting label="30350" type="text" option="readable" visible="eq(-1,true)"/>
 		<setting type="sep"/>
 		<setting label="30231" type="lsep"/>
 		<setting label="30111" type="bool" id="new_EP_top" default="true"/>
