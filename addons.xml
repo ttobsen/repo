@@ -501,21 +501,21 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.tele5_de" name="Tele5 Mediathek" version="1.3.7" provider-name="L0RE">
+<addon id="plugin.video.tele5_de" name="Tele5 Mediathek" version="1.5.0" provider-name="w4ki and a little bit of realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
+		<import addon="script.module.beautifulsoup4"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary lang="de">Tele5 - Mediathek</summary>
-		<summary lang="en">Tele5 - Mediathek</summary>
-		<description lang="de">Das offizielle Tele 5 Unterhaltungsprogramm entdecken! Freuen Sie sich auf vollständige Episoden von Original-Serien, Filmen oder exklusiven Videos.[CR]Hollywood-Klassiker wie Ben Hur oder Spartacus, Hollywood-Stars wie Kirk Douglas oder Clint Eastwood, die ganz Hollywood geprägt haben, gibt es regelmäßig in der Tele5 Mediathek.</description>
-		<description lang="en">Discover the official Tele 5 entertainment program! Enjoy full episodes of original series, movies or exclusive videos.[CR]Hollywood classics like Ben Hur or Spartacus, Hollywood stars like Kirk Douglas or Clint Eastwood, all of which have shaped Hollywood, are featured regularly in the Tele5 media library.</description>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<summary lang="de_DE">Tele5 - Mediathek</summary>
+		<summary lang="en_GB">Tele5 - Mediathek</summary>
+		<description lang="de_DE">Das einzigartige Unterhaltungsprogramm aus dem TELE 5 Universum! Freuen Sie sich auf vollständige Episoden von Original-Serien, Filme oder exklusive Videos.[CR]Hollywood-Klassiker wie Ben Hur oder Spartacus, Hollywood-Stars wie Kirk Douglas oder Clint Eastwood, die ganz Hollywood geprägt haben, gibt es regelmäßig in der TELE 5 Mediathek.</description>
+		<description lang="en_GB">The unique entertainment program from the TELE 5 universe! Enjoy full episodes of original series, movies or exclusive videos.[CR]Hollywood classics like Ben Hur or Spartacus, Hollywood stars like Kirk Douglas or Clint Eastwood, all of which have shaped Hollywood, are featured regularly in the TELE 5 media library.</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
 		<language></language>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
@@ -527,12 +527,8 @@
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.3.7  (official-21.01.2019)[/COLOR][/B] by realvito[CR]
-- fixed: Manchmal sind Spielfilme auf der Webseite falsch verlinkt (dreifache Abfrage, um auf die richtige Filmübersicht zu gelangen)
-- fixed: Ab und zu werden gewählte Ordner leer angezeigt, trotz vorhandenem Inhalt (auslesen optimiert)
-- optimized: "Staffel" in der Titelanzeige-Episoden entfernt, dafür Ordner "Staffel "+Staffelnummer hinzugefügt (sofern Staffelnummerierung vorhanden)
-- added: Mehr Rubriken in der Startübersicht (u.a. Filmtastic, SchleFaZ, Specials...)
-- added: Unerwünschte Rubriken in der Startübersicht lassen sich per Blacklist ausblenden (settings)
+		<news>[B][COLOR orangered]Version 1.5.0  (official-29.06.2019)[/COLOR][/B] by w4ki[CR]
+- Derselbe Inhalt wie in der Version 'w4ki-1.4.2' - jetzt als offizielle Finalversion
 		</news>
 	</extension>
 </addon>
@@ -651,37 +647,37 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.L0RE.arte" name="ARTE.TV" version="0.5.5" provider-name="L0RE">
+<addon id="plugin.video.L0RE.arte" name="ARTE.TV" version="0.5.6" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Videoportal of ARTE (DE/FR)</summary>
-		<summary lang="de">Videoportal von ARTE (DE/FR)</summary>
-		<description lang="en">Media library and Livestream - focus is Culture, Europe and the transmission of information from preferably unusual Perspectives.[CR]The programs of the European cultural channel online on "arte.tv".</description>
-		<description lang="de">Mediathek und Livestream - Schwerpunkte sind Kultur, Europa und die Vermittlung von Informationen aus vorzugsweise ungewöhnlichen Perspektiven.[CR]Die Programme des europäischen Kultursenders online auf "arte.tv"</description>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<summary lang="de_DE">Videoportal von ARTE (DE/FR)</summary>
+		<summary lang="en_GB">Videoportal of ARTE (DE/FR)</summary>
+		<description lang="de_DE">Mediathek und Livestream - Schwerpunkte sind Kultur, Europa und die Vermittlung von Informationen aus vorzugsweise ungewöhnlichen Perspektiven.[CR]Die Programme des europäischen Kultursenders online auf "arte.tv"</description>
+		<description lang="en_GB">Media library and Livestream - focus is Culture, Europe and the transmission of information from preferably unusual Perspectives.[CR]The programs of the European cultural channel online on "arte.tv".</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
 		<language></language>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
 		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
 		<website>https://www.arte.tv/</website>
-		<email>andreas at vogler dot name</email>
+		<email></email>
 		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.L0RE.arte</source>
 		<assets>
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 0.5.5  (05.05.2019)[/COLOR][/B] by realvito[CR]
-- fixed: Unterordner der Rubrik = Themen (in einigen Ordnern werden keine Videos gelistet)
-- fixed: Rubrik = Programm sortiert nach Datum (keine Anzeige)
-- fixed: Rubrik = Videos sortiert nach Laufzeit (falsche Sortierung)
-- fixed: Einige Videos werden NICHT abgespielt
+		<news>[B][COLOR orangered]Version 0.5.6  (29.06.2019)[/COLOR][/B] by realvito[CR]
+- fixed: Rubrik = Themen -> ARTE Concert kein Inhalt
+- fixed: Rubrik = alle Sendungen A-Z -> Anzeige der neuen Unterkategorien
+- fixed: Nächste Seite zum weiterblättern wird nicht mehr angezeigt
+- fixed: Urls für Live+Eventsender funktionieren nicht
+- added: Rubrik = Besondere Highlights - täglich wechselnde Inhalte
 		</news>
 	</extension>
 </addon>
@@ -4339,7 +4335,7 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 </extension>
 </addon>
 
-<addon id="plugin.video.L0RE.dmax" name="DMAX Mediathek" version="1.0.3" provider-name="L0RE">
+<addon id="plugin.video.L0RE.dmax" name="DMAX Mediathek" version="1.0.4" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="service.L0RE.cron" version="1.0.1" optional="true"/>
@@ -4348,12 +4344,12 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 		<provides>video</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary lang="en">DMAX Mediathek</summary>
-		<summary lang="de">DMAX Mediathek</summary>
-		<description lang="en">DMAX - the TV station. That's how it works here ! When and where you want: action, adventure, lifestyle. Real entertainment for real guys. Only on dmax.de of course !</description>
-		<description lang="de">DMAX - der TV Sender. So läuft das hier ! Wann und wo du willst: Action, Abenteuer, Lifestyle. Echte Unterhaltung für echte Kerle. Nur auf dmax.de natürlich !</description>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<summary lang="de_DE">DMAX Mediathek</summary>
+		<summary lang="en_GB">DMAX Mediathek</summary>
+		<description lang="de_DE">DMAX - der TV Sender. So läuft das hier ! Wann und wo du willst: Action, Abenteuer, Lifestyle. Echte Unterhaltung für echte Kerle. Nur auf dmax.de natürlich !</description>
+		<description lang="en_GB">DMAX - the TV station. That's how it works here ! When and where you want: action, adventure, lifestyle. Real entertainment for real guys. Only on dmax.de of course !</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
 		<language></language>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE. Version 3, June 1991</license>
@@ -4365,8 +4361,11 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.0.3  (26.06.2019)[/COLOR][/B] by mobsean[CR]
-- fixed: Some Series got Special Episodes, they are now listed in the normal Episodelist (Issue #102 on Github)
+		<news>[B][COLOR orangered]Version 1.0.4  (29.06.2019)[/COLOR][/B] by realvito[CR]
+- fixed: Rubrik = Alle Sendungen und Sendungen sortiert nach Beliebtheit - Fehler beim öffnen der Ordner (verirrte Sendungen die es gar nicht gibt)
+- fixed: Mehrfache Favoriteneinträge möglich, obwohl schon gespeichert
+- fixed: Laufzeitanzeige in der Bibliothek für Episoden die länger als 60 Minuten sind
+- optimized: Kleine Nachbesserrung für den Fix von User @mobsean für die Bibliothekfunktion: Sobald reguläre Episoden einer Serie vorhanden waren wurden die Specials nicht mehr angezeigt
 		</news>
 	</extension>
 </addon>
@@ -4549,22 +4548,20 @@ oder online unter https://goo.gl/GtK41L nachlesen.
     </extension>
 </addon>
 
-<addon id="plugin.video.sporttotal" name="Sport-Total TV" version="1.0.2" provider-name="L0RE">
+<addon id="plugin.video.sporttotal" name="Sport-Total TV" version="1.0.3" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
-		<import addon="script.common.plugin.cache" version="2.5.5" optional="true"/> # Add this
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Regionalsport on Sporttotal.tv</summary>
-		<summary lang="de">Regionalsport auf Sporttotal.tv</summary>
-		<description lang="en">Sporttotal.tv shows Germany's amateur sport in full length and width. The league game of the home club? The funny and best scenes from Germany's amateur leagues?[CR]Selected and compiled by Sporttotal.tv (https://www.sporttotal.tv).</description>
-		<description lang="de">Sporttotal.tv zeigt Deutschlands Amateursport in voller Länge und Breite. Das Oberligaspiel vom Heimatverein? Die lustigen und besten Szenen aus Deutschlands Amateurligen?[CR]Ausgewählt und zusammengestellt von Sporttotal.tv (https://www.sporttotal.tv).</description>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<summary lang="de_DE">Regionalsport auf Sporttotal.tv</summary>
+		<summary lang="en_GB">Regionalsport on Sporttotal.tv</summary>
+		<description lang="de_DE">Sporttotal.tv zeigt Deutschlands Amateursport in voller Länge und Breite. Das Oberligaspiel vom Heimatverein? Die lustigen und besten Szenen aus Deutschlands Amateurligen?[CR]Ausgewählt und zusammengestellt von Sporttotal.tv (https://www.sporttotal.tv).</description>
+		<description lang="en_GB">Sporttotal.tv shows Germany's amateur sport in full length and width. The league game of the home club? The funny and best scenes from Germany's amateur leagues?[CR]Selected and compiled by Sporttotal.tv (https://www.sporttotal.tv).</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
 		<language></language>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
@@ -4576,11 +4573,9 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.0.2  (16.05.2019)[/COLOR][/B] by realvito[CR]
-- fixed: In der Rubrik = Live-Übertragungen werden die verfügbaren Sportarten als kryptischer Text ausgegeben
-- fixed: In der Rubrik = Sportarten werden NICHT alle verfügbaren Sportarten gelistet und Links NICHT richtig weitergereicht
-- fixed: In der Rubrik = Ligen werden die verfügbaren Sportarten als kryptischer Text ausgegeben und Links NICHT richtig weitergereicht
-- fixed: Videos werden NICHT abgespielt (Link verändert)
+		<news>[B][COLOR orangered]Version 1.0.3  (29.06.2019)[/COLOR][/B] by realvito[CR]
+- fixed: Komplette Neuauflage des Addons nach Veränderung der Webseite
+- optimized: Eine Cache-Speicherung des Inhalts wird nicht mehr benötigt (entfernt)
 		</news>
 	</extension>
 </addon>
