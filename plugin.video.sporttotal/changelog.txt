@@ -23,3 +23,7 @@
 - fixed: In der Rubrik = Sportarten werden NICHT alle verfügbaren Sportarten gelistet und Links NICHT richtig weitergereicht
 - fixed: In der Rubrik = Ligen werden die verfügbaren Sportarten als kryptischer Text ausgegeben und Links NICHT richtig weitergereicht
 - fixed: Videos werden NICHT abgespielt (Link verändert)
+
+[B]Version 1.0.3  (29.06.2019)[/B] by realvito[CR]
+- fixed: Komplette Neuauflage des Addons nach Veränderung der Webseite
+- optimized: Eine Cache-Speicherung des Inhalts wird nicht mehr benötigt (entfernt)
