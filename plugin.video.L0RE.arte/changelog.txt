@@ -10,10 +10,17 @@
 - fixed: Sämtliche Rubriken (letzter Ordner) können NICHT geöffnet werden [Webseite verändert]
 - added: Die Laufzeit der einzelnen Videos wird jetzt angezeigt
 - added: Bei angezeigten Videos - Sortiermethode "Dauer" hinzugefügt
-- optimized: Bei angezeigten Videos - Titelbild = es wird jetzt immer höchste verfügbare Auflösung angezeigt
+- optimized: Bei angezeigten Videos - Titelbild = es wird jetzt immer die höchste verfügbare Auflösung angezeigt
 
 [B]Version 0.5.5  (05.05.2019)[/B] by realvito[CR]
 - fixed: Unterordner der Rubrik = Themen (in einigen Ordnern werden keine Videos gelistet)
 - fixed: Rubrik = Programm sortiert nach Datum (keine Anzeige)
 - fixed: Rubrik = Videos sortiert nach Laufzeit (falsche Sortierung)
 - fixed: Einige Videos werden NICHT abgespielt
+
+[B]Version 0.5.6  (29.06.2019)[/B] by realvito[CR]
+- fixed: Rubrik = Themen -> ARTE Concert kein Inhalt
+- fixed: Rubrik = alle Sendungen A-Z -> Anzeige der neuen Unterkategorien
+- fixed: Nächste Seite zum weiterblättern wird nicht mehr angezeigt
+- fixed: Urls für Live+Eventsender funktionieren nicht
+- added: Rubrik = Besondere Highlights - täglich wechselnde Inhalte
