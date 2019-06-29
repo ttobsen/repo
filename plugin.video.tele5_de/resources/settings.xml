@@ -3,26 +3,27 @@
 	<category label="30000">
 		<setting label="30230" type="lsep"/>
 		<setting label="30110" type="bool" id="inputstream" default="false"/>
-		<setting label="30350" type="text" id="dummy1" option="readable"/>
+		<setting label="30350" type="text" option="readable" visible="eq(-1,true)"/>
 		<setting type="sep"/>
 		<setting label="30231" type="lsep"/>
-		<setting label="30111" type="bool" id="enableTitleOrder" default="false"/>
+		<setting label="30111" type="enum" id="showOnlineUntil" lvalues="30112|30113|30114"/>
+		<setting label="30115" type="slider" id="maxRestWarn" range="0,6,96" enable="!eq(-1,1)" default="24" option="int" subsetting="true"/>
 		<setting type="sep"/>
 		<setting label="30232" type="lsep"/>
-		<setting label="30112" type="bool" id="useThumbAsFanart" default="true"/>
+		<setting label="30116" type="bool" id="fsk18" default="true"/>
 		<setting type="sep"/>
-	</category>
-	<category label="30001">
 		<setting label="30233" type="lsep"/>
-		<setting label="30113" type="text" id="blacklist" default=""/>
-		<setting label="30351" type="text" id="dummy2" option="readable"/>
-		<setting label="30352" type="text" id="dummy3" option="readable"/>
+		<setting label="30117" type="bool" id="enableTitleOrder" default="false"/>
+		<setting label="30118" type="bool" id="subdirSchlefaz" default="false"/>
 		<setting type="sep"/>
 		<setting label="30234" type="lsep"/>
-		<setting label="30114" type="bool" id="show_settings" default="true"/>
-		<setting type="sep"/>
+		<setting label="30119" type="bool" id="useThumbAsFanart" default="true"/>
+	</category>
+	<category label="30001">
 		<setting label="30235" type="lsep"/>
-		<setting label="30115" type="bool" id="enableDebug" default="false"/>
+		<setting label="30120" type="bool" id="show_settings" default="true"/>
 		<setting type="sep"/>
+		<setting label="30236" type="lsep"/>
+		<setting label="30121" type="bool" id="enableDebug" default="false"/>
 	</category>
 </settings>

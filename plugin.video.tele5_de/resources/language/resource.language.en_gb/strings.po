@@ -1,20 +1,19 @@
 ﻿# Kodi Media Center language file
 # Addon Name: Tele5 Mediathek
 # Addon id: plugin.video.tele5_de
-# Addon version: 1.3.0
-# Addon Provider: L0RE
+# Addon Provider: w4ki and a little bit of realvito
 msgid ""
 msgstr ""
 "Project-Id-Version: KODI-Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
-"POT-Creation-Date: 2018-07-09 11:30+0000\n"
+"Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
+"POT-Creation-Date: 2019-06-26 14:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Last-Translator: realvito\n"
 "Language-Team: LANGUAGE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
+"Language: en_GB\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "Addon Summary"
@@ -22,10 +21,10 @@ msgid "Tele5 - Mediathek"
 msgstr ""
 
 msgctxt "Addon Description"
-msgid "Discover the official Tele 5 entertainment program! Enjoy full episodes of original series, movies or exclusive videos.[CR]Hollywood classics like Ben Hur or Spartacus, Hollywood stars like Kirk Douglas or Clint Eastwood, all of which have shaped Hollywood, are featured regularly in the Tele5 media library."
+msgid "The unique entertainment program from the TELE 5 universe! Enjoy full episodes of original series, movies or exclusive videos.[CR]Hollywood classics like Ben Hur or Spartacus, Hollywood stars like Kirk Douglas or Clint Eastwood, all of which have shaped Hollywood, are featured regularly in the TELE 5 media library."
 msgstr ""
 
-#strings start
+# strings start
 # SETTINGS-CATEGORIES
 
 msgctxt "#30000"
@@ -36,34 +35,58 @@ msgctxt "#30001"
 msgid "Advanced"
 msgstr ""
 
-#empty strings from id 30002 to 30109
+# empty strings from id 30002 to 30109
 # SETTINGS-BUTTONS
 
 msgctxt "#30110"
-msgid "     Play HLS-Videos with [COLOR yellow]*Inputstream.Adaptive*[/COLOR] (since KODI-17+ possible)"
+msgid "Play HLS-Videos with [COLOR yellow]*Inputstream.Adaptive*[/COLOR] (since KODI-17+ possible)"
 msgstr ""
 
 msgctxt "#30111"
-msgid "     Sort all titles alphabetically [COLOR yellow](every folder customizable - otherwise standard)[/COLOR]"
+msgid "Show remaining online time"
 msgstr ""
 
 msgctxt "#30112"
-msgid "     Use Thumb as Background-Fanart"
+msgid "Off"
 msgstr ""
 
 msgctxt "#30113"
-msgid "     [COLOR orangered]Blacklist-Filter : [/COLOR]"
+msgid "End date"
 msgstr ""
 
 msgctxt "#30114"
-msgid "     Show Addon-Settings in the overview"
+msgid "Remaining time"
 msgstr ""
 
 msgctxt "#30115"
-msgid "     Detailed Addon-Debug (otherwise only Minimal-Log)"
+msgid "Warning [COLOR yellow](time left)[/COLOR] in title in hours"
 msgstr ""
 
-#empty strings from id 30116 to 30229
+msgctxt "#30116"
+msgid "Display FSK 18 movies [COLOR yellow](time-consuming)[/COLOR]"
+msgstr ""
+
+msgctxt "#30117"
+msgid "Sort all titles alphabetically [COLOR yellow](every folder customizable - otherwise standard)[/COLOR]"
+msgstr ""
+
+msgctxt "#30118"
+msgid "Show SchleFaZ in subdirectory"
+msgstr ""
+
+msgctxt "#30119"
+msgid "Use Thumb as Background-Fanart"
+msgstr ""
+
+msgctxt "#30120"
+msgid "Show Addon-Settings in the overview"
+msgstr ""
+
+msgctxt "#30121"
+msgid "Detailed Addon-Debug (otherwise only Minimal-Log)"
+msgstr ""
+
+# empty strings from id 30122 to 30229
 # SETTINGS-TITLES
 
 msgctxt "#30230"
@@ -71,67 +94,51 @@ msgid "[B][COLOR ff0099ff]PLAY[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30231"
-msgid "[B][COLOR ff0099ff]TITLE[/COLOR][/B]"
+msgid "[B][COLOR ff0099ff]AVAILABILITY[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30232"
-msgid "[B][COLOR ff0099ff]FANART[/COLOR][/B]"
+msgid "[B][COLOR ff0099ff]YOUTH PROTECTION[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30233"
-msgid "[B][COLOR ff0099ff]BLACKLIST[/COLOR][/B]"
+msgid "[B][COLOR ff0099ff]SORTING[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30234"
-msgid "[B][COLOR ff0099ff]SETTINGS[/COLOR][/B]"
+msgid "[B][COLOR ff0099ff]FANART[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30235"
+msgid "[B][COLOR ff0099ff]SETTINGS[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30236"
 msgid "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
 msgstr ""
 
-#empty strings from id 30236 to 30349
+# empty strings from id 30237 to 30349
 # SETTINGS-DESCRIPTIONS
 
 msgctxt "#30350"
-msgid "     * [COLOR yellow]For playback problems (audio interruptions,artifacts ...) probably an update to KODI-18 (Leia) is needed ![/COLOR] *"
+msgid "[COLOR yellow]For playback problems (audio interruptions,artifacts ...) probably an update to KODI-18 (Leia) is needed ![/COLOR]"
 msgstr ""
 
-msgctxt "#30351"
-msgid "     * [COLOR yellow]Hide unwanted folders in the startup overview ![/COLOR] *"
-msgstr ""
-
-msgctxt "#30352"
-msgid "     * [COLOR chartreuse]Entries in exact spelling as shown and separated by comma ','[/COLOR] *"
-msgstr ""
-
-#empty strings from id 30353 to 30500
-# WARNING-MESSAGES-OK
+# empty strings from id 30351 to 30500
+# WARNING/INFORMATION-MESSAGES-OK
 
 msgctxt "#30501"
 msgid "[COLOR orangered]ATTENTION : ... the required addon *[/COLOR][COLOR yellow]inputstream.adaptive[/COLOR][COLOR orangered]* is NOT installed !!![/COLOR][CR]Please install KODI-Krypton (version 17 or higher), These contain the required addon in setup !!!"
 msgstr ""
 
-#empty strings from id 30502 to 30520
-# WARNING-MESSAGES-NOTIFICATION
+# empty strings from id 30502 to 30520
+# WARNING/INFORMATION-MESSAGES-NOTIFICATION
 
 msgctxt "#30521"
 msgid "Tele5 - Mediathek : [COLOR red]!!! {0:s} - ERROR !!![/COLOR]"
 msgstr ""
 
-msgctxt "#30522"
-msgid "[COLOR red]Unfortunately, there are NO {0:s} :[/COLOR]"
-msgstr ""
-
-msgctxt "#30523"
-msgid "[COLOR red]An error has occured, please check *LOG* ![/COLOR]"
-msgstr ""
-
-msgctxt "#30524"
-msgid "* [COLOR blue]In this Category[/COLOR] * at Tele5"
-msgstr ""
-
-#empty strings from id 30525 to 30600
+# empty strings from id 30522 to 30600
 # PLUGIN-MAIN and SIDEMENU
 
 msgctxt "#30601"
@@ -139,25 +146,25 @@ msgid "Overview"
 msgstr ""
 
 msgctxt "#30602"
-msgid "Individual Productions"
-msgstr ""
-
-msgctxt "#30603"
-msgid "Series"
-msgstr ""
-
-msgctxt "#30604"
-msgid "Movies"
-msgstr ""
-
-msgctxt "#30607"
 msgid "TELE5 Settings"
 msgstr ""
 
-msgctxt "#30608"
+msgctxt "#30603"
 msgid "Inputstream Settings"
 msgstr ""
 
-msgctxt "#30654"
-msgid "[COLOR yellow]Add to TELE5-Playlist[/COLOR]"
+msgctxt "#30604"
+msgid "Season {0:s}"
+msgstr ""
+
+msgctxt "#30605"
+msgid "until {}"
+msgstr ""
+
+msgctxt "#30606"
+msgid "{} left"
+msgstr ""
+
+msgctxt "#30651"
+msgid "[COLOR yellow]Add to Tele5-Playlist[/COLOR]"
 msgstr ""

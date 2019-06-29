@@ -57,3 +57,42 @@
 - optimized: "Staffel" in der Titelanzeige-Episoden entfernt, dafür Ordner "Staffel "+Staffelnummer hinzugefügt (sofern Staffelnummerierung vorhanden)
 - added: Mehr Rubriken in der Startübersicht (u.a. Filmtastic, SchleFaZ, Specials...)
 - added: Unerwünschte Rubriken in der Startübersicht lassen sich per Blacklist ausblenden (settings)
+
+[B]Version w4ki-1.4.0~alpha  (25.05.2019)[/B] by w4ki[CR]
+- fixed: Alles kaputt
+- changed: Jetzt wird die Tele5 App-API benutzt
+- changed: Struktur wie in der App
+- changed: Serien mit wenigen Folgen werden ohne Staffel-Auswahl angezeigt
+
+[B]Version w4ki-1.4.0~beta  (27.05.2019)[/B] by w4ki[CR]
+- fixed: Zweiter Hauptmenüeintrag funktioniert nicht
+- fixed: Bei fehlender Besetzung wird ein Schauspieler mit leerem Namen angezeigt
+- fixed: Teilweise doppelte Beschreibung
+- added: Anzeige, wie lange Videos noch in der Mediathek sind (einstellbar)
+- added: mehr Informationen über Videos
+- added: Farben
+- changed: Mehrere Einträge werden mit dem "multi"-feature der API statt mit mehreren Threads geholt
+- added: User-Agent bei Requests (Firefox)
+- changed: Nummerierungen in Sprachfiles sortiert
+
+[B]Version w4ki-1.4.1~alpha  (28.05.2019)[/B] by w4ki[CR]
+- fixed: Fehler, wenn die Onlinezeit nicht angezeigt wird
+- fixed: Genre in Krypton funktioniert nicht [untested]
+- changed: User-Agent (Firefox ist in der API sinnlos)
+
+[B]Version w4ki-1.4.2~alpha  (30.05.2019)[/B] by w4ki[CR]
+- added: FSK 18 Filme
+- fixed: Bei Filmen mit unbekannter Altersfreigabe wurde 'Ab 0 Jahren' ausgegeben
+- added: SchleFaZ können als Unterverzeichnis von Filme angezeigt werden (einstellbar)
+
+[B]Version w4ki-1.4.2~beta  (31.05.2019)[/B] by w4ki[CR]
+- fixed: Filme funktionieren nicht
+- fixed: Teilweise doppelte Beschreibungsteile
+- fixed: Serien ohne Folgen wurden angezeigt
+- fixed: Serien funktionieren nicht
+
+[B]Version w4ki-1.4.2  (19.06.2019)[/B] by w4ki[CR]
+- fixed (hoffentlich): Fehler bei FSK 18 Filmen auf langsamer Hardware
+
+[B]Version 1.5.0  (official-29.06.2019)[/B] by w4ki[CR]
+- Derselbe Inhalt wie in der Version 'w4ki-1.4.2' - jetzt als offizielle Finalversion
