@@ -635,7 +635,7 @@ def parameters_string_to_dict(parameters):
 	return paramDict
 
 def addDir(name, url, mode, iconimage, plot=None, page=1, position=0, nosub=0, originalSERIE="", addType=0, FAVdel=False):
-	u = sys.argv[0]+"?url="+quote_plus(url)+"&name="+str(name)+"&page="+str(page)+"&position="+str(position)+"&nosub="+str(nosub)+"&originalSERIE="+str(originalSERIE)+"&mode="+str(mode)
+	u = sys.argv[0]+"?url="+quote_plus(url)+"&name="+quote_plus(name)+"&page="+str(page)+"&position="+str(position)+"&nosub="+str(nosub)+"&originalSERIE="+quote_plus(originalSERIE)+"&mode="+str(mode)
 	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
 	liz.setInfo(type='Video', infoLabels={'Title': name, 'Plot': plot})
 	liz.setArt({'poster': iconimage})
