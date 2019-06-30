@@ -190,6 +190,10 @@ msgid "Inputstream Settings"
 msgstr "Inputstream Einstellungen"
 
 msgctxt "#30609"
+msgid "[B][COLOR lime]  (new)[/COLOR][/B]"
+msgstr "[B][COLOR lime]  (neu)[/COLOR][/B]"
+
+msgctxt "#30610"
 msgid "[COLOR orangered]Next Page  >>>[/COLOR]"
 msgstr "[COLOR orangered]Nächste Seite  >>>[/COLOR]"
 

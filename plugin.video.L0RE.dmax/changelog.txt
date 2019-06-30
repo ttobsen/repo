@@ -27,3 +27,7 @@
 - fixed: Mehrfache Favoriteneinträge möglich, obwohl schon gespeichert
 - fixed: Laufzeitanzeige in der Bibliothek für Episoden die länger als 60 Minuten sind
 - optimized: Kleine Nachbesserrung für den Fix von User @mobsean für die Bibliothekfunktion: Sobald reguläre Episoden einer Serie vorhanden waren wurden die Specials nicht mehr angezeigt
+
+[B]Version 1.0.5  (30.06.2019)[/B] by realvito[CR]
+- fixed: UnicodeDecodeError: 'ascii' codec can't decode...
+- optimized: Serienordner mit neuen Episoden - gekennzeichnet (@mobsean)
