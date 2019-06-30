@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.rtlnow" name="TV Now" version="0.6.10" provider-name="L0RE">
+<addon id="plugin.video.rtlnow" name="TV Now" version="0.6.11" provider-name="L0RE">
  <requires>
         <import addon="xbmc.python" version="2.1.0"/>   
         <import addon="script.common.plugin.cache" version="2.5.5"/> # Add this    
@@ -18,7 +18,9 @@
     <website>https://www.tvnow.de/</website>
     <email>andreas at vogler dot name</email>
     <platform>all</platform>
-    <news>0.6.10
+    <news>0.6.11
+- Added Check Widevine option to the addon settings. The user can now enable or disable the Widevine installation check.    
+0.6.10
 - Update from https://widevine.rtl.de to https://widevine.tvnow.de    
 - Added is Widevine installed check 
 0.4.24

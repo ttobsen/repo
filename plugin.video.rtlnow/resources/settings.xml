@@ -1,12 +1,13 @@
 <settings>
      <category label="Settings">
-     <setting label="Certifikatsprüfung" type="bool" id="cert" default="true"/>
+     <setting label="Zertifikatsprüfung" type="bool" id="cert" default="true"/>
      <setting id="user" type="text" label="Email" default=""/>
      <setting id="pass" type="text" label="Password" default=""/>
      <setting id="kodi18" type="bool" label="Kodi 18 ab 15.8.2017" default="false"/>
      <setting id="freeonly" type="bool" label="Nur Freie Anzeigen" default="false" visible="false"/>
      <setting label="Cache Zeitraum" type="slider" id="cachetime" default="24" range="0,1,100" option="int" />     
      <setting id="inputstreamcomp" type="bool" label="Inputstream Kompatibles Kodi Version" default="false"/>
+     <setting id="checkwidevine" type="bool" label="Check Widevine Installation" default="true"/>
      </category>
      <category label="Media Library">
         <setting label="Madia Path" type="folder" id="mediapath" default=""/>        
