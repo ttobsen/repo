@@ -22,6 +22,7 @@ base_url = sys.argv[0]
 addon_handle = int(sys.argv[1])
 args = urlparse.parse_qs(sys.argv[2][1:])
 addon = xbmcaddon.Addon()
+
 # Lade Sprach Variablen
 translation = addon.getLocalizedString
 cj = cookielib.LWPCookieJar();
@@ -56,11 +57,13 @@ if not is_addon and not inputstreamcomp=="true":
         dialog.notification("Inpuitstream Fehler", 'Inputstream nicht eingeschaltet', xbmcgui.NOTIFICATION_ERROR)
         exit    
 
-is_helper = Helper('mpd', drm='widevine')
-if not is_helper.check_inputstream():
-  debug('is_helper.check_inputstream() No Widevine installed')
-  dialog = xbmcgui.Dialog()
-  dialog.notification("Widevine nicht gefunden", 'Ohne Widevine können keine\nDRM geschützten Inhalte\nwiedergegeben werden', xbmcgui.NOTIFICATION_ERROR)
+checkwidewine = addon.getSetting("checkwidevine")
+if checkwidewine=="true":
+  is_helper = Helper('mpd', drm='widevine')
+  if not is_helper.check_inputstream():
+    debug('is_helper.check_inputstream() No Widevine installed')
+    dialog = xbmcgui.Dialog()
+    dialog.notification("Widevine nicht gefunden", 'Ohne Widevine können keine\nDRM geschützten Inhalte\nwiedergegeben werden', xbmcgui.NOTIFICATION_ERROR)
 
 profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
