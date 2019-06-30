@@ -28,7 +28,7 @@ from bs4 import BeautifulSoup as origSoup
 # Generiert sonst ein UserWarning
 BeautifulSoup = lambda x: origSoup(x, 'html.parser')
 
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 import time
 import threading
 import json
@@ -561,8 +561,12 @@ def makeListItem(info):
 	mediatype = info['general']['videotype']
 	if mediatype not in ['movie', 'episode', 'musicvideo']: mediatype = 'video'
 	liz = xbmcgui.ListItem(title, iconImage=icon, thumbnailImage=thumb)
-	year = info['general']['releasedate']
-	if year: year = time.gmtime(year).tm_year
+	released = info['general']['releasedate']
+	if released:
+		try: year = time.gmtime(released).tm_year
+		except ValueError: # cannot handle value before YEAR=1970
+			published = datetime(1970, 1, 1) + timedelta(seconds=int(released))
+			year = published.strftime('%Y')
 	else: year = None
 	fsk = info['general']['ages']
 	if fsk:

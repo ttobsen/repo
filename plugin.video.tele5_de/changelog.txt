@@ -96,3 +96,6 @@
 
 [B]Version 1.5.0  (official-29.06.2019)[/B] by w4ki[CR]
 - Derselbe Inhalt wie in der Version 'w4ki-1.4.2' - jetzt als offizielle Finalversion
+
+[B]Version 1.5.1  (30.06.2019)[/B] by w4ki + realvito[CR]
+- fixed: Auf Windowssystemen kommt es zu Problemen mit Jahrgängen vor 1970 (Filmordner lässt sich nicht öffnen)
