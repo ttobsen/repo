@@ -160,7 +160,7 @@ def playvideo(url):
     debug(jsondata)
     videourl=""
     for element in struct["stack"]:
-        if element["view"]=="watch_3":
+        if element["view"]=="trailer":
            folge=element["data"][0]
            title=folge["title"]
            videourl=folge["embedURL"]
