@@ -55,7 +55,6 @@ enableInputstream = addon.getSetting('inputstream') == "true"
 showRemainingTime = addon.getSetting('showOnlineUntil')
 max_rest_warn = 3600 * int(addon.getSetting('maxRestWarn'))
 fsk18 = addon.getSetting('fsk18') == "true"
-subdirSchlefaz = addon.getSetting('subdirSchlefaz') == "true"
 useThumbAsFanart = addon.getSetting('useThumbAsFanart') == "true"
 enableAdjustment = addon.getSetting('show_settings') == "true"
 DEB_LEVEL = (xbmc.LOGNOTICE if addon.getSetting('enableDebug') == "true" else xbmc.LOGDEBUG)
@@ -391,18 +390,11 @@ def listMovies():
 	debug_MS("(listMovies) BEGIN")
 	data = getUrl(baseURL+'nexx/videos/movies/all')['result']
 	if fsk18: get_fsk18_movies(data) # Verändert data
-	schlefaz_ids = []
-	for movie in data:
-		if subdirSchlefaz and 'schlefaz' in movie['general']['title'].lower():
-			schlefaz_ids.append(str(movie['general']['ID']))
-		else:
-			listVideo(movie)
-	if schlefaz_ids:
-		addDir('SchleFaZ', 'listSchleFaZ', ','.join(schlefaz_ids))
+	for movie in data: listVideo(movie)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
-def listSchlefaz(IDs):
-	for movie in getUrl(baseURL+'nexx/videos/multi?videos='+IDs)['result']:
+def listSchlefaz():
+	for movie in getUrl(baseURL+'nexx/videos/all?type=movie&chan=29864')['result']:
 		listVideo(movie)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
@@ -487,8 +479,13 @@ def listSections():
 	  ['sections']):
 		if 'items' in section:
 			addDir(unescape(section['title']), 'listSection', idx)
-		elif section.get('playlistType', None) == 'all movies':
-			addDir(unescape(section['title']), 'listMovies')
+		else:
+			try: pl_type = section['playlistType']
+			except KeyError: continue
+			if pl_type == 'all movies': mode = 'listMovies'
+			elif pl_type == 'schlefaz': mode = 'listSchleFaZ'
+			else: continue
+			addDir(unescape(section['title']), mode)
 
 def listSection(idx):
 	idx = int(idx)
@@ -674,7 +671,7 @@ elif mode == 'iSettings':
 elif mode == 'listMovies':
 	listMovies()
 elif mode == 'listSchleFaZ':
-	listSchlefaz(ID)
+	listSchlefaz()
 elif mode == 'listType':
 	listType(ID)
 elif mode == 'listSeries':

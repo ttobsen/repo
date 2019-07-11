@@ -14,7 +14,6 @@
 		<setting type="sep"/>
 		<setting label="30233" type="lsep"/>
 		<setting label="30117" type="bool" id="enableTitleOrder" default="false"/>
-		<setting label="30118" type="bool" id="subdirSchlefaz" default="false"/>
 		<setting type="sep"/>
 		<setting label="30234" type="lsep"/>
 		<setting label="30119" type="bool" id="useThumbAsFanart" default="true"/>

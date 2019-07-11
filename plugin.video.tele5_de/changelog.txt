@@ -99,3 +99,7 @@
 
 [B]Version 1.5.1  (30.06.2019)[/B] by w4ki + realvito[CR]
 - fixed: Auf Windowssystemen kommt es zu Problemen mit Jahrgängen vor 1970 (Filmordner lässt sich nicht öffnen)
+
+[B]Version 1.5.2  (08.07.2019)[/B] by w4ki + realvito[CR]
+- added: SchleFaZ Mediathek
+- removed: SchleFaZ in Filme als Unterverzeichnis

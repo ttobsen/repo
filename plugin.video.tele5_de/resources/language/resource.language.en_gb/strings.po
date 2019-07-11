@@ -70,10 +70,6 @@ msgctxt "#30117"
 msgid "Sort all titles alphabetically [COLOR yellow](every folder customizable - otherwise standard)[/COLOR]"
 msgstr ""
 
-msgctxt "#30118"
-msgid "Show SchleFaZ in subdirectory"
-msgstr ""
-
 msgctxt "#30119"
 msgid "Use Thumb as Background-Fanart"
 msgstr ""
