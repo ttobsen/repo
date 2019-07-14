@@ -1,3 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-     <setting id="quality" type="select" label="Qualität" default="high" values="high|standard|hd|low200|low400" />
+	<category label="30000">
+		<setting label="30230" type="lsep"/>
+		<setting label="30110" type="bool" id="inputstream" default="false"/>
+		<setting label="30350" type="text" option="readable" visible="eq(-1,true)"/>
+		<setting type="sep"/>
+		<setting label="30231" type="lsep"/>
+		<setting label="30111" type="select" id="sorting" lvalues="30112|30113" default="0"/>
+		<setting type="sep"/>
+		<setting label="30232" type="lsep"/>
+		<setting label="30114" type="bool" id="useThumbAsFanart" default="true"/>
+		<setting type="sep"/>
+		<setting label="30233" type="lsep"/>
+		<setting label="30115" type="bool" id="show_settings" default="true"/>
+	</category>
 </settings>
