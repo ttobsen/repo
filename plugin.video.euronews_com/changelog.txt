@@ -27,3 +27,7 @@
 - fixed: Es werden KEINE Unterordner der Startordner angezeigt
 - optimized: Doppelte Ordner werden jetzt herausgefiltert
 - added: Wenn KEINE Videos im Ordner vorhanden sind - Meldung eingebaut
+
+[B]Version 2.1.3  (14.07.2019)[/B] by realvito[CR]
+- fixed: Es werden KEINE Ordner in der Übersicht angezeigt (Webseite und Quelltext verändert)
+- optimized: Bei Auswahl = Bev. mit Youtube abspielen - wird jetzt überprüft ob der YT-Link existiert, wenn nicht vorh. wird der Standardlink abgespielt
