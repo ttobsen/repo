@@ -1,3 +1,0 @@
-<settings>
-     <setting id="quality" type="select" label="Qualität" default="1080" values="1080|720|480|320" />
-</settings>
