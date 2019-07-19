@@ -128,14 +128,14 @@ def TopicsIndex():
 	result = content[content.find('<div class="js-programs-menu c-programs-menu c-header-sub-menu')+1:]
 	result = result[:result.find('<div class="c-programs-menu__footer">')]
 	part = result.split('<div class="list-item')
-	debug("(TopicsIndex) xxxxx RESULT : "+str(result)+" xxxxx")
+	log("(TopicsIndex) xxxxx RESULT : "+str(result)+" xxxxx")
 	for i in range(1,len(part),1):
 		entry = part[i]
 		if '<li class="list-item' in entry:
-			mainTHEME = re.compile(r'class=["\']title["\']>([^<]+?)(?:</a>|</span>)', re.DOTALL).findall(entry)[0]
+			mainTHEME = re.compile(r'class=["\']title.*?>([^<]+?)(?:</a>|</span>)', re.DOTALL).findall(entry)[0]
 			newMAIN = smart_str(mainTHEME).strip()
 			showXTRA = "OKAY"
-			try: mainURL = re.compile(r'<a href=["\'](.+?)["\'] class=["\']title["\']>', re.DOTALL).findall(entry)[0]
+			try: mainURL = re.compile(r'<a href=["\'](.+?)["\'] class=["\']title["\']', re.DOTALL).findall(entry)[0]
 			except: 
 				mainURL = newMAIN
 				showXTRA = "NEIN"
@@ -163,13 +163,13 @@ def SubTopics(firstURL, showXTRA):
 	for i in range(1,len(part),1):
 		entry = part[i]
 		if '<li class="list-item' in entry:
-			try: mainURL = re.compile(r'<a href=["\'](.+?)["\'] class=["\']title["\']>', re.DOTALL).findall(entry)[0]
+			try: mainURL = re.compile(r'<a href=["\'](.+?)["\'] class=["\']title["\']', re.DOTALL).findall(entry)[0]
 			except: mainURL = "Nothing"
-			mainTHEME = re.compile(r'class=["\']title["\']>([^<]+?)(?:</a>|</span>)', re.DOTALL).findall(entry)[0]
+			mainTHEME = re.compile(r'class=["\']title.*?>([^<]+?)(?:</a>|</span>)', re.DOTALL).findall(entry)[0]
 			newMAIN = smart_str(mainTHEME).strip()
 			debug("(SubTopics) ### newMAIN : "+str(newMAIN)+" ### firstURL : "+str(firstURL)+" ### mainURL : "+str(mainURL)+" ###")
 			if firstURL == mainURL or firstURL == newMAIN:
-				match = re.compile('<li class="list-item"><a href="([^"]+?)".*?list-item__link(.+?)</a></li>', re.DOTALL).findall(entry)
+				match = re.compile('<li class="list-item"><a href="([^"]+?)".*?list-item__link.*?>(.+?)</a></li>', re.DOTALL).findall(entry)
 				for link, title in match:
 					newURL = link.split('/')[-1].strip()
 					if newURL in ISOLATED:
