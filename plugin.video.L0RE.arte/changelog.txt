@@ -24,3 +24,8 @@
 - fixed: Nächste Seite zum weiterblättern wird nicht mehr angezeigt
 - fixed: Urls für Live+Eventsender funktionieren nicht
 - added: Rubrik = Besondere Highlights - täglich wechselnde Inhalte
+
+[B]Version 0.5.7  (19.07.2019)[/B] by realvito[CR]
+- fixed: Sämtliche Videos werden NICHT angezeigt (API verändert)
+- fixed: Endlich beseitigt :-) ERROR: NEWADDON Invalid Date Format "" im LOG
+- optimized: Rubrik = sortiert nach Datum wird jetzt in einem Ordner zusammengefasst

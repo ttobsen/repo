@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<addon id="plugin.video.L0RE.arte" name="ARTE.TV" version="0.5.6" provider-name="L0RE">
+<addon id="plugin.video.L0RE.arte" name="ARTE.TV" version="0.5.7" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 	</requires>
@@ -24,12 +24,10 @@
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 0.5.6  (29.06.2019)[/COLOR][/B] by realvito[CR]
-- fixed: Rubrik = Themen -> ARTE Concert kein Inhalt
-- fixed: Rubrik = alle Sendungen A-Z -> Anzeige der neuen Unterkategorien
-- fixed: Nächste Seite zum weiterblättern wird nicht mehr angezeigt
-- fixed: Urls für Live+Eventsender funktionieren nicht
-- added: Rubrik = Besondere Highlights - täglich wechselnde Inhalte
+		<news>[B][COLOR orangered]Version 0.5.7  (19.07.2019)[/COLOR][/B] by realvito[CR]
+- fixed: Sämtliche Videos werden NICHT angezeigt (API verändert)
+- fixed: Endlich beseitigt :-) ERROR: NEWADDON Invalid Date Format "" im LOG
+- optimized: Rubrik = sortiert nach Datum wird jetzt in einem Ordner zusammengefasst
 		</news>
 	</extension>
 </addon>
