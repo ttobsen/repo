@@ -103,3 +103,6 @@
 [B]Version 1.5.2  (08.07.2019)[/B] by w4ki + realvito[CR]
 - added: SchleFaZ Mediathek
 - removed: SchleFaZ in Filme als Unterverzeichnis
+
+[B]Version 1.5.3  (31.07.2019)[/B] by w4ki[CR]
+- fixed: bei SchleFaZ werden alle anderen Filme auch angezeigt

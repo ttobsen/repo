@@ -394,7 +394,7 @@ def listMovies():
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def listSchlefaz():
-	for movie in getUrl(baseURL+'nexx/videos/all?type=movie&chan=29864')['result']:
+	for movie in getUrl(baseURL+'nexx/videos/all?type=movie&channel=29864')['result']:
 		listVideo(movie)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
@@ -484,6 +484,10 @@ def listSections():
 			except KeyError: continue
 			if pl_type == 'all movies': mode = 'listMovies'
 			elif pl_type == 'schlefaz': mode = 'listSchleFaZ'
+			elif pl_type == 'custom':
+				addDir(unescape(section['title']), 'listPlaylist',
+				  section['playlistId'])
+				continue
 			else: continue
 			addDir(unescape(section['title']), mode)
 
