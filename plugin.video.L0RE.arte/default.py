@@ -384,7 +384,7 @@ def liveTV():
 	items.append(("ARTE-TV HD", "https://artelive-lh.akamaihd.net/i/artelive_de@393591/index_1_av-p.m3u8", icon))
 	items.append(("ARTE Event 1", "https://arteevent01-lh.akamaihd.net/i/arte_event01@395110/index_1_av-p.m3u8", icon))
 	items.append(("ARTE Event 2", "https://arteevent02-lh.akamaihd.net/i/arte_event02@308866/index_1_av-p.m3u8", icon))
-	items.append(("ARTE Event 3", "https://arteevent03-lh.akamaihd.net/i/arte_event03@305298/master.m3u8", icon))
+	items.append(("ARTE Event 3", "https://arteevent03-lh.akamaihd.net/i/arte_event03@305298/index_1_av-p.m3u8", icon))
 	items.append(("ARTE Event 4", "https://arteevent04-lh.akamaihd.net/i/arte_event04@308879/index_1_av-p.m3u8", icon))
 	items.append(("ARTE Event 5", "https://arteevent05-lh.akamaihd.net/i/arte_event05@391593/index_1_av-p.m3u8", icon))
 	for item in items:
