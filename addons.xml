@@ -2290,7 +2290,7 @@ To support the backport the addon will now always create the merged_epg.xml.gz
     </extension>
 </addon>
 
-<addon id="plugin.video.zappntv" name="Zappn TV" version="1.1.1" provider-name="fayer3">
+<addon id="plugin.video.zappntv" name="Zappn TV" version="1.2.0" provider-name="fayer3">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.routing" version="0.2.0"/>
@@ -2299,6 +2299,7 @@ To support the backport the addon will now always create the merged_epg.xml.gz
     <extension point="xbmc.python.pluginsource" library="main.py">
         <provides>video</provides>
     </extension>
+    <extension point="xbmc.python.library" library="favorite.py"/>
     <extension point="xbmc.addon.metadata">
         <summary lang="de_DE">ZAPPN TV Levestream und Mediathek</summary>
         <description lang="de_DE">Livestream von den Österreichischen Sendern ORF 1, ORF 2, Puls 4, Puls 24, ATV, ATV2, ProSieben, Sat.1, Kabel 1, Sixx, Prosieben Maxx, Sat.1 GOLD und Kabel 1 Doku sowie Mediathek von Puls 4, ATV, Kabel 1, Sat.1, Sixx, Prosieben, Prosieben Maxx, Sat.1 Gold und Kabel 1 Doku.</description>
@@ -2313,20 +2314,8 @@ To support the backport the addon will now always create the merged_epg.xml.gz
         <website>https://zappn.tv/</website>
         <email>fb4472 (at) aon.at</email>
         <source>https://github.com/fayer3/plugin.video.zappntv</source>
-        <news>- Vollständiges TV Programm Hinzugefügt
-- Kodi Versions check für DRM Hinzugefügt
-  - DRM Inhalt kann nur mit Kodi Version > 18.0 und inputstream.adaptive > 2.2.2 wiedergegeben werden
-- support für wiedergabe ohne inputstream.adaptive
-  - Auswahl zwischen folgenden Formaten:
-    - dash (mit inputstream.adaptive)
-    - hls (mit inputstream.adaptive)
-    - hls
-    - video (niedrigere Qualität)
-- Abhängigkeit von inputstream.adaptive entfernt, wird jetzt vor der Wiedergabe installiert
-- Fehlschlag von Wiedergabe repariert, Wiedergabe geschieht nun nur einmal
-- extrahieren von Staffel- und Folgennummer aus Videotitle
-- Option zum entfernen der Staffel- und Folgennummer aus dem Videotitel
-- benutze thumbnail als poster Bild</news>
+        <news>- Möglichkeit hinzugefügt, Serien über Rechtsklick zu favoriten hinzuzufügen
+- Suche auf Betriebsystemen mit Multiprozess unterstützung beschleunigt (alles außer Android)</news>
         <assets>
             <icon>resources/icon.png</icon>
             <fanart>resources/fanart.png</fanart>
@@ -2579,40 +2568,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 		<source></source>
 		<email></email>
 	</extension>
-</addon>
-
-<addon id="plugin.video.wm2018dach" name="Fußball-WM 2018 DACH" version="1.1.2" provider-name="MrKrabat">
-    <requires>
-        <import addon="xbmc.python" version="2.25.0"/>
-        <import addon="script.module.inputstreamhelper" version="0.3.3"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <language>de ch at en</language>
-        <summary lang="en_GB">The FIFA World Cup 2018 free and legal from public service broadcasting</summary>
-        <summary lang="de_DE">Die Fußball-WM 2018 kostenlos und legal vom öffentlich-rechtlichen Rundfunk</summary>
-        <description lang="en_GB">The FIFA World Cup 2018 free and legal from public service broadcasting</description>
-        <description lang="de_DE">Die Fußball-WM 2018 kostenlos und legal vom öffentlich-rechtlichen Rundfunk</description>
-        <disclaimer lang="en_GB">This addon is not affiliated with the broadcasters.</disclaimer>
-        <disclaimer lang="de_DE">Dieses Addon steht in keiner Verbindung zu den Sendeanstalten.</disclaimer>
-        <broken>Fußball-WM 2018 ist zuende</broken>
-        <news>v1.1.2 (2018.08.07)[CR]- Fußball-WM 2018 ist zuende</news>
-        <license>GNU Affero General Public License, v3</license>
-        <forum>https://www.kodinerds.net/index.php/Thread/62160-Fu%C3%9Fball-WM-2018-DACH/</forum>
-        <website></website>
-        <source>https://github.com/MrKrabat/plugin.video.wm2018dach</source>
-        <email></email>
-        <assets>
-            <icon>icon.png</icon>
-            <fanart>fanart.jpg</fanart>
-            <screenshot>resources/media/screenshot-01.jpg</screenshot>
-            <screenshot>resources/media/screenshot-02.jpg</screenshot>
-            <screenshot>resources/media/screenshot-03.jpg</screenshot>
-        </assets>
-    </extension>
 </addon>
 
 <addon id="plugin.video.L0RE.mtv" name="MTV Mediathek" version="0.2.2" provider-name="L0RE">
@@ -4102,40 +4057,6 @@ Thank you ran.de for your great service, especially for providing ranNFL reLives
             <screenshot>resources/media/screenshot-03.jpg</screenshot>
         </assets>
     </extension>
-</addon>
-
-<addon id="plugin.video.7tvneu" name="7TV" version="1.0.1" provider-name="L0RE">
-	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="de">7TV Mediathek</summary>
-		<summary lang="en">7TV Mediathek</summary>
-		<description lang="de">Alle Sendungen der Free-TV-Sender von ProSiebenSat.1 und Discovery in der senderübergreifenden Mediathek.[CR]Bei 7TV genießen Sie den bequemen Zugang zu Ihrem Lieblingssender und zu vielem mehr.</description>
-		<description lang="en">All broadcasts of Free-TV-Stations from ProSiebenSat.1 and Discovery in the trans-media library.[CR]7TV gives you easy access to your favorite station and much more.</description>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
-		<website>https://www.7tv.de</website>
-		<email></email>
-		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.7tvneu</source>
-		<assets>
-			<icon>icon.png</icon>
-			<fanart>fanart.jpg</fanart>
-		</assets>
-		<news>[B][COLOR orangered]Version 1.0.1  (11.11.2018)[/COLOR][/B] by realvito[CR]
-- fixed: Im Ordner = "Beliebteste Sendungen" und im Ordner = Suche -> "Serien" werden KEINE Sendungstitel angezeigt (extrahiere Titel aus der URL)
-- fixed: Manche Addon-Favoriten werden NICHT richtig abgespeichert und lassen sich NICHT abspielen (Daten komprimiert)
-- optimized: Sendungs- und Video-Titelbild = Qualität und Grösse maximiert
-- optimized: Kleinere Scriptfehler eliminiert
-		</news>
-	</extension>
 </addon>
 
 <addon id="repository.kodinerds_RPi2" name="kodinerds.net Binary Addons for Rasperry 2+3" version="1.0.3" provider-name="L0RE">
