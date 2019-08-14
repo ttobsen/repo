@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<settings>
-    <setting id="stream" type="select" lvalues="30001|30002|30003|30004|30005|30006|30007|30008" label="30000" default="0" />
-    <setting type="sep" />
-    <setting id="inputstream_adaptive_active" type="bool" label="30010" default="true"/>
-    <setting id="inputstream_adaptive_conf" type="action" label="30011" option="close" action="RunPlugin(plugin://plugin.video.wm2018dach/?mode=hls)"/>
-</settings>
