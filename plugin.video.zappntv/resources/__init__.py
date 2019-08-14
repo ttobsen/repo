@@ -1,1 +1,1 @@
-﻿# Dummy file to make this directory a package.
+# Dummy file to make this directory a package.
