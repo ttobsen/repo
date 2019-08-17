@@ -43,30 +43,38 @@ msgid "     Play Videos with [COLOR yellow]*Inputstream.Adaptive*[/COLOR] (since
 msgstr ""
 
 msgctxt "#30111"
-msgid "     Sorting Episodes: new EP - display on top"
+msgid "     Sorting of Episodes"
 msgstr ""
 
 msgctxt "#30112"
-msgid "     Use Thumb as Background-Fanart"
+msgid "Highest Episodenumber display on top"
 msgstr ""
 
 msgctxt "#30113"
-msgid "     Show Addon-Settings in the overview"
+msgid "Other methods to choose from"
 msgstr ""
 
 msgctxt "#30114"
-msgid "     Activate DMAX-Media-Library"
+msgid "     Use Thumb as Background-Fanart"
 msgstr ""
 
 msgctxt "#30115"
-msgid "     DMAX-Media-Folder (for .strm- and .nfo- Files)"
+msgid "     Show Addon-Settings in the overview"
 msgstr ""
 
 msgctxt "#30116"
+msgid "     Activate DMAX-Media-Library"
+msgstr ""
+
+msgctxt "#30117"
+msgid "     DMAX-Media-Folder (for .strm- and .nfo- Files)"
+msgstr ""
+
+msgctxt "#30118"
 msgid "     Update of the DMAX-Library (in Hours)"
 msgstr ""
 
-# empty strings from id 30117 to 30229
+# empty strings from id 30119 to 30229
 # SETTINGS-TITLES
 
 msgctxt "#30230"
@@ -127,34 +135,42 @@ msgstr ""
 # WARNING/INFORMATION-MESSAGES-NOTIFICATION
 
 msgctxt "#30521"
-msgid "[COLOR red]Currently NO videos of :[/COLOR]"
+msgid "DMAX Mediathek : [COLOR red]!!! ID - [/COLOR][COLOR blue]{0:s}[/COLOR][COLOR red] - ERROR !!![/COLOR]"
 msgstr ""
 
 msgctxt "#30522"
-msgid "* [COLOR blue]{0:s}[/COLOR] * in the DMAX-Videothek"
+msgid "ERROR = [COLOR red]This Series is no longer in the DMAX-Videothek ![/COLOR]"
 msgstr ""
 
 msgctxt "#30523"
-msgid "My DMAX-Favourites :"
+msgid "[COLOR red]Currently NO videos of :[/COLOR]"
 msgstr ""
 
 msgctxt "#30524"
-msgid "* [COLOR blue]{0:s}[/COLOR] *[COLOR FF008B00] successfully added !!![/COLOR]"
+msgid "* [COLOR blue]{0:s}[/COLOR] * in the DMAX-Videothek"
 msgstr ""
 
 msgctxt "#30525"
-msgid "* [COLOR blue]{0:s}[/COLOR] *[COLOR red] has been deleted !!![/COLOR]"
+msgid "My DMAX-Favourites :"
 msgstr ""
 
 msgctxt "#30526"
-msgid "[COLOR FF008B00]Added to DMAX-Medialibrary :[/COLOR]"
+msgid "* [COLOR blue]{0:s}[/COLOR] *[COLOR FF008B00] successfully added !!![/COLOR]"
 msgstr ""
 
 msgctxt "#30527"
+msgid "* [COLOR blue]{0:s}[/COLOR] *[COLOR red] has been deleted !!![/COLOR]"
+msgstr ""
+
+msgctxt "#30528"
+msgid "[COLOR FF008B00]Added to DMAX-Medialibrary :[/COLOR]"
+msgstr ""
+
+msgctxt "#30529"
 msgid "* Show: [COLOR blue]{0:s}[/COLOR] | Update every: [COLOR blue]{1:s} Hrs.[/COLOR] *"
 msgstr ""
 
-# empty strings from id 30528 to 30600
+# empty strings from id 30530 to 30600
 # PLUGIN-MAIN and SIDEMENU
 
 msgctxt "#30601"
@@ -190,11 +206,19 @@ msgid "Inputstream Settings"
 msgstr ""
 
 msgctxt "#30609"
-msgid "[B][COLOR lime]  (new)[/COLOR][/B]"
+msgid "[COLOR lime]  (new)[/COLOR]"
 msgstr ""
 
 msgctxt "#30610"
 msgid "[COLOR orangered]Next Page  >>>[/COLOR]"
+msgstr ""
+
+msgctxt "#30611"
+msgid "From [COLOR chartreuse]{0:s}[/COLOR]"
+msgstr ""
+
+msgctxt "#30612"
+msgid " to [COLOR orangered]{0:s}[/COLOR][CR][CR]"
 msgstr ""
 
 msgctxt "#30651"

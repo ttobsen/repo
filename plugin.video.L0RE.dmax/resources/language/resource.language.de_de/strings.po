@@ -43,30 +43,38 @@ msgid "     Play Videos with [COLOR yellow]*Inputstream.Adaptive*[/COLOR] (since
 msgstr "     Videos mit [COLOR yellow]*Inputstream.Adaptive*[/COLOR] abspielen (ab KODI-17+ möglich)"
 
 msgctxt "#30111"
-msgid "     Sorting Episodes: new EP - display on top"
-msgstr "     Sortierung Episoden: Neue EP - oben anzeigen"
+msgid "     Sorting of Episodes"
+msgstr "     Sortierung der Episoden"
 
 msgctxt "#30112"
+msgid "Highest Episodenumber display on top"
+msgstr "Höchste Episodennummer oben anzeigen"
+
+msgctxt "#30113"
+msgid "Other methods to choose from"
+msgstr "Weitere Methoden zur Auswahl"
+
+msgctxt "#30114"
 msgid "     Use Thumb as Background-Fanart"
 msgstr "     Thumb als Hintergrund-Fanart nutzen"
 
-msgctxt "#30113"
+msgctxt "#30115"
 msgid "     Show Addon-Settings in the overview"
 msgstr "     Addon-Einstellungen in der Übersicht anzeigen"
 
-msgctxt "#30114"
+msgctxt "#30116"
 msgid "     Activate DMAX-Media-Library"
 msgstr "     DMAX-Medien-Bibliothek aktivieren"
 
-msgctxt "#30115"
+msgctxt "#30117"
 msgid "     DMAX-Media-Folder (for .strm- and .nfo- Files)"
 msgstr "     DMAX-Media-Ordner (für .strm- und .nfo- Dateien)"
 
-msgctxt "#30116"
+msgctxt "#30118"
 msgid "     Update of the DMAX-Library (in Hours)"
 msgstr "     Update der DMAX-Bibliothek (in Stunden)"
 
-# empty strings from id 30117 to 30229
+# empty strings from id 30119 to 30229
 # SETTINGS-TITLES
 
 msgctxt "#30230"
@@ -127,34 +135,42 @@ msgstr "[COLOR orangered]ACHTUNG : ... es ist KEIN Ordner zum Speichern der Medi
 # WARNING/INFORMATION-MESSAGES-NOTIFICATION
 
 msgctxt "#30521"
+msgid "DMAX Mediathek : [COLOR red]!!! ID - [/COLOR][COLOR blue]{0:s}[/COLOR][COLOR red] - ERROR !!![/COLOR]"
+msgstr "DMAX Mediathek : [COLOR red]!!! ID - [/COLOR][COLOR blue]{0:s}[/COLOR][COLOR red] - ERROR !!![/COLOR]"
+
+msgctxt "#30522"
+msgid "ERROR = [COLOR red]This Series is no longer in the DMAX-Videothek ![/COLOR]"
+msgstr "ERROR = [COLOR red]Diese Serie gibt es NICHT mehr in der DMAX-Videothek ![/COLOR]"
+
+msgctxt "#30523"
 msgid "[COLOR red]Currently NO videos of :[/COLOR]"
 msgstr "[COLOR red]Zurzeit KEINE Videos von :[/COLOR]"
 
-msgctxt "#30522"
+msgctxt "#30524"
 msgid "* [COLOR blue]{0:s}[/COLOR] * in the DMAX-Videothek"
 msgstr "* [COLOR blue]{0:s}[/COLOR] * in der DMAX-Videothek"
 
-msgctxt "#30523"
+msgctxt "#30525"
 msgid "My DMAX-Favourites :"
 msgstr "Meine DMAX-Favoriten :"
 
-msgctxt "#30524"
+msgctxt "#30526"
 msgid "* [COLOR blue]{0:s}[/COLOR] *[COLOR FF008B00] successfully added !!![/COLOR]"
 msgstr "* [COLOR blue]{0:s}[/COLOR] *[COLOR FF008B00] erfolgreich hinzugefügt !!![/COLOR]"
 
-msgctxt "#30525"
+msgctxt "#30527"
 msgid "* [COLOR blue]{0:s}[/COLOR] *[COLOR red] has been deleted !!![/COLOR]"
 msgstr "* [COLOR blue]{0:s}[/COLOR] *[COLOR red] wurde gelöscht !!![/COLOR]"
 
-msgctxt "#30526"
+msgctxt "#30528"
 msgid "[COLOR FF008B00]Added to DMAX-Medialibrary :[/COLOR]"
 msgstr "[COLOR FF008B00]Zur DMAX-Medienbibliothek hinzugefügt :[/COLOR]"
 
-msgctxt "#30527"
+msgctxt "#30529"
 msgid "* Show: [COLOR blue]{0:s}[/COLOR] | Update every: [COLOR blue]{1:s} Hrs.[/COLOR] *"
 msgstr "* Serie: [COLOR blue]{0:s}[/COLOR] | Update alle: [COLOR blue]{1:s} Std.[/COLOR] *"
 
-# empty strings from id 30528 to 30600
+# empty strings from id 30530 to 30600
 # PLUGIN-MAIN and SIDEMENU
 
 msgctxt "#30601"
@@ -190,12 +206,20 @@ msgid "Inputstream Settings"
 msgstr "Inputstream Einstellungen"
 
 msgctxt "#30609"
-msgid "[B][COLOR lime]  (new)[/COLOR][/B]"
-msgstr "[B][COLOR lime]  (neu)[/COLOR][/B]"
+msgid "[COLOR lime]  (new)[/COLOR]"
+msgstr "[COLOR lime]  (neu)[/COLOR]"
 
 msgctxt "#30610"
 msgid "[COLOR orangered]Next Page  >>>[/COLOR]"
 msgstr "[COLOR orangered]Nächste Seite  >>>[/COLOR]"
+
+msgctxt "#30611"
+msgid "From [COLOR chartreuse]{0:s}[/COLOR]"
+msgstr "Vom [COLOR chartreuse]{0:s}[/COLOR]"
+
+msgctxt "#30612"
+msgid " to [COLOR orangered]{0:s}[/COLOR][CR][CR]"
+msgstr " bis [COLOR orangered]{0:s}[/COLOR][CR][CR]"
 
 msgctxt "#30651"
 msgid "[COLOR chartreuse]Add to DMAX-Favourites[/COLOR]"
