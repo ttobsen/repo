@@ -1,0 +1,122 @@
+﻿# Kodi Media Center language file
+# Addon Name: Welt der Wunder
+# Addon id: plugin.video.L0RE.weltderwunder
+# Addon Provider: L0RE
+msgid ""
+msgstr ""
+"Project-Id-Version: KODI-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
+"POT-Creation-Date: 2019-08-15 17:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: realvito\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de_DE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "Videoportal of Welt der Wunder"
+msgstr "Videoportal von Welt der Wunder"
+
+msgctxt "Addon Description"
+msgid "Every day, around the clock and with ever more diverse content: documentaries, reportages, magazines and soon with unprecedented new formats - that's what the heart of the World of Miracles TV !"
+msgstr "Jeden Tag, rund um die Uhr und mit immer vielfältigeren Inhalten: Dokumentationen, Reportagen, Magazine und demnächst mit noch nie dagewesenen, neuen Formaten - so schlägt das Herz von Welt der Wunder TV !"
+
+#strings start
+# SETTINGS-CATEGORIES
+
+msgctxt "#30000"
+msgid "General"
+msgstr "Allgemein"
+
+#empty strings from id 30001 to 30109
+# SETTINGS-BUTTONS
+
+msgctxt "#30110"
+msgid "     Preferred Video-Stream"
+msgstr "     Bevorzugter Video-Stream "
+
+msgctxt "#30111"
+msgid "Good Quality - 480p"
+msgstr "Gute Qualität - 480p"
+
+msgctxt "#30112"
+msgid "HD Quality - 720p"
+msgstr "HD Qualität - 720p"
+
+msgctxt "#30113"
+msgid "Max. Quality - 1080p"
+msgstr "Max. Qualität - 1080p"
+
+msgctxt "#30114"
+msgid "     Use Thumb as Background-Fanart"
+msgstr "     Thumb als Hintergrund-Fanart nutzen"
+
+msgctxt "#30115"
+msgid "     Show Addon-Settings in the overview"
+msgstr "     Addon-Einstellungen in der Übersicht anzeigen"
+
+#empty strings from id 30116 to 30229
+# SETTINGS-TITLES
+
+msgctxt "#30230"
+msgid "[B][COLOR ff0099ff]PLAY[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]ABSPIELEN[/COLOR][/B]"
+
+msgctxt "#30231"
+msgid "[B][COLOR ff0099ff]FANART[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]FANART[/COLOR][/B]"
+
+msgctxt "#30232"
+msgid "[B][COLOR ff0099ff]SETTINGS[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]EINSTELLUNGEN[/COLOR][/B]"
+
+#empty strings from id 30233 to 30349
+# SETTINGS-DESCRIPTIONS
+
+#empty strings from id 30350 to 30500
+# WARNING/INFORMATION-MESSAGES-OK
+
+#empty strings from id 30501 to 30520
+# WARNING/INFORMATION-MESSAGES-NOTIFICATION
+
+msgctxt "#30521"
+msgid "WdW - Videothek : [COLOR red]!!! {0:s} - ERROR !!![/COLOR]"
+msgstr "WdW - Videothek : [COLOR red]!!! {0:s} - ERROR !!![/COLOR]"
+
+msgctxt "#30522"
+msgid "[COLOR red]An error has occured, please check *LOG* ![/COLOR]"
+msgstr "[COLOR red]Es ist ein Fehler aufgetreten, bitte *LOG* einsehen ![/COLOR]"
+
+msgctxt "#30523"
+msgid "ERROR = [COLOR red]NO Stream entry found ![/COLOR]"
+msgstr "ERROR = [COLOR red]KEIN Stream-Eintrag gefunden ![/COLOR]"
+
+#empty strings from id 30524 to 30600
+# PLUGIN-MAIN and SIDEMENU
+
+msgctxt "#30601"
+msgid "All Broadcasts"
+msgstr "Alle Sendungen"
+
+msgctxt "#30602"
+msgid "Themes"
+msgstr "Themen"
+
+msgctxt "#30603"
+msgid "Search ..."
+msgstr "Suche ..."
+
+msgctxt "#30604"
+msgid "WdW Settings"
+msgstr "WdW Einstellungen"
+
+msgctxt "#30610"
+msgid "[COLOR orangered]Next Page  >>>[/COLOR]"
+msgstr "[COLOR orangered]Nächste Seite  >>>[/COLOR]"
+
+msgctxt "#30611"
+msgid "     [COLOR deepskyblue](NO VIDEO)[/COLOR]"
+msgstr "     [COLOR deepskyblue](KEIN VIDEO)[/COLOR]"
