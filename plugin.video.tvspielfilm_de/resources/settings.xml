@@ -23,9 +23,4 @@
 		<setting label="30351" type="text" option="readable"/>
 		<setting label="30352" type="text" option="readable"/>
 	</category>
-	<category label="30002">
-		<setting label="30236" type="lsep"/>
-		<setting label="30117" type="bool" id="forceView" default="false"/>
-		<setting label="30118" type="number" id="viewID" default="51" enable="eq(-1,true)"/>
-	</category>
 </settings>

@@ -1,20 +1,19 @@
-# Kodi Media Center language file
+﻿# Kodi Media Center language file
 # Addon Name: TV Spielfilm - Das Beste aus den Mediatheken
 # Addon id: plugin.video.tvspielfilm_de
-# Addon version: 1.1.3
 # Addon Provider: realvito
 msgid ""
 msgstr ""
 "Project-Id-Version: KODI-Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
 "POT-Creation-Date: 2018-01-31 13:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Last-Translator: realvito\n"
 "Language-Team: LANGUAGE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
+"Language: en_GB\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "Addon Summary"
@@ -22,10 +21,10 @@ msgid "The best from TV-Spielfilm"
 msgstr ""
 
 msgctxt "Addon Description"
-msgid "@realvito[CR]The best from german Mediatheken, selected and compiled by the magazine TV-Spielfilm (www.tvspielfilm.de).[CR][CR]For more information about all new features see - CHANGELOG.[CR]     HAVE FUN"
+msgid "The best from german Mediatheken, selected and compiled by the magazine TV-Spielfilm (www.tvspielfilm.de).[CR][CR]For more information about all new features see - CHANGELOG.[CR]     HAVE FUN"
 msgstr ""
 
-#strings start
+# strings start
 # SETTINGS-CATEGORIES
 
 msgctxt "#30000"
@@ -36,11 +35,7 @@ msgctxt "#30001"
 msgid "Playback"
 msgstr ""
 
-msgctxt "#30002"
-msgid "View"
-msgstr ""
-
-#empty strings from id 30003 to 30109
+# empty strings from id 30002 to 30109
 # SETTINGS-BUTTONS
 
 msgctxt "#30110"
@@ -71,15 +66,7 @@ msgctxt "#30116"
 msgid "     Preferred Video-file format at ARD+ZDF  [COLOR yellow](m3u8|mp4)[/COLOR]"
 msgstr ""
 
-msgctxt "#30117"
-msgid "     Force View"
-msgstr ""
-
-msgctxt "#30118"
-msgid "     ViewID"
-msgstr ""
-
-#empty strings from id 30119 to 30229
+# empty strings from id 30117 to 30229
 # SETTINGS-TITLES
 
 msgctxt "#30230"
@@ -106,11 +93,7 @@ msgctxt "#30235"
 msgid "[B][COLOR ff0099ff]INFO[/COLOR][/B]"
 msgstr ""
 
-msgctxt "#30236"
-msgid "[B][COLOR ff0099ff]VIEW[/COLOR][/B]"
-msgstr ""
-
-#empty strings from id 30237 to 30349
+# empty strings from id 30236 to 30349
 # SETTINGS-DESCRIPTIONS
 
 msgctxt "#30350"
@@ -125,23 +108,15 @@ msgctxt "#30352"
 msgid "     • [COLOR chartreuse]Setting choose »[/COLOR]mp4[COLOR chartreuse]«[/COLOR] •"
 msgstr ""
 
-#empty strings from id 30353 to 30500
-# WARNING-MESSAGES-OK
+# empty strings from id 30353 to 30500
+# WARNING/INFORMATION-MESSAGES-OK
 
 msgctxt "#30501"
-msgid "Unknown version - NOT determinable"
-msgstr ""
-
-msgctxt "#30502"
-msgid "[COLOR orangered]ATTENTION : ... the installed PYTHONVERSION : *[/COLOR][COLOR gold]{0:s}[/COLOR][COLOR orangered]* is too old !!![/COLOR][CR]Please update to KODI-Krypton (version 17 or higher) or -FTMC !!!"
-msgstr ""
-
-msgctxt "#30503"
 msgid "[COLOR orangered]ATTENTION : ... there is a problem with the Network !!![/COLOR][CR]Either the requested Webpage is not available at the moment or ...[CR]... check your Internet connection works ?!"
 msgstr ""
 
-#empty strings from id 30504 to 30520
-# WARNING-MESSAGES-NOTIFICATION
+# empty strings from id 30502 to 30520
+# WARNING/INFORMATION-MESSAGES-NOTIFICATION
 
 msgctxt "#30521"
 msgid "TV-Spielfilm : [COLOR red]!!! TS - MediathekURL - ERROR !!![/COLOR]"
@@ -163,7 +138,7 @@ msgctxt "#30525"
 msgid "ERROR = [COLOR red]The requested *VideoLink* does NOT exist ![/COLOR]"
 msgstr ""
 
-#empty strings from id 30526 to 30600
+# empty strings from id 30526 to 30600
 # PLUGIN-MAIN-SIDEMENU
 
 msgctxt "#30601"
