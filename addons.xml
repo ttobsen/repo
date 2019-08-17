@@ -975,7 +975,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.L0RE.tlc" name="TLC Mediathek" version="1.0.1" provider-name="L0RE">
+<addon id="plugin.video.L0RE.tlc" name="TLC Mediathek" version="1.0.2" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 	</requires>
@@ -1000,14 +1000,8 @@
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.0.1  (14.07.2019)[/COLOR][/B] by realvito[CR]
-- fixed: Vereinzelt werden KEINE Episoden angezeigt, obwohl Sie vorhanden sind (z.B. Specials)
-- added: Rubrik = Alle Sendungen, Themen
-- added: Nächste Seite zum weiterblättern in Rubriken
-- added: Videos mit -inputstream.adaptive- abspielen (settings)
-- added: Neueste Episoden im Ordner oben anzeigen oder weitere Sortiermethoden (settings)
-- added: Eigene TLC-Favoriten anlegen (RechtsKlick-Menü)
-- added: Sprachfiles (.po)
+		<news>[B][COLOR orangered]Version 1.0.2  (17.08.2019)[/COLOR][/B] by realvito[CR]
+- fixed: Rubrik = Themen - Ordner ist leer
 		</news>
 	</extension>
 </addon>
@@ -1570,27 +1564,39 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="plugin.video.L0RE.weltderwunder" name="Welt der Wunder" version="0.2.1" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
-        <import addon="script.module.requests" version="2.12.4"/>
-        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="de">Videoportal von Welt der Wunder</summary>
-    <summary lang="en">Videoportal von Welt der Wunder</summary>
-    <description lang="en">Videoportal von Welt der Wunder</description>
-    <description lang="de">Videoportal von Welt der Wunder</description>
-    <website></website>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.L0RE.weltderwunder</source>
-    <forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
+<addon id="plugin.video.L0RE.weltderwunder" name="Welt der Wunder" version="1.0.1" provider-name="L0RE">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
+		<import addon="script.module.youtube.dl"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de_DE">Videoportal von Welt der Wunder</summary>
+		<summary lang="en_GB">Videoportal of Welt der Wunder</summary>
+		<description lang="de_DE">Jeden Tag, rund um die Uhr und mit immer vielfältigeren Inhalten: Dokumentationen, Reportagen, Magazine und demnächst mit noch nie dagewesenen, neuen Formaten - so schlägt das Herz von Welt der Wunder TV !</description>
+		<description lang="en_GB">Every day, around the clock and with ever more diverse content: documentaries, reportages, magazines and soon with unprecedented new formats - that's what the heart of the World of Miracles TV !</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+		<website>http://www.weltderwunder.de</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.L0RE.weltderwunder</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 1.0.1  (17.08.2019)[/COLOR][/B] by realvito[CR]
+- fixed: Rubrik = Sendungen Fehler beim öffnen des Ordners
+- fixed: Rubrik = Themen es wird KEIN Inhalt angezeigt
+- fixed: Videos können nicht abgespielt werden (läuft jetzt über "script.module.youtube.dl")
+		</news>
+	</extension>
 </addon>
 
 <addon id="script.fritz.anaus" name="FritzPower Adapter An/Aus" version="0.2.1" provider-name="L0RE">
@@ -4247,7 +4253,7 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 </extension>
 </addon>
 
-<addon id="plugin.video.L0RE.dmax" name="DMAX Mediathek" version="1.0.6" provider-name="L0RE">
+<addon id="plugin.video.L0RE.dmax" name="DMAX Mediathek" version="1.0.7" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="service.L0RE.cron" version="1.0.1" optional="true"/>
@@ -4273,10 +4279,9 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.0.6+1.0.5  (30.06.2019)[/COLOR][/B] by realvito[CR]
-- returned: Änderungen in Zeile 638 verworfen !!!
-- fixed: UnicodeDecodeError: 'ascii' codec can't decode...
-- optimized: Serienordner mit neuen Episoden - gekennzeichnet (@mobsean)
+		<news>[B][COLOR orangered]Version 1.0.7  (17.08.2019)[/COLOR][/B] by realvito[CR]
+- fixed: Rubrik = Themen - Ordner ist leer
+- added: Weitere Sortiermethoden für Episoden u.a. Name, Datum, Dauer (settings)
 		</news>
 	</extension>
 </addon>
