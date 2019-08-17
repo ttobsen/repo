@@ -95,26 +95,34 @@ msgstr ""
 # WARNING/INFORMATION-MESSAGES-NOTIFICATION
 
 msgctxt "#30521"
-msgid "[COLOR red]Currently NO videos of :[/COLOR]"
+msgid "TLC Mediathek : [COLOR red]!!! ID - [/COLOR][COLOR blue]{0:s}[/COLOR][COLOR red] - ERROR !!![/COLOR]"
 msgstr ""
 
 msgctxt "#30522"
-msgid "* [COLOR blue]{0:s}[/COLOR] * in the TLC-Videothek"
+msgid "ERROR = [COLOR red]This Series is no longer in the TLC-Videothek ![/COLOR]"
 msgstr ""
 
 msgctxt "#30523"
-msgid "My TLC-Favourites :"
+msgid "[COLOR red]Currently NO videos of :[/COLOR]"
 msgstr ""
 
 msgctxt "#30524"
-msgid "* [COLOR blue]{0:s}[/COLOR] *[COLOR FF008B00] successfully added !!![/COLOR]"
+msgid "* [COLOR blue]{0:s}[/COLOR] * in the TLC-Videothek"
 msgstr ""
 
 msgctxt "#30525"
+msgid "My TLC-Favourites :"
+msgstr ""
+
+msgctxt "#30526"
+msgid "* [COLOR blue]{0:s}[/COLOR] *[COLOR FF008B00] successfully added !!![/COLOR]"
+msgstr ""
+
+msgctxt "#30527"
 msgid "* [COLOR blue]{0:s}[/COLOR] *[COLOR red] has been deleted !!![/COLOR]"
 msgstr ""
 
-# empty strings from id 30526 to 30600
+# empty strings from id 30528 to 30600
 # PLUGIN-MAIN and SIDEMENU
 
 msgctxt "#30601"

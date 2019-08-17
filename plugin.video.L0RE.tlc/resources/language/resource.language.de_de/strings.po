@@ -95,26 +95,34 @@ msgstr "[COLOR orangered]ACHTUNG : ... das benötigte Addon *[/COLOR][COLOR yell
 # WARNING/INFORMATION-MESSAGES-NOTIFICATION
 
 msgctxt "#30521"
+msgid "TLC Mediathek : [COLOR red]!!! ID - [/COLOR][COLOR blue]{0:s}[/COLOR][COLOR red] - ERROR !!![/COLOR]"
+msgstr "TLC Mediathek : [COLOR red]!!! ID - [/COLOR][COLOR blue]{0:s}[/COLOR][COLOR red] - ERROR !!![/COLOR]"
+
+msgctxt "#30522"
+msgid "ERROR = [COLOR red]This Series is no longer in the TLC-Videothek ![/COLOR]"
+msgstr "ERROR = [COLOR red]Diese Serie gibt es NICHT mehr in der TLC-Videothek ![/COLOR]"
+
+msgctxt "#30523"
 msgid "[COLOR red]Currently NO videos of :[/COLOR]"
 msgstr "[COLOR red]Zurzeit KEINE Videos von :[/COLOR]"
 
-msgctxt "#30522"
+msgctxt "#30524"
 msgid "* [COLOR blue]{0:s}[/COLOR] * in the TLC-Videothek"
 msgstr "* [COLOR blue]{0:s}[/COLOR] * in der TLC-Videothek"
 
-msgctxt "#30523"
+msgctxt "#30525"
 msgid "My TLC-Favourites :"
 msgstr "Meine TLC-Favoriten :"
 
-msgctxt "#30524"
+msgctxt "#30526"
 msgid "* [COLOR blue]{0:s}[/COLOR] *[COLOR FF008B00] successfully added !!![/COLOR]"
 msgstr "* [COLOR blue]{0:s}[/COLOR] *[COLOR FF008B00] erfolgreich hinzugefügt !!![/COLOR]"
 
-msgctxt "#30525"
+msgctxt "#30527"
 msgid "* [COLOR blue]{0:s}[/COLOR] *[COLOR red] has been deleted !!![/COLOR]"
 msgstr "* [COLOR blue]{0:s}[/COLOR] *[COLOR red] wurde gelöscht !!![/COLOR]"
 
-# empty strings from id 30526 to 30600
+# empty strings from id 30528 to 30600
 # PLUGIN-MAIN and SIDEMENU
 
 msgctxt "#30601"
