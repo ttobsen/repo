@@ -1,0 +1,210 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+CONST = {
+	'BASE_URL' 		: 'https://www.joyn.de',
+	'PSF_CONFIG_URL'	: 'https://psf.player.v0.maxdome.cloud/config/psf.json',
+	'PSF_URL'		: 'https://psf.player.v0.maxdome.cloud/dist/playback-source-fetcher.min.js',
+	'MIDDLEWARE_URL'	: 'https://middleware.p7s1.io/joyn/v1/',
+	'ENTITLEMENT_URL'	: 'entitlement-token/anonymous',
+	'IP_API_URL'		: 'http://ip-api.com/json',
+
+	'PSF_VARS_IDX'		: {
+					'SECRET' : 1184
+				  },
+
+	'COUNTRIES'		: {
+					 'DE' : {
+							'language'    : 'de',
+							'setting_id'  : '1',
+						},
+				  },
+
+	'PATH'			: {
+
+					'SEASON'	: {
+								'PATH'	      	: 	'seasons',
+								'QUERY_PARAMS' 	: 	{	'tvShowId' 		: '##tvShowId##',
+												'sortBy'   		: 'seasonsOrder',
+												'sortAscending'		: 'true',
+
+											},
+								'SELECTION'	:	'{data{id,channelId,visibilities,duration,metadata{de}}}',
+								'TEXTS'		:	{'title' : 'main', 'description' : 'main'},
+								'ART'		:	{},
+							  },
+
+					'VIDEO'		: {
+								'PATH'	      	: 	'videos',
+								'QUERY_PARAMS' 	: 	{	'tvShowId' 		: '##tvShowId##',
+												'seasonId'   		: '##seasonId##',
+												'sortBy'		: 'seasonsOrder',
+												'sortAscending'		: 'true',
+												'skip'			: '0',
+											},
+								'SELECTION'	:	'{totalCount,data{id,type,startTime,endTime,agofCode,path(context:"web", region:"de", type:"cmsPath"){path},tvShow,season,episode,duration,metadata{de},visibilities{endsAt}}}',
+								'TEXTS'		:	{'title' : 'main', 'description' : 'main'},
+								'ART'		:	{'PRIMARY'        : {'thumb'  : 'profile:original'},
+											 'ART_LOGO'       : {
+														'icon'   	: 'profile:nextgen-web-artlogo-183x75',
+														'clearlogo'	: 'profile:nextgen-web-artlogo-183x75',
+													    },
+											 'HERO_LANDSCAPE' : {'fanart' : 'profile:nextgen-web-herolandscape-1920x'},
+											 'HERO_PORTRAIT'  : {'poster' : 'profile:nextgen-webphone-heroportrait-563x'},
+											},
+
+							  },
+
+					'BRAND'		: {
+								'PATH'		:	'brands',
+								'QUERY_PARAMS' 	: 	{},
+								'SELECTION'	:	'{data{id,channelId,agofCodes,metadata{de}}}',
+								'TEXTS'		:	{'title' : 'main', 'description' : 'seo'},
+								'ART'		:	{'BRAND_LOGO'  : {
+													'icon'   	: 'profile:nextgen-web-artlogo-183x75',
+													'thumb'  	: 'profile:original',
+													'clearlogo'	: 'profile:nextgen-web-artlogo-183x75',
+												},
+											},
+							  },
+
+					'TVSHOW'	: {
+								'PATH'		:	'tvshows',
+								'QUERY_PARAMS' 	: 	{
+												'channelId'		: '##channelId##',
+												'limit'			: '250',
+												'skip'			: '0',
+											},
+								'SELECTION'	:	'{totalCount,data{id,type,startTime,endTime,metadata{de{ageRatings,copyrights ,numberOfSeasons,seasons,id,genres,images{type,url,accentColors},seo,channelObject{classIdentifier,bundleId},type,bundleId,classIdentifier,titles,descriptions}},baseUrl,path(context:"web", region:"de", type:"cmsPath"),brand,channelId,tvShow,season,episode,status}}',
+								'TEXTS'		:	{'title' : 'main', 'description' : 'main'},
+								'ART'		:	{'PRIMARY'        : {'thumb'  : 'profile:original'},
+											 'ART_LOGO'       : {
+														'icon'   	: 'profile:nextgen-web-artlogo-183x75',
+														'clearlogo'	: 'profile:nextgen-web-artlogo-183x75',
+													    },
+											 'HERO_LANDSCAPE' : {'fanart' : 'profile:nextgen-web-herolandscape-1920x'},
+											 'HERO_PORTRAIT'  : {'poster' : 'profile:nextgen-webphone-heroportrait-563x'},
+											},
+
+							  },
+					'EPG'		: {
+								'PATH'		: 'epg',
+								'QUERY_PARAMS'	: {
+											'skip'	 	: '0',
+											'from'	 	: '##from##',
+											'to'	 	: '##to##',
+											'sortBy' 	: 'startTime',
+											'sortAscending'	: 'true',
+											'limit'		: '5000',
+										  },
+								'SELECTION'	: '{totalCount,data{id,title,description,tvShow,type,tvChannelName,channelId,startTime,endTime,video,images(subType:"cover"){url,subType}}}',
+								'IMG_PROFILE'	: 'profile:original',
+							  },
+					'FETCH'		: {	'PATH'		: 'fetch/',
+								'QUERY_PARAMS'	: {},
+								'SELECTION'	: '{data{id,visibilities, channelId ,agofCodes,duration,metadata{de}}}',
+								'TEXTS'		:	{'title' : 'main', 'description' : 'main'},
+								'ART'		:	{'PRIMARY'        : {'thumb'  : 'profile:original'},
+											 'ART_LOGO'       : {
+														'icon'   	: 'profile:nextgen-web-artlogo-183x75',
+														'clearlogo'	: 'profile:nextgen-web-artlogo-183x75',
+													    },
+											 'HERO_LANDSCAPE' : {'fanart' : 'profile:nextgen-web-herolandscape-1920x'},
+											 'HERO_PORTRAIT'  : {'poster' : 'profile:nextgen-webphone-heroportrait-563x'},
+											},
+							  },
+					'TVSHOWS'	: {	'PATH'		: 'tvshows',
+								'QUERY_PARAMS'	: {
+											'ids' 	: '##ids##',
+											'limit'	: '1000',
+										},
+								'SELECTION'	: '{totalCount,data{id,type,startTime,endTime,metadata{de{ageRatings,copyrights ,numberOfSeasons,seasons,id,genres,images{type,url,accentColors},seo,channelObject{classIdentifier,bundleId},type,bundleId,classIdentifier,titles,descriptions}},baseUrl,path(context:"web", region:"de", type:"cmsPath"),brand,channelId,tvShow,season,episode,status}}',
+								'TEXTS'		:	{'title' : 'main', 'description' : 'main'},
+								'ART'		:	{'PRIMARY'        : {'thumb'  : 'profile:original'},
+											 'ART_LOGO'       : {
+														'icon'   	: 'profile:nextgen-web-artlogo-183x75',
+														'clearlogo'	: 'profile:nextgen-web-artlogo-183x75',
+													    },
+											 'HERO_LANDSCAPE' : {'fanart' : 'profile:nextgen-web-herolandscape-1920x'},
+											 'HERO_PORTRAIT'  : {'poster' : 'profile:nextgen-webphone-heroportrait-563x'},
+											},
+							  },
+					'SEASONS'	: {
+								'PATH'	      	: 	'seasons',
+								'QUERY_PARAMS' 	: 	{	'ids'	: '##ids##',
+												'limit'	: '1000',
+
+											},
+								'SELECTION'	:	'{data{id,channelId,visibilities,duration,metadata{de}}}',
+								'TEXTS'		:	{'title' : 'main', 'description' : 'main'},
+								'ART'		:	{},
+							  },
+
+				  },
+	'EPG'			: {
+					'REQUEST_HOURS'		: 20,
+					'REQUEST_OFFSET_HOURS'	: 10,
+				  },
+
+	'CACHE_DIR'		: 'cache',
+	'TEMP_DIR'		: 'tmp',
+	'DATA_DIR'		: 'data',
+	'CACHE'			: {
+					'CONFIG'	: { 'key' : 'config', 'expires' : 3600 },
+					'EPG'		: { 'key' : 'epg', 'expires': 36000 },
+					'BRANDS'	: { 'key' : 'brands', 'expires' : 36000 },
+				  },
+	'LASTSEEN_ITEM_COUNT'	: 20,
+	'UPEG_REFRESH_INTERVAL'	: 7200,
+	'UPEG_ROWCOUNT'		: 5,
+	'INPUTSTREAM_ADDON'	: 'inputstream.adaptive',
+	'MSG_IDS'		: {
+					'ADD_TO_WATCHLIST'		: 30651,
+					'ADD_TO_WATCHLIST_PRX'		: 30653,
+					'REMOVE_FROM_WATCHLIST'		: 30652,
+					'REMOVE_FROM_WATCHLIST_PRFX'	: 30654,
+					'MEDIA_LIBRARY'			: 30622,
+					'CATEGORY'			: 30623,
+					'TV_SHOW'			: 30624,
+					'SEASON'			: 30625,
+					'EPISODE'			: 30625,
+					'WATCHLIST'			: 30601,
+					'MEDIA_LIBRARIES'		: 30602,
+					'CATEGORIES'			: 30603,
+					'SEARCH'			: 30604,
+					'LIVE_TV'			: 30605,
+					'TV_GUIDE'			: 30606,
+					'MEDIA_LIBRARIES_PLOT'		: 30608,
+					'CATEGORIES_PLOT'		: 30609,
+					'WATCHLIST_PLOT'		: 30607,
+					'SEARCH_PLOT'			: 30610,
+					'LIVE_TV_PLOT'			: 30611,
+					'TV_GUIDE_PLOT'			: 30612,
+					'WL_TYPE_ADDED'			: 30526,
+					'WL_TYPE_REMOVED'		: 30527,
+					'MSG_INPUSTREAM_NOT_ENABLED'	: 30501,
+					'MSG_WIDEVINE_NOT_FOUND'	: 30502,
+					'MSG_NO_SEARCH_RESULTS'		: 30525,
+					'MSG_NO_FAVS_YET'		: 30528,
+					'MSG_FAVS_UNAVAILABLE'		: 30529,
+					'ERROR'				: 30521,
+					'MSG_ERR_TRY_AGAIN'		: 30522,
+					'MSG_ERROR_CONFIG_DECRYPTION'	: 30523,
+					'MSG_ERROR_NO_VIDEOSTEAM'   	: 30524,
+					'LIVETV_TITLE'			: 30655,
+					'LIVETV_UNTIL'			: 30656,
+					'LIVETV_UNTIL_AND_NEXT'		: 30657,
+					'MIN_AGE'			: 30658,
+					'VIDEO_AVAILABLE'		: 30650,
+					'SEASON_NO'			: 30621,
+					'MSG_CONFIG_VALUES_INCOMPLETE'	: 30530,
+					'MSG_NO_ACCESS_TO_URL'		: 30531,
+					'MSG_COUNTRY_NOT_DETECTED'	: 30532,
+					'MSG_COUNTRY_INVALID'		: 30533,
+					'CANCEL'			: 30503,
+					'OPEN_ADDON_SETTINGS'		: 30504,
+					'CACHE_WAS_CLEARED'		: 30659,
+					'CACHE_COULD_NOT_BE_CLEARED'	: 30660,
+				},
+
+}
