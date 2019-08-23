@@ -250,7 +250,7 @@ def playLive(url, name):
 def liveTV():
 	debug("(liveTV) ------------------------------------------------ START = liveTV -----------------------------------------------")
 	items = []
-	items.append(['[COLOR lime]* Welt der Wunder - LIVE TV *[/COLOR]', 'https://live.vidoo.de/live/weltderwunder/chunklist.m3u8', icon])
+	items.append(['[COLOR lime]* Welt der Wunder - LIVE TV *[/COLOR]', 'http://live.vidoo.de/live/weltderwunder/chunklist.m3u8', icon])
 	for item in items:
 		listitem = xbmcgui.ListItem(path=item[1], label=item[0], iconImage=item[2], thumbnailImage=item[2])
 		listitem.setArt({'fanart': defaultFanart})
@@ -258,7 +258,9 @@ def liveTV():
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def cleanPhoto(string):
-	return string.replace(' ', '%20').replace('ß', '%C3%9F').replace('ä', '%C3%A4').replace('ö', '%C3%B6').replace('ü', '%C3%BC').replace('width/500', 'width/1280').strip()
+	string = py2_enc(string)
+	string = string.replace(' ', '%20').replace('ß', '%C3%9F').replace('ä', '%C3%A4').replace('ö', '%C3%B6').replace('ü', '%C3%BC').replace('width/500', 'width/1280').strip()
+	return string
 
 def parameters_string_to_dict(parameters):
 	paramDict = {}
