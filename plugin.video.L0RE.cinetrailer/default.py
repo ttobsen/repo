@@ -57,22 +57,21 @@ def parameters_string_to_dict(parameters):
 
 
 def addLink(name, url, mode, iconimage, duration="", desc="", genre='',text=""):
-	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name"+urllib.quote_plus(name)+"&text="+urllib.quote_plus(text)+"&bild="+iconimage
-	ok = True
-	liz = xbmcgui.ListItem(name, iconImage="", thumbnailImage=iconimage)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
-	liz.setProperty('IsPlayable', 'true')
-	liz.addStreamInfo('video', { 'duration' : duration })
-	liz.setProperty("fanart_image", iconimage)
-	#liz.setProperty("fanart_image", defaultBackground)
-	xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
-	ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
-	return ok
+    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name"+urllib.quote_plus(name)+"&text="+urllib.quote_plus(text)+"&bild="+iconimage
+    ok = True
+    liz = xbmcgui.ListItem(name)
+    liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
+    liz.setArt({'icon': iconimage, 'thumb': iconimage, 'fanart': iconimage})
+    liz.setProperty('IsPlayable', 'true')
+    liz.addStreamInfo('video', { 'duration' : duration })
+    xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
+    ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
+    return ok
 
 def addDir(name, url, mode, iconimage, desc="",text="",page="",addtype=0,stunden=""):
     u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&text="+str(text)+"&page="+str(page)+"&name"+str(name)
     ok = True
-    liz = xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
+    liz = xbmcgui.ListItem(name)
     if addtype==1:
       commands = []  
       updatestd=addon.getSetting("updatestd")
@@ -82,6 +81,7 @@ def addDir(name, url, mode, iconimage, desc="",text="",page="",addtype=0,stunden
       commands.append(( "Add to library", 'XBMC.RunPlugin('+ link +')'))
       liz.addContextMenuItems( commands )
     liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
+    liz.setArt({'thumb': iconimage})
     ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
     return ok
 
