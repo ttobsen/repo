@@ -2258,7 +2258,7 @@ To support the backport the addon will now always create the merged_epg.xml.gz
   </extension>
 </addon>
 
-<addon id="plugin.video.zappntv" name="Zappn TV" version="1.2.1" provider-name="fayer3">
+<addon id="plugin.video.zappntv" name="Zappn TV" version="1.2.2" provider-name="fayer3">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.routing" version="0.2.0"/>
@@ -2283,7 +2283,9 @@ To support the backport the addon will now always create the merged_epg.xml.gz
         <email>fb4472 (at) aon.at</email>
         <source>https://github.com/fayer3/plugin.video.zappntv</source>
         <news>- Möglichkeit hinzugefügt, Serien über Rechtsklick zu favoriten hinzuzufügen
-- Suche auf Betriebsystemen mit Multiprozess unterstützung beschleunigt (alles außer Android)</news>
+- Suche auf Betriebsystemen mit Multiprozess unterstützung beschleunigt (alles außer Android)
+1.2.2:
+- pfade für neue plugin routing addon angepasst, zerstört leider alte gespeicherte Favoriten, diese müssen neu hinzugefügt werden.</news>
         <assets>
             <icon>resources/icon.png</icon>
             <fanart>resources/fanart.png</fanart>
