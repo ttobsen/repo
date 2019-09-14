@@ -2,18 +2,30 @@ import requests
 import time
 import base64
 import json
+import mechanize
+import cookielib
+import xbmc
 
 
 class Waipu:
     user_agent = "kodi plugin for waipu.tv (python)"
 
-    def __init__(self, username, password):
+    def __init__(self, username, password, provider):
         self._auth = None
         self.logged_in = False
         self.__username = username
         self.__password = password
+        self.__provider = provider # 0 = waipu, 1 = O2
 
     def fetchToken(self):
+        if self.__provider == 0:
+            # waipu
+            return self.fetchTokenWaipu()
+        else:
+            # O2
+            return self.fetchTokenO2()
+
+    def fetchTokenWaipu(self):
         url = "https://auth.waipu.tv/oauth/token"
         payload = {'username': self.__username, 'password': self.__password, 'grant_type': 'password'}
         headers = {'User-Agent': self.user_agent,
@@ -26,6 +38,46 @@ class Waipu:
             self._auth["expires"] = time.time() + self._auth["expires_in"]
         return r.status_code
 
+    def fetchTokenO2(self):
+        br = mechanize.Browser()
+        cj = cookielib.CookieJar()
+        br.set_cookiejar(cj)
+        br.set_handle_equiv(False)
+        br.set_handle_robots(False)
+        br.addheaders = [('authority', 'o2api.waipu.tv'),
+                         ('User-agent', 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1')]
+        br.set_handle_redirect(mechanize.HTTPRedirectHandler)
+        response = br.open("https://o2api.waipu.tv/api/o2/login/token?redirectUri=https%3A%2F%2Fo2tv.waipu.tv%2F&inWebview=true")
+
+        # print("login resp: "+response.read())
+
+        br.select_form("Login")
+
+        control = br.form.find_control("IDToken1")
+        control.value = self.__username
+
+        control = br.form.find_control("IDToken2")
+        control.value = self.__password
+
+        response = br.submit()
+
+        response_plain = str(response.read())
+        # print("final-site: " + response_plain)
+
+        if response_plain.find("Ihre Eingabe ist ung&uuml;ltig. Falls Sie einen Business Tarif bei") != -1:
+            # invalid login credentials
+            return 401
+
+        for cookie in cj:
+            if cookie.name == "user_token":
+                # print("Cookie: "+cookie.value)
+                self._auth = {'access_token': str(cookie.value).strip(), "expires": time.time() + 3600}
+
+                self.logged_in = True
+                return 200
+
+        return -1
+
     def getToken(self):
         if self._auth is None or self._auth["expires"] <= time.time():
             code = self.fetchToken()
@@ -36,16 +88,26 @@ class Waipu:
         # TODO: renew token
         return self._auth['access_token']
 
+    def decodeToken(self, token):
+        jwtheader, jwtpayload, jwtsignature = token.split(".")
+        jwtpayload = jwtpayload.replace("_", "/").replace("-", "+")
+        try:
+            jwtpayload_decoded = base64.b64decode(jwtpayload + '=' * (-len(jwtpayload) % 4))
+        except TypeError:
+            xbmc.log("base64 padding error: " + str(jwtpayload), level=xbmc.LOGERROR)
+            raise
+
+        jwt_json = json.loads(jwtpayload_decoded)
+        return jwt_json
+
+
     def getAccountDetails(self):
         try:
             token = self.getToken()
         except Exception as e:
             return {'error': str(e)}
         if token:
-            jwtheader, jwtpayload, jwtsignature = token.split(".")
-            jwtpayload_decoded = base64.b64decode(jwtpayload + '=' * (-len(jwtpayload) % 4))
-            jwt_json = json.loads(jwtpayload_decoded)
-            return jwt_json
+            return self.decodeToken(token)
         return {'error': 'unknown'}
 
     def getLicense(self):
@@ -56,23 +118,19 @@ class Waipu:
         return license_str
 
     def getAccountChannels(self):
-        jwtheader, jwtpayload, jwtsignature = self.getToken().split(".")
-        jwtpayload_decoded = base64.b64decode(jwtpayload + '=' * (-len(jwtpayload) % 4))
-        jwt_json = json.loads(jwtpayload_decoded)
-
+        jwt_json = self.decodeToken(self.getToken())
         acc_channels = []
         acc_channels += jwt_json["userAssets"]["channels"]["SD"]
         acc_channels += jwt_json["userAssets"]["channels"]["HD"]
         return acc_channels
 
-
-    def getChannels(self, epg_hours_future = 0):
+    def getChannels(self, epg_hours_future=0):
         self.getToken()
 
-        starttime = time.strftime("%Y-%m-%dT%H:%M:%S",time.localtime());
-        endtime = time.strftime("%Y-%m-%dT%H:%M:%S",time.localtime(time.time() + int(epg_hours_future)*60*60))
+        starttime = time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime());
+        endtime = time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime(time.time() + int(epg_hours_future) * 60 * 60))
 
-        url = "https://epg.waipu.tv/api/programs?includeRunningAtStartTime=true&startTime="+starttime+"&stopTime="+endtime
+        url = "https://epg.waipu.tv/api/programs?includeRunningAtStartTime=true&startTime=" + starttime + "&stopTime=" + endtime
         headers = {'User-Agent': self.user_agent,
                    'Accept': 'application/vnd.waipu.epg-channels-and-programs-v1+json',
                    'Authorization': 'Bearer ' + self._auth['access_token']}
@@ -108,7 +166,7 @@ class Waipu:
         headers = {'User-Agent': self.user_agent,
                    'Authorization': 'Bearer ' + self._auth['access_token'],
                    'Accept': 'application/vnd.waipu.epg-program-v1+json'}
-        url = "https://epg.waipu.tv/api/channels/"+channelId+"/programs/current"
+        url = "https://epg.waipu.tv/api/channels/" + channelId + "/programs/current"
         r = requests.get(url, headers=headers)
         return r.json()
 
@@ -117,7 +175,7 @@ class Waipu:
 
         payload = {'network': 'wlan'}
         headers = {'User-Agent': self.user_agent,
-            'Authorization': 'Bearer ' + self._auth['access_token']}
+                   'Authorization': 'Bearer ' + self._auth['access_token']}
         r = requests.get(playouturl, data=payload, headers=headers)
         return r.json()
 
