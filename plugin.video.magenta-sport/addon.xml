@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.magenta-sport" version="1.2.8" name="Magenta Sport" provider-name="Maven">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="script.module.pydes" version="2.0.1"/>
+        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+        <import addon="script.module.requests" version="2.12.4"/>
+        <import addon="script.module.inputstreamhelper" version="0.3.3"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <assets>
+            <icon>resources\icon.png</icon>
+            <fanart>resources\fanart.jpg</fanart>
+            <screenshot>resources\screen_1.png</screenshot>
+            <screenshot>resources\screen_2.png</screenshot>
+            <screenshot>resources\screen_3.png</screenshot>
+        </assets>
+        <summary lang="de_DE">Magenta Sport</summary>
+        <description lang="de_DE">Magenta Sport ist ein Portal für Live Eishockey, Basketball, 3. Lig, Sky Handball, Sky Bundeliga/Champions-League Konferenzen &amp; Frauenfußball Bundesliga Übertragungen.</description>
+        <disclaimer lang="de_DE">Inoffizielles Addon - Benutzung auf eigene Gefahr. Das Plugin wurde nicht von der Deutschen Telekom beauftragt &amp; bereitgestellt.</disclaimer>
+        <summary lang="en_GB">Magenta Sport</summary>
+        <description lang="en_GB">Magenta Sport is a portal for live Icehockey, Basketball, German 3rd Ligue, Sky Handball, Sky Bundeliga/Champions-League conferences &amp; womans football matches.</description>
+        <disclaimer lang="en_GB">Unofficial Addon - Use at your own risk. The plugin is not commisioned by Deutsche Telekom.</disclaimer>
+        <language>en de</language>
+        <platform>all</platform>
+        <license>MIT</license>
+        <website>https://www.magentasport.de/</website>
+        <source>https://github.com/kodinerds/repo/plugin.video.magenta-sport</source>
+    </extension>
+</addon>
