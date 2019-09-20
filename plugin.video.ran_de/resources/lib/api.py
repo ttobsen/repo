@@ -169,8 +169,9 @@ def get_video_url(resource, height):
         listitem = xbmcgui.ListItem(path=urld+"|"+userAgent)         
         listitem.setProperty("inputstream.adaptive.license_type", "com.widevine.alpha")
         listitem.setProperty("inputstream.adaptive.manifest_type", "mpd")
-        listitem.setProperty('inputstreamaddon', "inputstream.adaptive")             
-        xbmcplugin.setResolvedUrl(addon_handle, True, listitem)                    
+        listitem.setProperty('inputstreamaddon', "inputstream.adaptive")
+        listitem.setProperty("inputstream.adaptive.manifest_update_parameter", "full")
+        xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
         return ""
     else:
         video_id = json_data['video_id']
