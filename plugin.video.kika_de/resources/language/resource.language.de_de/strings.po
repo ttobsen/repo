@@ -1,0 +1,222 @@
+﻿# Kodi Media Center language file
+# Addon Name: KiKA+
+# Addon id: plugin.video.kika_de
+# Addon Provider: realvito
+msgid ""
+msgstr ""
+"Project-Id-Version: KODI-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
+"POT-Creation-Date: 2019-08-31 17:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: realvito\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de_DE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "KIKA media library"
+msgstr "KIKA Mediathek"
+
+msgctxt "Addon Description"
+msgid "KiKA - the kids channel from ARD and ZDF."
+msgstr "KiKA - der Kinderkanal von ARD und ZDF."
+
+#strings start
+# SETTINGS-CATEGORIES
+
+msgctxt "#30000"
+msgid "General"
+msgstr "Allgemein"
+
+msgctxt "#30001"
+msgid "Advanced"
+msgstr "Fortgeschritten"
+
+#empty strings from id 30001 to 30109
+# SETTINGS-BUTTONS
+
+msgctxt "#30110"
+msgid "     Show RUBRIK: New Videos"
+msgstr "     Zeige RUBRIK: Neue Videos"
+
+msgctxt "#30111"
+msgid "     Show RUBRIK: KiKANiNCHEN"
+msgstr "     Zeige RUBRIK: KiKANiNCHEN"
+
+msgctxt "#30112"
+msgid "     Show RUBRIK: Videos from 3 years"
+msgstr "     Zeige RUBRIK: Videos ab 3 Jahren"
+
+msgctxt "#30113"
+msgid "     Show RUBRIK: Videos from 6 years"
+msgstr "     Zeige RUBRIK: Videos ab 6 Jahren"
+
+msgctxt "#30114"
+msgid "     Show RUBRIK: Videos from 10 years"
+msgstr "     Zeige RUBRIK: Videos ab 10 Jahren"
+
+msgctxt "#30115"
+msgid "     Show RUBRIK: All Videos"
+msgstr "     Zeige RUBRIK: Alle Videos"
+
+msgctxt "#30116"
+msgid "     Preferred video resolution"
+msgstr "     Bevorzugte Video-Auflösung"
+
+msgctxt "#30117"
+msgid "Good HD Quality - 720p  [COLOR yellow](1280x720)[/COLOR]"
+msgstr "Gute HD Qualität - 720p  [COLOR yellow](1280x720)[/COLOR]"
+
+msgctxt "#30118"
+msgid "Quality - 540p  [COLOR yellow](960x540)[/COLOR]"
+msgstr "Qualität - 540p  [COLOR yellow](960x540)[/COLOR]"
+
+msgctxt "#30119"
+msgid "Quality - 576p  [COLOR yellow](720x576)[/COLOR]"
+msgstr "Qualität - 576p  [COLOR yellow](720x576)[/COLOR]"
+
+msgctxt "#30120"
+msgid "Quality - 360p  [COLOR yellow](640x360)[/COLOR]"
+msgstr "Qualität - 360p  [COLOR yellow](640x360)[/COLOR]"
+
+msgctxt "#30121"
+msgid "Quality - 288p  [COLOR yellow](512x288)[/COLOR]"
+msgstr "Qualität - 288p  [COLOR yellow](512x288)[/COLOR]"
+
+msgctxt "#30122"
+msgid "Quality - 270p  [COLOR yellow](480x270)[/COLOR]"
+msgstr "Qualität - 270p  [COLOR yellow](480x270)[/COLOR]"
+
+msgctxt "#30123"
+msgid "Quality - 180p  [COLOR yellow](320x180)[/COLOR]"
+msgstr "Qualität - 180p  [COLOR yellow](320x180)[/COLOR]"
+
+msgctxt "#30124"
+msgid "     If avail. show broadcast date in title"
+msgstr "     Wenn vorh. Ausstrahlungsdatum im Titel anzeigen"
+
+msgctxt "#30125"
+msgid "     Use Thumb as Background-Fanart"
+msgstr "     Thumb als Hintergrund-Fanart nutzen"
+
+msgctxt "#30126"
+msgid "     Show Addon-Settings in the overview"
+msgstr "     Addon-Einstellungen in der Übersicht anzeigen"
+
+msgctxt "#30127"
+msgid "     Max. listed pages of a Series [COLOR yellow](time consuming)[/COLOR]"
+msgstr "     Max. gelistete Seiten einer Serie [COLOR yellow](zeitaufwendig)[/COLOR]"
+
+msgctxt "#30128"
+msgid "     Force View"
+msgstr "     Darstellungsansicht forcieren"
+
+msgctxt "#30129"
+msgid "     ViewID (Alphabet)"
+msgstr "     DarstellungsID (Alphabet)"
+
+msgctxt "#30130"
+msgid "     ViewID (Shows)"
+msgstr "     DarstellungsID (Sendungen)"
+
+msgctxt "#30131"
+msgid "     ViewID (Videos)"
+msgstr "     DarstellungsID (Videos)"
+
+#empty strings from id 30132 to 30229
+# SETTINGS-TITLES
+
+msgctxt "#30230"
+msgid "[B][COLOR ff0099ff]FOLDER[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]ORDNER[/COLOR][/B]"
+
+msgctxt "#30231"
+msgid "[B][COLOR ff0099ff]PLAY[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]ABSPIELEN[/COLOR][/B]"
+
+msgctxt "#30232"
+msgid "[B][COLOR ff0099ff]TITLE[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]TITEL[/COLOR][/B]"
+
+msgctxt "#30233"
+msgid "[B][COLOR ff0099ff]FANART[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]FANART[/COLOR][/B]"
+
+msgctxt "#30234"
+msgid "[B][COLOR ff0099ff]SETTINGS[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]EINSTELLUNGEN[/COLOR][/B]"
+
+msgctxt "#30235"
+msgid "[B][COLOR ff0099ff]EPISODES[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]EPISODEN[/COLOR][/B]"
+
+msgctxt "#30236"
+msgid "[B][COLOR ff0099ff]VIEWS[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]ANSICHT[/COLOR][/B]"
+
+#empty strings from id 30237 to 30349
+# SETTINGS-DESCRIPTIONS
+
+#empty strings from id 30350 to 30500
+# WARNING/INFORMATION-MESSAGES-OK
+
+#empty strings from id 30501 to 30520
+# WARNING/INFORMATION-MESSAGES-NOTIFICATION
+
+msgctxt "#30521"
+msgid "KiKA+ Videothek : [COLOR red]!!! {0:s} - ERROR !!![/COLOR]"
+msgstr "KiKA+ Videothek : [COLOR red]!!! {0:s} - ERROR !!![/COLOR]"
+
+msgctxt "#30522"
+msgid "[COLOR red]An error has occured, please check *LOG* ![/COLOR]"
+msgstr "[COLOR red]Es ist ein Fehler aufgetreten, bitte *LOG* einsehen ![/COLOR]"
+
+msgctxt "#30523"
+msgid "ERROR = [COLOR red]The requested *VideoLink* does NOT exist ![/COLOR]"
+msgstr "ERROR = [COLOR red]Der angeforderte *VideoLink* existiert NICHT ![/COLOR]"
+
+msgctxt "#30524"
+msgid "ERROR = [COLOR red]Unfortunately no Live-Stream found ![/COLOR]"
+msgstr "ERROR = [COLOR red]Leider keinen Live-Stream gefunden ![/COLOR]"
+
+#empty strings from id 30525 to 30600
+# PLUGIN-MAIN and SIDEMENU
+
+msgctxt "#30602"
+msgid "New Videos"
+msgstr "Neue Videos"
+
+msgctxt "#30603"
+msgid "KiKANiNCHEN"
+msgstr "KiKANiNCHEN"
+
+msgctxt "#30604"
+msgid "Videos from 3 years"
+msgstr "Videos ab 3 Jahren"
+
+msgctxt "#30605"
+msgid "Videos from 6 years"
+msgstr "Videos ab 6 Jahren"
+
+msgctxt "#30606"
+msgid "Videos from 10 years"
+msgstr "Videos ab 10 Jahren"
+
+msgctxt "#30607"
+msgid "All Videos"
+msgstr "Alle Videos"
+
+msgctxt "#30608"
+msgid "[COLOR lime]* Livestream - Kinderkanal von ARD und ZDF *[/COLOR]"
+msgstr "[COLOR lime]* Livestream - Kinderkanal von ARD und ZDF *[/COLOR]"
+
+msgctxt "#30609"
+msgid "KiKA+ Settings"
+msgstr "KiKA+ Einstellungen"
+
+msgctxt "#30610"
+msgid "[COLOR orangered]Next Page  >>>[/COLOR]"
+msgstr "[COLOR orangered]Nächste Seite  >>>[/COLOR]"

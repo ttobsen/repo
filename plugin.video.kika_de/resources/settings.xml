@@ -1,9 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-   <setting id="ab3Only" type="bool" label="30105" default="false"/>
-   <setting id="playSound" type="bool" label="30104" default="true"/>
-   <setting id="useThumbAsFanart" type="bool" label="30101" default="true"/>
-   <setting id="forceViewMode" type="bool" label="30102" default="true"/>
-   <setting id="viewMode" type="number" label="30103" enable="eq(-1,true)" default="51"/>
-   <setting id="autoSelectFormat" type="bool" label="30106" default="false"/>
-   <setting id="format" type="enum" label="30107" values="320x180|480x270|512x288|640x360|720x576|960x540|1280x720"  enable="eq(-1,true)" default="6"/>
+	<category label="30000">
+		<setting label="30230" type="lsep"/>
+		<setting label="30110" type="bool" id="Newest" default="true"/>
+		<setting label="30111" type="bool" id="since00" default="true"/>
+		<setting label="30112" type="bool" id="since03" default="true"/>
+		<setting label="30113" type="bool" id="since06" default="true"/>
+		<setting label="30114" type="bool" id="since10" default="true"/>
+		<setting label="30115" type="bool" id="sinceAll" default="true"/>
+		<setting type="sep"/>
+		<setting label="30231" type="lsep"/>
+		<setting label="30116" type="select" id="prefVideoQuality" lvalues="30117|30118|30119|30120|30121|30122|30123" default="0" option="int"/>
+		<setting type="sep"/>
+		<setting label="30232" type="lsep"/>
+		<setting label="30124" type="bool" id="show_date" default="true"/>
+		<setting type="sep"/>
+		<setting label="30233" type="lsep"/>
+		<setting label="30125" type="bool" id="useThumbAsFanart" default="true"/>
+	</category>
+	<category label="30001">
+		<setting label="30234" type="lsep"/>
+		<setting label="30126" type="bool" id="show_settings" default="true"/>
+		<setting type="sep"/>
+		<setting label="30235" type="lsep"/>
+		<setting label="30127" type="slider" id="max_pages" range="5,1,14" default="8" option="int"/>
+		<setting type="sep"/>
+		<setting label="30236" type="lsep"/>
+		<setting label="30128" type="bool" id="forceView" default="false"/>
+		<setting label="30129" type="number" id="viewIDAlphabet" enable="eq(-1,true)" default="500" subsetting="true"/>
+		<setting label="30130" type="number" id="viewIDShows" enable="eq(-2,true)" default="500" subsetting="true"/>
+		<setting label="30131" type="number" id="viewIDVideos" enable="eq(-3,true)" default="500" subsetting="true"/>
+	</category>
 </settings>
