@@ -295,27 +295,39 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.kika_de" name="KIKA+" version="1.0.10" provider-name="AddonScriptorDE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="de">KIKA Mediathek</summary>
-        <summary lang="en">KIKA media library</summary>
-        <language>de</language>
-        <description lang="de">KiKA - der Kinderkanal von ARD und ZDF</description>
-        <description lang="en">KiKA - the kids channel from ARD and ZDF</description>
-        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.kika_de</source>
-        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
-        <email>AddonScriptorDE at yahoo dot de</email>
-        <website>http://kikaplus.net/clients/kika/kikaplus/</website>
-    </extension>
+<addon id="plugin.video.kika_de" name="KiKA+" version="2.0.1" provider-name="realvito">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de_DE">KIKA Mediathek</summary>
+		<summary lang="en_GB">KIKA media library</summary>
+		<description lang="de_DE">KiKA - der Kinderkanal von ARD und ZDF.</description>
+		<description lang="en_GB">KiKA - the kids channel from ARD and ZDF.</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+		<website>https://www.kika.de</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.kika_de</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 2.0.1  (30.09.2019)[/COLOR][/B] by realvito[CR]
+- removed : manuelle Streamauswahl (vordefiniert in den settings - sonst bestmögliche Qualität)
+- optimized: Bevorzugter Videostream jetzt 'mp4' statt 'rtmp'
+- added: Rubriken = Videos ab 3, 6, 10 Jahre, neue Videos (jede Rubrik abschaltbar - settings)
+- added: Autom. Auflistung mehrerer Serienseiten ohne umblättern (Anzahl einstellbar - settings)
+- added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19+) :-)
+		</news>
+	</extension>
 </addon>
 
 <addon id="script.embuary.helper" name="Embuary Helper" version="0.1.7" provider-name="sualfred">
@@ -624,7 +636,7 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.L0RE.arte" name="ARTE.TV" version="0.5.8" provider-name="L0RE">
+<addon id="plugin.video.L0RE.arte" name="ARTE.TV" version="0.5.9" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 	</requires>
@@ -649,8 +661,8 @@
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 0.5.8  (10.08.2019)[/COLOR][/B] by realvito[CR]
-- added: Live + Event TV = ARTE Event 5
+		<news>[B][COLOR orangered]Version 0.5.9  (30.09.2019)[/COLOR][/B] by realvito[CR]
+- fixed: LibreELEC - Fehler beim öffnen der Rubrik = Programm sortiert nach Datum (Error: unsupported locale setting)
 		</news>
 	</extension>
 </addon>
@@ -2862,7 +2874,7 @@ Zattoo Live TV, Aufnahmen und EPG
     </extension>
 </addon>
 
-<addon id="plugin.video.tvspielfilm_de" name="TV Spielfilm - Das Beste aus den Mediatheken" version="1.2.1" provider-name="realvito">
+<addon id="plugin.video.tvspielfilm_de" name="TV Spielfilm - Das Beste aus den Mediatheken" version="1.2.2" provider-name="realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="plugin.video.L0RE.arte" optional="true"/>
@@ -2890,8 +2902,9 @@ Zattoo Live TV, Aufnahmen und EPG
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.2.1  (17.08.2019)[/COLOR][/B][CR]
-- fixed: in Rubrik = nach Datum, Highlights und nach Sender wird Webseitenquelltext angezeigt
+		<news>[B][COLOR orangered]Version 1.2.2  (30.09.2019)[/COLOR][/B][CR]
+- fixed: ARTE-Videos über "plugin.video.arteplussept" abspielen (Code verändert)
+- fixed: LibreELEC - Fehler beim öffnen des Addons (Error: unsupported locale setting)
 		</news>
 	</extension>
 </addon>
@@ -2996,7 +3009,7 @@ Zattoo Live TV, Aufnahmen und EPG
     </extension>
 </addon>
 
-<addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.5.0" provider-name="realvito">
+<addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.5.1" provider-name="realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="plugin.video.L0RE.arte" optional="true"/>
@@ -3007,12 +3020,12 @@ Zattoo Live TV, Aufnahmen und EPG
 		<provides>video</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary lang="en">The best from TV-Today</summary>
-		<summary lang="de">Das Beste aus TV-Today</summary>
-		<description lang="en">@realvito[CR]The best from german Mediatheken, selected and compiled by the magazine TV-Today (www.tvtoday.de).[CR][CR]For more information about all new features see - CHANGELOG.[CR]     HAVE FUN</description>
-		<description lang="de">@realvito[CR]Das Beste aus deutschen Mediatheken, ausgewählt und zusammengestellt von der Zeitschrift TV-Today (www.tvtoday.de).[CR][CR]Für mehr Informationen zu allen Neuerungen siehe - CHANGELOG.[CR]     HAVE FUN</description>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<summary lang="de_DE">Das Beste aus TV-Today</summary>
+		<summary lang="en_GB">The best from TV-Today</summary>
+		<description lang="de_DE">Das Beste aus deutschen Mediatheken, ausgewählt und zusammengestellt von der Zeitschrift TV-Today (www.tvtoday.de).[CR][CR]Für mehr Informationen zu allen Neuerungen siehe - CHANGELOG.[CR]     HAVE FUN</description>
+		<description lang="en_GB">The best from german Mediatheken, selected and compiled by the magazine TV-Today (www.tvtoday.de).[CR][CR]For more information about all new features see - CHANGELOG.[CR]     HAVE FUN</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
 		<language></language>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
@@ -3024,9 +3037,9 @@ Zattoo Live TV, Aufnahmen und EPG
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.5.0  (18.01.2019)[/COLOR][/B][CR]
-- fixed: BUG? = Auf manchen Android-Systemen gibt es Probleme beim Speichern des Cookiefiles (ValueError: timestamp out of range for platform time_t)
-- fixed: Alle Ordner im Genrebereich (z.B. Spielfilme...) sind leer
+		<news>[B][COLOR orangered]Version 1.5.1  (30.09.2019)[/COLOR][/B][CR]
+- fixed: ARTE-Videos über "plugin.video.arteplussept" abspielen (Code verändert)
+- optimized: Einige kleine Scriptanpassungen
 		</news>
 	</extension>
 </addon>
@@ -4705,27 +4718,38 @@ oder online unter https://goo.gl/GtK41L nachlesen.
   </extension>
 </addon>
 
-<addon id="plugin.video.myspass_de" name="Myspass.de" version="3.0.3" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
-		<import addon="script.module.youtube.dl" version="14.810.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-  <extension point="xbmc.addon.metadata">    
-    <summary lang="de">Schlag den Raab/Star, TV total, Elton vs. Simon, Pastewka, Dr. Psycho, Stromberg, South Park, Spongebob und vieles mehr...</summary>
-    <summary lang="en">Schlag den Raab/Star, TV total, Elton vs. Simon, Pastewka, Dr. Psycho, Stromberg, South Park, Spongebob and much more...</summary>
-    <language>de</language>
-    <description lang="de">Schlag den Raab/Star, TV total, Elton vs. Simon, Pastewka, Dr. Psycho, Stromberg, South Park, Spongebob und vieles mehr...</description>
-    <description lang="en">Schlag den Raab/Star, TV total, Elton vs. Simon, Pastewka, Dr. Psycho, Stromberg, South Park, Spongebob and much more...</description>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    <website></website>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.ampya</source>
-    <forum>http://www.kodinerds.net/</forum>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
+<addon id="plugin.video.myspass_de" name="Myspass.de" version="4.0.1" provider-name="L0RE">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de_DE">Myspass Mediathek</summary>
+		<summary lang="en_GB">Myspass media library</summary>
+		<description lang="de_DE">Egal ob aktuelle TV Shows wie PussyTerror tv, LUKE ! Die Woche und ich oder Schlag den Henssler, ob Kult-TV-Serien wie Stromberg, Ladykracher oder Pastewka - wir haben es für Dich auf Lager !</description>
+		<description lang="en_GB">No matter if current TV shows like PussyTerror tv, LUKE ! The week and I or blow the Henssler, whether cult TV series like Stromberg, Ladykracher or Pastewka - we have it in stock for you !</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+		<website>https://www.myspass.de</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.myspass_de</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 4.0.1  (30.09.2019)[/COLOR][/B] by realvito[CR]
+- optimized: Script überarbeitet - unnötige Codeschnipsel entfernt
+- fixed: Alle Videos werden NICHT abgespielt (Abhängigkeit -script.module.youtube.dl- entfernt)
+- optimized: Für die ausgewählte Sendung wird entweder autom. Playliste oder Abspiellink erstellt (Qualität gibt es leider nicht besser)
+- added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19+) :-)
+		</news>
+	</extension>
 </addon>
 
 </addons>
