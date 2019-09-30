@@ -1,273 +1,301 @@
-#!/usr/bin/python
+﻿#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 import sys
-import urlparse
+import os
+import re
+import xbmc
 import xbmcgui
 import xbmcplugin
 import xbmcaddon
-import xbmc
+PY2 = sys.version_info[0] == 2
+PY3 = sys.version_info[0] == 3
+if PY2:
+	from urllib import quote, unquote, quote_plus, unquote_plus, urlencode  # Python 2.X
+	from urllib2 import build_opener, HTTPCookieProcessor, Request, urlopen  # Python 2.X
+	from cookielib import LWPCookieJar  # Python 2.X
+	from urlparse import urljoin, urlparse, urlunparse  # Python 2.X
+elif PY3:
+	from urllib.parse import quote, unquote, quote_plus, unquote_plus, urlencode, urljoin, urlparse, urlunparse  # Python 3+
+	from urllib.request import build_opener, HTTPCookieProcessor, Request, urlopen  # Python 3+
+	from http.cookiejar import LWPCookieJar  # Python 3+
+import json
 import xbmcvfs
-import urllib, urllib2, socket, cookielib, re, os, shutil,json
+import shutil
+import socket
 import time
-import datetime
-import YDStreamExtractor
-
-
-
+from datetime import datetime, timedelta
+import io
+import gzip
 import ssl
 
-try:
-    _create_unverified_https_context = ssl._create_unverified_context
-except AttributeError:
-    # Legacy Python that doesn't verify HTTPS certificates by default
-    pass
-else:
-    # Handle target environment that doesn't support HTTPS verification
-    ssl._create_default_https_context = _create_unverified_https_context
+try: _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError: pass
+else: ssl._create_default_https_context = _create_unverified_https_context
 
-# Setting Variablen Des Plugins
+
 global debuging
-base_url = sys.argv[0]
-addon_handle = int(sys.argv[1])
-
-args = urlparse.parse_qs(sys.argv[2][1:])
+pluginhandle = int(sys.argv[1])
 addon = xbmcaddon.Addon()
-# Lade Sprach Variablen
-translation = addon.getLocalizedString
-defaultBackground = ""
-defaultThumb = ""
-cliplist=[]
-filelist=[]
-profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
-temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
-xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
+addonPath = xbmc.translatePath(addon.getAddonInfo('path')).encode('utf-8').decode('utf-8')
+dataPath = xbmc.translatePath(addon.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
+temp        = xbmc.translatePath(os.path.join(dataPath, 'temp', '')).encode('utf-8').decode('utf-8')
+defaultFanart = os.path.join(addonPath, 'fanart.jpg')
+icon = os.path.join(addonPath, 'icon.png')
+baseURL = "https://www.myspass.de"
 
-mainurl="http://www.myspass.de"
-#Directory für Token Anlegen
-if not xbmcvfs.exists(temp):       
-       xbmcvfs.mkdirs(temp)
-       
-xbmcplugin.setContent(int(sys.argv[1]), 'musicvideos')
-icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
-useThumbAsFanart=addon.getSetting("useThumbAsFanart") == "true"
+xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
 
+def py2_enc(s, encoding='utf-8'):
+	if PY2 and isinstance(s, unicode):
+		s = s.encode(encoding)
+	return s
 
+def py2_uni(s, encoding='utf-8'):
+	if PY2 and isinstance(s, str):
+		s = unicode(s, encoding)
+	return s
+
+def py3_dec(d, encoding='utf-8'):
+	if PY3 and isinstance(d, bytes):
+		d = d.decode(encoding)
+	return d
+
+def translation(id):
+	LANGUAGE = addon.getLocalizedString(id)
+	LANGUAGE = py2_enc(LANGUAGE)
+	return LANGUAGE
+
+def failing(content):
+	log(content, xbmc.LOGERROR)
 
 def debug(content):
-    log(content, xbmc.LOGDEBUG)
-    
-def notice(content):
-    log(content, xbmc.LOGNOTICE)
+	log(content, xbmc.LOGDEBUG)
 
 def log(msg, level=xbmc.LOGNOTICE):
-    addon = xbmcaddon.Addon()
-    addonID = addon.getAddonInfo('id')
-    xbmc.log('%s: %s' % (addonID, msg), level) 
+	msg = py2_enc(msg)
+	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+msg, level)
+
+def getUrl(url, header=None, agent='Dalvik/2.1.0 (Linux; U; Android 7.1.2;)'):
+	opener = build_opener()
+	opener.addheaders = [('User-Agent', agent), ('Accept-Encoding', 'gzip, identity')]
+	try:
+		if header: opener.addheaders = header
+		response = opener.open(url, timeout=30)
+		if response.info().get('Content-Encoding') == 'gzip':
+			content = py3_dec(gzip.GzipFile(fileobj=io.BytesIO(response.read())).read())
+		else:
+			content = py3_dec(response.read())
+	except Exception as e:
+		failure = str(e)
+		failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
+		content = ""
+		return sys.exit(0)
+	return content
+
+def index():
+	addDir('Home', 'http://m.myspass.de/api/index.php?command=hometeaser', 'listVideos', icon)
+	addDir('Ganze Folgen', 'http://m.myspass.de/api/index.php?command=formats', 'listShows', icon)
+	addDir('Shows A-Z', 'http://m.myspass.de/api/index.php?command=azformats', 'listShows', icon)
+	addDir('Beliebteste', 'http://m.myspass.de/api/index.php?command=favourite', 'listVideos', icon)
+	addDir('Neueste', 'http://m.myspass.de/api/index.php?command=latest&length=30', 'listVideos', icon)
+	xbmcplugin.endOfDirectory(pluginhandle)
+
+def listShows(url):
+	xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL_IGNORE_THE)
+	debug("(listShows) ------------------------------------------------ START = listShows -----------------------------------------------")
+	debug("(listShows) ### URL : {0} ###".format(url))
+	content = getUrl(url)
+	DATA = json.loads(content) 
+	for element in DATA['data']:
+		name = element['format'].replace('fÃ¼r das JÃ¶rg', 'für das Jörg')
+		plot = element['format_description']
+		idd = str(element['format_id'])
+		logo = 'http:'+element['latestVideo']['original_image'].replace('\/', '/')
+		debug("(listShows) XXX TITLE = {0} | IDD = {1} | LOGO = {2} XXX".format(str(name), idd, str(logo)))
+		if 'media/images' in logo:
+			addDir(name, 'http://m.myspass.de/api/index.php?command=seasonslist&id='+idd, 'listSeasons', logo, plot)
+	xbmcplugin.endOfDirectory(pluginhandle)
+
+def listSeasons(url):
+	debug("(listSeasons) ------------------------------------------------ START = listSeasons -----------------------------------------------")
+	debug("(listSeasons) ### URL : {0} ###".format(url))
+	content = getUrl(url)
+	DATA = json.loads(content) 
+	for element in DATA['data']:
+		name = element['season_name']
+		if name == '1': name = 'Staffel 1'
+		plot = element['season_description']
+		idd = str(element['season_id'])
+		logo = 'http:'+element['latestVideo']['original_image'].replace('\/', '/')
+		debug("(listSeasons) XXX TITLE = {0} | IDD = {1} | LOGO = {2} XXX".format(str(name), idd, str(logo)))
+		if name != 'Trailer':
+			addDir(name, 'http://m.myspass.de/api/index.php?command=seasonepisodes&id='+idd, 'listVideos', logo, plot)
+	xbmcplugin.endOfDirectory(pluginhandle)
+
+def listVideos(url):
+	debug("(listVideos) ------------------------------------------------ START = listVideos -----------------------------------------------")
+	debug("(listVideos) ### URL : {0} ###".format(url))
+	workList = ""
+	firstURL = url
+	try:
+		content = getUrl(url)
+		DATA = json.loads(content)
+	except: return xbmcgui.Dialog().notification('[COLOR red]Leider gibt es KEINE Einträge :[/COLOR]', '* [COLOR blue]In dieser Rubrik[/COLOR] * bei Myspass.de', icon, 8000)
+	for element in DATA['data']:
+		seriesname = element['format'].replace('fÃ¼r das JÃ¶rg', 'für das Jörg')
+		title = element['title']
+		if 'Teil 2' in title or 'Teil 3' in title: continue
+		idd = str(element['unique_id'])
+		if 'command=hometeaser' in firstURL:
+			element = element['video']
+		image = 'http:'+element['original_image'].replace('\/', '/')
+		duration2 = ""
+		vidURL2 = ""
+		duration3 = ""
+		vidURL3 = ""
+		if 'Teil 1' in title:
+			try:
+				searchURL = element['myspass_url'].replace('\/', '/').replace('/myspass/', '/')
+				header = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36'), ('Accept-Encoding', 'gzip, identity')]
+				html = getUrl(searchURL, header=header)
+				if 'www.myspass.de' in searchURL and '-Teil-' in searchURL: shortURL = searchURL.split('www.myspass.de')[1].split('-Teil-')[0]
+				else: shortURL = searchURL
+				content_2 = html[html.find('<table class="listView--table">')+1:]
+				content_2 = content_2[:content_2.find('</table>')]
+				match = re.compile('data-id="(.+?)".*?<a href="(.+?)">', re.DOTALL).findall(content_2)
+				for newIDD, url2 in match:
+					if shortURL in url2 and 'Teil-2' in url2:
+						content_3 = getUrl('http://m.myspass.de/api/index.php?command=video&id='+str(newIDD))
+						DATA_2 = json.loads(content_3)
+						duration2 = DATA_2['data']['play_length']
+						vidURL2 = "@@"+DATA_2['data']['video_url'].replace('\/', '/').replace('http://c11021-osu.p.core.cdn.streamfarm.net/', 'https://cldf-od.r53.cdn.tv1.eu/')
+					if shortURL in url2 and 'Teil-3' in url2:
+						content_4 = getUrl('http://m.myspass.de/api/index.php?command=video&id='+str(newIDD))
+						DATA_3 = json.loads(content_4)
+						duration3 = DATA_3['data']['play_length']
+						vidURL3 = "@@"+DATA_3['data']['video_url'].replace('\/', '/').replace('http://c11021-osu.p.core.cdn.streamfarm.net/', 'https://cldf-od.r53.cdn.tv1.eu/')
+			except: pass
+		startDATES = None
+		Note_1 = ""
+		Note_2 = ""
+		if "broadcast_date" in element and element['broadcast_date'] != "" and element['broadcast_date'] != None:
+			try:
+				airedtime = datetime(*(time.strptime(element['broadcast_date'], '%Y-%m-%d')[0:6])) # 2019-06-13
+				startDATES =  airedtime.strftime('%d.%m.%Y')
+			except: pass
+		if startDATES and not '1970' in startDATES: Note_1 = "Sendung vom "+str(startDATES)+"[CR][CR]"
+		if "teaser_text" in element and element['teaser_text'] != "" and element['teaser_text'] != None:
+			Note_2 = element['teaser_text']
+		plot = Note_1+Note_2
+		season = str(element['season_number']).zfill(2)
+		episode = str(element['episode_nr'])
+		if episode.startswith('00'): episode = episode.replace('00', '0')
+		episode = episode.zfill(2)
+		vidURL = element['video_url'].replace('\/', '/').replace('http://c11021-osu.p.core.cdn.streamfarm.net/', 'https://cldf-od.r53.cdn.tv1.eu/')
+		if vidURL2 != "": vidURL = vidURL+vidURL2
+		if vidURL3 != "": vidURL = vidURL+vidURL3
+		duration = element['play_length']
+		if duration2 != "": duration = int(duration)+int(duration2)
+		if duration3 != "": duration = int(duration)+int(duration3)
+		name = "[COLOR chartreuse]S"+season+"E"+episode+":[/COLOR]  "+title.split('- Teil')[0].split(' Teil')[0]
+		if 'hometeaser' in firstURL or 'favourite' in firstURL or 'latest&length' in firstURL:
+			name = "[COLOR chartreuse]S"+season+"E"+episode+":[/COLOR]  "+seriesname+" - "+title.split('- Teil')[0].split(' Teil')[0]
+		seq = idd+"###"+vidURL+"###"+seriesname+"###"+name+"###"+image+"###"+plot+"###"+str(duration)+"###"+str(season)+"###"+str(episode)+"###"
+		workList = workList+seq.replace('\n', ' ').encode('utf-8')+'\n'
+		listitem = xbmcgui.ListItem(path=sys.argv[0]+'?number='+idd+'&mode=play_CODE')
+		listitem.setInfo(type='Video', infoLabels={'Tvshowtitle': seriesname, 'Title': name, 'Season': season, 'Episode': episode, 'Plot': plot, 'Duration': duration, 'Studio': 'myspass.de', 'Genre': 'Unterhaltung', 'mediatype': 'episode'})
+		listitem.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
+		if image != icon:
+			listitem.setArt({'fanart': image})
+		listitem.addStreamInfo('Video', {'Duration':duration})
+		listitem.setProperty('IsPlayable', 'true')
+		xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=sys.argv[0]+'?number='+idd+'&mode=play_CODE', listitem=listitem)
+	with open(os.path.join(dataPath, 'episode_data.txt'), 'w') as input:
+		input.write(workList)
+		debug("(listVideos) XXX workList : {0} XXX".format(str(workList)))
+	xbmcplugin.endOfDirectory(pluginhandle)
+ 
+def play_CODE(idd):
+	debug("(play_CODE) ------------------------------------------------ START = play_CODE -----------------------------------------------")
+	debug("(play_CODE) ### IDD : {0} ###".format(str(idd)))
+	pos_LISTE = 0
+	Special = False
+	PL = xbmc.PlayList(1)
+	with open(os.path.join(dataPath, 'episode_data.txt'), 'r') as output:
+		sequence = output.read().split('\n')
+		for seq in sequence:
+			field = seq.split('###')
+			if field[0]==idd:
+				endURL = field[1]
+				seriesname = field[2]
+				title = field[3]
+				try: title = title.split(':[/COLOR]')[1].strip()
+				except: pass
+				try: title = title.split(seriesname+" -")[1].strip()
+				except: pass
+				image = field[4]
+				plot = field[5] 
+				duration = field[6]
+				season = field[7]
+				episode = field[8]
+				if '@@' in endURL:
+					Special = True
+					videoURL = endURL.split('@@')
+					complete = '/2'
+					if len(videoURL) == 3:
+						complete = '/3'
+					for single in videoURL:
+						log("(play_CODE) Playlist : {0} ".format(str(single)))
+						pos_LISTE += 1
+						NRS_title = title+"[COLOR chartreuse]  TEIL "+str(pos_LISTE)+complete+"[/COLOR]"
+						listitem = xbmcgui.ListItem(title)
+						listitem.setInfo(type='Video', infoLabels={'Tvshowtitle': seriesname, 'Title': NRS_title, 'Season': season, 'Episode': episode, 'Plot': plot, 'Duration': duration, 'Studio': 'myspass.de', 'Genre': 'Unterhaltung', 'mediatype': 'episode'})
+						listitem.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': image})
+						xbmc.sleep(50)
+						PL.add(url=single, listitem=listitem, index=pos_LISTE)
+				else:
+					log("(play_CODE) Streamurl : {0} ".format(str(endURL)))
+					listitem = xbmcgui.ListItem(path=endURL)
+					listitem.setInfo(type='Video', infoLabels={'Tvshowtitle': seriesname, 'Title': title, 'Season': season, 'Episode': episode, 'Plot': plot, 'Duration': duration, 'Studio': 'myspass.de', 'Genre': 'Unterhaltung', 'mediatype': 'episode'})
+					listitem.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': image})
+	if Special:
+		return PL
+	else:
+		xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
 def parameters_string_to_dict(parameters):
-  paramDict = {}
-  if parameters:
-    paramPairs = parameters[1:].split("&")
-    for paramsPair in paramPairs:
-      paramSplits = paramsPair.split('=')
-      if (len(paramSplits)) == 2:
-        paramDict[paramSplits[0]] = paramSplits[1]
-  return paramDict
-  
-    
-def addDir(name, url, mode, iconimage, desc=""):
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
-  liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
-  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
-  if useThumbAsFanart:
-    if not iconimage or iconimage==icon or iconimage==defaultThumb:
-      iconimage = defaultBackground    
-    liz.setArt({ 'fanart': iconimage })
-  else:
-    liz.setArt({ 'fanart': defaultBackground })    
-  ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
-  return ok
-  
-def addLink(name, url, mode, iconimage, duration="", desc="",artist_id="",genre="",shortname="",production_year=0,zeit=0,liedid=0):  
-  cd=addon.getSetting("password")  
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
-  ok = True
-  liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage)
-  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre,"Sorttitle":shortname,"Dateadded":zeit,"year":production_year })
-  liz.setProperty('IsPlayable', 'true')
-  liz.addStreamInfo('video', { 'duration' : duration })
-  liz.setArt({ 'fanart': iconimage })   
-  ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
-  return ok
+	paramDict = {}
+	if parameters:
+		paramPairs = parameters[1:].split('&')
+		for paramsPair in paramPairs:
+			paramSplits = paramsPair.split('=')
+			if (len(paramSplits)) == 2:
+				paramDict[paramSplits[0]] = paramSplits[1]
+	return paramDict
 
-
-def getUrl(url,data="x"):        
-        debug("Get Url: " +url)
-        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
-        userAgent = "Dalvik/2.1.0 (Linux; U; Android 5.0;)"
-        opener.addheaders = [('User-Agent', userAgent)]
-        try:
-          if data!="x" :
-             content=opener.open(url,data=data).read()
-          else:
-             content=opener.open(url).read()
-        except urllib2.HTTPError as e:
-             #print e.code   
-             cc=e.read()  
-             struktur = json.loads(cc)  
-             error=struktur["errors"][0] 
-             error=unicode(error).encode("utf-8")
-             debug("ERROR : " + error)
-             dialog = xbmcgui.Dialog()
-             nr=dialog.ok("Error", error)
-             return ""
-             
-        opener.close()
-        return content
-
-
-      #addDir(namenliste[i], namenliste[i], mode+datum,logoliste[i],ids=str(idliste[i]))
-   #xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
-  
-
-
+def addDir(name, url, mode, image, plot=None):
+	u = sys.argv[0]+'?url='+quote_plus(url)+'&mode='+str(mode)
+	liz = xbmcgui.ListItem(name)
+	liz.setInfo(type='Video', infoLabels={'Title': name, 'Plot': plot})
+	liz.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
+	if image != icon:
+		liz.setArt({'fanart': image})
+	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
 
 params = parameters_string_to_dict(sys.argv[2])
-mode = urllib.unquote_plus(params.get('mode', ''))
-url = urllib.unquote_plus(params.get('url', ''))
+url = unquote_plus(params.get('url', ''))
+mode = unquote_plus(params.get('mode', ''))
+image = unquote_plus(params.get('image', ''))
+number = unquote_plus(params.get('number', ''))
 
-def startpage(url):
-   content=getUrl(url)
-   struktur = json.loads(content) 
-   for element in struktur["data"]:
-       thumbnail=element["video"]["original_image"].replace("\/","/")
-       sendung=element["format"]
-       titel=element["title"]
-       desc=element["video"]["teaser_text"]       
-       staffel=element["video"]["season_number"]
-       if len(staffel)==1:
-         staffel="0"+staffel
-       episode=element["video"]["episode_nr"]
-       if len(episode)==1:
-         episode="0"+episode       
-       videourl=element["video"]["myspass_url"].replace("\/","/")
-       laenge=element["video"]["play_length"]
-       if " Teil "in titel:
-         laenge=0
-         titel = re.compile('(.+?) - Teil [0-9]+', re.DOTALL).findall(titel)[0]         
-       name="S"+staffel+"E"+episode+" "+sendung +" - "+titel
-       addDir(name,videourl,"playvideo","http:"+thumbnail,desc=desc)
-   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
-   
-def videos(url):
-   content=getUrl(url)
-   struktur = json.loads(content) 
-   for element in struktur["data"]:
-       thumbnail=element["original_image"].replace("\/","/")
-       sendung=element["format"]
-       titel=element["title"]
-       desc=element["teaser_text"]       
-       staffel=element["season_number"]
-       if len(staffel)==1:
-         staffel="0"+staffel
-       episode=element["episode_nr"]
-       if len(episode)==1:
-         episode="0"+episode       
-       videourl=element["myspass_url"].replace("\/","/")
-       laenge=element["play_length"]
-       if " Teil "in titel:
-         laenge=0
-         titel = re.compile('(.+?) - Teil [0-9]+', re.DOTALL).findall(titel)[0]
-       name="S"+staffel+"E"+episode+" "+sendung +" - "+titel
-       addDir(name,videourl,"playvideo","http:"+thumbnail,desc=desc)
-   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
-   
-def shows(url):
-   content=getUrl(url)
-   struktur = json.loads(content) 
-   for element in struktur["data"]:
-    id=element["format_id"]
-    desc=element["format_description"]
-    logo=element["latestVideo"]["original_image"].replace("\/","/")
-    name=element["format"]
-    addDir(name, "http://m.myspass.de/api/index.php?command=seasonslist&id="+id, "show", "http:"+logo, desc=desc)
-   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
-
-
-
-def show(url):
-   content=getUrl(url)
-   struktur = json.loads(content) 
-   for element in struktur["data"]:
-     name=element["season_name"]
-     desc=element["season_description"]
-     id=element["season_id"]
-     logo=element["latestVideo"]["original_image"].replace("\/","/")
-     addDir(name, "http://m.myspass.de/api/index.php?command=seasonepisodes&id="+id, "videos", "http:"+logo, desc=desc)
-   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
-
-def NEXT(url):
- playlist = xbmc.PlayList(1)
- content=getUrl(url)
- urlnext=re.compile('<div class="full_episode_button desktop_only"><a href="(.+?)">', re.DOTALL).findall(content)[0]
- urlnext="http://www.myspass.de/myspass"+urlnext
- content=getUrl(urlnext)
- title=re.compile('"headline":"(.+?)",', re.DOTALL).findall(content)[0]
- desc=re.compile('"description":"(.+?)"', re.DOTALL).findall(content)[0]
- thumb=re.compile('"thumbnailUrl":"(.+?)"', re.DOTALL).findall(content)[0]
- debug("NEXTT URL :"+urlnext)
- vid = YDStreamExtractor.getVideoInfo(urlnext,quality=2) #quality is 0=SD, 1=720p, 2=1080p and is a maximum        
- stream_url = vid.streamURL()            
- stream_url=stream_url.split("|")[0]
- u = base_url+"?url="+urllib.quote_plus(urlnext)+"&mode="+str("NEXT")
- listitem = xbmcgui.ListItem(path=u)
- playlist.add(u, listitem)  
- listitem = xbmcgui.ListItem(path=stream_url, iconImage="", thumbnailImage=thumb)
- listitem.setInfo(type="Video", infoLabels={"Title": title, "Plot": desc})  
- xbmcplugin.setResolvedUrl(addon_handle,True, listitem)
- 
-def playvideo(url)      :
-        content=getUrl(url)        
-        title=re.compile('"headline":"(.+?)",', re.DOTALL).findall(content)[0]
-        desc=re.compile('"description":"(.+?)"', re.DOTALL).findall(content)[0]
-        thumb=re.compile('"thumbnailUrl":"(.+?)"', re.DOTALL).findall(content)[0]
-        playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
-        playlist.clear() 
-        vid = YDStreamExtractor.getVideoInfo(url,quality=2) #quality is 0=SD, 1=720p, 2=1080p and is a maximum        
-        stream_url = vid.streamURL()            
-        stream_url=stream_url.split("|")[0]
-        debug("stream_url :"+stream_url)
-        listitem = xbmcgui.ListItem(path=stream_url, iconImage="", thumbnailImage=thumb)
-        listitem.setInfo(type="Video", infoLabels={"Title": title, "Plot": desc})  
-        #listitem = xbmcgui.ListItem(path=stream_url)
-        playlist.add(stream_url, listitem)  
-        u = base_url+"?url="+urllib.quote_plus(url)+"&mode="+str("NEXT")
-        listitem = xbmcgui.ListItem(path=u)
-        playlist.add(u, listitem)  
-        xbmc.Player().play(playlist)        
-        #xbmcplugin.setResolvedUrl(addon_handle,True, listitem)
-
-if mode is '':
-    addDir("Home", "http://m.myspass.de/api/index.php?command=hometeaser", 'startpage',"")   
-    addDir("Ganze Folgen", "http://m.myspass.de/api/index.php?command=formats", 'shows',"")   
-    addDir("Shows A-Z", "http://m.myspass.de/api/index.php?command=azformats", 'shows',"")    
-    addDir("Beliebteste", "http://m.myspass.de/api/index.php?command=favourite", 'videos',"")           
-    addDir("Neueste", "http://m.myspass.de/api/index.php?command=latest&length=20", 'videos',"")           
-    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
+if mode == 'listShows':
+	listShows(url)
+elif mode == 'listSeasons':
+	listSeasons(url)
+elif mode == 'listVideos':
+	listVideos(url)
+elif mode == 'play_CODE':
+	play_CODE(number)
 else:
-  # Wenn Settings ausgewählt wurde
-  if mode == 'Settings':
-          addon.openSettings()
-  if mode == 'startpage':
-          startpage(url)
-  if mode == 'shows':
-          shows(url)
-  if mode == 'show':
-          show(url)          
-  if mode == 'playvideo':
-          playvideo(url)
-  if mode == 'videos':
-          videos(url)                                    
-  if mode == 'NEXT' :
-           NEXT(url)
+	index()
