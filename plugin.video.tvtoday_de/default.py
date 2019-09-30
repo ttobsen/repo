@@ -270,7 +270,7 @@ def playVideo(url):
 		log("(playVideo) AbspielLink (Original) : {0}".format(LINK))
 	except:
 		log("(playVideo) MediathekLink-00 : MediathekLink der Sendung in TV-Today NICHT gefunden !!!")
-		xbmcgui.Dialog).notification(translation(30521), translation(30522), icon, 8000)
+		xbmcgui.Dialog().notification(translation(30521), translation(30522), icon, 8000)
 		LINK = ""
 	log("(playVideo) frei")
 	if LINK.startswith("https://www.arte.tv"):

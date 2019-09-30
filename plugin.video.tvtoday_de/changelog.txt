@@ -140,6 +140,7 @@
 - fixed: BUG? = Auf manchen Android-Systemen gibt es Probleme beim Speichern des Cookiefiles (ValueError: timestamp out of range for platform time_t)
 - fixed: Alle Ordner im Genrebereich (z.B. Spielfilme...) sind leer
 
-[B]Version 1.5.1  (30.09.2019)[/B]
+[B]Version 1.5.1+1.5.2  (30.09.2019)[/B]
 - fixed: ARTE-Videos über "plugin.video.arteplussept" abspielen (Code verändert)
 - optimized: Einige kleine Scriptanpassungen
+- fixed: Github-Übertragungsfehler
