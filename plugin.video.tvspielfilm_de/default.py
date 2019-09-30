@@ -30,7 +30,6 @@ import json
 import xbmcvfs
 import shutil
 import socket
-import locale
 import time
 from datetime import datetime, timedelta
 import io
@@ -47,7 +46,7 @@ dataPath = xbmc.translatePath(addon.getAddonInfo('profile')).encode('utf-8').dec
 temp        = xbmc.translatePath(os.path.join(dataPath, 'temp', '')).encode('utf-8').decode('utf-8')
 defaultFanart = os.path.join(addonPath, 'fanart.jpg')
 icon = os.path.join(addonPath, 'icon.png')
-pic = os.path.join(addonPath, 'resources', 'media', '').encode('utf-8').decode('utf-8')
+artpic = os.path.join(addonPath, 'resources', 'media', '').encode('utf-8').decode('utf-8')
 preferredStreamType = addon.getSetting("streamSelection")
 showDATE = addon.getSetting("enableDatetitle") == 'true'
 showTVchannel = addon.getSetting("enableChannelID") == 'true'
@@ -62,6 +61,7 @@ xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
 
 if xbmcvfs.exists(temp) and os.path.isdir(temp):
 	shutil.rmtree(temp, ignore_errors=True)
+	xbmc.sleep(500)
 xbmcvfs.mkdirs(temp)
 cookie = os.path.join(temp, 'cookie.lwp')
 cj = LWPCookieJar()
@@ -95,18 +95,14 @@ def log(msg, level=xbmc.LOGNOTICE):
 	msg = py2_enc(msg)
 	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+msg, level)
 
-def getUrl(url, header=None):
+def getUrl(url, header=None, agent='Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0'):
 	global cj
 	for cook in cj:
 		debug_MS("(getUrl) Cookie : {0}".format(str(cook)))
-	pos = 0
 	opener = build_opener(HTTPCookieProcessor(cj))
+	opener.addheaders = [('User-Agent', agent), ('Accept-Encoding', 'gzip, deflate')]
 	try:
-		if header:
-			opener.addheaders = header
-		else:
-			opener.addheaders = [('User-Agent=Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0')]
-			opener.addheaders = [('Accept-Encoding', 'gzip, deflate')]
+		if header: opener.addheaders = header
 		response = opener.open(url, timeout=30)
 		if response.info().get('Content-Encoding') == 'gzip':
 			content = py3_dec(gzip.GzipFile(fileobj=io.BytesIO(response.read())).read())
@@ -114,15 +110,7 @@ def getUrl(url, header=None):
 			content = py3_dec(response.read())
 	except Exception as e:
 		failure = str(e)
-		if pos < 1 and 'getaddrinfo failed' in failure:
-			pos += 1
-			xbmcgui.Dialog().ok(addon.getAddonInfo('id'), translation(30501))
-			failing("(getUrl) ERROR - ERROR - ERROR : ########## Es besteht ein Problem mit dem Netzwerk === {0} === ##########\n########## Entweder ist die angeforderte - WebSeite - zurzeit nicht erreichbar oder überprüfen Sie, ob Ihre Internetverbindung funktioniert ?! ##########".format(failure))
-		else:
-			if hasattr(e, 'code'):
-				failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
-			elif hasattr(e, 'reason'):
-				failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
+		failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
 		content = ""
 		return sys.exit(0)
 	opener.close()
@@ -131,21 +119,21 @@ def getUrl(url, header=None):
 	return content
 
 def index():
-	locale.setlocale(locale.LC_ALL, '')
 	i = 1
 	while i <= 5:
 		WU = (datetime.now() - timedelta(days=i)).strftime('%Y-%m-%d')
-		WT = (datetime.now() - timedelta(days=i)).strftime('%A~%d.%m.%Y')
-		addDir("Auswahl vom "+WT.split('~')[0]+", den "+WT.split('~')[1], baseURL+dateURL+"?date="+WU, 'listVideos_Day_Channel_Highlights', icon)
+		WT = (datetime.now() - timedelta(days=i)).strftime('%a~%d.%m.%Y')
+		MD = WT.split('~')[0].replace('Mon', translation(30601)).replace('Tue', translation(30602)).replace('Wed', translation(30603)).replace('Thu', translation(30604)).replace('Fri', translation(30605)).replace('Sat', translation(30606)).replace('Sun', translation(30607))
+		addDir(translation(30608).format(MD, WT.split('~')[1]), baseURL+dateURL+"?date="+WU, 'listVideos_Day_Channel_Highlights', icon)
 		i += 1
-	addDir("[COLOR deepskyblue]• • • SENDER sortiert • • •[/COLOR]", baseURL+"/mediathek/nach-sender/", 'listChannel', icon)
-	addDir("[COLOR deepskyblue]• • • TV-HIGHLIGHTS • • •[/COLOR]", baseURL+"/mediathek/", 'listVideos_Day_Channel_Highlights', icon)
-	addDir("* Spielfilme *", "Spielfilm", 'listVideosGenre', icon)
-	addDir("* Serien *", "Serie", 'listVideosGenre', icon)
-	addDir("* Reportagen *", "Report", 'listVideosGenre', icon)
-	addDir("* Unterhaltung *", "Unterhaltung", 'listVideosGenre', icon)
-	addDir("* Kinder *", "Kinder", 'listVideosGenre', icon)
-	addDir("* Sport *", "Sport", 'listVideosGenre', icon)
+	addDir(translation(30609), baseURL+"/mediathek/nach-sender/", 'listChannel', icon)
+	addDir(translation(30610), baseURL+"/mediathek/", 'listVideos_Day_Channel_Highlights', icon)
+	addDir(translation(30611), "Spielfilm", 'listVideosGenre', icon)
+	addDir(translation(30612), "Serie", 'listVideosGenre', icon)
+	addDir(translation(30613), "Report", 'listVideosGenre', icon)
+	addDir(translation(30614), "Unterhaltung", 'listVideosGenre', icon)
+	addDir(translation(30615), "Kinder", 'listVideosGenre', icon)
+	addDir(translation(30616), "Sport", 'listVideosGenre', icon)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def listChannel(url):
@@ -170,7 +158,7 @@ def listChannel(url):
 				if ("RTL" in channelID or "VOX" in channelID or "SUPER" in channelID):
 					continue
 			debug_MS("(listChannel) Link : {0}{1}".format(url, channelID))
-			addDir('[COLOR lime]'+title+'[/COLOR]', url, 'listVideos_Day_Channel_Highlights', pic+title.lower().replace(' ', '')+'.png', studio=title)
+			addDir('[COLOR lime]'+title+'[/COLOR]', url, 'listVideos_Day_Channel_Highlights', artpic+title.lower().replace(' ', '')+'.png', studio=title)
 		except:
 			failing("(listChannel) Fehler-Eintrag : {0}".format(str(entry)))
 	xbmcplugin.endOfDirectory(pluginhandle)
@@ -242,7 +230,7 @@ def listVideos_Day_Channel_Highlights(url):
 			debug_MS("(listVideos_Day_Channel_Highlights) Name : {0}".format(title))
 			debug_MS("(listVideos_Day_Channel_Highlights) Link : {0}".format(urlFW))
 			debug_MS("(listVideos_Day_Channel_Highlights) Icon : {0}".format(photo))
-			addLink(title, urlFW, 'playVideo', photo, studio=studio)
+			addLink(title, urlFW, 'playVideo', photo, studio)
 		except:
 			failing("(listVideos_Day_Channel_Highlights) Fehler-Eintrag : {0}".format(str(entry)))
 	xbmcplugin.endOfDirectory(pluginhandle)
@@ -292,7 +280,7 @@ def listVideosGenre(category):
 			debug_MS("(listVideosGenre) Name : {0}".format(title))
 			debug_MS("(listVideosGenre) Link : {0}".format(urlFW))
 			debug_MS("(listVideosGenre) Icon : {0}".format(photo))
-			addLink(title, urlFW, 'playVideo', photo, studio=studio)
+			addLink(title, urlFW, 'playVideo', photo, studio)
 		except:
 			failing("(listVideosGenre) Fehler-Eintrag : {0}".format(str(entry)))
 	xbmcplugin.endOfDirectory(pluginhandle)
@@ -315,22 +303,19 @@ def playVideo(url):
 	if LINK.startswith("https://www.arte.tv"):
 		videoID = re.compile("arte.tv/de/videos/([^/]+?)/", re.DOTALL).findall(LINK)[0]
 		try:
-			plugin2 = xbmcaddon.Addon(id='plugin.video.L0RE.arte')
-			finalURL = 'plugin://'+plugin2.getAddonInfo('id')+'/?mode=playvideo&url='+videoID
+			finalURL = 'plugin://plugin.video.L0RE.arte/?mode=playvideo&url='+str(videoID)
 			log("(playVideo) AbspielLink-1 (ARTE-TV) : {0}".format(finalURL))
 		except:
 			try:
-				plugin3 = xbmcaddon.Addon(id='plugin.video.arteplussept')
-				finalURL = 'plugin://'+plugin3.getAddonInfo('id')+'/play/'+quote_plus(videoID)
+				finalURL = 'plugin://plugin.video.arteplussept/play/SHOW/'+str(videoID)
 				log("(playVideo) AbspielLink-2 (ARTE-plussept) : {0}".format(finalURL))
 			except:
 				if finalURL:
 					log("(playVideo) AbspielLink-00 (ARTE) : *ARTE-Plugin* Der angeforderte -VideoLink- existiert NICHT !!!")
-					xbmcgui.Dialog().notification((translation(30523).format('ARTE - Plugin')), translation(30525), icon, 8000)
+					xbmcgui.Dialog().notification(translation(30523).format('ARTE - Plugin'), translation(30525), icon, 8000)
 				else:
 					log("(playVideo) AbspielLink-00 (ARTE) : KEIN *ARTE-Addon* zur Wiedergabe vorhanden !!!")
-					xbmcgui.Dialog().notification((translation(30523).format('ARTE - Addon')), (translation(30524).format('ARTE-Addon')), icon, 8000)
-				pass
+					xbmcgui.Dialog().notification(translation(30523).format('ARTE - Addon'), translation(30524).format('ARTE-Addon'), icon, 8000)
 	elif LINK.startswith(ARD_SCHEMES):
 		videoURL = LINK
 		return ArdGetVideo(videoURL)
@@ -360,6 +345,7 @@ def ArdGetVideo(videoURL):
 			secondURL = getUrl(videoURL)
 			videoID = re.compile(r'["\']contentId["\']:([^,]+?),["\']metadataId["\']:', re.DOTALL).findall(secondURL)[0].replace('"', '').replace("'", "")
 		debug_MS("(ArdGetVideo) ***** Extracted-videoID : {0} *****".format(videoID))
+		# evtl. NEW = https://appdata.ardmediathek.de/appdata/servlet/play/media/66597424 #
 		content = getUrl('https://classic.ardmediathek.de/play/media/'+videoID)
 		debug_MS("(ArdGetVideo) ##### CONTENT : {0} #####".format(str(content)))
 		result = json.loads(content)
@@ -393,7 +379,7 @@ def ArdGetVideo(videoURL):
 						linkQuality = 3
 					elif quality["_quality"] > 3 and not quality["_quality"] > 4:
 						linkQuality = 4
-			log("(ArdGetVideo) ##### LINK-Qualität (ARD+3) = {0} ##### [3=beste|2=mittlere|1=schlechteste]".format(str(linkQuality)))
+			log("(ArdGetVideo) ##### LINK-Qualität (ARD+3) = {0} ##### [4=höchste|3=beste|2=mittlere|1=schlechteste]".format(str(linkQuality)))
 			for element in allLinks:
 				if linkQuality != element["_quality"]:
 					# Nicht gewollte Qualität überspringen
@@ -420,14 +406,14 @@ def ArdGetVideo(videoURL):
 				finalURL = VideoBEST(ARD_Url, improve='ard-YES') # *mp4URL* Qualität nachbessern, überprüfen, danach abspielen
 		if not finalURL:
 			log("(ArdGetVideo) AbspielLink-00 (ARD+3) : *ARD-Intern* Der angeforderte -VideoLink- existiert NICHT !!!")
-			xbmcgui.Dialog().notification((translation(30523).format('ARD - Intern')), translation(30525), icon, 8000)
+			xbmcgui.Dialog().notification(translation(30523).format('ARD - Intern'), translation(30525), icon, 8000)
 		else:
 			listitem = xbmcgui.ListItem(name, path=finalURL)
 			xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 			log("(ArdGetVideo) END-Qualität (ARD+3) : {0}".format(finalURL))
 	except:
 		failing("(ArdGetVideo) AbspielLink-00 (ARD+3) : *ARD-Intern* Der angeforderte -VideoLink- existiert NICHT !!!")
-		xbmcgui.Dialog().notification((translation(30523).format('ARD - Intern')), translation(30525), icon, 8000)
+		xbmcgui.Dialog().notification(translation(30523).format('ARD - Intern'), translation(30525), icon, 8000)
 	log("(playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---")
 
 def RtlGetVideo(SERIES, EPISODE, REFERER):
@@ -459,10 +445,10 @@ def RtlGetVideo(SERIES, EPISODE, REFERER):
 			xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 		except:
 			failing("(RtlGetVideo) AbspielLink-00 (TV-Now) : *TVNow-Plugin* Der angeforderte -VideoLink- existiert NICHT !!!")
-			xbmcgui.Dialog().notification((translation(30523).format('TVNow - Plugin')), translation(30525), icon, 8000)
+			xbmcgui.Dialog().notification(translation(30523).format('TVNow - Plugin'), translation(30525), icon, 8000)
 	else:
 		log("(RtlGetVideo) AbspielLink-00 (TV-Now) : KEIN *TVNow-Addon* zur Wiedergabe vorhanden !!!")
-		xbmcgui.Dialog().notification((translation(30523).format('TVNow - Addon')), (translation(30524).format('TVNow-Addon')), icon, 8000)
+		xbmcgui.Dialog().notification(translation(30523).format('TVNow - Addon'), translation(30524).format('TVNow-Addon'), icon, 8000)
 	log("(playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---")
 
 def ZdfGetVideo(videoURL):
@@ -501,7 +487,7 @@ def ZdfGetVideo(videoURL):
 	except:
 		failing("(ZdfGetVideo) AbspielLink-00 (ZDF+3) : *ZDF-Intern* Der angeforderte -VideoLink- existiert NICHT !!!")
 		log("(playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---")
-		xbmcgui.Dialog().notification((translation(30523).format('ZDF - Intern')), translation(30525), icon, 8000)
+		xbmcgui.Dialog().notification(translation(30523).format('ZDF - Intern'), translation(30525), icon, 8000)
 
 def ZdfExtractQuality(thirdURL):
 	jsonObject = json.loads(thirdURL)
@@ -613,31 +599,27 @@ def parameters_string_to_dict(parameters):
 				paramDict[paramSplits[0]] = paramSplits[1]
 	return paramDict
 
-def addVideoList(url, name, image, studio):
+def addQueue(url, name, image, studio):
 	PL = xbmc.PlayList(1)
-	listitem = xbmcgui.ListItem(name, thumbnailImage=image)
+	listitem = xbmcgui.ListItem(name)
 	listitem.setInfo(type="Video", infoLabels={"Title": name, "Studio": studio, "mediatype": "video"})
-	if useThumbAsFanart and image != icon:
-		listitem.setArt({'fanart': image})
-	else:
-		listitem.setArt({'fanart': defaultFanart})
+	listitem.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
 	listitem.setProperty('IsPlayable', 'true')
 	listitem.setContentLookup(False)
 	PL.add(url, listitem)
 
-def addDir(name, url, mode, image, plot=None, studio=None, genre=None):
+def addDir(name, url, mode, image, studio=None, plot=None):
 	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=image)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot, "Studio": studio, "Genre": genre})
-	if useThumbAsFanart and image != icon:
+	liz = xbmcgui.ListItem(name)
+	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot, "Studio": studio})
+	liz.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
+	if useThumbAsFanart and image != icon and not artpic in image:
 		liz.setArt({'fanart': image})
-	else:
-		liz.setArt({'fanart': defaultFanart})
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
 
-def addLink(name, url, mode, image, plot=None, duration=None, seriesname=None, season=None, episode=None, genre=None, year=None, begins=None, studio=None):
+def addLink(name, url, mode, image, studio=None, plot=None, duration=None, seriesname=None, season=None, episode=None, genre=None, year=None, begins=None):
 	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=image)
+	liz = xbmcgui.ListItem(name)
 	ilabels = {}
 	ilabels['Season'] = season
 	ilabels['Episode'] = episode
@@ -656,15 +638,13 @@ def addLink(name, url, mode, image, plot=None, duration=None, seriesname=None, s
 	ilabels['Mpaa'] = None
 	ilabels['Mediatype'] = 'video'
 	liz.setInfo(type='Video', infoLabels=ilabels)
-	liz.setArt({'poster': image})
-	if useThumbAsFanart and image != icon:
+	liz.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
+	if useThumbAsFanart and image != icon and not artpic in image:
 		liz.setArt({'fanart': image})
-	else:
-		liz.setArt({'fanart': defaultFanart})
 	liz.addStreamInfo('Video', {'Duration': duration})
 	liz.setProperty('IsPlayable', 'true')
 	liz.setContentLookup(False)
-	liz.addContextMenuItems([(translation(30601), 'RunPlugin(plugin://{0}?mode=addVideoList&url={1}&name={2}&image={3}&studio={4})'.format(addon.getAddonInfo('id'), quote_plus(u), quote_plus(name), quote_plus(image), quote_plus(studio)))])
+	liz.addContextMenuItems([(translation(30653), 'RunPlugin({0}?mode=addQueue&url={1}&name={2}&image={3}&studio={4})'.format(sys.argv[0], quote_plus(u), quote_plus(name), quote_plus(image), quote_plus(studio)))])
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
 
 params = parameters_string_to_dict(sys.argv[2])
@@ -682,7 +662,7 @@ elif mode == 'listVideosGenre':
 	listVideosGenre(url)
 elif mode == 'playVideo':
 	playVideo(url)
-elif mode == 'addVideoList':
-	addVideoList(url, name, image, studio)
+elif mode == 'addQueue':
+	addQueue(url, name, image, studio)
 else:
 	index()

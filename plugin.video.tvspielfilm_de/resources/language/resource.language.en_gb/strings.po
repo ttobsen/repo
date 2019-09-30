@@ -111,11 +111,7 @@ msgstr ""
 # empty strings from id 30353 to 30500
 # WARNING/INFORMATION-MESSAGES-OK
 
-msgctxt "#30501"
-msgid "[COLOR orangered]ATTENTION : ... there is a problem with the Network !!![/COLOR][CR]Either the requested Webpage is not available at the moment or ...[CR]... check your Internet connection works ?!"
-msgstr ""
-
-# empty strings from id 30502 to 30520
+# empty strings from id 30500 to 30520
 # WARNING/INFORMATION-MESSAGES-NOTIFICATION
 
 msgctxt "#30521"
@@ -142,5 +138,69 @@ msgstr ""
 # PLUGIN-MAIN-SIDEMENU
 
 msgctxt "#30601"
+msgid "Monday"
+msgstr ""
+
+msgctxt "#30602"
+msgid "Tuesday"
+msgstr ""
+
+msgctxt "#30603"
+msgid "Wednesday"
+msgstr ""
+
+msgctxt "#30604"
+msgid "Thursday"
+msgstr ""
+
+msgctxt "#30605"
+msgid "Friday"
+msgstr ""
+
+msgctxt "#30606"
+msgid "Saturday"
+msgstr ""
+
+msgctxt "#30607"
+msgid "Sunday"
+msgstr ""
+
+msgctxt "#30608"
+msgid "Selection from {0:s}, the {1:s}"
+msgstr ""
+
+msgctxt "#30609"
+msgid "[COLOR deepskyblue]• • • STATIONS sorted • • •[/COLOR]"
+msgstr ""
+
+msgctxt "#30610"
+msgid "[COLOR deepskyblue]• • • TV-HIGHLIGHTS • • •[/COLOR]"
+msgstr ""
+
+msgctxt "#30611"
+msgid "* Movies *"
+msgstr ""
+
+msgctxt "#30612"
+msgid "* Series *"
+msgstr ""
+
+msgctxt "#30613"
+msgid "* Reports *"
+msgstr ""
+
+msgctxt "#30614"
+msgid "* Entertainment *"
+msgstr ""
+
+msgctxt "#30615"
+msgid "* Children *"
+msgstr ""
+
+msgctxt "#30616"
+msgid "* Sports *"
+msgstr ""
+
+msgctxt "#30653"
 msgid "[B][COLOR yellow]Add to TV-Spielfilm-Playlist[/COLOR][/B]"
 msgstr ""

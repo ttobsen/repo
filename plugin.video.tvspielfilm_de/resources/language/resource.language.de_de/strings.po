@@ -111,11 +111,7 @@ msgstr "     • [COLOR chartreuse]Einstellung »[/COLOR]mp4[COLOR chartreuse]«
 # empty strings from id 30353 to 30500
 # WARNING/INFORMATION-MESSAGES-OK
 
-msgctxt "#30501"
-msgid "[COLOR orangered]ATTENTION : ... there is a problem with the Network !!![/COLOR][CR]Either the requested Webpage is not available at the moment or ...[CR]... check your Internet connection works ?!"
-msgstr "[COLOR orangered]ACHTUNG : ... Es besteht ein Problem mit dem Netzwerk !!![/COLOR][CR]Entweder ist die angeforderte - WebSeite - zurzeit nicht erreichbar oder ...[CR]... überprüfen Sie, ob Ihre Internetverbindung funktioniert ?!"
-
-# empty strings from id 30502 to 30520
+# empty strings from id 30500 to 30520
 # WARNING/INFORMATION-MESSAGES-NOTIFICATION
 
 msgctxt "#30521"
@@ -142,5 +138,69 @@ msgstr "ERROR = [COLOR red]Der angeforderte *VideoLink* existiert NICHT ![/COLOR
 # PLUGIN-MAIN-SIDEMENU
 
 msgctxt "#30601"
+msgid "Monday"
+msgstr "Montag"
+
+msgctxt "#30602"
+msgid "Tuesday"
+msgstr "Dienstag"
+
+msgctxt "#30603"
+msgid "Wednesday"
+msgstr "Mittwoch"
+
+msgctxt "#30604"
+msgid "Thursday"
+msgstr "Donnerstag"
+
+msgctxt "#30605"
+msgid "Friday"
+msgstr "Freitag"
+
+msgctxt "#30606"
+msgid "Saturday"
+msgstr "Samstag"
+
+msgctxt "#30607"
+msgid "Sunday"
+msgstr "Sonntag"
+
+msgctxt "#30608"
+msgid "Selection from {0:s}, the {1:s}"
+msgstr "Auswahl vom {0:s}, den {1:s}"
+
+msgctxt "#30609"
+msgid "[COLOR deepskyblue]• • • STATIONS sorted • • •[/COLOR]"
+msgstr "[COLOR deepskyblue]• • • SENDER sortiert • • •[/COLOR]"
+
+msgctxt "#30610"
+msgid "[COLOR deepskyblue]• • • TV-HIGHLIGHTS • • •[/COLOR]"
+msgstr "[COLOR deepskyblue]• • • TV-HIGHLIGHTS • • •[/COLOR]"
+
+msgctxt "#30611"
+msgid "* Movies *"
+msgstr "* Spielfilme *"
+
+msgctxt "#30612"
+msgid "* Series *"
+msgstr "* Serien *"
+
+msgctxt "#30613"
+msgid "* Reports *"
+msgstr "* Reportagen *"
+
+msgctxt "#30614"
+msgid "* Entertainment *"
+msgstr "* Unterhaltung *"
+
+msgctxt "#30615"
+msgid "* Children *"
+msgstr "* Kinder *"
+
+msgctxt "#30616"
+msgid "* Sports *"
+msgstr "* Sport *"
+
+msgctxt "#30653"
 msgid "[B][COLOR yellow]Add to TV-Spielfilm-Playlist[/COLOR][/B]"
 msgstr "[B][COLOR yellow]In TV-Spielfilm-Abspielliste einreihen[/COLOR][/B]"
