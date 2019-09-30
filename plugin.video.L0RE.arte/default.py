@@ -23,7 +23,6 @@ import json
 import xbmcvfs
 import shutil
 import socket
-import locale
 import time
 from datetime import datetime, timedelta
 
@@ -42,7 +41,7 @@ baseURL = "https://www.arte.tv/"
 apiURL = "https://api-cdn.arte.tv/api/emac/v3/"+COUNTRY+"/web/"
 OPA_token = "AOwImM4EGZ2gjYjRGZzEzYxMTNxMWOjJDO4gDO3UWN3UmN5IjNzAzMlRmMwEWM2I2NhFWN1kjYkJjZ1cjY1czN reraeB"
 EMAC_token = "wYxYGNiBjNwQjZzIjMhRDOllDMwEjM2MDN3MjY4U2M1ATYkVWOkZTM5QzM4YzN2ITM0E2MxgDO1EjN5kjZmZWM reraeB"
-headerEMAC = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36'), ('Authorization', EMAC_token[::-1])]
+headerEMAC = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0'), ('Authorization', EMAC_token[::-1])]
 
 xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_UNSORTED)
 xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
@@ -95,24 +94,19 @@ def log(msg, level=xbmc.LOGNOTICE):
 	msg = py2_enc(msg)
 	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+msg, level)
 
-def getUrl(url, header=None):
+def getUrl(url, header=None, agent='Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0'):
 	global cj
 	for cook in cj:
-		debug("(getUrl) Cookie : "+str(cook))
+		debug("(getUrl) Cookie : {0}".format(str(cook)))
 	opener = build_opener(HTTPCookieProcessor(cj))
+	opener.addheaders = [('User-Agent', agent)]
 	try:
-		if header:
-			opener.addheaders = header
-		else:
-			opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36')]
+		if header: opener.addheaders = header
 		response = opener.open(url, timeout=30)
 		content = py3_dec(response.read())
 	except Exception as e:
 		failure = str(e)
-		if hasattr(e, 'code'):
-			failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
-		elif hasattr(e, 'reason'):
-			failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
+		failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
 		content = ""
 		return sys.exit(0)
 	opener.close()
@@ -266,13 +260,16 @@ def videos_Themes(url, page="1", query=""):
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def listSelection():
-	locale.setlocale(locale.LC_ALL, COUNTRY)
 	i = -20
 	while i <= 20:
-		WT = (datetime.now() - timedelta(days=i)).strftime('%A~%d.%m.%Y')
 		WU = (datetime.now() - timedelta(days=i)).strftime('%Y-%m-%d')
-		if i == 0: addDir("[COLOR lime]"+WT.split('~')[0].title()+" - "+WT.split('~')[1]+"[/COLOR]", WU, 'videos_Datum', icon)
-		else: addDir(WT.split('~')[0].title()+" - "+WT.split('~')[1], WU, 'videos_Datum', icon)
+		WT = (datetime.now() - timedelta(days=i)).strftime('%a~%d.%m.%Y')
+		if COUNTRY=="de":
+			MD = WT.split('~')[0].replace('Mon', 'Montag').replace('Tue', 'Dienstag').replace('Wed', 'Mittwoch').replace('Thu', 'Donnerstag').replace('Fri', 'Freitag').replace('Sat', 'Samstag').replace('Sun', 'Sonntag')
+		elif COUNTRY=="fr":
+			MD = WT.split('~')[0].replace('Mon', 'Lundi').replace('Tue', 'Mardi').replace('Wed', 'Mercredi').replace('Thu', 'Jeudi').replace('Fri', 'Vendredi').replace('Sat', 'Samedi').replace('Sun', 'Dimanche')
+		if i == 0: addDir("[COLOR lime]"+WT.split('~')[1]+" | "+MD+"[/COLOR]", WU, 'videos_Datum', icon)
+		else: addDir(WT.split('~')[1]+" | "+MD, WU, 'videos_Datum', icon)
 		i += 1
 	xbmcplugin.endOfDirectory(pluginhandle)
 
@@ -381,15 +378,15 @@ def playLive(url, name):
 def liveTV():
 	debug("(liveTV) ------------------------------------------------ START = liveTV -----------------------------------------------")
 	items = []
-	items.append(("ARTE-TV HD", "https://artelive-lh.akamaihd.net/i/artelive_de@393591/index_1_av-p.m3u8", icon))
-	items.append(("ARTE Event 1", "https://arteevent01-lh.akamaihd.net/i/arte_event01@395110/index_1_av-p.m3u8", icon))
-	items.append(("ARTE Event 2", "https://arteevent02-lh.akamaihd.net/i/arte_event02@308866/index_1_av-p.m3u8", icon))
-	items.append(("ARTE Event 3", "https://arteevent03-lh.akamaihd.net/i/arte_event03@305298/index_1_av-p.m3u8", icon))
-	items.append(("ARTE Event 4", "https://arteevent04-lh.akamaihd.net/i/arte_event04@308879/index_1_av-p.m3u8", icon))
-	items.append(("ARTE Event 5", "https://arteevent05-lh.akamaihd.net/i/arte_event05@391593/index_1_av-p.m3u8", icon))
+	items.append(["ARTE-TV HD", "https://artelive-lh.akamaihd.net/i/artelive_de@393591/index_1_av-p.m3u8", icon])
+	items.append(["ARTE Event 1", "https://arteevent01-lh.akamaihd.net/i/arte_event01@395110/index_1_av-p.m3u8", icon])
+	items.append(["ARTE Event 2", "https://arteevent02-lh.akamaihd.net/i/arte_event02@308866/index_1_av-p.m3u8", icon])
+	items.append(["ARTE Event 3", "https://arteevent03-lh.akamaihd.net/i/arte_event03@305298/index_1_av-p.m3u8", icon])
+	items.append(["ARTE Event 4", "https://arteevent04-lh.akamaihd.net/i/arte_event04@308879/index_1_av-p.m3u8", icon])
+	items.append(["ARTE Event 5", "https://arteevent05-lh.akamaihd.net/i/arte_event05@391593/index_1_av-p.m3u8", icon])
 	for item in items:
-		listitem = xbmcgui.ListItem(path=item[1], label=item[0], iconImage=item[2], thumbnailImage=item[2])
-		listitem.setArt({'fanart': defaultFanart})
+		listitem = xbmcgui.ListItem(path=item[1], label=item[0])
+		listitem.setArt({'icon': icon, 'thumb': item[2], 'poster': item[2], 'fanart': defaultFanart})
 		xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=sys.argv[0]+"?mode=playLive&url="+quote_plus(item[1])+"&name="+item[0], listitem=listitem)  
 	xbmcplugin.endOfDirectory(pluginhandle)
 
@@ -439,7 +436,7 @@ def get_ListItem(info, nosub):
 	if endTIMES: Note_2 = "bis [COLOR orangered]"+str(endTIMES)+"[/COLOR][CR][CR]"
 	if begins: xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_DATE)
 	if duration: xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_DURATION)
-	liz = xbmcgui.ListItem(title, iconImage=icon, thumbnailImage=thumb)
+	liz = xbmcgui.ListItem(title)
 	ilabels = {}
 	ilabels['Episode'] = None
 	ilabels['Season'] = None
@@ -458,7 +455,7 @@ def get_ListItem(info, nosub):
 	ilabels['Mpaa'] = None
 	ilabels['Mediatype'] = 'video'
 	liz.setInfo(type='Video', infoLabels=ilabels)
-	liz.setArt({'poster': thumb, 'fanart': thumb})
+	liz.setArt({'icon': icon, 'thumb': thumb, 'poster': thumb, 'fanart': thumb})
 	liz.addStreamInfo('Video', {'Duration': duration})
 	liz.setProperty('IsPlayable', 'true')
 	if nosub:
@@ -486,9 +483,9 @@ def parameters_string_to_dict(parameters):
 
 def addDir(name, url, mode, image, tagline=None, plot=None, page=1, query=""):   
 	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)+"&query="+str(query)
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=image)
+	liz = xbmcgui.ListItem(name)
 	liz.setInfo(type='Video', infoLabels={'Title': name, 'Plot': plot, 'Tagline': tagline})
-	liz.setArt({'fanart': defaultFanart})
+	liz.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
 	if image != icon: liz.setArt({'fanart': image})
 	return xbmcplugin.addDirectoryItem(handle=pluginhandle, url=u, listitem=liz, isFolder=True)
 
