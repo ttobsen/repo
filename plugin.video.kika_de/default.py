@@ -33,6 +33,7 @@ addon = xbmcaddon.Addon()
 addonPath = xbmc.translatePath(addon.getAddonInfo('path')).encode('utf-8').decode('utf-8')
 dataPath = xbmc.translatePath(addon.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
 temp        = xbmc.translatePath(os.path.join(dataPath, 'temp', '')).encode('utf-8').decode('utf-8')
+filename = os.path.join(dataPath, 'episode_data.txt')
 defaultFanart = os.path.join(addonPath, 'fanart.jpg')
 icon = os.path.join(addonPath, 'icon.png')
 artpic = os.path.join(addonPath, 'resources', 'media', '').encode('utf-8').decode('utf-8')
@@ -271,9 +272,11 @@ def listEpisodes(url, page=0):
 			episode = 0
 			numbers = 0
 			if title1[:1].isdigit():
-				numbers = re.findall('([0-9]+). ',title1,re.S)[0].strip().zfill(4)
-				episode = numbers
-				pos3 += 1
+				try:
+					numbers = re.findall('([0-9]+).',title1,re.S)[0].strip().zfill(4)
+					episode = numbers
+					pos3 += 1
+				except: pass
 			if pos2 == pos3:
 				debug("(listEpisodes) FOURTH XXX POS_2 = {0} | POS_3 = {1} XXX".format(str(pos2), str(pos3)))
 				COMBI_2.append([numbers, pos2, pos3, title1, title2, endURL, image, plot, duration, seriesname, episode])
@@ -283,17 +286,31 @@ def listEpisodes(url, page=0):
 	if COMBI_2:
 		for numbers, pos2, pos3, title1, title2, endURL, image, plot, duration, seriesname, episode in COMBI_2:
 			hasresult = hashlib.md5(seriesname+'-'+title1).hexdigest()
-			seq = hasresult+"###"+endURL+"###"+seriesname+"###"+title2+"###"+image+"###"+plot+"###"+str(duration)+"###"+str(episode)+"###"
-			workList = workList+seq.replace("\n"," ").encode('utf-8')+"\n"
-			listitem = xbmcgui.ListItem(path=sys.argv[0]+'?number='+hasresult+'&mode=play_CODE')
-			listitem.setInfo(type='Video', infoLabels={'Title': title2, 'Tvshowtitle': seriesname, 'Plot': plot, 'Duration': duration, 'Episode': episode, 'Mediatype': 'episode'})
+			seq = py2_enc(str(hasresult)+"###"+str(endURL)+"###"+str(seriesname)+"###"+str(title2)+"###"+str(image)+"###"+str(plot)+"###"+str(duration)+"###"+str(episode)+"###")
+			workList = workList+seq.replace('\n', ' ')+'\n'
+			listitem = xbmcgui.ListItem(title2, path=sys.argv[0]+'?number='+hasresult+'&mode=play_CODE')
+			ilabels = {}
+			ilabels['Episode'] = episode
+			ilabels['Tvshowtitle'] = seriesname
+			ilabels['Title'] = title2
+			ilabels['Tagline'] = None
+			ilabels['Plot'] = plot
+			ilabels['Duration'] = duration
+			ilabels['Year'] = None
+			ilabels['Genre'] = 'Kinder'
+			ilabels['Director'] = None
+			ilabels['Writer'] = None
+			ilabels['Studio'] = 'KiKA'
+			ilabels['Mpaa'] = None
+			ilabels['Mediatype'] = 'episode'
+			listitem.setInfo(type='Video', infoLabels=ilabels)
 			listitem.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
 			if useThumbAsFanart and image != icon and not artpic in image:
 				listitem.setArt({'fanart': image})
 			listitem.addStreamInfo('Video', {'Duration':duration})
 			listitem.setProperty('IsPlayable', 'true')
 			xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=sys.argv[0]+'?number='+hasresult+'&mode=play_CODE', listitem=listitem)
-	with open(os.path.join(dataPath, 'episode_data.txt'), 'w') as input:
+	with open(filename, 'w') as input:
 		input.write(workList)
 		debug("(listEpisodes) XXX workList : {0} XXX".format(str(workList)))
 	xbmcplugin.endOfDirectory(pluginhandle)
@@ -335,7 +352,7 @@ def play_CODE(idd):
 	DATA = {}
 	DATA['media'] = []
 	finalURL = False
-	with open(os.path.join(dataPath, 'episode_data.txt'), 'r') as output:
+	with open(filename, 'r') as output:
 		sequence = output.read().split('\n')
 		for seq in sequence:
 			field = seq.split('###')

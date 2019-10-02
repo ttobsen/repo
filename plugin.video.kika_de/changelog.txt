@@ -9,7 +9,7 @@
 
 ...
 
-[B]Version 2.0.1  (30.09.2019)[/B] by realvito[CR]
+[B]Version 2.0.1+2.0.2  (02.10.2019)[/B] by realvito[CR]
 - Autor bisher @AddonScriptorDE/L0RE
 - Ab jetzt übernommen durch @realvito
 - removed : manuelle Streamauswahl (vordefiniert in den settings - sonst bestmögliche Qualität)
@@ -17,3 +17,4 @@
 - added: Rubriken = Videos ab 3, 6, 10 Jahre, neue Videos (jede Rubrik abschaltbar - settings)
 - added: Autom. Auflistung mehrerer Serienseiten ohne umblättern (Anzahl einstellbar - settings)
 - added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19+) :-)
+- fixed: Mehrere nachträglich aufgetretene Encoding- und sonstige Errors
