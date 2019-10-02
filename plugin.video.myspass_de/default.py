@@ -40,11 +40,14 @@ addon = xbmcaddon.Addon()
 addonPath = xbmc.translatePath(addon.getAddonInfo('path')).encode('utf-8').decode('utf-8')
 dataPath = xbmc.translatePath(addon.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
 temp        = xbmc.translatePath(os.path.join(dataPath, 'temp', '')).encode('utf-8').decode('utf-8')
+filename = os.path.join(dataPath, 'episode_data.txt')
 defaultFanart = os.path.join(addonPath, 'fanart.jpg')
 icon = os.path.join(addonPath, 'icon.png')
 baseURL = "https://www.myspass.de"
 
 xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
+if not xbmcvfs.exists(temp):
+	xbmcvfs.mkdirs(temp)
 
 def py2_enc(s, encoding='utf-8'):
 	if PY2 and isinstance(s, unicode):
@@ -108,8 +111,12 @@ def listShows(url):
 	content = getUrl(url)
 	DATA = json.loads(content) 
 	for element in DATA['data']:
-		name = element['format'].replace('fÃ¼r das JÃ¶rg', 'für das Jörg')
-		plot = element['format_description']
+		name = ""
+		plot = ""
+		if "format" in element and element['format'] != "" and element['format'] != None:
+			name = cleanTitle(element['format'])
+		if "format_description" in element and element['format_description'] != "" and element['format_description'] != None:
+			plot = cleanTitle(element['format_description'])
 		idd = str(element['format_id'])
 		logo = 'http:'+element['latestVideo']['original_image'].replace('\/', '/')
 		debug("(listShows) XXX TITLE = {0} | IDD = {1} | LOGO = {2} XXX".format(str(name), idd, str(logo)))
@@ -123,9 +130,13 @@ def listSeasons(url):
 	content = getUrl(url)
 	DATA = json.loads(content) 
 	for element in DATA['data']:
-		name = element['season_name']
-		if name == '1': name = 'Staffel 1'
-		plot = element['season_description']
+		name = ""
+		plot = ""
+		if "season_name" in element and element['season_name'] != "" and element['season_name'] != None:
+			name = cleanTitle(element['season_name'])
+			if name == '1': name = 'Staffel 1'
+		if "season_description" in element and element['season_description'] != "" and element['season_description'] != None:
+			plot = cleanTitle(element['season_description'])
 		idd = str(element['season_id'])
 		logo = 'http:'+element['latestVideo']['original_image'].replace('\/', '/')
 		debug("(listSeasons) XXX TITLE = {0} | IDD = {1} | LOGO = {2} XXX".format(str(name), idd, str(logo)))
@@ -143,8 +154,12 @@ def listVideos(url):
 		DATA = json.loads(content)
 	except: return xbmcgui.Dialog().notification('[COLOR red]Leider gibt es KEINE Einträge :[/COLOR]', '* [COLOR blue]In dieser Rubrik[/COLOR] * bei Myspass.de', icon, 8000)
 	for element in DATA['data']:
-		seriesname = element['format'].replace('fÃ¼r das JÃ¶rg', 'für das Jörg')
-		title = element['title']
+		seriesname = ""
+		title = ""
+		if "format" in element and element['format'] != "" and element['format'] != None:
+			seriesname = cleanTitle(element['format'])
+		if "title" in element and element['title'] != "" and element['title'] != None:
+			title = cleanTitle(element['title'])
 		if 'Teil 2' in title or 'Teil 3' in title: continue
 		idd = str(element['unique_id'])
 		if 'command=hometeaser' in firstURL:
@@ -186,7 +201,7 @@ def listVideos(url):
 			except: pass
 		if startDATES and not '1970' in startDATES: Note_1 = "Sendung vom "+str(startDATES)+"[CR][CR]"
 		if "teaser_text" in element and element['teaser_text'] != "" and element['teaser_text'] != None:
-			Note_2 = element['teaser_text']
+			Note_2 = cleanTitle(element['teaser_text'])
 		plot = Note_1+Note_2
 		season = str(element['season_number']).zfill(2)
 		episode = str(element['episode_nr'])
@@ -201,17 +216,32 @@ def listVideos(url):
 		name = "[COLOR chartreuse]S"+season+"E"+episode+":[/COLOR]  "+title.split('- Teil')[0].split(' Teil')[0]
 		if 'hometeaser' in firstURL or 'favourite' in firstURL or 'latest&length' in firstURL:
 			name = "[COLOR chartreuse]S"+season+"E"+episode+":[/COLOR]  "+seriesname+" - "+title.split('- Teil')[0].split(' Teil')[0]
-		seq = idd+"###"+vidURL+"###"+seriesname+"###"+name+"###"+image+"###"+plot+"###"+str(duration)+"###"+str(season)+"###"+str(episode)+"###"
-		workList = workList+seq.replace('\n', ' ').encode('utf-8')+'\n'
-		listitem = xbmcgui.ListItem(path=sys.argv[0]+'?number='+idd+'&mode=play_CODE')
-		listitem.setInfo(type='Video', infoLabels={'Tvshowtitle': seriesname, 'Title': name, 'Season': season, 'Episode': episode, 'Plot': plot, 'Duration': duration, 'Studio': 'myspass.de', 'Genre': 'Unterhaltung', 'mediatype': 'episode'})
+		seq = py2_enc(idd+"###"+str(vidURL)+"###"+str(seriesname)+"###"+str(name)+"###"+str(image)+"###"+str(plot)+"###"+str(duration)+"###"+str(season)+"###"+str(episode)+"###")
+		workList = workList+seq.replace('\n', ' ')+'\n'
+		listitem = xbmcgui.ListItem(name, path=sys.argv[0]+'?number='+idd+'&mode=play_CODE')
+		ilabels = {}
+		ilabels['Season'] = season
+		ilabels['Episode'] = episode
+		ilabels['Tvshowtitle'] = seriesname
+		ilabels['Title'] = name
+		ilabels['Tagline'] = None
+		ilabels['Plot'] = plot
+		ilabels['Duration'] = duration
+		ilabels['Year'] = None
+		ilabels['Genre'] = 'Unterhaltung'
+		ilabels['Director'] = None
+		ilabels['Writer'] = None
+		ilabels['Studio'] = 'myspass.de'
+		ilabels['Mpaa'] = None
+		ilabels['Mediatype'] = 'episode'
+		listitem.setInfo(type='Video', infoLabels=ilabels)
 		listitem.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
 		if image != icon:
 			listitem.setArt({'fanart': image})
 		listitem.addStreamInfo('Video', {'Duration':duration})
 		listitem.setProperty('IsPlayable', 'true')
 		xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=sys.argv[0]+'?number='+idd+'&mode=play_CODE', listitem=listitem)
-	with open(os.path.join(dataPath, 'episode_data.txt'), 'w') as input:
+	with open(filename, 'w') as input:
 		input.write(workList)
 		debug("(listVideos) XXX workList : {0} XXX".format(str(workList)))
 	xbmcplugin.endOfDirectory(pluginhandle)
@@ -222,7 +252,7 @@ def play_CODE(idd):
 	pos_LISTE = 0
 	Special = False
 	PL = xbmc.PlayList(1)
-	with open(os.path.join(dataPath, 'episode_data.txt'), 'r') as output:
+	with open(filename, 'r') as output:
 		sequence = output.read().split('\n')
 		for seq in sequence:
 			field = seq.split('###')
@@ -264,6 +294,15 @@ def play_CODE(idd):
 	else:
 		xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
+def cleanTitle(title):
+	title = py2_enc(title)
+	title = title.replace('&lt;', '<').replace('&gt;', '>').replace('&amp;', '&').replace('amp;', '').replace('&#39;', '\'').replace('&#039;', '\'').replace('&quot;', '"').replace('&szlig;', 'ß').replace('&ndash;', '-')
+	title = title.replace('&#x00c4', 'Ä').replace('&#x00e4', 'ä').replace('&#x00d6', 'Ö').replace('&#x00f6', 'ö').replace('&#x00dc', 'Ü').replace('&#x00fc', 'ü').replace('&#x00df', 'ß')
+	title = title.replace('&Auml;', 'Ä').replace('&Ouml;', 'Ö').replace('&Uuml;', 'Ü').replace('&auml;', 'ä').replace('&ouml;', 'ö').replace('&uuml;', 'ü')
+	title = title.replace('&agrave;', 'à').replace('&aacute;', 'á').replace('&acirc;', 'â').replace('&egrave;', 'è').replace('&eacute;', 'é').replace('&ecirc;', 'ê').replace('&igrave;', 'ì').replace('&iacute;', 'í').replace('&icirc;', 'î')
+	title = title.replace('&ograve;', 'ò').replace('&oacute;', 'ó').replace('&ocirc;', 'ô').replace('&ugrave;', 'ù').replace('&uacute;', 'ú').replace('&ucirc;', 'û')
+	return title.strip()
+
 def parameters_string_to_dict(parameters):
 	paramDict = {}
 	if parameters:
@@ -284,6 +323,7 @@ def addDir(name, url, mode, image, plot=None):
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
 
 params = parameters_string_to_dict(sys.argv[2])
+name = unquote_plus(params.get('name', ''))
 url = unquote_plus(params.get('url', ''))
 mode = unquote_plus(params.get('mode', ''))
 image = unquote_plus(params.get('image', ''))
