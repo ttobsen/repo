@@ -3685,7 +3685,7 @@ Thank you ran.de for your great service, especially for providing ranNFL reLives
 	</extension>
 </addon>
 
-<addon id="plugin.video.prosiebensat1" name="ProSiebenSat.1" version="1.1.1" provider-name="Maven">
+<addon id="plugin.video.prosiebensat1" name="ProSiebenSat.1" version="1.1.2" provider-name="Maven">
 	<requires>
 		<import addon="xbmc.python" version="2.26.0"/>
 		<import addon="script.module.requests" version="2.22.0" />
@@ -3712,6 +3712,7 @@ Thank you ran.de for your great service, especially for providing ranNFL reLives
 			<icon>resources/icon.png</icon>
 			<fanart>resources/fanart.png</fanart>
 		</assets>
+		<news>1.1.2[CR]- Episodenanzeige von 'The Voice of Germany' behoben</news>
 	</extension>
 </addon>
 
