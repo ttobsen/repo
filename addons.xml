@@ -493,7 +493,7 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.tele5_de" name="Tele5 Mediathek" version="1.5.3" provider-name="w4ki and a little bit of realvito">
+<addon id="plugin.video.tele5_de" name="Tele5 Mediathek" version="1.5.4" provider-name="w4ki and a little bit of realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="script.module.beautifulsoup4"/>
@@ -519,9 +519,9 @@
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.5.3  (31.07.2019)[/COLOR][/B] by w4ki[CR]
-- fixed: bei SchleFaZ werden alle anderen Filme auch angezeigt
-		</news>
+		<news>[B]Version 1.5.4  (13.10.2019)[/B] by w4ki[CR]
+- fixed: Serien lassen sich nicht mehr abspielen
+- added: Bei Schlefaz werden auch FSK 18 Filme angezeigt (wenn aktiv)</news>
 	</extension>
 </addon>
 
