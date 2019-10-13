@@ -219,6 +219,7 @@ def listOverview():
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def get_fsk18_movies(data):
+	if not fsk18: return
 	IDs = set()
 	ID_lock = threading.Lock()
 	domain_paths = set(movie['domain_path'] for movie in data)
@@ -389,13 +390,16 @@ def is_better_test((pa, aa), (pb, ab)):
 def listMovies():
 	debug_MS("(listMovies) BEGIN")
 	data = getUrl(baseURL+'nexx/videos/movies/all')['result']
-	if fsk18: get_fsk18_movies(data) # Verändert data
+	get_fsk18_movies(data) # Verändert data
 	for movie in data: listVideo(movie)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def listSchlefaz():
-	for movie in getUrl(baseURL+'nexx/videos/all?type=movie&channel=29864')['result']:
-		listVideo(movie)
+	data = getUrl(baseURL+'nexx/videos/all?type=movie&channel=29864')['result']
+	debug_MS('(listSchlefaz) 1: '+str(next((m for m in data if m['general']['ID'] == '1554421'), None)))
+	get_fsk18_movies(data)
+	debug_MS('(listSchlefaz) 2: '+str(next((m for m in data if m['general']['ID'] == 1554421), None)))
+	for movie in data: listVideo(movie)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 series_cache = {}
@@ -600,9 +604,9 @@ def makeListItem(info):
 	return liz
 
 def listVideo(info):
-	u = sys.argv[0]+"?mode=play&id="+str(info['general']['ID'])
 	liz = makeListItem(info)
 	if liz is None: return
+	u = sys.argv[0]+"?mode=play&id="+str(info['general']['ID'])
 	liz.addContextMenuItems([(translation(30651), 'RunPlugin(plugin://{0}?mode=addVideoList&id={1})'.format(addon.getAddonInfo('id'), info['general']['ID']))])
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
 
@@ -612,10 +616,14 @@ def play(ID):
 	try:
 		session.fetch("videos/byid/"+ID,
 		  data = 'additionalfields=language,channel,format,persons,studio,licenseby,slug,fileversion,contentModerationAspects&addInteractionOptions=1&addStatusDetails=1&addStreamDetails=1&addFeatures=1&addCaptions=1&addScenes=1&addHotSpots=1&addBumpers=1&captionFormat=data')
-		locator = session.get_prop('result', 'streamdata', 'azureLocator')
-	except ValueError:
+		result = session.get_prop('result')
+		if isinstance(result, list):
+			result = next(r for r in result if str(r['general']['ID']) == ID)
+		locator = result['streamdata']['azureLocator']
+	except (ValueError, StopIteration):
 		failing("(play) ERROR: Can't get locator")
 		notify_err("Error finding Video URL", "Bad response")
+		return
 	path = ('https://tele5nexx.akamaized.net/'+
 	  locator+'/'+ID+'_src.ism/Manifest(format=m3u8-aapl)')
 	debug_MS(path)

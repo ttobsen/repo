@@ -106,3 +106,7 @@
 
 [B]Version 1.5.3  (31.07.2019)[/B] by w4ki[CR]
 - fixed: bei SchleFaZ werden alle anderen Filme auch angezeigt
+
+[B]Version 1.5.4  (13.10.2019)[/B] by w4ki[CR]
+- fixed: Serien lassen sich nicht mehr abspielen
+- added: Bei Schlefaz werden auch FSK 18 Filme angezeigt (wenn aktiv)

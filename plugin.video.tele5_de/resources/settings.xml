@@ -7,7 +7,7 @@
 		<setting type="sep"/>
 		<setting label="30231" type="lsep"/>
 		<setting label="30111" type="enum" id="showOnlineUntil" lvalues="30112|30113|30114"/>
-		<setting label="30115" type="slider" id="maxRestWarn" range="0,6,96" enable="!eq(-1,1)" default="24" option="int" subsetting="true"/>
+		<setting label="30115" type="slider" id="maxRestWarn" range="0,6,96" enable="!eq(-1,0)" default="24" option="int" subsetting="true"/>
 		<setting type="sep"/>
 		<setting label="30232" type="lsep"/>
 		<setting label="30116" type="bool" id="fsk18" default="true"/>
