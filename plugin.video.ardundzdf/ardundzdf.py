@@ -44,8 +44,9 @@ import resources.lib.EPG				as EPG
 
 # +++++ ARDundZDF - Addon Kodi-Version, migriert von der Plexmediaserver-Version +++++
 
-VERSION =  '1.9.8'		 
-VDATE = '29.09.2019'
+# VERSION -> addon.xml
+VERSION =  '2.0.1'		 
+VDATE = '12.10.2019'
 
 # 
 #	
@@ -323,7 +324,7 @@ def Main():
 		tagline = 'in den Settings sind ZDF Mediathek und ZDFmobileaustauschbar'
 		fparams="&fparams={}"
 		addDir(li=li, label="ZDFmobile", action="dirList", dirID="resources.lib.zdfmobile.Main_ZDFmobile", 
-			fanart=R(FANART), thumb=R(ICON_MAIN_ZDFMOBILE), fparams=fparams)
+			fanart=R(FANART), thumb=R(ICON_MAIN_ZDFMOBILE), tagline=tagline, fparams=fparams)
 	else:
 		tagline = 'in den Settings sind ZDF Mediathek und ZDFmobile austauschbar'
 		fparams="&fparams={'name': 'ZDF Mediathek'}"
@@ -1021,7 +1022,7 @@ def Audio_get_rubriken(li, gridlist, page, ID):		# extrahiert Rubriken
 		descr	= "[B]Folgeseiten[/B] | %s" % (anzahl) 
 		descr = repl_json_chars(descr)
 		summ_par= descr
-		title = repl_json_chars(title)
+		title = unescape(title); title = repl_json_chars(title)
 				
 		PLog('Satz:');
 		PLog(title); PLog(img); PLog(href);  PLog(descr);
@@ -6142,14 +6143,14 @@ def ZDF_get_content(li, page, ref_path, ID=None):
 		if thumb.find('https://') == -1:	 # Bsp.: "./img/bgs/zdf-typical-fallback-314x314.jpg?cb=0.18.1787"
 				thumb = ZDF_BASE + thumb[1:] # 	Fallback-Image  ohne Host
 						
-		teaser_label = stringextract('class=\"teaser-label\"', '</div>', rec)
+		teaser_label = stringextract('class="teaser-label"', '</div>', rec)
 		teaser_typ =  stringextract('<strong>', '</strong>', teaser_label)
 		if teaser_typ == 'Beiträge':		# Mehrfachergebnisse ohne Datum + Uhrzeit
 			multi = True
 			summary = dt1 + teaser_typ 		# Anzahl Beiträge
-		#PLog('teaser_typ: ' + teaser_typ)			
+		PLog('teaser_typ: ' + teaser_typ)			
 			
-		subscription = stringextract('is-subscription=\"', '\"', rec)	# aus plusbar-Block	
+		subscription = stringextract('is-subscription="', '"', rec)	# aus plusbar-Block	
 		PLog(subscription)
 		if subscription == 'true':						
 			multi = True
@@ -6233,9 +6234,11 @@ def ZDF_get_content(li, page, ref_path, ID=None):
 			
 		descr = stringextract('description">', '<', rec)
 		if descr == '':
-			descr = stringextract('teaser-text">', '<', rec)
+			descr = stringextract('teaser-text">', '<', rec) # mehrere Varianten möglich
+		if descr == '':
+			descr = stringextract('class="teaser-text" >', '<', rec)
 		descr = mystrip(descr)
-		# PLog('descr:' + descr)		# UnicodeDecodeError möglich
+		PLog('descr:' + descr)		# UnicodeDecodeError möglich
 		if descr:
 			summary = descr
 		else:
@@ -6277,6 +6280,8 @@ def ZDF_get_content(li, page, ref_path, ID=None):
 			
 		PLog('neuer Satz')
 		PLog(thumb);PLog(path);PLog(title);PLog(summary);PLog(tagline); PLog(multi);
+		# if ID == 'zdfmobile':		# HTML-Auswertung für Modul zdfmobile - nicht genutzt
+			# return title,teaser_label,summary,thumb,tagline,duration
 		 
 		if multi == True:
 			fparams="&fparams={'url': '%s', 'title': '%s', 'ID': '%s'}" % (urllib2.quote(path), 

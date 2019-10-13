@@ -127,7 +127,9 @@ def listShows(entry):
         for show in shows:
             infoLabels = show.get('infoLabels', {})
             art = show.get('art')
-            url = build_url({'action': 'showcontent', 'entry': {'domain': entry.get('domain'), 'path': '{0}{1}'.format(show.get('url'), '/video'), 'cmsId': show.get('cmsId'), 'type': 'season', 'art': art, 'infoLabels': infoLabels}})
+            domain = re.search('https?:\/\/(www.)?(.*[^\/])', show.get('url')).group(2) if show.get('url').startswith('http') else entry.get('domain')
+            path = '/video' if show.get('url').startswith('http') else '{0}{1}'.format(re.search('(.*[^\/])', show.get('url')).group(1), '/video')
+            url = build_url({'action': 'showcontent', 'entry': {'domain': domain, 'path': path, 'cmsId': show.get('cmsId'), 'type': 'season', 'art': art, 'infoLabels': infoLabels}})
             addDir(infoLabels.get('title'), url, art=art, infoLabels=infoLabels)
 
     xbmcplugin.setContent(addon_handle, 'tvshows')
@@ -135,6 +137,7 @@ def listShows(entry):
     xbmcplugin.endOfDirectory(addon_handle, cacheToDisc=True)
 
 def listShowcontent(entry):
+    addSortMethod = False
     content = getContentFull(entry.get('domain'), entry.get('path'))
     if content and len(content) > 0:
         detail = getListItems(content.get('data', None), entry.get('type'), entry.get('domain'), entry.get('path'), entry.get('cmsId'))
@@ -174,9 +177,12 @@ def listShowcontent(entry):
                     url = build_url({'action': 'play', 'entry': {'domain': entry.get('domain'), 'path': item.get('url')}})
                     addFile(infoLabels.get('title'), url, art=item.get('art', {}), infoLabels=infoLabels)
                     xbmcplugin.setContent(addon_handle, 'episodes')
-                    xbmcplugin.addSortMethod(addon_handle, sortMethod=xbmcplugin.SORT_METHOD_EPISODE)
+                    if infoLabels.get('episode'):
+                        addSortMethod = True
 
-    xbmcplugin.addSortMethod(addon_handle, sortMethod=xbmcplugin.SORT_METHOD_LABEL)
+    if addSortMethod:
+        xbmcplugin.addSortMethod(addon_handle, sortMethod=xbmcplugin.SORT_METHOD_EPISODE)
+        xbmcplugin.addSortMethod(addon_handle, sortMethod=xbmcplugin.SORT_METHOD_LABEL)
     xbmcplugin.endOfDirectory(addon_handle, cacheToDisc=True)
 
 def getContentFull(domain, path):
@@ -193,12 +199,12 @@ def getContentFull(domain, path):
 def getContentPreview(domain, path):
     base = 'https://magellan-api.p7s1.io/content-preview/{0}{1}/graphql'.format(domain, path)
     if path == '/livestream':
-        parameters = {'query': 'query PreviewContentQuery($domain: String!, $url: String!, $date: DateTime, $contentType: String, $debug: Boolean!, $authentication: AuthenticationInput) { site(domain: $domain, date: $date, authentication: $authentication) { domain path(url: $url) { route { ...fRoute } page { ...fPage ...fLivestream24Page } content(type: PREVIEW, contentType: $contentType) { ...fContent } mainNav: navigation(type: MAIN) { items { ...fNavigationItem } } metaNav: navigation(type: META) { items { ...fNavigationItem } } channelNav: navigation(type: CHANNEL) { items { ...fNavigationItem } } showsNav: navigation(type: SHOWS) { items { ...fNavigationItem } } footerNav: navigation(type: FOOTER) { items { ...fNavigationItem } } networkNav: navigation(type: NETWORK) { items { ...fNavigationItem } } } } } fragment fRoute on Route { url exists authentication comment contentType name cmsId startDate status endDate } fragment fPage on Page { cmsId contentType pagination { ...fPagination } title shortTitle subheadline proMamsId additionalProMamsIds route source regWall { ...fRegWall } links { ...fLink } metadata { ...fMetadata } breadcrumbs { id href title text } channel { ...fChannel } seo { ...fSeo } modified published flags mainClassNames } fragment fPagination on Pagination { kind limit parent contentType } fragment fRegWall on RegWall { isActive start end } fragment fLink on Link { id classes language href relation title text outbound } fragment fMetadata on Metadata { property name content } fragment fChannel on Channel { name title shortName licenceTerms cssId cmsId proMamsId additionalProMamsIds route image hasLogo liftHeadings, logo sponsors { ...fSponsor } } fragment fSponsor on Sponsor { name url image } fragment fSeo on Seo { title keywords description canonical robots } fragment fLivestream24Page on Livestream24Page { ... on Livestream24Page { livestreamId contentResources epg { name items { ...fEpgItem tvShowTeaser { ...fTeaserItem } } } } } fragment fEpgItem on EpgItem { id title description startTime endTime episode { number } season { number } tvShow { title } images { url title copyright } links { href contentType title } } fragment fTeaserItem on TeaserItem { id url info headline contentType channel { ...fChannelInfo } branding { ...fBrand } site picture { url } videoType orientation date flags valid { from to } epg { episode { ...fEpisode } season { ...fSeason } duration nextEpgInfo { ...fEpgInfo } } } fragment fChannelInfo on ChannelInfo { title shortName cssId cmsId } fragment fBrand on Brand { id, name } fragment fEpisode on Episode { number } fragment fSeason on Season { number } fragment fEpgInfo on EpgInfo { time endTime primetime } fragment fContent on Content { areas { ...fContentArea } } fragment fContentArea on ContentArea { id containers { ...fContentContainer } filters { ...fFilterOptions } debug @include(if: $debug) { ...fContentDebugInfo } } fragment fContentContainer on ContentContainer { id style elements { ...fContentElement } } fragment fContentElement on ContentElement { id authentication title description component config style highlight navigation { ...fNavigationItem } regwall filters { ...fFilterOptions } update styleModifiers groups { id title total cursor itemSource { type id } items { ...fContentElementItem } debug @include(if: $debug) { ...fContentDebugInfo } } groupLayout debug @include(if: $debug) { ...fContentDebugInfo } } fragment fNavigationItem on NavigationItem { selected href channel { ...fChannelInfo } contentType title items { selected href channel { ...fChannelInfo } contentType title } } fragment fFilterOptions on FilterOptions { type remote categories { name title options { title id channelId } } } fragment fContentElementItem on ContentElementItem { id url info branding { ...fBrand } body config headline contentType channel { ...fChannelInfo } site picture { url } videoType orientation date duration flags genres valid { from to } epg { episode { ...fEpisode } season { ...fSeason } duration nextEpgInfo { ...fEpgInfo } } debug @include(if: $debug) { ...fContentDebugInfo } } fragment fContentDebugInfo on ContentDebugInfo { source transformations { description } } '}
+        parameters = {'query': ' query PreviewContentQuery($domain: String!, $url: String!, $date: DateTime, $contentType: String, $debug: Boolean!, $authentication: AuthenticationInput) { site(domain: $domain, date: $date, authentication: $authentication) { domain path(url: $url) { route { ...fRoute } page { ...fPage ...fLivestream24Page } content(type: PREVIEW, contentType: $contentType) { ...fContent } mainNav: navigation(type: MAIN) { items { ...fNavigationItem } } metaNav: navigation(type: META) { items { ...fNavigationItem } } channelNav: navigation(type: CHANNEL) { items { ...fNavigationItem } } showsNav: navigation(type: SHOWS) { items { ...fNavigationItem } } footerNav: navigation(type: FOOTER) { items { ...fNavigationItem } } networkNav: navigation(type: NETWORK) { items { ...fNavigationItem } } } } } fragment fRoute on Route { url exists authentication comment contentType name cmsId startDate status endDate } fragment fPage on Page { cmsId contentType pagination { ...fPagination } title shortTitle subheadline proMamsId additionalProMamsIds route source regWall { ...fRegWall } links { ...fLink } metadata { ...fMetadata } breadcrumbs { id href title text } channel { ...fChannel } seo { ...fSeo } modified published flags mainClassNames } fragment fPagination on Pagination { kind limit parent contentType } fragment fRegWall on RegWall { isActive start end } fragment fLink on Link { id classes language href relation title text outbound } fragment fMetadata on Metadata { property name content } fragment fChannel on Channel { name title shortName licenceTerms cssId cmsId proMamsId additionalProMamsIds route image hasLogo liftHeadings, logo sponsors { ...fSponsor } } fragment fSponsor on Sponsor { name url image } fragment fSeo on Seo { title keywords description canonical robots } fragment fLivestream24Page on Livestream24Page { ... on Livestream24Page { livestreamId contentResources epg { name items { ...fEpgItem tvShowTeaser { ...fTeaserItem } } } } } fragment fEpgItem on EpgItem { id title description startTime endTime episode { number } season { number } tvShow { title } images { url title copyright } links { href contentType title } } fragment fTeaserItem on TeaserItem { id url info headline contentType channel { ...fChannelInfo } branding { ...fBrand } site picture { url } videoType orientation date flags valid { from to } epg { episode { ...fEpisode } season { ...fSeason } duration nextEpgInfo { ...fEpgInfo } } } fragment fChannelInfo on ChannelInfo { title shortName cssId cmsId } fragment fBrand on Brand { id, name } fragment fEpisode on Episode { number } fragment fSeason on Season { number } fragment fEpgInfo on EpgInfo { time endTime primetime } fragment fContent on Content { areas { ...fContentArea } } fragment fContentArea on ContentArea { id containers { ...fContentContainer } filters { ...fFilterOptions } debug @include(if: $debug) { ...fContentDebugInfo } } fragment fContentContainer on ContentContainer { id style elements { ...fContentElement } } fragment fContentElement on ContentElement { id authentication title description component config style highlight navigation { ...fNavigationItem } regwall filters { ...fFilterOptions } update styleModifiers groups { id title total cursor itemSource { type id } items { ...fContentElementItem } debug @include(if: $debug) { ...fContentDebugInfo } } groupLayout debug @include(if: $debug) { ...fContentDebugInfo } } fragment fNavigationItem on NavigationItem { selected href channel { ...fChannelInfo } contentType title items { selected href channel { ...fChannelInfo } contentType title } } fragment fFilterOptions on FilterOptions { type remote categories { name title options { title id channelId } } } fragment fContentElementItem on ContentElementItem { id url info branding { ...fBrand } body config headline contentType channel { ...fChannelInfo } site picture { url } videoType orientation date duration flags genres valid { from to } epg { episode { ...fEpisode } season { ...fSeason } duration nextEpgInfo { ...fEpgInfo } } debug @include(if: $debug) { ...fContentDebugInfo } } fragment fContentDebugInfo on ContentDebugInfo { source transformations { description } } '}
         parameters.update({'variables': '{{"authentication":null,"contentType":"video","debug":false,"domain":"{0}","isMobile":false,"url":"{1}"}}'.format(domain, path)})
     else:
         parameters = {'query': ' query PreviewContentQuery($domain: String!, $url: String!, $date: DateTime, $contentType: String, $debug: Boolean!, $authentication: AuthenticationInput) { site(domain: $domain, date: $date, authentication: $authentication) { domain path(url: $url) { route { ...fRoute } page { ...fPage ...fVideoPage } content(type: PREVIEW, contentType: $contentType) { ...fContent } mainNav: navigation(type: MAIN) { items { ...fNavigationItem } } metaNav: navigation(type: META) { items { ...fNavigationItem } } channelNav: navigation(type: CHANNEL) { items { ...fNavigationItem } } showsNav: navigation(type: SHOWS) { items { ...fNavigationItem } } footerNav: navigation(type: FOOTER) { items { ...fNavigationItem } } networkNav: navigation(type: NETWORK) { items { ...fNavigationItem } } } } } fragment fRoute on Route { url exists authentication comment contentType name cmsId startDate status endDate } fragment fPage on Page { cmsId contentType pagination { ...fPagination } title shortTitle subheadline proMamsId additionalProMamsIds route source regWall { ...fRegWall } links { ...fLink } metadata { ...fMetadata } breadcrumbs { id href title text } channel { ...fChannel } seo { ...fSeo } modified published flags mainClassNames } fragment fPagination on Pagination { kind limit parent contentType } fragment fRegWall on RegWall { isActive start end } fragment fLink on Link { id classes language href relation title text outbound } fragment fMetadata on Metadata { property name content } fragment fChannel on Channel { name title shortName licenceTerms cssId cmsId proMamsId additionalProMamsIds route image hasLogo liftHeadings, logo sponsors { ...fSponsor } } fragment fSponsor on Sponsor { name url image } fragment fSeo on Seo { title keywords description canonical robots } fragment fVideoPage on VideoPage { ... on VideoPage { copyright description longDescription duration season episode airdate videoType contentResource image webUrl livestreamStartDate livestreamEndDate recommendation { results { headline subheadline duration url image videoType contentType recoVariation recoSource channel { ...fChannelInfo } } } } } fragment fChannelInfo on ChannelInfo { title shortName cssId cmsId } fragment fContent on Content { areas { ...fContentArea } } fragment fContentArea on ContentArea { id containers { ...fContentContainer } filters { ...fFilterOptions } debug @include(if: $debug) { ...fContentDebugInfo } } fragment fContentContainer on ContentContainer { id style elements { ...fContentElement } } fragment fContentElement on ContentElement { id authentication title description component config style highlight navigation { ...fNavigationItem } regwall filters { ...fFilterOptions } update styleModifiers groups { id title total cursor itemSource { type id } items { ...fContentElementItem } debug @include(if: $debug) { ...fContentDebugInfo } } groupLayout debug @include(if: $debug) { ...fContentDebugInfo } } fragment fNavigationItem on NavigationItem { selected href channel { ...fChannelInfo } contentType title items { selected href channel { ...fChannelInfo } contentType title } } fragment fFilterOptions on FilterOptions { type remote categories { name title options { title id channelId } } } fragment fContentElementItem on ContentElementItem { id url info branding { ...fBrand } body config headline contentType channel { ...fChannelInfo } site picture { url } videoType orientation date duration flags genres valid { from to } epg { episode { ...fEpisode } season { ...fSeason } duration nextEpgInfo { ...fEpgInfo } } debug @include(if: $debug) { ...fContentDebugInfo } } fragment fBrand on Brand { id, name } fragment fEpisode on Episode { number } fragment fSeason on Season { number } fragment fEpgInfo on EpgInfo { time endTime primetime } fragment fContentDebugInfo on ContentDebugInfo { source transformations { description } } '}
         parameters.update({'variables': '{{"authentication":null,"contentType":"livestream24","debug":false,"domain":"{0}","isMobile":false,"url":"{1}"}}'.format(domain, path)})
-    url = '{0}{1}?{2}'.format(base, path, urllib.urlencode(parameters).replace('+', '%20'))
+    url = '{0}?{1}'.format(base, urllib.urlencode(parameters).replace('+', '%20'))
     xbmc.log('url = {0}'.format(url))
     result = requests.get(url).json()
     if result and path.endswith('/video') and result.get('data', None) and result.get('data').get('site', None) and result.get('data').get('site').get('path', None) and result.get('data').get('site').get('path').get('route').get('status').lower() == 'not_found':
@@ -226,25 +232,26 @@ def getListItems(data, type, domain=None, path=None, cmsId=None, content=None):
                         groupitems = groups[0].get('items', None)
                         if groupitems:
                             for groupitem in groupitems:
-                                citems = content.get('items')
-                                if type == 'show':
-                                    item = getContentInfos(groupitem, 'show')
-                                    if checkItemUrlExists(citems, item) == False:
-                                        citems.append(item)
-                                        content.update({'items': citems})
-                                elif cmsId and groupitem.get('channel').get('cmsId') == cmsId:
-                                    if not groupitem.get('videoType') and groupitem.get('headline') and (groupitem.get('headline').lower().startswith('staffel') or groupitem.get('headline').lower().startswith('season')):
-                                        content.update({'type': 'season'})
-                                        item = getContentInfos(groupitem, 'season')
+                                if groupitem:
+                                    citems = content.get('items')
+                                    if type == 'show':
+                                        item = getContentInfos(groupitem, 'show')
                                         if checkItemUrlExists(citems, item) == False:
                                             citems.append(item)
                                             content.update({'items': citems})
-                                    elif groupitem.get('videoType') and groupitem.get('videoType').lower() == 'full':
-                                        content.update({'type': 'episode'})
-                                        item = getContentInfos(groupitem, 'episode')
-                                        if checkItemUrlExists(citems, item) == False:
-                                            citems.append(item)
-                                            content.update({'items': citems})
+                                    elif (cmsId and groupitem.get('channel') and groupitem.get('channel').get('cmsId') == cmsId) or (domain and data.get('site').get('domain') == domain and path and groupitem.get('url') and groupitem.get('url').startswith(path)):
+                                        if not groupitem.get('videoType') and groupitem.get('headline') and (groupitem.get('headline').lower().startswith('staffel') or groupitem.get('headline').lower().startswith('season')):
+                                            content.update({'type': 'season'})
+                                            item = getContentInfos(groupitem, 'season')
+                                            if checkItemUrlExists(citems, item) == False:
+                                                citems.append(item)
+                                                content.update({'items': citems})
+                                        elif groupitem.get('videoType') and groupitem.get('videoType').lower() == 'full':
+                                            content.update({'type': 'episode'})
+                                            item = getContentInfos(groupitem, 'episode')
+                                            if checkItemUrlExists(citems, item) == False:
+                                                citems.append(item)
+                                                content.update({'items': citems})
 
     if not content.get('type'):
         content.update({'type': type})
@@ -264,7 +271,7 @@ def getShownav(data, content, domain, cmsId):
                         content.update({'items': citems})
                     elif channelsubitem.get('title').lower().find('episode') > -1 or channelsubitem.get('title').lower().find('folge') > -1:
                         subcontent = getContentFull(domain, channelsubitem.get('href'))
-                        content = getListItems(subcontent.get('data'), 'episode', domain, channelsubitem.get('href'), cmsId, content)
+                        content = getListItems(subcontent.get('data'), 'episode', domain, channelsubitem.get('href'), channelsubitem.get('channel').get('cmsId'), content)
                         content.update({'type': 'episode'})
 
     return content
