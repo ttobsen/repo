@@ -5,9 +5,16 @@
 # License: GPL v.3 https://www.gnu.org/copyleft/gpl.html
 
 import sys
-from urllib import urlencode
-from urlparse import parse_qsl
+try:
+    from urllib import urlencode
+except ImportError:
+    from urllib.parse import urlencode
 from waipu import Waipu
+try:
+    import urlparse
+except ImportError:
+    import urllib.parse as urlparse
+
 import xbmcgui
 import xbmcplugin
 import xbmcaddon
@@ -112,6 +119,9 @@ def list_recordings():
         if 'locked' in recording and recording['locked']:
             continue
         label_dat = ''
+        if recording['status'] == "RECORDING":
+            label_dat = '[COLOR red][REC][/COLOR] '
+
         metadata = {
             'genre': recording['epgData']['genre'],
             'plot': recording['epgData']['description'],
@@ -121,9 +131,9 @@ def list_recordings():
             # tv show
             if recording['epgData']['episodeTitle']:
                 metadata.update({"tvshowtitle": recording['epgData']['episodeTitle']})
-                label_dat = "[B]" + recording['epgData']['title'] + "[/B] - " + recording['epgData']['episodeTitle']
+                label_dat = label_dat + "[B]" + recording['epgData']['title'] + "[/B] - " + recording['epgData']['episodeTitle']
             else:
-                label_dat = "[B]" + recording['epgData']['title'] + "[/B]"
+                label_dat = label_dat + "[B]" + recording['epgData']['title'] + "[/B]"
             if b_episodeid and recording['epgData']['season'] and recording['epgData']['episode']:
                 label_dat = label_dat + " (S"+recording['epgData']['season']+"E"+recording['epgData']['episode']+")"
             metadata.update({
@@ -133,7 +143,7 @@ def list_recordings():
             })
         else:
             # movie
-            label_dat = "[B]" + recording['epgData']['title'] + "[/B]"
+            label_dat = label_dat + "[B]" + recording['epgData']['title'] + "[/B]"
             if b_recordingdate and 'startTime' in recording['epgData'] and recording['epgData']['startTime']:
                 startDate = parser.parse(recording['epgData']['startTime'])
                 label_dat = label_dat + " " + startDate.strftime("(%d.%m.%Y %H:%M)")
@@ -391,7 +401,7 @@ def play_recording(recordingid):
 
 
 def router(paramstring):
-    params = dict(parse_qsl(paramstring))
+    params = dict(urlparse.parse_qsl(paramstring))
     if params:
         if params['action'] == "play-channel":
             play_channel(params['playouturl'], params['title'], params['logourl'])
