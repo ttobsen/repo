@@ -61,17 +61,18 @@ def log(msg, level=xbmc.LOGNOTICE):
 def parameters_string_to_dict(parameters):
 	paramDict = {}
 	if parameters:
-		paramPairs = parameters[1:].split("&")
+		paramPairs = parameters[1:].split('&')
 		for paramsPair in paramPairs:
 			paramSplits = paramsPair.split('=')
 			if (len(paramSplits)) == 2:
 				paramDict[paramSplits[0]] = paramSplits[1]
 	return paramDict
 
-def addDir(name, url, mode, iconimage, source=None):
+def addDir(name, url, mode, image, source=None):
 	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)+"&name="+quote_plus(name)+"&source="+quote_plus(source)
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
+	liz = xbmcgui.ListItem(name)
 	liz.setInfo(type="Video", infoLabels={"Title": name})
+	liz.setArt({'icon': icon, 'thumb': image, 'poster': image})
 	xbmcplugin.setContent(int(sys.argv[1]), 'movies')
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
 
@@ -111,6 +112,7 @@ def insert(name, url, stunden, last, source=""):
 	conn.close()
 
 def delete(name, url, source=""):
+	REM_text = py2_enc(name).replace('[COLOR orangered]Eintrag+Ordner löschen: [/COLOR]', '').replace('[COLOR orangered]Nur Eintrag löschen: [/COLOR]', '').strip()
 	if source.startswith("special://"):
 		source = xbmc.translatePath(os.path.join('source', ''))
 	source = py2_uni(source)
@@ -121,14 +123,14 @@ def delete(name, url, source=""):
 		conn.commit()
 		if source != "" and os.path.isdir(source) and forceTrash:
 			shutil.rmtree(source, ignore_errors=True)
-			log("########## DELETING from Crontab and System - TITLE = "+py2_enc(name).split(':')[1].replace('[/COLOR]', '').strip()+" ##########")
+			log("########## DELETING from Crontab and System - TITLE = "+REM_text+" ##########")
 		elif source == "" or not forceTrash:
 			xbmcgui.Dialog().ok(__addon__.getAddonInfo('id'), translation(30501))
-			log("########## DELETING only from Crontab - TITLE = "+py2_enc(name).split(':')[1].replace('[/COLOR]', '').strip()+" ##########")
+			log("########## DELETING only from Crontab - TITLE = "+REM_text+" ##########")
 	except:
 		conn.rollback()# Roll back any change if something goes wrong
 		var = traceback.format_exc()
-		failing("ERROR - ERROR - ERROR : ########## ({0}) received... ({1}) ...Delete Name in List failed ##########".format(py2_enc(name).split(':')[1].replace('[/COLOR]', '').strip(), var))
+		failing("ERROR - ERROR - ERROR : ########## ({0}) received... ({1}) ...Delete Name in List failed ##########".format(REM_text, var))
 	cur.close()
 	conn.close()
 

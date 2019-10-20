@@ -1,0 +1,118 @@
+﻿# Kodi Media Center language file
+# Addon Name: Crontab für andere Addons
+# Addon id: service.L0RE.cron
+# Addon Provider: L0RE
+msgid ""
+msgstr ""
+"Project-Id-Version: KODI-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
+"POT-Creation-Date: 2018-10-06 14:15+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: realvito\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de_DE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Crontab - Action control"
+msgstr "Crontab - Aktionssteuerung"
+
+msgctxt "Addon Description"
+msgid "A service to call regular (hours/days) stored actions (e.g. update the addon media library) in other plugins."
+msgstr "Ein Service um regelmäßig (Stunden/Tage) gespeicherte Aktionen (z.B. Aktualisierung der Addon-Medienbibliothek) in anderen Plugins aufzurufen."
+
+# strings start
+# SETTINGS-CATEGORIES
+
+msgctxt "#30000"
+msgid "General"
+msgstr "Allgemein"
+
+# empty strings from id 30001 to 30109
+# SETTINGS-BUTTONS
+
+msgctxt "#30110"
+msgid "     [COLOR orangered]>>> DELETE Database completely = CLICK HERE >>>[/COLOR]"
+msgstr "     [COLOR orangered]>>> Database komplett LÖSCHEN = HIER KLICKEN >>>[/COLOR]"
+
+msgctxt "#30111"
+msgid "     Delete selected titles in Crontab and on the system ?"
+msgstr "     Ausgewählte Titel im Crontab und auf dem System löschen ?"
+
+# empty strings from id 30112 to 30229
+# SETTINGS-TITLES
+
+msgctxt "#30230"
+msgid "[B][COLOR ff0099ff]DATABASE[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]DATABASE[/COLOR][/B]"
+
+msgctxt "#30231"
+msgid "[B][COLOR ff0099ff]ENTRIES[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]EINTRÄGE[/COLOR][/B]"
+
+# empty strings from id 30232 to 30349
+# SETTINGS-DESCRIPTIONS
+
+msgctxt "#30350"
+msgid "     * [COLOR orangered]ATTENTION: This process can NOT be undone[/COLOR] *"
+msgstr "     * [COLOR orangered]ACHTUNG: Dieser Vorgang kann NICHT rückgängig gemacht werden[/COLOR] *"
+
+msgctxt "#30351"
+msgid "     * [COLOR yellow]With setting: Crontab+Delete system - an attempt is made to delete the title in Crontab and the Title-folder on the system[/COLOR] *"
+msgstr "     * [COLOR yellow]Bei Einstellung: Crontab+System löschen - wird versucht den Titel im Crontab und den Titelordner auf dem System zu löschen[/COLOR] *"
+
+msgctxt "#30352"
+msgid "     * [COLOR yellow]However, there is the possibility - that so-called map oaks remain in the KODI-Library[/COLOR] *"
+msgstr "     * [COLOR yellow]Dabei besteht allerdings die Möglichkeit - dass sog. Karteileichen in der KODI-Library zurückbleiben[/COLOR] *"
+
+msgctxt "#30353"
+msgid "     * [COLOR yellow]In this case please run "KODI > System > Media > Library + Clean Library (Video Library)" at the end[/COLOR] *"
+msgstr "     * [COLOR yellow]In diesem Fall bitte "KODI > System > Medien > Bibliothek + Bibliothek bereinigen (Video-Bibliothek)" am Ende ausführen[/COLOR] *"
+
+msgctxt "#30354"
+msgid "     * [COLOR chartreuse]... or leave this setting turned off - and remove the Title-folder later with the Library right-click-menu[/COLOR] *"
+msgstr "     * [COLOR chartreuse]... oder diese Einstellung ausgeschaltet lassen - und den Titelordner später über das Library-Rechtsklickmenü entfernen[/COLOR] *"
+
+# empty strings from id 30355 to 30500
+# WARNING/INFORMATION-MESSAGES-OK
+
+msgctxt "#30501"
+msgid "NO path is stored for this entry, or *Crontab* is set to simple delete only.[CR]Please delete the folder later directly from the KODI-Library![CR][COLOR orangered]Delete now only the entry in *Crontab* ![/COLOR]"
+msgstr "Für diesen Eintrag ist KEIN Pfad gespeichert oder in *Crontab* ist nur einfaches löschen eingestellt.[CR]Bitte den Ordner später direkt über die KODI-Library löschen ![CR][COLOR orangered]Lösche jetzt nur den Eintrag im *Crontab* ![/COLOR]"
+
+msgctxt "#30502"
+msgid "Do you really want to delete the entire *Cron-Database* ???"
+msgstr "Wollen Sie wirklich die gesamte *Cron-Database* löschen ???"
+
+msgctxt "#30503"
+msgid "[COLOR orangered]This process can NOT be undone !!![/COLOR]"
+msgstr "[COLOR orangered]Dieser Vorgang kann NICHT rückgängig gemacht werden !!![/COLOR]"
+
+msgctxt "#30504"
+msgid "Cancel"
+msgstr "Abbruch"
+
+msgctxt "#30505"
+msgid "Execute delete"
+msgstr "Löschen ausführen"
+
+msgctxt "#30506"
+msgid "There is NO *Cron-Database* available !"
+msgstr "Es ist leider KEINE *Cron-Database* vorhanden !"
+
+# empty strings from id 30507 to 30520
+# WARNING/INFORMATION-MESSAGES-NOTIFICATION
+
+msgctxt "#30521"
+msgid "Crontab for other Addons:"
+msgstr "Crontab für andere Addons:"
+
+msgctxt "#30522"
+msgid "[COLOR FF008B00]* cron.db *[/COLOR] successfully deleted !"
+msgstr "[COLOR FF008B00]* cron.db *[/COLOR] erfolgreich gelöscht !"
+
+# empty strings from id 30523 to 30600
+# PLUGIN-MAIN and SIDEMENU

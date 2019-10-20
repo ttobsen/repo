@@ -23,7 +23,7 @@ def py2_enc(s, encoding='utf-8'):
 	if PY2 and isinstance(s, unicode):
 		s = s.encode(encoding)
 	return s
-	
+
 def py2_uni(s, encoding='utf-8'):
 	if PY2 and isinstance(s, str):
 		s = unicode(s, encoding)
