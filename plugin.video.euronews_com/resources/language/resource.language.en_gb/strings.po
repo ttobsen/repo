@@ -134,5 +134,9 @@ msgctxt "#30524"
 msgid "* [COLOR blue]In the Category: {0:s}[/COLOR] * at euronews.com"
 msgstr ""
 
-#empty strings from id 30525 to 30600
+msgctxt "#30525"
+msgid "ERROR = [COLOR red]Unfortunately no Live-Stream found ![/COLOR]"
+msgstr ""
+
+#empty strings from id 30526 to 30600
 # PLUGIN-MAIN and SIDEMENU

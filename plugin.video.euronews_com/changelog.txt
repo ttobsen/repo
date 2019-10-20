@@ -34,3 +34,7 @@
 
 [B]Version 2.1.4  (19.07.2019)[/B] by realvito[CR]
 - fixed: Wieder werden KEINE Ordner in der Übersicht angezeigt und ein Fehler wird produziert (Quelltext nochm. verändert)
+
+[B]Version 2.1.5  (20.10.2019)[/B] by realvito[CR]
+- fixed: Wenn Live-Stream fehlerhaft - wird Addon nicht geöffnet
+- fixed: Wenn original Live-Stream ausfällt - nehme Ersatz Live-Stream von Youtube (wenn vorh.)

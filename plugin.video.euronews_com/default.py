@@ -39,9 +39,10 @@ dataPath    = xbmc.translatePath(addon.getAddonInfo('profile')).encode('utf-8').
 temp           = xbmc.translatePath(os.path.join(dataPath, 'temp', '')).encode('utf-8').decode('utf-8')
 defaultFanart = os.path.join(addonPath, 'fanart.jpg')
 icon = os.path.join(addonPath, 'icon.png')
-langSHORTCUT = {0: 'www', 1: 'gr', 2: 'fr', 3: 'de', 4: 'it', 5: 'es', 6: 'pt', 7: 'hu', 8: 'ru', 9: 'ua', 10: 'tr', 11: 'arabic', 12: 'fa'}[int(addon.getSetting('language'))]
+langSHORTCUT = {0: 'www', 1: 'gr', 2: 'fr', 3: 'de', 4: 'it', 5: 'es', 6: 'pt', 7: 'hu', 8: 'ru', 9: 'ua', 10: 'tr', 11: 'arabic', 12: 'farsi'}[int(addon.getSetting('language'))]
 # Spachennummerierung(settings) ~ English=0|Greek=1|French=2|German=3|Italian=4|Spanish=5|Portuguese=6|Hungarian=7|Russian=8|Ukrainian=9|Turkish=10|Arabic=11|Persian=12
 #         Webseitenkürzel(euronews) = 0: www|1: gr|2: fr|3: de|4: it|5: es|6: pt|7: hu|8: ru|9: ua|10: tr|11: arabic|12: fa
+channelLIVE = {0: 'A5mOMIWBXR8', 1: '8diu9l-ZVrc', 2: 'pe6KBHGOB6A', 3: '1dSCoMAzLTI', 4: 'X6SuOrHXZLo', 5: '0jf_DZCqp1c', 6: 'oPNI2zjGpeU', 7: '00', 8: 'em7IYdWeo-I', 9: '00', 10: '00', 11: '00', 12: '00'}[int(addon.getSetting('language'))]
 baseURL = "https://"+langSHORTCUT+".euronews.com"
 
 xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
@@ -89,15 +90,14 @@ def log(msg, level=xbmc.LOGNOTICE):
 	msg = py2_enc(msg)
 	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+msg, level)
 
-def getUrl(url, header=None):
+def getUrl(url, header=None, agent='Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0'):
 	global cj
+	for cook in cj:
+		debug("(getUrl) Cookie : {0}".format(str(cook)))
 	opener = build_opener(HTTPCookieProcessor(cj))
+	opener.addheaders = [('User-Agent', agent), ('Accept-Encoding', 'gzip, deflate')]
 	try:
-		if header:
-			opener.addheaders = header
-		else:
-			opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0')]
-			opener.addheaders = [('Accept-Encoding', 'gzip, deflate')]
+		if header: opener.addheaders = header
 		response = opener.open(url, timeout=30)
 		if response.info().get('Content-Encoding') == 'gzip':
 			content = py3_dec(gzip.GzipFile(fileobj=io.BytesIO(response.read())).read())
@@ -105,12 +105,8 @@ def getUrl(url, header=None):
 			content = py3_dec(response.read())
 	except Exception as e:
 		failure = str(e)
-		if hasattr(e, 'code'):
-			failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
-			xbmcgui.Dialog().notification((translation(30521).format("URL")), "ERROR = [COLOR red]{0}[/COLOR]".format(failure), icon, 12000)
-		elif hasattr(e, 'reason'):
-			failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
-			xbmcgui.Dialog().notification((translation(30521).format("URL")), "ERROR = [COLOR red]{0}[/COLOR]".format(failure), icon, 12000)
+		failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
+		#xbmcgui.Dialog().notification(translation(30521).format('URL'), "ERROR = [COLOR red]{0}[/COLOR]".format(failure), icon, 15000)
 		content = ""
 		return sys.exit(0)
 	opener.close()
@@ -127,8 +123,8 @@ def TopicsIndex():
 	content = getUrl(baseURL)
 	result = content[content.find('<div class="js-programs-menu c-programs-menu c-header-sub-menu')+1:]
 	result = result[:result.find('<div class="c-programs-menu__footer">')]
+	debug("(TopicsIndex) xxxxx RESULT : "+str(result)+" xxxxx")
 	part = result.split('<div class="list-item')
-	log("(TopicsIndex) xxxxx RESULT : "+str(result)+" xxxxx")
 	for i in range(1,len(part),1):
 		entry = part[i]
 		if '<li class="list-item' in entry:
@@ -146,7 +142,7 @@ def TopicsIndex():
 				ISOLATED.add(newNAME)
 				debug("(TopicsIndex) ### TITLE : "+str(newMAIN)+" ### URL : "+str(mainURL)+" ###")
 				addDir(newMAIN, mainURL, "SubTopics", icon, category=showXTRA)
-	liveTV(baseURL+"/api/watchlive.json")
+	addDir('[COLOR lime]* EURONEWS LIVE-TV *[/COLOR]', baseURL+"/api/watchlive.json", 'play_LIVE', icon, folder=False)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def SubTopics(firstURL, showXTRA):
@@ -177,10 +173,10 @@ def SubTopics(firstURL, showXTRA):
 					ISOLATED.add(newURL)
 					name = smart_str(title).replace('"', '').replace('>', '').strip()
 					if showXTRA == "OKAY":
-						addDir(name, "/api/program/"+newURL, "listVideos", icon, category=name)
+						addDir(name, "/api/program/"+newURL, 'listVideos', icon, category=name)
 						debug("(SubTopics) ### SHOW : "+str(name)+" ### newURL : /api/program/"+newURL+" ###")
 					else:
-						addDir(name, link, "listVideos", icon, category=name)
+						addDir(name, link, 'listVideos', icon, category=name)
 						debug("(SubTopics) ### SHOW : "+str(name)+" ### LINK : "+link+" ###")
 	xbmcplugin.endOfDirectory(pluginhandle)
 
@@ -235,31 +231,38 @@ def listVideos(url, adress):
 			continue
 		ISOLATED.add(finalURL)
 		debug("(listVideos) ### YT-ID : "+str(YOUTUBE_id)+" ### VIDEO : "+str(finalURL)+" ###")
-		addLink(name, finalURL, "playVideo", thumb, plot, duration, aired, str(YOUTUBE_id))
+		addLink(name, finalURL, 'playVideo', thumb, plot, duration, aired, str(YOUTUBE_id))
 	if not FOUND:
-		return xbmcgui.Dialog().notification((translation(30522).format('Videos')), (translation(30524).format(adress)), icon, 8000)
-	xbmcplugin.endOfDirectory(pluginhandle)   
-
-def liveTV(url):
-	debug("(liveTV) -------------------------------------------------- START = liveTV --------------------------------------------------")
-	debug("(liveTV) ##### startURL : "+url+" #####")
-	content = getUrl(url)
-	url1 = re.compile('"url":"(.+?)"', re.DOTALL).findall(content)[0]
-	url1 = url1.replace("\/","/").split('//')[1]
-	debug("(liveTV) ##### URL-1 : https://"+url1+" #####")
-	content1 = getUrl("https://"+url1)
-	url2 = re.compile('"primary":"(.+?)"', re.DOTALL).findall(content1)[0]
-	url2 = url2.replace("\/","/").split('//')[1]
-	debug("(liveTV) ##### URL-2 : https://"+url2+" #####")
-	listitem = xbmcgui.ListItem(path="https://"+url2, label="[COLOR lime]* EURONEWS LIVE-TV *[/COLOR]", iconImage=icon, thumbnailImage=icon)
-	listitem.setArt({'fanart': defaultFanart})
-	xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=sys.argv[0]+"?mode=playLive&url="+quote_plus("https://"+url2)+"&category=[COLOR lime]* EURONEWS LIVE-TV *[/COLOR]", listitem=listitem)  
+		return xbmcgui.Dialog().notification(translation(30522).format('Videos'), translation(30524).format(adress), icon, 8000)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
-def playLive(url, name):
-	listitem = xbmcgui.ListItem(path=url, label=name)
-	listitem.setMimeType('application/vnd.apple.mpegurl')
-	xbmc.Player().play(item=url, listitem=listitem)
+def play_LIVE(url):
+	debug("(play_LIVE) ------------------------------------------------ START = play_LIVE -----------------------------------------------")
+	live_url = False
+	try:
+		content1 = getUrl(url)
+		url1 = re.compile('"url":"(.+?)"', re.DOTALL).findall(content1)[0]
+		url1 = 'https://'+url1.replace('\/', '/').split('//')[1]
+		debug("(play_LIVE) ##### URL-1 : "+url1+" #####")
+		content2 = getUrl(url1)
+		url2 = re.compile('"primary":"(.+?)"', re.DOTALL).findall(content2)[0]
+		live_url = 'https://'+url2.replace('\/', '/').split('//')[1]
+		debug("(play_LIVE) ##### URL-2 : "+live_url+" #####")
+	except: pass
+	if not live_url and channelLIVE != '00':
+		try:
+			code = urlopen('https://www.youtube.com/oembed?format=json&url=http://www.youtube.com/watch?v='+channelLIVE).getcode()
+			if str(code) == '200': live_url = 'plugin://plugin.video.youtube/play/?video_id='+channelLIVE
+		except: pass
+	if live_url:
+		debug("(play_LIVE) ### LIVEurl : {0} ###".format(live_url))
+		listitem = xbmcgui.ListItem(path=live_url, label='[COLOR lime]* EURONEWS LIVE-TV *[/COLOR]')
+		listitem.setMimeType('application/vnd.apple.mpegurl')
+		xbmc.Player().play(item=live_url, listitem=listitem)
+	else:
+		failing("(liveTV) ##### Abspielen des Live-Streams NICHT möglich ##### URL : {0} #####\n   ########## KEINEN Live-Stream-Eintrag auf der Webseite von *euronews.com* gefunden !!! ##########".format(url))
+		return xbmcgui.Dialog().notification(translation(30521).format('LIVE'), translation(30525), icon, 8000)
+	xbmcplugin.endOfDirectory(pluginhandle)
 
 def playVideo(url, YTID):
 	debug("(playVideo) -------------------------------------------------- START = playVideo --------------------------------------------------")
@@ -267,7 +270,7 @@ def playVideo(url, YTID):
 	stream = url
 	if (addon.getSetting('YOUTUBE_LINK') == 'true' and YTID):
 		try:
-			code = urlopen('https://www.youtube.com/oembed?format=json&url=http://www.youtube.com/watch?v='+YOUTUBE_id).getcode()
+			code = urlopen('https://www.youtube.com/oembed?format=json&url=http://www.youtube.com/watch?v='+YTID).getcode()
 			if str(code) == '200': stream = 'plugin://plugin.video.youtube/play/?video_id='+YTID
 		except: pass
 	listitem = xbmcgui.ListItem(path=stream)
@@ -283,28 +286,26 @@ def parameters_string_to_dict(parameters):
 				paramDict[paramSplits[0]] = paramSplits[1]
 	return paramDict
 
-def addDir(name, url, mode, image, plot=None, category=""):
-	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)+"&category="+str(category)
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=image)
+def addDir(name, url, mode, image, plot=None, category="", folder=True):
+	u = sys.argv[0]+'?url='+quote_plus(url)+'&mode='+str(mode)+'&category='+str(category)
+	liz = xbmcgui.ListItem(name)
 	liz.setInfo(type='Video', infoLabels={'Title': name, 'Plot': plot})
+	liz.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
 	if image != icon:
 		liz.setArt({'fanart': image})
-	else:
-		liz.setArt({'fanart': defaultFanart})
-	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
+	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=folder)
 
 def addLink(name, url, mode, image, plot=None, duration=None, aired=None, YOUTUBE_id=None, category=""):
-	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)+"&YOUTUBE_id="+str(YOUTUBE_id)+"&category="+str(category)
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=image)
+	u = sys.argv[0]+'?url='+quote_plus(url)+'&mode='+str(mode)+'&YOUTUBE_id='+str(YOUTUBE_id)+'&category='+str(category)
+	liz = xbmcgui.ListItem(name)
 	liz.setInfo(type='Video', infoLabels={'Title': name, 'Plot': plot, 'Duration': duration, 'Date': aired, 'Genre': 'News', 'Studio': 'euronews'})
+	liz.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
 	if image != icon:
 		liz.setArt({'fanart': image})
-	else:
-		liz.setArt({'fanart': defaultFanart})
 	liz.addStreamInfo('Video', {'Duration': duration})
 	liz.setProperty('IsPlayable', 'true')
 	liz.setContentLookup(False)
-	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=False)
+	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
 
 params = parameters_string_to_dict(sys.argv[2])
 url = unquote_plus(params.get('url', ''))
@@ -313,15 +314,13 @@ image = unquote_plus(params.get('image', ''))
 YOUTUBE_id = unquote_plus(params.get('YOUTUBE_id', ''))
 category = unquote_plus(params.get('category', ''))
 
-if mode == "SubTopics":
+if mode == 'SubTopics':
 	SubTopics(url, category)
-elif mode == "listVideos":
+elif mode == 'listVideos':
 	listVideos(url, category)
-elif mode  == "liveTV":
-	liveTV(url)
-elif mode == "playLive":
-	playLive(url, category)
-elif mode == "playVideo":
+elif mode == 'play_LIVE':
+	play_LIVE(url)
+elif mode == 'playVideo':
 	playVideo(url, YOUTUBE_id)
 else:
 	TopicsIndex()
