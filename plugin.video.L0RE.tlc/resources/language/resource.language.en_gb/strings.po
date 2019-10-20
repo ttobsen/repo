@@ -126,27 +126,27 @@ msgstr ""
 # PLUGIN-MAIN and SIDEMENU
 
 msgctxt "#30601"
-msgid "All Shows"
+msgid "* My TLC-Favourites *"
 msgstr ""
 
 msgctxt "#30602"
-msgid "Subjects"
+msgid "All Shows"
 msgstr ""
 
 msgctxt "#30603"
-msgid "Highlights"
+msgid "Subjects"
 msgstr ""
 
 msgctxt "#30604"
-msgid "Latest Shows"
+msgid "Highlights"
 msgstr ""
 
 msgctxt "#30605"
-msgid "Shows sorted by popularity"
+msgid "Latest Shows"
 msgstr ""
 
 msgctxt "#30606"
-msgid "* My TLC-Favourites *"
+msgid "Shows sorted by popularity"
 msgstr ""
 
 msgctxt "#30607"

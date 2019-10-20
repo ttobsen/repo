@@ -126,28 +126,28 @@ msgstr "* [COLOR blue]{0:s}[/COLOR] *[COLOR red] wurde gelöscht !!![/COLOR]"
 # PLUGIN-MAIN and SIDEMENU
 
 msgctxt "#30601"
+msgid "* My TLC-Favourites *"
+msgstr "* Meine TLC-Favoriten *"
+
+msgctxt "#30602"
 msgid "All Shows"
 msgstr "Alle Sendungen"
 
-msgctxt "#30602"
+msgctxt "#30603"
 msgid "Subjects"
 msgstr "Themen"
 
-msgctxt "#30603"
+msgctxt "#30604"
 msgid "Highlights"
 msgstr "Highlights"
 
-msgctxt "#30604"
+msgctxt "#30605"
 msgid "Latest Shows"
 msgstr "Neue Sendungen"
 
-msgctxt "#30605"
+msgctxt "#30606"
 msgid "Shows sorted by popularity"
 msgstr "Sendungen sortiert nach Beliebtheit"
-
-msgctxt "#30606"
-msgid "* My TLC-Favourites *"
-msgstr "* Meine TLC-Favoriten *"
 
 msgctxt "#30607"
 msgid "TLC Settings"
