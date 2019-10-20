@@ -89,15 +89,12 @@ def log(msg, level=xbmc.LOGNOTICE):
 	msg = py2_enc(msg)
 	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+msg, level)
 
-def getUrl(url, header=None):
+def getUrl(url, header=None, agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36'):
 	global cj
 	opener = build_opener(HTTPCookieProcessor(cj))
+	opener.addheaders = [('User-Agent', agent), ('Accept-Encoding', 'gzip, deflate')]
 	try:
-		if header:
-			opener.addheaders = header
-		else:
-			opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36')]
-			opener.addheaders = [('Accept-Encoding', 'gzip, deflate')]
+		if header: opener.addheaders = header
 		response = opener.open(url, timeout=30)
 		if response.info().get('Content-Encoding') == 'gzip':
 			content = py3_dec(gzip.GzipFile(fileobj=io.BytesIO(response.read())).read())
@@ -105,10 +102,7 @@ def getUrl(url, header=None):
 			content = py3_dec(response.read())
 	except Exception as e:
 		failure = str(e)
-		if hasattr(e, 'code'):
-			failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
-		elif hasattr(e, 'reason'):
-			failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
+		failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
 		content = ""
 		return sys.exit(0)
 	opener.close()
@@ -131,12 +125,12 @@ def ADDON_operate(TESTING):
 		return True
 
 def index():
-	addDir(translation(30601), baseURL+"api/search?query=*&limit=50", "listseries", icon, nosub="overview_all")
-	addDir(translation(30602), "", "listthemes", icon)
-	addDir(translation(30603), baseURL+"api/shows/highlights?limit=50", "listseries", icon, nosub="featured")
-	addDir(translation(30604), baseURL+"api/shows/neu?limit=50", "listseries", icon, nosub="recently_added")
-	addDir(translation(30605), baseURL+"api/shows/beliebt?limit=50", "listseries", icon, nosub="most_popular")
-	addDir(translation(30606), "", "listShowsFavs", icon)
+	addDir(translation(30601), "", "listShowsFavs", icon)
+	addDir(translation(30602), baseURL+"api/search?query=*&limit=50", "listseries", icon, nosub="overview_all")
+	addDir(translation(30603), "", "listthemes", icon)
+	addDir(translation(30604), baseURL+"api/shows/highlights?limit=50", "listseries", icon, nosub="featured")
+	addDir(translation(30605), baseURL+"api/shows/neu?limit=50", "listseries", icon, nosub="recently_added")
+	addDir(translation(30606), baseURL+"api/shows/beliebt?limit=50", "listseries", icon, nosub="most_popular")
 	if enableAdjustment:
 		addDir(translation(30607), "", "aSettings", icon)
 		if enableInputstream:
@@ -190,18 +184,18 @@ def listseries(url, PAGE, POS, ADDITION):
 		if idd !="" and len(idd) < 9 and plot != "" and image != "":
 			count += 1
 			if 'beliebt' in url:
-				name = "[COLOR chartreuse]"+str(count)+" •  [/COLOR]"+title
+				name = '[COLOR chartreuse]'+str(count)+' •  [/COLOR]'+title
 			try: 
 				if elem['hasNewEpisodes']: name = name+translation(30609)
 			except: pass
 			debug("(listseries) Filtered ### NAME : "+str(name)+" || IDD : "+str(idd)+" || IMAGE : "+str(image)+" ###")
-			addType=2
+			addType=1
 			if os.path.exists(channelFavsFile):
 				with open(channelFavsFile, 'r') as output:
 					lines = output.readlines()
 					for line in lines:
 						idd_FS = re.compile('URL=<uu>(.*?)</uu>').findall(line)[0]
-						if idd == idd_FS: addType=1
+						if idd == idd_FS: addType=2
 			addDir(name, idd, "listepisodes", image, plot, nosub=ADDITION, originalSERIE=title, addType=addType)
 	currentRESULT = count
 	debug("(listseries) ##### currentRESULT : "+str(currentRESULT)+" #####")
@@ -228,7 +222,7 @@ def listepisodes(idd, originalSERIE):
 	except: return xbmcgui.Dialog().notification(translation(30521).format(str(idd)), translation(30522), icon, 12000)
 	genstr = ""
 	genreList=[]
-	if 'genres' in DATA['show']:
+	if 'show' in DATA and 'genres' in DATA['show'] and DATA['show']['genres'] != "" and DATA['show']['genres'] != None:
 		for item in DATA['show']['genres']:
 			gNames = py2_enc(item['name'])
 			genreList.append(gNames)
@@ -243,16 +237,16 @@ def listepisodes(idd, originalSERIE):
 					if 'isPlayable' in vid and vid['isPlayable'] == True:
 						debug("(listepisodes) ##### subelement-1-vid : "+str(vid)+" #####")
 						season = ""
-						if 'season' in vid and vid['season'] != "" and vid['season'] != "0" and vid['season'] != None:
+						if 'season' in vid and vid['season'] != "" and str(vid['season']) != "0" and vid['season'] != None:
 							season = str(vid['season']).zfill(2)
 						episode = ""
-						if 'episode' in vid and vid['episode'] != "" and vid['episode'] != "0" and vid['episode'] != None:
+						if 'episode' in vid and vid['episode'] != "" and str(vid['episode']) != "0" and vid['episode'] != None:
 							episode = str(vid['episode']).zfill(2)
-						title = py2_enc(vid['title'])
-						if (season != "" and season in title) and (episode != "" and episode in title):
-							title1 = "[COLOR chartreuse]"+title.split(':')[0].replace('{S}', 'S').replace('.{E}', 'E')+":[/COLOR]"
-							title2 = title.split(':')[1]
-							number = title.split(':')[0].replace('{S}', 'S').replace('.{E}', 'E')
+						title = py2_enc(vid['name']).strip()
+						if season != "" and episode != "":
+							title1 = '[COLOR chartreuse]S'+season+'E'+episode+':[/COLOR]'
+							title2 = title
+							number = 'S'+season+'E'+episode
 						else:
 							title1 = title
 							title2 = ""
@@ -282,7 +276,7 @@ def listepisodes(idd, originalSERIE):
 						if startTIMES: Note_1 = translation(30611).format(str(startTIMES))
 						if endTIMES: Note_2 = translation(30612).format(str(endTIMES))
 						if 'description' in vid and vid['description'] != "" and vid['description'] != None:
-							Note_3 = py2_enc(vid['description']).replace('\n\n\n', '\n\n')
+							Note_3 = py2_enc(vid['description']).replace('\n\n\n', '\n\n').strip()
 						plot = Note_1+Note_2+Note_3
 						image = ""
 						if 'image' in vid and 'src' in vid['image'] and vid['image']['src'] != "" and vid['image']['src'] != None:
@@ -299,12 +293,12 @@ def listepisodes(idd, originalSERIE):
 				if 'isPlayable' in item and item['isPlayable'] == True:
 					debug("(listepisodes) ##### subelement-2-item : "+str(item)+" #####")
 					season = "00"
-					if 'season' in item and item['season'] != "" and item['season'] != "0" and item['season'] != None:
+					if 'season' in item and item['season'] != "" and str(item['season']) != "0" and item['season'] != None:
 						season = str(item['season']).zfill(2)
 					episode = ""
-					if 'episode' in item and item['episode'] != "" and item['episode'] != "0" and item['episode'] != None:
+					if 'episode' in item and item['episode'] != "" and str(item['episode']) != "0" and item['episode'] != None:
 						episode = str(item['episode']).zfill(2)
-					title = py2_enc(item['title'])
+					title = py2_enc(item['name']).strip()
 					begins = None
 					year = None
 					airdate = None
@@ -332,7 +326,7 @@ def listepisodes(idd, originalSERIE):
 					if startTIMES: Note_1 = translation(30611).format(str(startTIMES))
 					if endTIMES: Note_2 = translation(30612).format(str(endTIMES))
 					if 'description' in item and item['description'] != "" and item['description'] != None:
-						Note_3 = py2_enc(item['description']).replace('\n\n\n', '\n\n')
+						Note_3 = py2_enc(item['description']).replace('\n\n\n', '\n\n').strip()
 					plot = Note_1+Note_2+Note_3
 					image = ""
 					if 'image' in item and 'src' in item['image'] and item['image']['src'] != "" and item['image']['src'] != None:
@@ -346,15 +340,15 @@ def listepisodes(idd, originalSERIE):
 			if SELECT:
 				for title, idd2, image, plot, duration, season, episode, genstr, year, airdate, begins in sorted(SELECT, key=lambda ad:ad[9], reverse=False):
 					pos1 += 1
-					if (season != "00" and season in title) and (episode != "" and episode in title):
-						title1 = "[COLOR orangered]"+title.split(':')[0].replace('{S}', 'S').replace('.{E}', 'E')+":[/COLOR]"
-						title2 = title.split(':')[1]
-						number = title.split(':')[0].replace('{S}', 'S').replace('.{E}', 'E')
+					if season != "00" and episode != "":
+						title1 = '[COLOR orangered]S'+season+'E'+episode+':[/COLOR]'
+						title2 = title
+						number = 'S'+season+'E'+episode
 					else:
 						episode = str(pos1).zfill(2)
-						title1 = "[COLOR orangered]S00E"+episode+":[/COLOR]"
-						title2 = title+"  (Special)"
-						number = "S00E"+episode
+						title1 = '[COLOR orangered]S00E'+episode+':[/COLOR]'
+						title2 = title+'  (Special)'
+						number = 'S00E'+episode
 					COMBI.append([number, title1, title2, idd2, image, plot, duration, season, episode, genstr, year, begins])
 	else:
 		debug("(listepisodes) ##### Keine COMBINATION-List - Kein Eintrag gefunden #####")
@@ -457,20 +451,25 @@ def utc_to_local(dt):
 	if time.localtime().tm_isdst: return dt - timedelta(seconds=time.altzone)
 	else: return dt - timedelta(seconds=time.timezone)
 
-def tolibrary(url, name, stunden):
-	debug("-------------------------- TOLIBRARY --------------------------")
+def tolibrary(param):
+	log("-------------------------- TOLIBRARY --------------------------")
 	if mediaPath =="":
 		xbmcgui.Dialog().ok(addon.getAddonInfo('id'), translation(30502))
 	elif mediaPath !="" and ADDON_operate('service.L0RE.cron'):
-		urln = 'plugin://{0}/?mode=generatefiles&url={1}&name={2}'.format(addon.getAddonInfo('id'), url, name)
-		urln = quote_plus(urln)
+		LIB_entry = param[param.find('###START'):]
+		LIB_entry = LIB_entry[:LIB_entry.find('END###')]
+		url = LIB_entry.split('###')[2]
+		name = LIB_entry.split('###')[3]
+		stunden = LIB_entry.split('###')[4]
+		newURL = 'plugin://{0}/?mode=generatefiles&url={1}&name={2}'.format(addon.getAddonInfo('id'), url, name.replace('&', '%26'))
+		newURL = quote_plus(newURL)
 		source = quote_plus(mediaPath+fixPathSymbols(name))
-		debug("(tolibrary) ##### URLn : "+str(urln)+" #####")
-		debug("(tolibrary) ##### SOURCE : "+str(source)+" #####")
-		xbmc.executebuiltin('RunPlugin(plugin://service.L0RE.cron/?mode=adddata&name={0}&stunden={1}&url={2}&source={3})'.format(name, stunden, urln, source))
+		log("(tolibrary) ##### newURL : "+str(newURL)+" #####")
+		log("(tolibrary) ##### SOURCE : "+str(source)+" #####")
+		xbmc.executebuiltin('RunPlugin(plugin://service.L0RE.cron/?mode=adddata&name={0}&stunden={1}&url={2}&source={3})'.format(name.replace('&', '%26'), stunden, newURL, source))
 		xbmcgui.Dialog().notification(translation(30528), translation(30529).format(name,str(stunden)), icon, 12000)
 
-def generatefiles(idd, name):
+def generatefiles(idd, show):
 	debug("-------------------------- GENERATEFILES --------------------------")
 	if not enableLibrary or mediaPath =="":
 		return
@@ -480,7 +479,7 @@ def generatefiles(idd, name):
 	SPECIALS = False
 	url = baseURL+"api/show-detail/"+str(idd)
 	debug("(generatefiles) ##### URL : "+str(url)+" #####")
-	ppath =py2_uni(mediaPath)+py2_uni(fixPathSymbols(name))
+	ppath =py2_uni(mediaPath)+py2_uni(fixPathSymbols(show))
 	debug("(generatefiles) ##### PPATH : "+str(ppath)+" #####")
 	if os.path.isdir(ppath):
 		shutil.rmtree(ppath, ignore_errors=True)
@@ -493,7 +492,7 @@ def generatefiles(idd, name):
 	except:
 		return
 	genreList=[]
-	if 'genres' in DATA['show']:
+	if 'show' in DATA and 'genres' in DATA['show'] and DATA['show']['genres'] != "" and DATA['show']['genres'] != None:
 		for item in DATA['show']['genres']:
 			gNames = py2_enc(item['name'])
 			genreList.append(gNames)
@@ -515,15 +514,36 @@ def generatefiles(idd, name):
 					if 'isPlayable' in vid and vid['isPlayable'] == True:
 						debug("(generatefiles) ##### subelement-1-vid : "+str(vid)+" #####")
 						EP_season = ""
-						if 'season' in vid and vid['season'] != "" and vid['season'] != "0" and vid['season'] != None:
+						if 'season' in vid and vid['season'] != "" and str(vid['season']) != "0" and vid['season'] != None:
 							EP_season = str(vid['season']).zfill(2)
 						EP_episode = ""
-						if 'episode' in vid and vid['episode'] != "" and vid['episode'] != "0" and vid['episode'] != None:
+						if 'episode' in vid and vid['episode'] != "" and str(vid['episode']) != "0" and vid['episode'] != None:
 							EP_episode = str(vid['episode']).zfill(2)
-						EP_title = py2_enc(vid['title']).replace('{S}', 'S').replace('.{E}', 'E').strip()
-						EP_plot = ""
+						EP_title = py2_enc(vid['name']).strip()
+						if EP_season != "" and EP_episode != "":
+							EP_title = 'S'+EP_season+'E'+EP_episode+': '+EP_title
+						startTIMES = None
+						endTIMES = None
+						Note_1 = ""
+						Note_2 = ""
+						Note_3 = ""
+						if 'publishStart' in vid and vid['publishStart'] != "" and vid['publishStart'] != None and not str(vid['publishStart']).startswith('1970'):
+							try:
+								startDATES = datetime(*(time.strptime(vid['publishStart'], '%Y-%m-%dT%H:%M:%SZ')[0:6])) # 2019-06-23T14:10:00Z
+								LOCALstart = utc_to_local(startDATES)
+								startTIMES = LOCALstart.strftime('%d.%m.%y • %H:%M')
+							except: pass
+						if 'publishEnd' in vid and vid['publishEnd'] != "" and vid['publishEnd'] != None and not str(vid['publishEnd']).startswith('1970'):
+							try:
+								endDATES = datetime(*(time.strptime(vid['publishEnd'], '%Y-%m-%dT%H:%M:%SZ')[0:6])) # 2019-06-23T14:10:00Z
+								LOCALend = utc_to_local(endDATES)
+								endTIMES = LOCALend.strftime('%d.%m.%y • %H:%M')
+							except: pass
+						if startTIMES: Note_1 = translation(30611).format(str(startTIMES))
+						if endTIMES: Note_2 = translation(30612).format(str(endTIMES))
 						if 'description' in vid and vid['description'] != "" and vid['description'] != None:
-							EP_plot = py2_enc(vid['description']).replace('\n\n\n', '\n\n')
+							Note_3 = py2_enc(vid['description']).replace('\n\n\n', '\n\n').strip()
+						EP_plot = Note_1+Note_2+Note_3
 						EP_image = ""
 						if 'image' in vid and 'src' in vid['image'] and vid['image']['src'] != "" and vid['image']['src'] != None:
 							EP_image = vid['image']['src']
@@ -554,15 +574,34 @@ def generatefiles(idd, name):
 				if 'isPlayable' in item and item['isPlayable'] == True:
 					debug("(generatefiles) ##### subelement-2-item : "+str(item)+" #####")
 					EP_season = "00"
-					if 'season' in item and item['season'] != "" and item['season'] != "0" and item['season'] != None:
+					if 'season' in item and item['season'] != "" and str(item['season']) != "0" and item['season'] != None:
 						EP_season = str(item['season']).zfill(2)
 					EP_episode = ""
-					if 'episode' in item and item['episode'] != "" and item['episode'] != "0" and item['episode'] != None:
+					if 'episode' in item and item['episode'] != "" and str(item['episode']) != "0" and item['episode'] != None:
 						EP_episode = str(item['episode']).zfill(2)
-					EP_title2 = py2_enc(item['title']).strip()
-					EP_plot = ""
+					EP_title2 = py2_enc(item['name']).strip()
+					startTIMES = None
+					endTIMES = None
+					Note_1 = ""
+					Note_2 = ""
+					Note_3 = ""
+					if 'publishStart' in item and item['publishStart'] != "" and item['publishStart'] != None and not str(item['publishStart']).startswith('1970'):
+						try:
+							startDATES = datetime(*(time.strptime(item['publishStart'], '%Y-%m-%dT%H:%M:%SZ')[0:6])) # 2019-06-23T14:10:00Z
+							LOCALstart = utc_to_local(startDATES)
+							startTIMES = LOCALstart.strftime('%d.%m.%y • %H:%M')
+						except: pass
+					if 'publishEnd' in item and item['publishEnd'] != "" and item['publishEnd'] != None and not str(item['publishEnd']).startswith('1970'):
+						try:
+							endDATES = datetime(*(time.strptime(item['publishEnd'], '%Y-%m-%dT%H:%M:%SZ')[0:6])) # 2019-06-23T14:10:00Z
+							LOCALend = utc_to_local(endDATES)
+							endTIMES = LOCALend.strftime('%d.%m.%y • %H:%M')
+						except: pass
+					if startTIMES: Note_1 = translation(30611).format(str(startTIMES))
+					if endTIMES: Note_2 = translation(30612).format(str(endTIMES))
 					if 'description' in item and item['description'] != "" and item['description'] != None:
-						EP_plot = py2_enc(item['description']).replace('\n\n\n', '\n\n')
+						Note_3 = py2_enc(item['description']).replace('\n\n\n', '\n\n').strip()
+					EP_plot = Note_1+Note_2+Note_3
 					EP_image = ""
 					if 'image' in item and 'src' in item['image'] and item['image']['src'] != "" and item['image']['src'] != None:
 						EP_image = item['image']['src']
@@ -589,11 +628,11 @@ def generatefiles(idd, name):
 			if SELECTION:
 				for EP_title2, TVS_title, EP_idd, EP_season, EP_episode, EP_plot, EP_duration, EP_image, EP_genre1, EP_genre2, EP_genre3, EP_yeardate, EP_airdate in sorted(SELECTION, key=lambda Ea:Ea[12], reverse=False):
 					pos2 += 1
-					if (EP_season != "00" and EP_season in EP_title2) and (EP_episode != "" and EP_episode in EP_title2):
-						EP_title = EP_title2.replace('{S}', 'S').replace('.{E}', 'E')
+					if EP_season != "00" and EP_episode != "":
+						EP_title = 'S'+EP_season+'E'+EP_episode+': '+EP_title2
 					else:
 						EP_episode = str(pos2).zfill(2)
-						EP_title = "S00E"+EP_episode+": "+EP_title2
+						EP_title = 'S00E'+EP_episode+': '+EP_title2
 					episodeFILE = py2_uni(fixPathSymbols(EP_title))
 					COMBINATION.append([episodeFILE, EP_title, TVS_title, EP_idd, EP_season, EP_episode, EP_plot, EP_duration, EP_image, EP_genre1, EP_genre2, EP_genre3, EP_yeardate, EP_airdate])
 	else:
@@ -678,33 +717,31 @@ def parameters_string_to_dict(parameters):
 				paramDict[paramSplits[0]] = paramSplits[1]
 	return paramDict
 
-def addDir(name, url, mode, iconimage, plot=None, page=1, position=0, nosub=0, originalSERIE="", addType=0, FAVdel=False):
-	u = sys.argv[0]+"?url="+quote_plus(url)+"&name="+quote_plus(name)+"&page="+str(page)+"&position="+str(position)+"&nosub="+str(nosub)+"&originalSERIE="+quote_plus(originalSERIE)+"&mode="+str(mode)
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
+def addDir(name, url, mode, image, plot=None, page=1, position=0, nosub=0, originalSERIE="", addType=0, FAVdel=False):
+	u = sys.argv[0]+'?url='+quote_plus(url)+'&page='+str(page)+'&position='+str(position)+'&nosub='+str(nosub)+'&originalSERIE='+quote_plus(originalSERIE)+'&mode='+str(mode)
+	liz = xbmcgui.ListItem(name)
 	liz.setInfo(type='Video', infoLabels={'Title': name, 'Plot': plot})
-	liz.setArt({'poster': iconimage})
-	if useThumbAsFanart and iconimage != icon:
-		liz.setArt({'fanart': iconimage})
-	else:
-		liz.setArt({'fanart': defaultFanart})
+	liz.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
+	if useThumbAsFanart and image != icon:
+		liz.setArt({'fanart': image})
 	entries = []
 	if addType == 1 or addType == 2:
-		if addType == 2 and FAVdel == False:
-			playListInfos_1 = 'MODE=<mm>ADD</mm> ###TITLE=<tt>{0}</tt> URL=<uu>{1}</uu> THUMB=<ii>{2}</ii> PLOT=<pp>{3}</pp> END###'.format(originalSERIE, url, iconimage, plot.replace('\n', '#n#'))
-			entries.append([translation(30651), 'RunPlugin(plugin://'+addon.getAddonInfo('id')+'/?mode=favs&url='+quote_plus(playListInfos_1)+')'])
+		if addType == 1 and FAVdel == False:
+			playListInfos_1 = 'MODE=<mm>ADD</mm> ###TITLE=<tt>{0}</tt> URL=<uu>{1}</uu> THUMB=<ii>{2}</ii> PLOT=<pp>{3}</pp> END###'.format(originalSERIE, url, image, plot.replace('\n', '#n#'))
+			entries.append([translation(30651), 'RunPlugin('+sys.argv[0]+'?mode=favs&url='+quote_plus(playListInfos_1)+')'])
 		if enableLibrary:
-			link = 'plugin://{0}/?mode=tolibrary&url={1}&name={2}&stunden={3}'.format(addon.getAddonInfo('id'), url, originalSERIE, updatestd)
-			debug("(addDir) ##### link : "+py2_enc(link)+" #####")
-			entries.append([translation(30653), 'RunPlugin('+link+')'])
+			libListInfos = '###START###{0}###{1}###{2}###END###'.format(url, originalSERIE, updatestd)
+			debug("(addDir) ##### libListInfos : "+py2_enc(libListInfos)+" #####")
+			entries.append([translation(30653), 'RunPlugin('+sys.argv[0]+'?mode=tolibrary&url='+quote_plus(libListInfos)+')'])
 	if FAVdel == True:
-		playListInfos_2 = 'MODE=<mm>DEL</mm> ###TITLE=<tt>{0}</tt> URL=<uu>{1}</uu> THUMB=<ii>{2}</ii> PLOT=<pp>{3}</pp> END###'.format(name, url, iconimage, plot)
-		entries.append([translation(30652), 'RunPlugin(plugin://'+addon.getAddonInfo('id')+'/?mode=favs&url='+quote_plus(playListInfos_2)+')'])
+		playListInfos_2 = 'MODE=<mm>DEL</mm> ###TITLE=<tt>{0}</tt> URL=<uu>{1}</uu> THUMB=<ii>{2}</ii> PLOT=<pp>{3}</pp> END###'.format(name, url, image, plot)
+		entries.append([translation(30652), 'RunPlugin('+sys.argv[0]+'?mode=favs&url='+quote_plus(playListInfos_2)+')'])
 	liz.addContextMenuItems(entries, replaceItems=False)
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
 
-def addLink(name, url, mode, iconimage, plot=None, duration=None, seriesname=None, season=None, episode=None, genre=None, year=None, begins=None):
-	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
+def addLink(name, url, mode, image, plot=None, duration=None, seriesname=None, season=None, episode=None, genre=None, year=None, begins=None):
+	u = sys.argv[0]+'?url='+quote_plus(url)+'&mode='+str(mode)
+	liz = xbmcgui.ListItem(name)
 	ilabels = {}
 	ilabels['Season'] = season
 	ilabels['Episode'] = episode
@@ -723,11 +760,9 @@ def addLink(name, url, mode, iconimage, plot=None, duration=None, seriesname=Non
 	ilabels['Mpaa'] = None
 	ilabels['Mediatype'] = 'episode'
 	liz.setInfo(type='Video', infoLabels=ilabels)
-	liz.setArt({'poster': iconimage})
-	if useThumbAsFanart and iconimage != icon:
-		liz.setArt({'fanart': iconimage})
-	else:
-		liz.setArt({'fanart': defaultFanart})
+	liz.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
+	if useThumbAsFanart and image != icon:
+		liz.setArt({'fanart': image})
 	liz.addStreamInfo('Video', {'Duration': duration})
 	liz.setProperty('IsPlayable', 'true')
 	liz.setContentLookup(False)
@@ -737,7 +772,7 @@ params = parameters_string_to_dict(sys.argv[2])
 name = unquote_plus(params.get('name', ''))
 url = unquote_plus(params.get('url', ''))
 mode = unquote_plus(params.get('mode', ''))
-iconimage = unquote_plus(params.get('iconimage', ''))
+image = unquote_plus(params.get('image', ''))
 page = unquote_plus(params.get('page', ''))
 position = unquote_plus(params.get('position', ''))
 nosub = unquote_plus(params.get('nosub', ''))
@@ -761,7 +796,7 @@ elif mode == 'listShowsFavs':
 elif mode == 'favs':
 	favs(url)
 elif mode == 'tolibrary':
-	tolibrary(url, name, stunden)
+	tolibrary(url)
 elif mode == 'generatefiles':
 	generatefiles(url, name)
 else:
