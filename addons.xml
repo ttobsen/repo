@@ -3520,7 +3520,7 @@ Thank you ran.de for your great service, especially for providing ranNFL reLives
 
 </addon>
 
-<addon id="plugin.video.skysport.de" name="Sky Sport Mediathek" version="1.0.0" provider-name="Maven">
+<addon id="plugin.video.skysport.de" name="Sky Sport Mediathek" version="1.1.0" provider-name="Maven">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.beautifulsoup4" version="4.5.3" />
@@ -3538,7 +3538,8 @@ Thank you ran.de for your great service, especially for providing ranNFL reLives
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
 		<website>https://sport.sky.de</website>
-		<source>https://github.com/Maven85/plugin.video.skysport.de.git</source>		
+		<source>https://github.com/Maven85/plugin.video.skysport.de.git</source>
+		<reuselanguageinvoker>true</reuselanguageinvoker>		
     </extension>
 </addon>
 
