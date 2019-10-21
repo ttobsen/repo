@@ -64,7 +64,7 @@
                         <aspectratio>stretch</aspectratio>
                         <bordertexture border="10">ThumbShadow.png</bordertexture>
                         <bordersize>6</bordersize>
-                        <texture background="true" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
+                        <texture background="true" fallback="FallbackCover.png">$VAR[ListItemIconVAR]</texture>
                     </control>
                     <control type="image">
                         <left>10</left>
@@ -73,7 +73,7 @@
                         <height>90</height>
                         <colordiffuse>grey2</colordiffuse>
                         <aspectratio>stretch</aspectratio>
-                        <texture background="true" flipy="true" diffuse="ShadowWhite.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
+                        <texture background="true" flipy="true" diffuse="ShadowWhite.png" fallback="FallbackCover.png">$VAR[ListItemIconVAR]</texture>
                     </control>
                 </itemlayout>
                 <focusedlayout height="300" width="240">
@@ -85,7 +85,7 @@
                         <aspectratio>stretch</aspectratio>
                         <bordertexture border="10">ThumbShadowWhite.png</bordertexture>
                         <bordersize>8</bordersize>
-                        <texture background="true" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
+                        <texture background="true" fallback="FallbackCover.png">$VAR[ListItemIconVAR]</texture>
 						<animation effect="zoom" center="auto" end="120" time="250" condition="Control.HasFocus(509)|Control.HasFocus(2000)">Focus</animation>
 						<animation effect="zoom" center="auto" end="100" time="200" condition="Control.HasFocus(888)">Conditional</animation>
 						<animation effect="zoom" center="auto" start="120" end="100" time="100">UnFocus</animation>

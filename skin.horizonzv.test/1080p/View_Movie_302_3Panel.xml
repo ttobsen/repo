@@ -347,7 +347,7 @@
                     <width>510</width>
                     <height>315</height>
                     <aspectratio>keep</aspectratio>
-                    <texture background="true" border="5">$INFO[ListItem.Icon]</texture>
+                    <texture background="true" border="5">$VAR[ListItemIconVAR]</texture>
                     <visible>Container.Content(episodes)</visible>
                     <visible>!ListItem.IsParentFolder</visible>
                     <visible>!String.IsEmpty(ListItem.Icon)</visible>

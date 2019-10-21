@@ -108,7 +108,7 @@
                             <width>1054</width>
                             <height>195</height>
                             <aspectratio>keep</aspectratio>
-                            <texture>$INFO[ListItem.Icon]</texture>
+                            <texture>$VAR[ListItemIconVAR]</texture>
                             <visible>ListItem.IsParentFolder</visible>
                         </control>
                         <control type="group">
@@ -285,7 +285,7 @@
                             <width>1054</width>
                             <height>195</height>
                             <aspectratio>keep</aspectratio>
-                            <texture>$INFO[ListItem.Icon]</texture>
+                            <texture>$VAR[ListItemIconVAR]</texture>
                             <visible>ListItem.IsParentFolder</visible>
                         </control>
                         <control type="group">
@@ -386,7 +386,7 @@
                             <width>1054</width>
                             <height>195</height>
                             <aspectratio>keep</aspectratio>
-                            <texture>$INFO[ListItem.Icon]</texture>
+                            <texture>$VAR[ListItemIconVAR]</texture>
                             <visible>ListItem.IsParentFolder</visible>
                         </control>
                         <control type="image">

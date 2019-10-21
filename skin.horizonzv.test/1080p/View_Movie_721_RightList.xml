@@ -420,7 +420,7 @@
                         <width>645</width>
                         <height>387</height>
                         <aspectratio align="center" aligny="center">scale</aspectratio>
-                        <texture background="true" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
+                        <texture background="true" fallback="FallbackCover.png">$VAR[ListItemIconVAR]</texture>
                         <bordertexture border="5">buttons/ButtonNF.png</bordertexture>
                         <bordersize>4</bordersize>
                     </control>

@@ -59,7 +59,7 @@
 					<height>110</height>
 					<aspectratio>scale</aspectratio>
 					<colordiffuse>$VAR[widgetdim]</colordiffuse>
-					<texture>$INFO[ListItem.Icon]</texture>
+					<texture>$VAR[ListItemIconVAR]</texture>
 					<visible>String.IsEmpty(ListItem.Art(fanart))</visible>
 				</control>
 				<control type="image">
@@ -162,7 +162,7 @@
 						<width>332</width>
 						<height>110</height>
 						<aspectratio>scale</aspectratio>
-						<texture>$INFO[ListItem.Icon]</texture>
+						<texture>$VAR[ListItemIconVAR]</texture>
 						<visible>String.IsEmpty(ListItem.Art(fanart))</visible>
 						<visible>Control.HasFocus($PARAM[dashboard_id])</visible>
 					</control>
@@ -174,7 +174,7 @@
 						<height>110</height>
 						<aspectratio>scale</aspectratio>
 						<colordiffuse>$VAR[widgetdim]</colordiffuse>
-						<texture>$INFO[ListItem.Icon]</texture>
+						<texture>$VAR[ListItemIconVAR]</texture>
 						<visible>String.IsEmpty(ListItem.Art(fanart))</visible>
 						<visible>!Control.HasFocus($PARAM[dashboard_id])</visible>
 					</control>
@@ -370,7 +370,7 @@
                 <height>142</height>
                 <aspectratio>keep</aspectratio>
                 <colordiffuse>$VAR[widgetdim]</colordiffuse>
-                <texture>$INFO[ListItem.Icon]</texture>
+                <texture>$VAR[ListItemIconVAR]</texture>
             </control>
             <control type="image">
                 <description>background</description>
@@ -405,7 +405,7 @@
                     <height>158</height>
                     <aspectratio>keep</aspectratio>
                     <colordiffuse>$VAR[widgetdim]</colordiffuse>
-                    <texture>$INFO[ListItem.Icon]</texture>
+                    <texture>$VAR[ListItemIconVAR]</texture>
                     <visible>!Control.HasFocus(8009)</visible>
                 </control>
                 <control type="image">
@@ -415,7 +415,7 @@
                     <width>158</width>
                     <height>158</height>
                     <aspectratio>keep</aspectratio>
-                    <texture>$INFO[ListItem.Icon]</texture>
+                    <texture>$VAR[ListItemIconVAR]</texture>
                     <visible>Control.HasFocus(8009)</visible>
                 </control>
                 <control type="image">
@@ -455,7 +455,7 @@
                 <width>158</width>
                 <height>158</height>
                 <aspectratio>keep</aspectratio>
-                <texture>$INFO[ListItem.Icon]</texture>
+                <texture>$VAR[ListItemIconVAR]</texture>
             </control>
         </focusedlayout>
         <include>dashboardcontent_settings</include>

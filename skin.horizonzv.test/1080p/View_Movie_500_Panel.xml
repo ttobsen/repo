@@ -283,7 +283,7 @@
                             <height>208</height>
                             <aspectratio>stretch</aspectratio>
                             <colordiffuse>$VAR[CoverDim]</colordiffuse>
-                            <texture border="2" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
+                            <texture border="2" fallback="FallbackCover.png">$VAR[ListItemIconVAR]</texture>
                         </control>
                         <control type="image">
                             <left>24</left>
@@ -393,7 +393,7 @@
                             <width>342</width>
                             <height>208</height>
                             <aspectratio>stretch</aspectratio>
-                            <texture border="2" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
+                            <texture border="2" fallback="FallbackCover.png">$VAR[ListItemIconVAR]</texture>
                         </control>
                         <control type="image">
                             <left>303</left>

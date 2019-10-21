@@ -100,7 +100,7 @@
                     <width>316</width>
                     <height>450</height>
                     <aspectratio aligny="bottom">keep</aspectratio>
-                    <texture>$INFO[ListItem.Icon]</texture>
+                    <texture>$VAR[ListItemIconVAR]</texture>
                     <visible>!String.Contains(Control.GetLabel(416),*)</visible>
                 </control>
                 <control type="image">
@@ -109,7 +109,7 @@
                     <width>316</width>
                     <height>450</height>
                     <aspectratio aligny="bottom">keep</aspectratio>
-                    <texture flipx="true">$INFO[ListItem.Icon]</texture>
+                    <texture flipx="true">$VAR[ListItemIconVAR]</texture>
                     <visible>String.Contains(Control.GetLabel(416),*)</visible>
                 </control>
                 <control type="panel" id="450">
@@ -129,7 +129,7 @@
                             <top>3</top>
                             <width>57</width>
                             <height>57</height>
-                            <texture>$INFO[ListItem.Icon]</texture>
+                            <texture>$VAR[ListItemIconVAR]</texture>
                             <aspectratio>keep</aspectratio>
                         </control>
                         <control type="label">
@@ -175,7 +175,7 @@
                             <top>3</top>
                             <width>57</width>
                             <height>57</height>
-                            <texture>$INFO[ListItem.Icon]</texture>
+                            <texture>$VAR[ListItemIconVAR]</texture>
                             <aspectratio>keep</aspectratio>
                         </control>
                         <control type="label">
@@ -208,7 +208,7 @@
                             <top>3</top>
                             <width>57</width>
                             <height>57</height>
-                            <texture>$INFO[ListItem.Icon]</texture>
+                            <texture>$VAR[ListItemIconVAR]</texture>
                             <aspectratio>keep</aspectratio>
                         </control>
                         <control type="label">
@@ -254,7 +254,7 @@
                             <top>3</top>
                             <width>57</width>
                             <height>57</height>
-                            <texture>$INFO[ListItem.Icon]</texture>
+                            <texture>$VAR[ListItemIconVAR]</texture>
                             <aspectratio>keep</aspectratio>
                         </control>
                         <control type="label">

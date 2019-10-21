@@ -164,7 +164,7 @@
             <top>406</top>
             <width>320</width>
             <height>674</height>
-            <texture diffuse="clear-cases/steelbox_diffuse.png">$INFO[ListItem.Icon]</texture>
+            <texture diffuse="clear-cases/steelbox_diffuse.png">$VAR[ListItemIconVAR]</texture>
             <animation effect="rotatey" start="0" end="-45" condition="true">Conditional</animation>
         </control>
         <control type="label">

@@ -547,7 +547,7 @@
                             <top>15</top>
                             <width>172</width>
                             <height>225</height>
-                            <imagepath>$INFO[ListItem.Icon]</imagepath>
+                            <imagepath>$VAR[ListItemIconVAR]</imagepath>
                             <timeperimage>100</timeperimage>
                             <randomize>false</randomize>
                             <fadetime>10</fadetime>
@@ -629,7 +629,7 @@
                             <top>15</top>
                             <width>172</width>
                             <height>225</height>
-                            <imagepath>$INFO[ListItem.Icon]</imagepath>
+                            <imagepath>$VAR[ListItemIconVAR]</imagepath>
                             <timeperimage>100</timeperimage>
                             <randomize>false</randomize>
                             <fadetime>10</fadetime>
@@ -642,7 +642,7 @@
                             <top>15</top>
                             <width>172</width>
                             <height>225</height>
-                            <imagepath>$INFO[ListItem.Icon]</imagepath>
+                            <imagepath>$VAR[ListItemIconVAR]</imagepath>
                             <timeperimage>100</timeperimage>
                             <randomize>false</randomize>
                             <fadetime>10</fadetime>
@@ -2008,7 +2008,7 @@
                     <height>225</height>
 					<aspectratio>keep</aspectratio>
                     <colordiffuse>$VAR[widgetdim]</colordiffuse>
-                    <texture fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
+					<texture>$VAR[ListItemIconVAR]</texture>
                 </control>
                 <control type="image">
                     <left>8</left>
@@ -2069,7 +2069,7 @@
 						<height>225</height>
 						<aspectratio>keep</aspectratio>
 						<colordiffuse>$VAR[widgetdim]</colordiffuse>
-						<texture fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
+						<texture>$VAR[ListItemIconVAR]</texture>
 						<visible>!Control.HasFocus($PARAM[Widget_Listlayout_id])</visible>
 					</control>
 					<control type="image">
@@ -2078,7 +2078,7 @@
 						<width>225</width>
 						<height>225</height>
 						<aspectratio>keep</aspectratio>
-						<texture fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
+						<texture>$VAR[ListItemIconVAR]</texture>
 						<visible>Control.HasFocus($PARAM[Widget_Listlayout_id])</visible>
 					</control>
                     <control type="image">
@@ -2089,7 +2089,7 @@
                         <aspectratio>stretch</aspectratio>
                         <texture>Shadow.png</texture>
                         <visible>String.IsEmpty(ListItem.Icon)</visible>
-                    </control>
+					</control>
                     <control type="label">
                         <left>15</left>
                         <top>186</top>

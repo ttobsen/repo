@@ -98,7 +98,7 @@
                                 <top>4</top>
                                 <width>322</width>
                                 <height>459</height>
-                                <texture diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
+                                <texture diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$VAR[ListItemIconVAR]</texture>
                                 <aspectratio>stretch</aspectratio>
                                 <visible>!Container.Content(Episodes)|String.IsEmpty(ListItem.Art(tvshow.poster))</visible>
                             </control>
@@ -130,7 +130,7 @@
                                 <top>0</top>
                                 <width>342</width>
                                 <height>468</height>
-                                <texture fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
+                                <texture fallback="FallbackCover.png">$VAR[ListItemIconVAR]</texture>
                                 <aspectratio>stretch</aspectratio>
                                 <bordertexture border="5">buttons/ButtonNF.png</bordertexture>
                                 <bordersize>4</bordersize>
@@ -296,7 +296,7 @@
                     <left>1425</left>
                     <width>300</width>
                     <height>300</height>
-                    <texture diffuse="masks/mask.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
+                    <texture diffuse="masks/mask.png" fallback="FallbackCover.png">$VAR[ListItemIconVAR]</texture>
                     <bordertexture border="8">ThumbShadowWhite.png</bordertexture>
                     <bordersize>7</bordersize>
                     <aspectratio>scale</aspectratio>
@@ -616,7 +616,7 @@
                 <top>0</top>
                 <width>519</width>
                 <height>309</height>
-                <texture>$INFO[ListItem.Icon]</texture>
+                <texture>$VAR[ListItemIconVAR]</texture>
                 <bordertexture border="10">ThumbShadowWhite.png</bordertexture>
                 <bordersize>8</bordersize>
                 <aspectratio>stretch</aspectratio>
@@ -627,7 +627,7 @@
                 <top>0</top>
                 <width>519</width>
                 <height>309</height>
-                <texture>$INFO[ListItem.Icon]</texture>
+                <texture>$VAR[ListItemIconVAR]</texture>
                 <aspectratio align="right" scalediffuse="false">keep</aspectratio>
                 <visible>ListItem.IsParentFolder</visible>
             </control>

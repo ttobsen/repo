@@ -45,6 +45,7 @@
                             <top>6</top>
                             <width>75</width>
                             <height>75</height>
+							<colordiffuse>menudiffuse</colordiffuse>
                             <texture>BlackBack.png</texture>
                         </control>
                         <control type="image">
@@ -52,7 +53,7 @@
                             <top>6</top>
                             <width>75</width>
                             <height>75</height>
-                            <texture fallback="DefaultVideo.png">$INFO[ListItem.Icon]</texture>
+                            <texture fallback="DefaultVideo.png">$VAR[ListItemIconVAR]</texture>
                             <aspectratio>keep</aspectratio>
                         </control>
 						<control type="label">
@@ -73,7 +74,7 @@
 							<height>30</height>
 							<align>left</align>
 							<aligny>center</aligny>
-							<label>$INFO[ListItem.Title]$INFO[ListItem.Season, - S,]$INFO[ListItem.Episode,E,]$INFO[ListItem.Duration, (,)]</label>
+                            <label>$INFO[ListItem.Label]$INFO[ListItem.Season, - S,]$INFO[ListItem.Episode,E,]$INFO[ListItem.Duration, (,)]</label>
 							<font>ubuntu-r19b</font>
 						</control>
                         <control type="label">
@@ -133,14 +134,15 @@
                                 <top>6</top>
                                 <width>75</width>
                                 <height>75</height>
-                                <texture>BlackBack.png</texture>
+								<colordiffuse>menudiffuse</colordiffuse>
+								<texture>BlackBack.png</texture>
                             </control>
                             <control type="image">
                                 <left>15</left>
                                 <top>6</top>
                                 <width>75</width>
                                 <height>75</height>
-                                <texture fallback="DefaultVideo.png">$INFO[ListItem.Icon]</texture>
+                                <texture fallback="DefaultVideo.png">$VAR[ListItemIconVAR]</texture>
                                 <aspectratio>keep</aspectratio>
                             </control>
                             <control type="label">
@@ -160,7 +162,7 @@
                                 <height>30</height>
                                 <align>left</align>
                                 <aligny>center</aligny>
-                                <label>$INFO[ListItem.Title]$INFO[ListItem.Season, - S,]$INFO[ListItem.Episode,E,]$INFO[ListItem.Duration, (,)]</label>
+                                <label>$INFO[ListItem.Label]$INFO[ListItem.Season, - S,]$INFO[ListItem.Episode,E,]$INFO[ListItem.Duration, (,)]</label>
                                 <font>ubuntu-r19b</font>
                             </control>
                             <control type="label">
@@ -203,77 +205,139 @@
                 <showonepage>false</showonepage>
                 <orientation>vertical</orientation>
             </control>
-            <control type="label">
-                <left>1082</left>
-                <top>375</top>
-                <width>710</width>
-                <height>38</height>
-                <label>$INFO[ListItem.PlotOutline]</label>
-                <align>center</align>
-                <aligny>center</aligny>
-                <font>ubuntu-r21b</font>
-                <textcolor>description</textcolor>
-                <shadowcolor>black</shadowcolor>
-            </control>
             <control type="group">
-                <left>130</left>
-                <top>30</top>
-                <visible>!String.IsEmpty(Container(50).ListItem.Plot)</visible>
-                <!-- <control type="image">
-                    <left>952</left>
-                    <top>398</top>
-                    <width>15</width>
-                    <height>510</height>
-                    <colordiffuse>fanartdiffuse</colordiffuse>
-                    <texture background="true" flipx="true" border="1">SideFade.png</texture>
-                </control>
-                <control type="image">
-                    <left>1708</left>
-                    <top>398</top>
-                    <width>15</width>
-                    <height>510</height>
-                    <colordiffuse>fanartdiffuse</colordiffuse>
-                    <texture background="true" border="1">SideFade.png</texture>
-                </control> -->
-                <control type="textbox">
-                    <description>Description Value for TV Show</description>
-                    <left>982</left>
-                    <top>405</top>
-                    <width>710</width>
-                    <height>510</height>
-                    <include condition="!Skin.HasSetting(BigPlotText)">PlotText16Var</include>
-                    <include condition="Skin.HasSetting(BigPlotText)">PlotTextBigVar</include>
-                    <textcolor>white</textcolor>
-                    <label>$INFO[Container(50).ListItem.Plot]</label>
-                </control>
-            </control>
-            <control type="group">
-                <left>1250</left>
-                <top>165</top>
-                <control type="label">
-                    <description>Disk usage text</description>
-                    <left>15</left>
-                    <top>788</top>
-                    <width>435</width>
-                    <height>30</height>
-                    <label>$INFO[PVR.backenddiskspace]</label>
-                    <align>center</align>
-                    <aligny>center</aligny>
-                    <textcolor>grey</textcolor>
-                    <shadowcolor>black</shadowcolor>
-                    <font>font12</font>
-                    <visible>!Integer.IsGreater(PVR.backenddiskspaceprogr,100)</visible>
-                </control>
-                <control type="progress">
-                    <description>Disk usage bar</description>
-                    <left>15</left>
-                    <top>822</top>
-                    <width>435</width>
-                    <height>12</height>
-                    <info>PVR.backenddiskspaceprogr</info>
-                    <visible>!Integer.IsGreater(PVR.backenddiskspaceprogr,100)</visible>
-                </control>
-            </control>
+				<include>openclosevisible</include>
+				<visible>!ListItem.IsFolder</visible>
+				<control type="label">
+					<left>1082</left>
+					<top>375</top>
+					<width>710</width>
+					<height>38</height>
+					<label>$INFO[ListItem.PlotOutline]</label>
+					<align>center</align>
+					<aligny>center</aligny>
+					<font>ubuntu-r21b</font>
+					<textcolor>description</textcolor>
+					<shadowcolor>black</shadowcolor>
+				</control>
+				<control type="group">
+					<left>130</left>
+					<top>30</top>
+					<visible>!String.IsEmpty(Container(50).ListItem.Plot)</visible>
+					<!-- <control type="image">
+						<left>952</left>
+						<top>398</top>
+						<width>15</width>
+						<height>510</height>
+						<colordiffuse>fanartdiffuse</colordiffuse>
+						<texture background="true" flipx="true" border="1">SideFade.png</texture>
+					</control>
+					<control type="image">
+						<left>1708</left>
+						<top>398</top>
+						<width>15</width>
+						<height>510</height>
+						<colordiffuse>fanartdiffuse</colordiffuse>
+						<texture background="true" border="1">SideFade.png</texture>
+					</control> -->
+					<control type="textbox">
+						<description>Description Value for TV Show</description>
+						<left>982</left>
+						<top>405</top>
+						<width>710</width>
+						<height>510</height>
+						<include condition="!Skin.HasSetting(BigPlotText)">PlotText16Var</include>
+						<include condition="Skin.HasSetting(BigPlotText)">PlotTextBigVar</include>
+						<textcolor>white</textcolor>
+						<label>$INFO[Container(50).ListItem.Plot]</label>
+					</control>
+				</control>
+				<control type="group">
+					<left>1250</left>
+					<top>165</top>
+					<control type="label">
+						<description>Disk usage text</description>
+						<left>15</left>
+						<top>788</top>
+						<width>435</width>
+						<height>30</height>
+						<label>$INFO[PVR.backenddiskspace]</label>
+						<align>center</align>
+						<aligny>center</aligny>
+						<textcolor>grey</textcolor>
+						<shadowcolor>black</shadowcolor>
+						<font>font12</font>
+						<visible>!Integer.IsGreater(PVR.backenddiskspaceprogr,100)</visible>
+					</control>
+					<control type="progress">
+						<description>Disk usage bar</description>
+						<left>15</left>
+						<top>822</top>
+						<width>435</width>
+						<height>12</height>
+						<info>PVR.backenddiskspaceprogr</info>
+						<visible>!Integer.IsGreater(PVR.backenddiskspaceprogr,100)</visible>
+					</control>
+				</control>
+			</control>
+			<control type="group">
+				<include>openclosevisible</include>
+				<left>1082</left>
+				<top>375</top>
+				<visible>ListItem.IsFolder</visible>
+				<control type="label">
+					<left>1082</left>
+					<top>375</top>
+					<width>710</width>
+					<height>38</height>
+					<label>$INFO[Container(5000).NumItems,$LOCALIZE[19076] (, $LOCALIZE[31025])]</label>
+					<align>center</align>
+					<aligny>center</aligny>
+					<font>ubuntu-r21b</font>
+					<textcolor>description</textcolor>
+					<shadowcolor>black</shadowcolor>
+				</control>
+				<control type="group">
+					<top>40</top>
+					<left>40</left>
+					<visible>ListItem.IsFolder</visible>
+					<control type="label">
+						<width>710</width>
+						<height>38</height>
+						<label>$INFO[Container(5000).NumItems,$LOCALIZE[19076] (, $LOCALIZE[31025])]</label>
+						<align>center</align>
+						<aligny>center</aligny>
+						<font>ubuntu-r21b</font>
+						<textcolor>description</textcolor>
+						<shadowcolor>black</shadowcolor>
+					</control>
+					<control type="group">
+						<left>10</left>
+						<top>60</top>
+						<control type="panel" id="5000">
+							<width>580</width>
+							<height>362</height>
+							<itemlayout height="40" width="560">
+								<control type="label">
+									<left>10</left>
+									<height>50</height>
+									<width>580</width>
+									<label>[COLOR $VAR[ThemeLabelColor]]$INFO[ListItem.Duration(mins),, $LOCALIZE[12391]][/COLOR]  -  $INFO[ListItem.Label]</label>
+								</control>
+							</itemlayout>
+							<focusedlayout height="40" width="560">
+								<control type="label">
+									<left>10</left>
+									<height>50</height>
+									<width>580</width>
+									<label>[COLOR $VAR[ThemeLabelColor]]$INFO[ListItem.Duration(mins),, $LOCALIZE[12391]][/COLOR]  -  $INFO[ListItem.Label]</label>
+								</control>
+							</focusedlayout>
+							<content>$INFO[ListItem.FolderPath]</content>
+						</control>
+					</control>
+				</control>
+			</control>
         </control>
     </include>
 </includes>

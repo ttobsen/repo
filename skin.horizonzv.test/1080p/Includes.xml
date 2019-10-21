@@ -2922,7 +2922,7 @@
                     <width>210</width>
                     <height>210</height>
                     <aspectratio>keep</aspectratio>
-                    <texture fallback="FallbackRadio.png">$INFO[ListItem.Icon]</texture>
+                    <texture fallback="FallbackRadio.png">$VAR[ListItemIconVAR]</texture>
                 </control>
                 <control type="image">
                     <left>4</left>

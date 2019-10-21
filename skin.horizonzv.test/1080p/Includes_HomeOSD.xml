@@ -115,7 +115,7 @@
                                         <width>45</width>
                                         <height>45</height>
                                         <colordiffuse>grey1</colordiffuse>
-                                        <texture>$INFO[ListItem.Icon]</texture>
+                                        <texture>$VAR[ListItemIconVAR]</texture>
                                     </control>
                                 </itemlayout>
                                 <focusedlayout width="45" height="45">
@@ -142,7 +142,7 @@
                                         <width>45</width>
                                         <height>45</height>
                                         <colordiffuse>description</colordiffuse>
-                                        <texture>$INFO[ListItem.Icon]</texture>
+                                        <texture>$VAR[ListItemIconVAR]</texture>
                                         <visible>Control.HasFocus(600)</visible>
                                     </control>
                                     <control type="image">
@@ -151,7 +151,7 @@
                                         <width>45</width>
                                         <height>45</height>
                                         <colordiffuse>grey1</colordiffuse>
-                                        <texture>$INFO[ListItem.Icon]</texture>
+                                        <texture>$VAR[ListItemIconVAR]</texture>
                                         <visible>!Control.HasFocus(600)</visible>
                                     </control>
                                 </focusedlayout>
@@ -232,7 +232,7 @@
                                         <width>45</width>
                                         <height>45</height>
                                         <colordiffuse>grey1</colordiffuse>
-                                        <texture>$INFO[ListItem.Icon]</texture>
+                                        <texture>$VAR[ListItemIconVAR]</texture>
                                     </control>
                                 </itemlayout>
                                 <focusedlayout width="45" height="45">
@@ -259,7 +259,7 @@
                                         <width>45</width>
                                         <height>45</height>
                                         <colordiffuse>description</colordiffuse>
-                                        <texture>$INFO[ListItem.Icon]</texture>
+                                        <texture>$VAR[ListItemIconVAR]</texture>
                                         <visible>Control.HasFocus(600)</visible>
                                     </control>
                                     <control type="image">
@@ -268,7 +268,7 @@
                                         <width>45</width>
                                         <height>45</height>
                                         <colordiffuse>grey1</colordiffuse>
-                                        <texture>$INFO[ListItem.Icon]</texture>
+                                        <texture>$VAR[ListItemIconVAR]</texture>
                                         <visible>!Control.HasFocus(600)</visible>
                                     </control>
                                 </focusedlayout>

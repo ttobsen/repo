@@ -34,7 +34,7 @@
 					<height>250</height>
 					<aspectratio>keep</aspectratio>
 					<colordiffuse>grey1</colordiffuse>
-					<texture>$INFO[ListItem.Icon]</texture>
+					<texture>$VAR[ListItemIconVAR]</texture>
 					<align>center</align>
 				</control>
 				<control type="label">
@@ -82,7 +82,7 @@
 						<width>258</width>
 						<height>250</height>
 						<aspectratio>keep</aspectratio>
-						<texture>$INFO[ListItem.Icon]</texture>
+						<texture>$VAR[ListItemIconVAR]</texture>
 						<align>center</align>
 					</control>
 					<control type="label">

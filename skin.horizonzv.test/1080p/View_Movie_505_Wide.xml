@@ -69,7 +69,7 @@
                         <top>8</top>
                         <width>525</width>
                         <height>87</height>
-                        <texture>$INFO[ListItem.Icon]</texture>
+                        <texture>$VAR[ListItemIconVAR]</texture>
                         <aspectratio>keep</aspectratio>
                         <visible>ListItem.IsParentFolder</visible>
                     </control>
@@ -152,7 +152,7 @@
                             <top>8</top>
                             <width>525</width>
                             <height>87</height>
-                            <texture>$INFO[ListItem.Icon]</texture>
+                            <texture>$VAR[ListItemIconVAR]</texture>
                             <aspectratio>keep</aspectratio>
                             <visible>ListItem.IsParentFolder</visible>
                         </control>
@@ -241,7 +241,7 @@
                         <width>309</width>
                         <height>165</height>
                         <colordiffuse>$VAR[CoverDim]</colordiffuse>
-                        <texture>$INFO[ListItem.Icon]</texture>
+                        <texture>$VAR[ListItemIconVAR]</texture>
                         <aspectratio>scale</aspectratio>
                     </control>
                     <control type="label">
@@ -283,7 +283,7 @@
                             <top>8</top>
                             <width>309</width>
                             <height>165</height>
-                            <texture>$INFO[ListItem.Icon]</texture>
+                            <texture>$VAR[ListItemIconVAR]</texture>
                             <aspectratio>scale</aspectratio>
                         </control>
                         <control type="image">
@@ -341,7 +341,7 @@
                         <width>240</width>
                         <height>342</height>
                         <colordiffuse>$VAR[CoverDim]</colordiffuse>
-                        <texture>$INFO[ListItem.Icon]</texture>
+                        <texture>$VAR[ListItemIconVAR]</texture>
                         <aspectratio>stretch</aspectratio>
                     </control>
                     <control type="image">
@@ -391,7 +391,7 @@
                             <top>8</top>
                             <width>240</width>
                             <height>342</height>
-                            <texture>$INFO[ListItem.Icon]</texture>
+                            <texture>$VAR[ListItemIconVAR]</texture>
                             <aspectratio>stretch</aspectratio>
                         </control>
                         <control type="image">

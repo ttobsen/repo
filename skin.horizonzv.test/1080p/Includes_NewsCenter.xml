@@ -100,7 +100,7 @@
             <height>142</height>
             <colordiffuse>grey</colordiffuse>
             <aspectratio>scale</aspectratio>
-            <texture>$INFO[ListItem.Icon]</texture>
+            <texture>$VAR[ListItemIconVAR]</texture>
         </control>
         <control type="image">
             <left>8</left>

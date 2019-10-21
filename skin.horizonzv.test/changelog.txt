@@ -1,4 +1,8 @@
-﻿v 1.18.0.23
+﻿v 1.18.0.24
+- Widget - Icons bei Ordnern angepasst
+- PVR Recordings - Ordnerinfo eingebaut, Icons angepasst
+
+v 1.18.0.23
 - PVR Widget - zuletzt gesehen hinzugefügt
 
 v 1.18.0.22

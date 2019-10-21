@@ -77,7 +77,7 @@
 								<height>334</height>
 								<aspectratio>stretch</aspectratio>
 								<colordiffuse>$VAR[CoverDim]</colordiffuse>
-								<texture diffuse="masks/CdCoverMask_full.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
+								<texture diffuse="masks/CdCoverMask_full.png" fallback="FallbackCover.png">$VAR[ListItemIconVAR]</texture>
 							</control>
 							<control type="image">
 								<left>0</left>
@@ -95,7 +95,7 @@
 								<height>117</height>
 								<aspectratio>stretch</aspectratio>
 								<colordiffuse>$VAR[CoverDim]</colordiffuse>
-								<texture border="1" flipy="true" diffuse="ContentPanelMirror3.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
+								<texture border="1" flipy="true" diffuse="ContentPanelMirror3.png" fallback="FallbackCover.png">$VAR[ListItemIconVAR]</texture>
 								<visible>Skin.HasSetting(animation)</visible>
 							</control>
 							<control type="image">
@@ -655,7 +655,7 @@
                         <width>471</width>
                         <height>471</height>
                         <aspectratio>stretch</aspectratio>
-                        <texture diffuse="masks/CdCoverMask_full.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
+                        <texture diffuse="masks/CdCoverMask_full.png" fallback="FallbackCover.png">$VAR[ListItemIconVAR]</texture>
                     </control>
                     <control type="image">
                         <left>-51</left>

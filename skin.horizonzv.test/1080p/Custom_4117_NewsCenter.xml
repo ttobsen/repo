@@ -240,7 +240,7 @@
                             <height>225</height>
                             <aspectratio>scale</aspectratio>
                             <colordiffuse>grey1</colordiffuse>
-                            <texture>$INFO[ListItem.Icon]</texture>
+                            <texture>$VAR[ListItemIconVAR]</texture>
                             <bordertexture border="10">ThumbShadow.png</bordertexture>
                             <bordersize>6</bordersize>
                         </control>
@@ -296,7 +296,7 @@
                             <height>225</height>
                             <aspectratio>scale</aspectratio>
                             <colordiffuse>grey1</colordiffuse>
-                            <texture>$INFO[ListItem.Icon]</texture>
+                            <texture>$VAR[ListItemIconVAR]</texture>
                             <bordertexture border="10">ThumbShadow.png</bordertexture>
                             <bordersize>6</bordersize>
                             <visible>!Control.HasFocus(19111)</visible>
@@ -307,7 +307,7 @@
                             <width>324</width>
                             <height>225</height>
                             <aspectratio>scale</aspectratio>
-                            <texture>$INFO[ListItem.Icon]</texture>
+                            <texture>$VAR[ListItemIconVAR]</texture>
                             <bordertexture border="10">ThumbShadow.png</bordertexture>
                             <bordersize>6</bordersize>
                             <visible>Control.HasFocus(19111)</visible>
@@ -785,7 +785,7 @@
                             <top>0</top>
                             <width>45</width>
                             <height>45</height>
-                            <texture>$INFO[ListItem.Icon]</texture>
+                            <texture>$VAR[ListItemIconVAR]</texture>
                         </control>
                         <control type="label">
                             <description>Platz</description>
@@ -868,7 +868,7 @@
                             <top>0</top>
                             <width>45</width>
                             <height>45</height>
-                            <texture>$INFO[ListItem.Icon]</texture>
+                            <texture>$VAR[ListItemIconVAR]</texture>
                         </control>
                         <control type="label">
                             <description>Platz</description>
@@ -1255,7 +1255,7 @@
                             <top>8</top>
                             <width>120</width>
                             <height>120</height>
-                            <texture>$INFO[ListItem.Icon]</texture>
+                            <texture>$VAR[ListItemIconVAR]</texture>
                             <aspectratio align="left" aligny="top">keep</aspectratio>
                         </control>
                         <control type="label">
@@ -1309,7 +1309,7 @@
                             <top>8</top>
                             <width>120</width>
                             <height>120</height>
-                            <texture>$INFO[ListItem.Icon]</texture>
+                            <texture>$VAR[ListItemIconVAR]</texture>
                             <aspectratio align="left" aligny="top">keep</aspectratio>
                         </control>
                         <control type="label">
@@ -1388,7 +1388,7 @@
                             <top>0</top>
                             <width>150</width>
                             <height>150</height>
-                            <texture>$INFO[ListItem.Icon]</texture>
+                            <texture>$VAR[ListItemIconVAR]</texture>
                             <aspectratio>scale</aspectratio>
                         </control>
                         <control type="image">
@@ -1422,7 +1422,7 @@
                             <top>0</top>
                             <width>150</width>
                             <height>150</height>
-                            <texture>$INFO[ListItem.Icon]</texture>
+                            <texture>$VAR[ListItemIconVAR]</texture>
                             <aspectratio>scale</aspectratio>
                         </control>
                         <control type="image">

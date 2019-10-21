@@ -91,7 +91,7 @@
                         <top>15</top>
                         <width>52</width>
                         <height>51</height>
-                        <texture background="true" fallback="icons/TVShowsIcon.png">$INFO[ListItem.Icon]</texture>
+                        <texture background="true" fallback="icons/TVShowsIcon.png">$VAR[ListItemIconVAR]</texture>
                         <aspectratio>keep</aspectratio>
                         <visible>!Window.IsVisible(radiochannels)</visible>
                     </control>
@@ -100,7 +100,7 @@
                         <top>15</top>
                         <width>52</width>
                         <height>51</height>
-                        <texture background="true" fallback="FallbackRadio.png">$INFO[ListItem.Icon]</texture>
+                        <texture background="true" fallback="FallbackRadio.png">$VAR[ListItemIconVAR]</texture>
                         <aspectratio>keep</aspectratio>
                         <visible>Window.IsVisible(radiochannels)</visible>
                     </control>
@@ -147,7 +147,7 @@
                             <top>15</top>
                             <width>52</width>
                             <height>51</height>
-                            <texture background="true" fallback="icons/TVShowsIcon.png">$INFO[ListItem.Icon]</texture>
+                            <texture background="true" fallback="icons/TVShowsIcon.png">$VAR[ListItemIconVAR]</texture>
                             <aspectratio>keep</aspectratio>
                             <visible>!Window.IsVisible(radiochannels)</visible>
                         </control>
@@ -156,7 +156,7 @@
                             <top>15</top>
                             <width>52</width>
                             <height>51</height>
-                            <texture background="true" fallback="FallbackRadio.png">$INFO[ListItem.Icon]</texture>
+                            <texture background="true" fallback="FallbackRadio.png">$VAR[ListItemIconVAR]</texture>
                             <aspectratio>keep</aspectratio>
                             <visible>Window.IsVisible(radiochannels)</visible>
                         </control>
@@ -247,7 +247,7 @@
                     <top>15</top>
                     <width>300</width>
                     <height>147</height>
-                    <texture>$INFO[ListItem.Icon]</texture>
+                    <texture>$VAR[ListItemIconVAR]</texture>
                     <aspectratio align="center" aligny="center">keep</aspectratio>
                 </control>
                 <control type="label">

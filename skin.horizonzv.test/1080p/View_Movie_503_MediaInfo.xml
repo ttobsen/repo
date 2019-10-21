@@ -500,7 +500,7 @@
                         <width>795</width>
                         <height>315</height>
                         <aspectratio>keep</aspectratio>
-                        <texture>$INFO[ListItem.Icon]</texture>
+                        <texture>$VAR[ListItemIconVAR]</texture>
                         <bordertexture border="8">ThumbShadow.png</bordertexture>
                         <bordersize>8</bordersize>
                     </control>
@@ -659,7 +659,7 @@
                             <top>4</top>
                             <width>321</width>
                             <height>494</height>
-                            <texture background="true" diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
+                            <texture background="true" diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$VAR[ListItemIconVAR]</texture>
                             <aspectratio>stretch</aspectratio>
                         </control>
                         <control type="image">
@@ -708,7 +708,7 @@
                     <top>525</top>
                     <width>300</width>
                     <height>300</height>
-                    <texture>$INFO[ListItem.Icon]</texture>
+                    <texture>$VAR[ListItemIconVAR]</texture>
                 </control>
             </control>
             <control type="group">

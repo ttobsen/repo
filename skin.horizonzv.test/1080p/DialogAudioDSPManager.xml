@@ -191,7 +191,7 @@
                                     <top>12</top>
                                     <width>45</width>
                                     <height>45</height>
-                                    <texture fallback="DefaultAudioDSP.png">$INFO[ListItem.Icon]</texture>
+                                    <texture fallback="DefaultAudioDSP.png">$VAR[ListItemIconVAR]</texture>
                                     <aspectratio aligny="center" align="left">keep</aspectratio>
                                 </control>
                                 <control type="label">
@@ -223,7 +223,7 @@
                                     <top>12</top>
                                     <width>75</width>
                                     <height>75</height>
-                                    <texture fallback="DefaultAudioDSP.png">$INFO[ListItem.Icon]</texture>
+                                    <texture fallback="DefaultAudioDSP.png">$VAR[ListItemIconVAR]</texture>
                                     <aspectratio aligny="center" align="left">keep</aspectratio>
                                 </control>
                                 <control type="label">
@@ -327,7 +327,7 @@
                                     <top>12</top>
                                     <width>45</width>
                                     <height>45</height>
-                                    <texture fallback="DefaultAudioDSP.png">$INFO[ListItem.Icon]</texture>
+                                    <texture fallback="DefaultAudioDSP.png">$VAR[ListItemIconVAR]</texture>
                                     <aspectratio aligny="center" align="left">keep</aspectratio>
                                 </control>
                                 <control type="label">
@@ -359,7 +359,7 @@
                                     <top>12</top>
                                     <width>75</width>
                                     <height>75</height>
-                                    <texture fallback="DefaultAudioDSP.png">$INFO[ListItem.Icon]</texture>
+                                    <texture fallback="DefaultAudioDSP.png">$VAR[ListItemIconVAR]</texture>
                                     <aspectratio aligny="center" align="left">keep</aspectratio>
                                 </control>
                                 <control type="label">
