@@ -1,3 +1,5 @@
+1.1.0 removed sections without videos and old categories
+1.0.1 enabled python-caching
 1.0.0 added section "Home"
 0.5.1 removed inputstream.adaptive
 0.5.0 added videos for the categories "Football" and "Handball"

@@ -17,21 +17,17 @@ try:
 except:
     import storageserverdummy as StorageServer
 
+HOST = 'http://sport.sky.de'
+VIDEO_URL_HSL = 'https://player.ooyala.com/player/all/{video_id}.m3u8'
+LIVE_URL_HSL = 'https://eventhlshttps-i.akamaihd.net/hls/live/263645/ssn-hd-https/index.m3u8'
+USER_AGENT = 'User-Agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36'
+
 addon = xbmcaddon.Addon()
-params = dict(urlparse.parse_qsl(sys.argv[2][1:]))
+addon_base_url = 'plugin://' + addon.getAddonInfo('id')
 addon_handle = int(sys.argv[1])
 cache = StorageServer.StorageServer(addon.getAddonInfo('name') + '.videoid', 24 * 30)
 sky_sport_news_icon = xbmc.translatePath(addon.getAddonInfo('path') + '/resources/skysport_news.jpg').decode('utf-8')
-
-HOST = 'http://sport.sky.de'
-NAVIGATION_JSON_FILE = xbmc.translatePath(addon.getAddonInfo('path') + '/resources/navigation.json')
-
-ADDON_BASE_URL = 'plugin://' + addon.getAddonInfo('id')
-
-VIDEO_URL_HSL = 'https://player.ooyala.com/player/all/{video_id}.m3u8'
-LIVE_URL_HSL = 'https://eventhlshttps-i.akamaihd.net/hls/live/263645/ssn-hd-https/index.m3u8'
-
-USER_AGENT = 'User-Agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36'
+nav_json = json.load(open(xbmc.translatePath(addon.getAddonInfo('path') + '/resources/navigation.json')))
 
 
 def rootDir():
@@ -40,9 +36,8 @@ def rootDir():
 
     url = build_url({'action': 'listHome'})
     addDir('Home', url)
-
-    nav = json.load(open(NAVIGATION_JSON_FILE))
-    for item in nav:
+    
+    for item in nav_json:
         action = item.get('action', 'showVideos')
         if action == 'showVideos':
             url = build_url({'action': action, 'path': item.get('path'), 'show_videos': 'false'})
@@ -68,7 +63,7 @@ def addVideo(label, url, icon, isFolder=False):
 
 
 def build_url(query):
-    return ADDON_BASE_URL + '?' + urllib.urlencode(query)
+    return addon_base_url + '?' + urllib.urlencode(query)
 
 
 def listHome():
@@ -87,28 +82,30 @@ def listHome():
     xbmcplugin.endOfDirectory(addon_handle, cacheToDisc=True)
 
 
-def listSubnavi(path, hasitems):
+def listSubnavi(path, hasitems, items_to_add=None):
     if hasitems == 'false':
         url = urlparse.urljoin(HOST, path)
         html = requests.get(url).text
         soup = BeautifulSoup(html, 'html.parser')
 
         for item in soup('a', 'sdc-site-directory__content'):
+            if items_to_add and item.get('href') not in items_to_add:
+                continue
+
             label = item.span.string
             url = build_url({'action': 'showVideos', 'path': item.get('href') + '-videos', 'show_videos': 'false'})
             addDir(label, url)
     else:
         items = None
-        nav = json.load(open(NAVIGATION_JSON_FILE))
-        for item in nav:
-            if item.get('path') == path:
-                items = item.get('children')
+        for nav_item in nav_json:
+            if nav_item.get('path') == path:
+                items = nav_item.get('children')
 
-        if items is not None:
+        if items:
             for item in items:
-                action = item.get('action') if item.get('action', None) is not None else 'showVideos'
+                action = item.get('action') if item.get('action', None) else 'showVideos'
                 if action == 'listSubnavi':
-                    url = build_url({'action': action, 'path': item.get('path'), 'hasitems': 'true' if item.get('children', None) is not None else 'false'})
+                    url = build_url({'action': action, 'path': item.get('path'), 'hasitems': 'true' if item.get('children', None) else 'false', 'items_to_add': item.get('includes')})
                 else:
                     url = build_url({'action': action, 'path': item.get('path'), 'show_videos': 'true' if item.get('show_videos', None) is None or item.get('show_videos') == 'true' else 'false'})
                 addDir(item.get('label'), url)
@@ -130,7 +127,7 @@ def showVideos(path, show_videos):
             if label is not None and label != '':
                 addDir(label, url)
     else:
-        for item in soup('div', 'sdc-site-tiles__item sdc-site-tile sdc-site-tile--has-link'):
+        for item in soup.select('div[class*="sdc-site-tiles__item sdc-site-tile sdc-site-tile--has-link"]'):
             link = item.find('a', {'class': 'sdc-site-tile__headline-link'})
             label = link.span.string
             url = build_url({'action': 'playVoD', 'path': link.get('href')})
@@ -215,6 +212,7 @@ def getHLSUrl(url, maxbandwith, maxresolution):
 
 
 if __name__ == '__main__':
+    params = dict(urlparse.parse_qsl(sys.argv[2][1:]))
     if 'action' in params:
 
         xbmc.log("params = " + str(params))
@@ -224,7 +222,7 @@ if __name__ == '__main__':
         elif params.get('action') == 'listHome':
             listHome()
         elif params.get('action') == 'listSubnavi':
-            listSubnavi(params.get('path'), params.get('hasitems'))
+            listSubnavi(params.get('path'), params.get('hasitems'), params.get('items_to_add'))
         elif params.get('action') == 'showVideos':
             showVideos(params.get('path'), params.get('show_videos'))
         elif params.get('action') == 'playVoD':

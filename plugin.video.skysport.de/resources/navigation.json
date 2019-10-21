@@ -1,9 +1,5 @@
 [
 	{
-		"label": "Beach Volleyball",
-		"path": "beach-volleyball/videos"
-	},
-	{
 		"label": "Formel 1",
 		"path": "formel1/videos"
 	},
@@ -21,7 +17,18 @@
 			{
 				"label": "Ligen und Wettbewerbe",
 				"path": "fussball/ligen-wettbewerbe",
-				"action": "listSubnavi"
+				"action": "listSubnavi",
+				"includes": [
+					"/bundesliga",
+					"/2-bundesliga",
+					"/dfb-pokal",
+					"/uefa-champions-league",
+					"/uefa-europa-league",
+					"/premier-league",
+					"/oesterreichische-bundesliga",
+					"/austria-erste-liga",
+					"/uefa-europa-league"
+				]
 			}
 		]
 	},
