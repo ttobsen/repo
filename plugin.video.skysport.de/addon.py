@@ -127,7 +127,7 @@ def showVideos(path, show_videos):
             if label is not None and label != '':
                 addDir(label, url)
     else:
-        for item in soup.select('div[class*="sdc-site-tiles__item sdc-site-tile sdc-site-tile--has-link"]'):
+        for item in soup.find_all('div', class_=re.compile("^sdc-site-tiles__item sdc-site-tile sdc-site-tile--has-link")):
             link = item.find('a', {'class': 'sdc-site-tile__headline-link'})
             label = link.span.string
             url = build_url({'action': 'playVoD', 'path': link.get('href')})
