@@ -53,7 +53,8 @@
                             <top>6</top>
                             <width>75</width>
                             <height>75</height>
-                            <texture fallback="DefaultVideo.png">$VAR[ListItemIconVAR]</texture>
+                            <!-- <texture fallback="DefaultVideo.png">$VAR[ListItemIconVAR]</texture> -->
+                            <texture>$VAR[PosterThumb]</texture>
                             <aspectratio>keep</aspectratio>
                         </control>
 						<control type="label">
@@ -142,7 +143,7 @@
                                 <top>6</top>
                                 <width>75</width>
                                 <height>75</height>
-                                <texture fallback="DefaultVideo.png">$VAR[ListItemIconVAR]</texture>
+                                <texture>$VAR[PosterThumb]</texture>
                                 <aspectratio>keep</aspectratio>
                             </control>
                             <control type="label">
@@ -284,7 +285,7 @@
 				<include>openclosevisible</include>
 				<left>1082</left>
 				<top>375</top>
-				<visible>ListItem.IsFolder</visible>
+				<visible>ListItem.IsFolder+!ListItem.IsParentFolder</visible>
 				<control type="label">
 					<left>1082</left>
 					<top>375</top>

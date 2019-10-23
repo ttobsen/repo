@@ -1137,7 +1137,7 @@
             <visible>!Window.IsVisible(favourites)</visible>
 			<include content="HomePageWidget_list">
 				<!-- pvr recordings -->
-				<param name="HomePageWidget_content" value="pvr://recordings/tv/active/"/>
+				<param name="HomePageWidget_content" value="$VAR[PVRWidgetRecordsFlatVAR]"/>
 				<param name="HomePageWidget_sortby" value="date"/>
 				<param name="HomePageWidget_sortorder" value="descending"/>
 				<param name="HomePageWidget_limit" value="40"/>
@@ -1683,7 +1683,7 @@
 			<control type="group">
 				<width>960</width>
 				<height>330</height>
-				<visible>Control.IsVisible($PARAM[HomePageWidget_list_id])</visible>
+				<visible>Control.IsVisible($PARAM[HomePageWidget_list_id])|Container($PARAM[HomePageWidget_list_id]).IsUpdating</visible>
 				<control type="group">
 					<visible>Control.IsVisible($PARAM[HomePageWidget_list_id])</visible>
 					<include content="HomepageWidgetInfoPanel">
@@ -1786,6 +1786,16 @@
                     <align>center</align>
                     <label>$INFO[ListItem.Label]</label>
                     <visible>String.IsEmpty(ListItem.Icon)</visible>
+                </control>
+                <control type="label">
+					<left>8</left>
+					<top>180</top>
+					<width>161</width>
+					<height>75</height>
+                    <font>ubuntu-r13b</font>
+                    <align>center</align>
+                    <label>UPDATE...</label>
+                    <visible>Container($PARAM[HomePageWidget_list_id]).IsUpdating</visible>
                 </control>
                 <control type="group">
                     <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)</visible>
@@ -2008,7 +2018,7 @@
                     <height>225</height>
 					<aspectratio>keep</aspectratio>
                     <colordiffuse>$VAR[widgetdim]</colordiffuse>
-					<texture>$VAR[ListItemIconVAR]</texture>
+					<texture>$VAR[PosterThumb]</texture>
                 </control>
                 <control type="image">
                     <left>8</left>
@@ -2069,7 +2079,7 @@
 						<height>225</height>
 						<aspectratio>keep</aspectratio>
 						<colordiffuse>$VAR[widgetdim]</colordiffuse>
-						<texture>$VAR[ListItemIconVAR]</texture>
+						<texture>$VAR[PosterThumb]</texture>
 						<visible>!Control.HasFocus($PARAM[Widget_Listlayout_id])</visible>
 					</control>
 					<control type="image">
@@ -2078,7 +2088,7 @@
 						<width>225</width>
 						<height>225</height>
 						<aspectratio>keep</aspectratio>
-						<texture>$VAR[ListItemIconVAR]</texture>
+						<texture>$VAR[PosterThumb]</texture>
 						<visible>Control.HasFocus($PARAM[Widget_Listlayout_id])</visible>
 					</control>
                     <control type="image">

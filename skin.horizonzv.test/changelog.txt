@@ -1,4 +1,8 @@
-﻿v 1.18.0.24
+﻿v 1.18.0.25
+- Bugfix Ordnersymbol in Views
+- PVR Widget Schalter zum Stapeln eingebaut
+
+v 1.18.0.24
 - Widget - Icons bei Ordnern angepasst
 - PVR Recordings - Ordnerinfo eingebaut, Icons angepasst
 

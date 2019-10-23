@@ -909,6 +909,13 @@
                     <onclick>Skin.ToggleSetting(Widget_Recordings)</onclick>
                     <selected>Skin.HasSetting(Widget_Recordings)</selected>
                 </control>
+                <control type="radiobutton" id="1201">
+                    <description>Widget TV Shows</description>
+                    <include>dialogbutton_popup</include>
+                    <label>- $LOCALIZE[14001]</label>
+                    <onclick>Skin.ToggleSetting(Widget_PVR_Flat)</onclick>
+                    <visible>Skin.HasSetting(Widget_Recordings)</visible>
+                </control>
                 <control type="radiobutton" id="121">
                     <include>dialogbutton_popup</include>
                     <label>$LOCALIZE[19040]</label>
