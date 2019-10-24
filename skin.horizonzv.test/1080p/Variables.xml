@@ -290,8 +290,6 @@
     </variable>
     <variable name="PosterThumb">
 		<value condition="ListItem.IsParentFolder">$INFO[ListItem.Icon]</value>
-        <value condition="!String.IsEmpty(ListItem.Art(poster))">$INFO[ListItem.Art(poster)]</value>
-		<value condition="!String.IsEmpty(Listitem.EpgEventIcon)">$INFO[ListItem.EpgEventIcon]</value>
         <value condition="String.Contains(Container.ListItem.DBTYPE,episode)+Window.IsVisible(home)">$INFO[ListItem.Art(tvshow.poster)]</value>
         <value condition="String.Contains(Skin.String(studiologos.name),coloured)+Container.Content(studios)+!ListItem.IsParentFolder+!Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.studios.coloured/,]$VAR[MovieMovieStudiosVar]</value>
         <value condition="String.Contains(Skin.String(studiologos.name),white)+Container.Content(studios)+!ListItem.IsParentFolder+!Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.studios.white/,]$VAR[MovieMovieStudiosVar]</value>
@@ -306,6 +304,9 @@
         <value condition="String.Contains(Skin.String(musicgenreicons.name),grey)+Container.Content(genres)+!ListItem.IsParentFolder+Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.musicgenreicons.grey/,.jpg]$VAR[MovieMusicgenreiconsExtVar]</value>
         <value condition="String.Contains(Skin.String(musicgenreicons.name),poster)+Container.Content(genres)+!ListItem.IsParentFolder+Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.musicgenreicons.poster/,.jpg]$VAR[MovieMusicgenreiconsExtVar]</value>
         <value condition="String.Contains(Skin.String(musicgenreicons.name),text)+Container.Content(genres)+!ListItem.IsParentFolder+Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.musicgenreicons.text/,.jpg]$VAR[MovieMusicgenreiconsExtVar]</value>
+        <value condition="!String.IsEmpty(ListItem.Art(poster))">$INFO[ListItem.Art(poster)]</value>
+        <value condition="!String.IsEmpty(ListItem.Art(tvshow.poster))">$INFO[ListItem.Art(tvshow.poster)]</value>
+		<value condition="!String.IsEmpty(Listitem.EpgEventIcon)">$INFO[ListItem.EpgEventIcon]</value>
         <value condition="!String.IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
 		<value condition="ListItem.IsFolder">DefaultFolder.png</value>
 		<value>$INFO[ListItem.Icon]</value>

@@ -1,4 +1,7 @@
-﻿v 1.18.0.25
+﻿v 1.18.0.26
+- Fehler der Ordnericon-Darstellung behoben (Ansicht Wide)
+
+v 1.18.0.25
 - Bugfix Ordnersymbol in Views
 - PVR Widget Schalter zum Stapeln eingebaut
 

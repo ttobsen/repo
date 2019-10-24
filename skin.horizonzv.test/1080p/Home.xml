@@ -633,6 +633,17 @@
                 <align>left</align>
                 <textcolor>orange</textcolor>
                 <shadowcolor>black</shadowcolor>
+                <label>ListItem DBTYPE: $INFO[Container.ListItem.DBTYPE]</label>
+            </control>
+            <control type="label">
+                <left>30</left>
+                <top>225</top>
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
                 <label>ListItem Label: $INFO[Container.ListItem.Label]</label>
 				<visible>!String.IsEmpty(Container.ListItem.Label)</visible>
             </control>
