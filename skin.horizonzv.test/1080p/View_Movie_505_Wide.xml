@@ -9,7 +9,8 @@
                 <include>HiddenButton</include>
                 <visible>Control.IsVisible(505)+!Control.HasFocus(666)</visible>
             </control>
-            <control type="group">
+			<include>BlackBack</include>
+            <!-- <control type="group">
                 <control type="image">
                     <left>112</left>
                     <top>82</top>
@@ -26,13 +27,13 @@
                     <height>900</height>
                     <texture border="4">masks/Default_sharp.png</texture>
                 </control>
-            </control>
+            </control> -->
             <control type="panel" id="505">
                 <visible>Container.Content(TVShows)|Container.Content(Sets)|Container.Content(Movies)|Container.Content(episodes)|Container.Content(seasons)|Container.Content(Files)</visible>
                 <left>150</left>
                 <top>180</top>
                 <width>1620</width>
-                <height>724</height>
+                <height>723</height>
                 <onleft>9000</onleft>
                 <onright condition="[Skin.HasSetting(HideJumpSMSBar)|Container.Content(episodes)|Container.Content(seasons)]+[Container(505).HasNext|Container(505).HasPrevious]">60</onright>
                 <onright condition="[Skin.HasSetting(HideJumpSMSBar)|Container.Content(episodes)|Container.Content(seasons)]+![Container(505).HasNext|Container(505).HasPrevious]">SetFocus(732)</onright>
@@ -69,7 +70,7 @@
                         <top>8</top>
                         <width>525</width>
                         <height>87</height>
-                        <texture>$VAR[ListItemIconVAR]</texture>
+                        <texture>$VAR[PosterThumb]</texture>
                         <aspectratio>keep</aspectratio>
                         <visible>ListItem.IsParentFolder</visible>
                     </control>
@@ -152,7 +153,7 @@
                             <top>8</top>
                             <width>525</width>
                             <height>87</height>
-                            <texture>$VAR[ListItemIconVAR]</texture>
+							<texture>$VAR[PosterThumb]</texture>
                             <aspectratio>keep</aspectratio>
                             <visible>ListItem.IsParentFolder</visible>
                         </control>
@@ -215,7 +216,7 @@
                         </control>
                     </control>
                 </focusedlayout>
-                <itemlayout height="240" width="324" condition="Container.Content(episodes)">
+                <itemlayout height="241" width="324" condition="Container.Content(episodes)">
                     <control type="image">
                         <left>0</left>
                         <top>0</top>
@@ -241,7 +242,7 @@
                         <width>309</width>
                         <height>165</height>
                         <colordiffuse>$VAR[CoverDim]</colordiffuse>
-                        <texture>$VAR[ListItemIconVAR]</texture>
+                        <texture>$VAR[PosterThumb]</texture>
                         <aspectratio>scale</aspectratio>
                     </control>
                     <control type="label">
@@ -265,7 +266,7 @@
                         <include>Amazon_Flagg_Small</include>
                     </control>
                 </itemlayout>
-                <focusedlayout height="240" width="324" condition="Container.Content(episodes)">
+                <focusedlayout height="241" width="324" condition="Container.Content(episodes)">
                     <control type="group">
                         <include>focuseffect</include>
                         <control type="image">
@@ -283,7 +284,7 @@
                             <top>8</top>
                             <width>309</width>
                             <height>165</height>
-                            <texture>$VAR[ListItemIconVAR]</texture>
+							<texture>$VAR[PosterThumb]</texture>
                             <aspectratio>scale</aspectratio>
                         </control>
                         <control type="image">
@@ -341,7 +342,7 @@
                         <width>240</width>
                         <height>342</height>
                         <colordiffuse>$VAR[CoverDim]</colordiffuse>
-                        <texture>$VAR[ListItemIconVAR]</texture>
+                        <texture>$VAR[PosterThumb]</texture>
                         <aspectratio>stretch</aspectratio>
                     </control>
                     <control type="image">
@@ -391,7 +392,7 @@
                             <top>8</top>
                             <width>240</width>
                             <height>342</height>
-                            <texture>$VAR[ListItemIconVAR]</texture>
+							<texture>$VAR[PosterThumb]</texture>
                             <aspectratio>stretch</aspectratio>
                         </control>
                         <control type="image">

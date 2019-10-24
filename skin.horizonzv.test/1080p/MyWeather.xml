@@ -413,7 +413,7 @@
             <include>Clock</include>
             <include>NavInfo</include>
             <include>TouchButtons</include>
-			<control type="label">
+			<!-- <control type="label">
 				<left>30</left>
 				<top>80r</top>
 				<width>auto</width>
@@ -423,7 +423,7 @@
 				<textcolor>orange</textcolor>
 				<shadowcolor>black</shadowcolor>
 				<label>$INFO[ListItem.Label]</label>
-			</control>
+			</control> -->
         </control>
     </controls>
 </window>
