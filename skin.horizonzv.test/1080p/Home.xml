@@ -978,11 +978,66 @@
                 <height>18</height>
                 <font>font12</font>
                 <align>left</align>
-                <textcolor>orange</textcolor>
+                <textcolor>red</textcolor>
                 <shadowcolor>black</shadowcolor>
                 <label>VAR PosterThumb: $VAR[PosterThumb]</label>
             </control>
-        </control>
+            <control type="label">
+                <left>30</left>
+                <top>225</top>
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>red</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>SkinHelper Title: $INFO[Window(Home).Property(SkinHelper.ListItem.Art.Title)]</label>
+            </control>
+            <control type="label">
+                <left>30</left>
+                <top>225</top>
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>red</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>SkinHelper Fanart: $INFO[Window(Home).Property(SkinHelper.PVR.FanArt)]</label>
+            </control>
+            <control type="label">
+                <left>30</left>
+                <top>225</top>
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>red</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>SkinHelper Poster: $INFO[Window(Home).Property(SkinHelper.PVR.Poster)]</label>
+            </control>
+            <control type="label">
+                <left>30</left>
+                <top>225</top>
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>red</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>SkinHelper Channels: $INFO[Window(Home).Property(SkinHelper.TotalTVChannels)]</label>
+            </control>
+            <control type="label">
+                <left>30</left>
+                <top>225</top>
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>red</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>SkinHelper MovieSet Fanart: $INFO[Window(Home).Property(SkinHelper.ListItem.Plot)]</label>
+            </control>
+		</control>
 		<!-- <control type="list" id="784512">
             <left>30</left>
             <top>60r</top>

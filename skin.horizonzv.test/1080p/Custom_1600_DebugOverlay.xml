@@ -560,5 +560,27 @@
             <visible>PVR.IsPlayingRadio</visible>
             <visible>Skin.HasSetting(DebugInfo)</visible>
         </control>
+        <control type="label">
+            <left>0</left>
+            <top>290</top>
+            <include>PathID</include>
+            <label>Background VAR: $VAR[BackgroundMyNavFanartVAR]</label>
+            <visible>Skin.HasSetting(DebugInfo)</visible>
+		</control>
+        <control type="label">
+            <left>0</left>
+            <top>320</top>
+            <include>PathID</include>
+			<label>SkinHelper ExtraArt: $INFO[Window(Home).Property(SkinHelper.ListItem.Art.ExtraFanart)]</label>
+            <visible>Skin.HasSetting(DebugInfo)</visible>
+		</control>
+        <control type="label">
+            <left>0</left>
+            <top>350</top>
+            <include>PathID</include>
+            <label>IsCollection</label>
+			<visible>ListItem.IsCollection</visible>
+            <visible>Skin.HasSetting(DebugInfo)</visible>
+		</control>
     </controls>
 </window>

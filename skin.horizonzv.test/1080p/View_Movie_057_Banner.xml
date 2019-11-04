@@ -221,7 +221,7 @@
                                 <font>menufontimpacted</font>
                                 <textcolor>grey1</textcolor>
                                 <label>20457</label>
-                                <visible>ListItem.IsCollection</visible>
+                                <visible>ListItem.IsCollection+String.IsEmpty(ListItem.Plot)</visible>
                             </control>
                             <control type="image">
                                 <description>Rated</description>

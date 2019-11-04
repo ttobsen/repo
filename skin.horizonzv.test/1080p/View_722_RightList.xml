@@ -189,7 +189,7 @@
                     <width>990</width>
                     <height>375</height>
                     <aspectratio align="left">keep</aspectratio>
-                    <texture background="true" fallback="FallbackCover.png">$VAR[ListItemIconVAR]</texture>
+                    <texture background="true" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
                     <bordertexture border="5">buttons/ButtonNF.png</bordertexture>
                     <bordersize>4</bordersize>
                     <visible>![Container.Content(songs)|Container.Content(artists)|Container.Content(albums)]</visible>

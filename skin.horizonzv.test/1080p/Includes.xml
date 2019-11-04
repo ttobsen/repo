@@ -2888,16 +2888,42 @@
         </content>
     </include>
     <include name="KeyboardButton">
-        <width>90</width>
-        <height>60</height>
+        <width>80</width>
+        <height>50</height>
         <!-- <texturenofocus border="3">buttons/KeyboardKeyNF.png</texturenofocus> -->
         <texturenofocus/>
         <texturefocus border="5">buttons/KeyboardKey.png</texturefocus>
+		<font>ubuntu-r21b</font>
         <align>center</align>
         <aligny>center</aligny>
         <focusedcolor>black</focusedcolor>
         <textoffsetx>0</textoffsetx>
     </include>
+	<include name="DefaultDialogButton">
+		<param name="width">300</param>
+		<param name="height">100</param>
+		<param name="focus">buttons/ButtonFO.png</param>
+		<param name="nofocus">buttons/ButtonNFlight.png</param>
+		<param name="wrapmultiline">false</param>
+		<param name="font">ubuntu-r16b</param>
+		<param name="onclick"></param>
+		<param name="visible">true</param>
+		<definition>
+			<control type="button" id="$PARAM[id]">
+				<width>$PARAM[width]</width>
+				<height>$PARAM[height]</height>
+				<label>$PARAM[label]</label>
+				<font>$PARAM[font]</font>
+				<textoffsetx>20</textoffsetx>
+				<onclick>$PARAM[onclick]</onclick>
+				<wrapmultiline>$PARAM[wrapmultiline]</wrapmultiline>
+				<align>center</align>
+				<texturefocus border="5">$PARAM[focus]</texturefocus>
+				<texturenofocus border="5">$PARAM[nofocus]</texturenofocus>
+				<visible>$PARAM[visible]</visible>
+			</control>
+		</definition>
+	</include>
     <include name="PVRInfoTopPanel">
         <control type="group">
             <description>Small Media Window</description>

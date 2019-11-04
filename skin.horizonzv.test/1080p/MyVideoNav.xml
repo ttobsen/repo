@@ -62,11 +62,16 @@
                     <selected>Skin.HasSetting(View508HideInfo)</selected>
                     <visible>Control.IsVisible(508)</visible>
                 </control>
-                <control type="radiobutton" id="14">
+                <!-- <control type="radiobutton" id="14">
                     <description>Watched Toggle</description>
                     <include>SidePanelToggleButton</include>
                     <label>20367</label>
-                </control>
+                </control> -->
+				<control type="button" id="10">
+                    <description>Watched Toggle</description>
+                    <include>SidePanelToggleButton</include>
+					<label2>$INFO[Container.NumItems]</label2>
+				</control>
                 <control type="button" id="8">
                     <description>Search</description>
                     <include>SidePanelButton</include>

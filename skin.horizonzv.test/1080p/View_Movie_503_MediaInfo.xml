@@ -500,7 +500,7 @@
                         <width>795</width>
                         <height>315</height>
                         <aspectratio>keep</aspectratio>
-                        <texture>$VAR[ListItemIconVAR]</texture>
+                        <texture>$VAR[PosterThumb]</texture>
                         <bordertexture border="8">ThumbShadow.png</bordertexture>
                         <bordersize>8</bordersize>
                     </control>
@@ -659,7 +659,7 @@
                             <top>4</top>
                             <width>321</width>
                             <height>494</height>
-                            <texture background="true" diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$VAR[ListItemIconVAR]</texture>
+                            <texture background="true" diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
                             <aspectratio>stretch</aspectratio>
                         </control>
                         <control type="image">
