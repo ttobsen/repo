@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="Allgemein">
+		<setting id="maxbandwith" type="number" label="max. Bitrate (0 = kein Limit)" default="0" />
+		<setting id="maxresolution" type="enum" label="max. Auflösung" values="360p|480p|720p|1080p|Max" default="4" />
+	</category>
+</settings>

@@ -1,0 +1,42 @@
+[
+	{
+		"label": "American Football",
+		"category": 20588
+	},
+	{
+		"label": "Basketball",
+		"category": 108
+	},
+	{
+		"label": "Eishockey",
+		"category": 4470
+	},
+	{
+		"label": "eSport",
+		"category": 19045
+	},
+	{
+		"label": "Formel 1",
+		"category": 176
+	},
+	{
+		"label": "Fußball",
+		"category": 5662
+	},
+	{
+		"label": "Golf",
+		"category": 1568
+	},
+	{
+		"label": "Handball",
+		"category": 5667		
+	},
+	{
+		"label": "Radsport",
+		"category": 92
+	},
+	{
+		"label": "Tennis",
+		"category": 194
+	}
+]

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.skysport.at" name="Sky Sport Austria Mediathek" version="1.0.0" provider-name="Maven">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0"/>
+		<import addon="script.module.beautifulsoup4" version="4.5.3" />
+		<import addon="script.module.requests" version="2.18.4" />
+		<import addon="script.common.plugin.cache" version="2.5.8"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de_DE">Videos aus der ganzen Welt des Sports.</summary>
+		<description lang="de_DE">Dieses Plugin stellt Videos von https://www.skysportaustria.at bereit.</description>
+		<disclaimer lang="de_DE">Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
+		
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+		<website>https://www.skysportaustria.at/</website>
+		<source>https://github.com/Maven85/plugin.video.skysport.at.git</source>
+		<reuselanguageinvoker>true</reuselanguageinvoker>		
+    </extension>
+</addon>
