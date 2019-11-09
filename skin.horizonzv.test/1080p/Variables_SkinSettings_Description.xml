@@ -74,9 +74,7 @@
         <value condition="ControlGroup(800).HasFocus(858)+ControlGroup(800).Hasfocus()">$LOCALIZE[51120]</value>
         <value condition="ControlGroup(800).HasFocus(870)+ControlGroup(800).Hasfocus()">$LOCALIZE[51122]</value>
         <value condition="ControlGroup(800).HasFocus(872)+ControlGroup(800).Hasfocus()">$LOCALIZE[51124]</value>
-        <value condition="ControlGroup(900).HasFocus(899)+ControlGroup(900).Hasfocus()">$LOCALIZE[51123]</value>
         <value condition="ControlGroup(900).HasFocus(901)+ControlGroup(900).Hasfocus()">$LOCALIZE[51125]</value>
-        <value condition="ControlGroup(900).HasFocus(902)+ControlGroup(900).Hasfocus()">$LOCALIZE[51126]</value>
         <value condition="ControlGroup(900).HasFocus(920)+ControlGroup(900).Hasfocus()">$LOCALIZE[51130]</value>
         <value condition="ControlGroup(900).HasFocus(940)+ControlGroup(900).Hasfocus()">$LOCALIZE[51132]</value>
         <value condition="ControlGroup(900).HasFocus(942)+ControlGroup(900).Hasfocus()">$LOCALIZE[51134]</value>

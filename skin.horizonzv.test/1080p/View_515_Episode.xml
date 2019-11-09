@@ -98,7 +98,7 @@
                                 <top>4</top>
                                 <width>322</width>
                                 <height>459</height>
-                                <texture diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$VAR[ListItemIconVAR]</texture>
+                                <texture diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                                 <aspectratio>stretch</aspectratio>
                                 <visible>!Container.Content(Episodes)|String.IsEmpty(ListItem.Art(tvshow.poster))</visible>
                             </control>
@@ -130,7 +130,7 @@
                                 <top>0</top>
                                 <width>342</width>
                                 <height>468</height>
-                                <texture fallback="FallbackCover.png">$VAR[ListItemIconVAR]</texture>
+                                <texture fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                                 <aspectratio>stretch</aspectratio>
                                 <bordertexture border="5">buttons/ButtonNF.png</bordertexture>
                                 <bordersize>4</bordersize>
@@ -296,7 +296,7 @@
                     <left>1425</left>
                     <width>300</width>
                     <height>300</height>
-                    <texture diffuse="masks/mask.png" fallback="FallbackCover.png">$VAR[ListItemIconVAR]</texture>
+                    <texture diffuse="masks/mask.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                     <bordertexture border="8">ThumbShadowWhite.png</bordertexture>
                     <bordersize>7</bordersize>
                     <aspectratio>scale</aspectratio>
@@ -368,7 +368,7 @@
         </focusedlayout>
     </include>
     <include name="EpisodeViewtypeVideoLayouts">
-        <itemlayout width="1050" height="90" condition="![Skin.HasSetting(episodebanner)|Skin.HasSetting(episodelogo)]|Container.Content(episodes)">
+        <itemlayout width="1050" height="90" condition="Container.Content(episodes)">
             <control type="group">
                 <top>8</top>
                 <control type="label">
@@ -420,105 +420,6 @@
                     <textcolor>white</textcolor>
                     <visible>Container.Content(episodes)</visible>
                 </control>
-            </control>
-        </itemlayout>
-        <itemlayout width="1050" height="117" condition="Skin.HasSetting(episodebanner)+!Container.Content(episodes)">
-            <control type="group">
-                <top>-8</top>
-                <control type="image">
-                    <left>1086</left>
-                    <top>0</top>
-                    <width>638</width>
-                    <height>135</height>
-                    <aspectratio align="right">stretch</aspectratio>
-                    <colordiffuse>grey1</colordiffuse>
-                    <texture fallback="FallbackBanner2.png">$VAR[BannerThumb]</texture>
-                    <bordertexture border="8">ThumbShadow.png</bordertexture>
-                    <visible>!ListItem.IsParentFolder</visible>
-                    <bordersize>7</bordersize>
-                    <visible>!ListItem.IsParentFolder</visible>
-                    <visible>![String.IsEmpty(ListItem.VideoCodec)+!ListItem.IsParentFolder+ListItem.IsCollection]</visible>
-                    <visible>[Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(tvshow_art)
-					|![Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(video_art)</visible>
-                </control>
-                <control type="image">
-                    <left>1086</left>
-                    <top>0</top>
-                    <width>638</width>
-                    <height>135</height>
-                    <aspectratio align="right">stretch</aspectratio>
-                    <colordiffuse>orange</colordiffuse>
-                    <texture>SetBanner.png</texture>
-                    <visible>String.IsEmpty(ListItem.Art(banner))</visible>
-                    <visible>[String.IsEmpty(ListItem.VideoCodec)+!ListItem.IsParentFolder+ListItem.IsCollection]</visible>
-                    <visible>[Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(tvshow_art)
-					|![Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(video_art)</visible>
-                    <bordertexture border="8">ThumbShadow.png</bordertexture>
-                    <bordersize>7</bordersize>
-                </control>
-                <control type="label">
-                    <left>1102</left>
-                    <top>45</top>
-                    <width>600</width>
-                    <height>45</height>
-                    <align>right</align>
-                    <font>ubuntu-r21b</font>
-                    <shadowcolor>black</shadowcolor>
-                    <label>$VAR[OriginalTitle]</label>
-                    <visible>String.IsEmpty(ListItem.Art(banner))|[Container.Content(TVShows)+String.IsEmpty(ListItem.Art(tvshow.banner))]</visible>
-                </control>
-                <control type="image">
-                    <left>1740</left>
-                    <top>45</top>
-                    <width>45</width>
-                    <height>45</height>
-                    <texture>$INFO[ListItem.Overlay]</texture>
-                    <visible>!ListItem.IsResumable</visible>
-                </control>
-                <control type="image">
-                    <left>1740</left>
-                    <top>45</top>
-                    <width>45</width>
-                    <height>45</height>
-                    <texture>OverlayWatching.png</texture>
-                    <visible>ListItem.IsResumable</visible>
-                </control>
-            </control>
-        </itemlayout>
-        <itemlayout width="1050" height="180" condition="Skin.HasSetting(episodelogo)+!Container.Content(episodes)">
-            <control type="image">
-                <left>1206</left>
-                <top>8</top>
-                <width>519</width>
-                <height>165</height>
-                <aspectratio align="right">keep</aspectratio>
-                <texture>$INFO[ListItem.Art(clearlogo)]</texture>
-            </control>
-            <control type="label">
-                <left>675</left>
-                <top>45</top>
-                <width>1035</width>
-                <height>45</height>
-                <align>right</align>
-                <font>ubuntu-r26b</font>
-                <label>$VAR[OriginalTitle]</label>
-                <visible>String.IsEmpty(ListItem.Art(clearlogo))</visible>
-            </control>
-            <control type="image">
-                <left>1740</left>
-                <top>45</top>
-                <width>45</width>
-                <height>45</height>
-                <texture>$INFO[ListItem.Overlay]</texture>
-                <visible>!ListItem.IsResumable</visible>
-            </control>
-            <control type="image">
-                <left>1740</left>
-                <top>45</top>
-                <width>45</width>
-                <height>45</height>
-                <texture>OverlayWatching.png</texture>
-                <visible>ListItem.IsResumable</visible>
             </control>
         </itemlayout>
         <focusedlayout width="1050" height="330" condition="!Container.Content(episodes)">
@@ -616,7 +517,7 @@
                 <top>0</top>
                 <width>519</width>
                 <height>309</height>
-                <texture>$VAR[ListItemIconVAR]</texture>
+                <texture>$INFO[ListItem.Icon]</texture>
                 <bordertexture border="10">ThumbShadowWhite.png</bordertexture>
                 <bordersize>8</bordersize>
                 <aspectratio>stretch</aspectratio>
@@ -627,7 +528,7 @@
                 <top>0</top>
                 <width>519</width>
                 <height>309</height>
-                <texture>$VAR[ListItemIconVAR]</texture>
+                <texture>$INFO[ListItem.Icon]</texture>
                 <aspectratio align="right" scalediffuse="false">keep</aspectratio>
                 <visible>ListItem.IsParentFolder</visible>
             </control>

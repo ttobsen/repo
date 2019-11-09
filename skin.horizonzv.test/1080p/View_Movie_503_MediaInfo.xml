@@ -279,26 +279,14 @@
                 <visible>Skin.HasSetting(CommonPageCount)</visible>
             </control>
             <control type="image">
-                <!-- Clearlogo Movie -->
                 <include>openclosevisible</include>
                 <left>1110</left>
                 <top>150</top>
                 <width>750</width>
                 <height>120</height>
                 <aspectratio align="right">keep</aspectratio>
-                <texture background="true">$INFO[ListItem.Art(clearlogo)]</texture>
-                <visible>Skin.HasSetting(video_art)+!Container.Content(Seasons)+!String.IsEmpty(ListItem.Art(clearlogo))</visible>
-            </control>
-            <control type="image">
-                <!-- Clearlogo TVShow -->
-                <include>openclosevisible</include>
-                <left>1110</left>
-                <top>150</top>
-                <width>750</width>
-                <height>120</height>
-                <aspectratio align="right">keep</aspectratio>
-                <texture background="true">$INFO[ListItem.Art(tvshow.clearlogo)]</texture>
-                <visible>Skin.HasSetting(tvshow_art)+[Container.Content(Seasons)|Container.Content(Episodes)]+!String.IsEmpty(ListItem.Art(tvshow.clearlogo))</visible>
+                <texture background="true">$VAR[ClearlogoVAR]</texture>
+                <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
             </control>
             <control type="image">
                 <left>1011</left>
@@ -356,7 +344,7 @@
                     <width>930</width>
                     <height>165</height>
                     <aspectratio>keep</aspectratio>
-                    <texture background="true">$VAR[BannerThumb]</texture>
+                    <texture background="true">$VAR[BannerVAR]</texture>
                     <bordertexture border="10">ThumbShadowWhite.png</bordertexture>
                     <bordersize>7</bordersize>
                 </control>
@@ -491,6 +479,18 @@
             <control type="group">
                 <!-- Episodes -->
                 <visible>Container.Content(Episodes)</visible>
+                <control type="image">
+                    <include>openclosevisible</include>
+                    <left>38</left>
+                    <top>112</top>
+                    <width>930</width>
+                    <height>165</height>
+                    <aspectratio>keep</aspectratio>
+                    <texture background="true">$VAR[BannerVAR]</texture>
+                    <bordertexture border="10">ThumbShadowWhite.png</bordertexture>
+                    <bordersize>7</bordersize>
+					<visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
+                </control>
                 <control type="group">
                     <left>1065</left>
                     <top>345</top>
@@ -549,7 +549,7 @@
                     <width>930</width>
                     <height>165</height>
                     <aspectratio>keep</aspectratio>
-                    <texture background="true">$INFO[ListItem.Art(banner)]</texture>
+                    <texture background="true">$VAR[BannerVAR]</texture>
                     <bordertexture border="10">ThumbShadowWhite.png</bordertexture>
                     <bordersize>7</bordersize>
                 </control>
@@ -601,7 +601,7 @@
                         <width>930</width>
                         <height>165</height>
                         <aspectratio>keep</aspectratio>
-                        <texture background="true">$INFO[ListItem.Art(banner)]</texture>
+                        <texture background="true">$VAR[BannerVAR]</texture>
                         <bordertexture border="10">ThumbShadowWhite.png</bordertexture>
                         <bordersize>7</bordersize>
                         <visible>!ListItem.IsCollection</visible>
@@ -708,7 +708,7 @@
                     <top>525</top>
                     <width>300</width>
                     <height>300</height>
-                    <texture>$VAR[ListItemIconVAR]</texture>
+                    <texture>$INFO[ListItem.Icon]</texture>
                 </control>
             </control>
             <control type="group">

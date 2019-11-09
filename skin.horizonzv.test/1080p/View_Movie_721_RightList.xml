@@ -277,6 +277,7 @@
                     <align>right</align>
                     <textcolor>grey</textcolor>
                     <label>$INFO[ListItem.Votes ,, $LOCALIZE[205] ]</label>
+					<visible>!ListItem.IsCollection</visible>
                 </control>
                 <control type="group">
                     <include>openclosevisible</include>
@@ -288,6 +289,7 @@
                         <height>3</height>
                         <colordiffuse>fanartdiffuse</colordiffuse>
                         <texture background="true" border="1">Separator1.png</texture>
+						<animation effect="slide" end="0,-95" time="0" condition="ListItem.IsCollection">Conditional</animation>
                     </control>
                     <control type="textbox">
                         <left>30</left>
@@ -298,6 +300,18 @@
                         <include condition="!Skin.HasSetting(BigPlotText)">PlotText16Var</include>
                         <include condition="Skin.HasSetting(BigPlotText)">PlotTextBigVar</include>
                         <label fallback="195">$INFO[ListItem.Plot]</label>
+						<visible>!ListItem.IsCollection</visible>
+                    </control>
+                    <control type="textbox">
+                        <left>30</left>
+                        <top>105</top>
+                        <width>1005</width>
+                        <height>310</height>
+                        <shadowcolor>black</shadowcolor>
+                        <include condition="!Skin.HasSetting(BigPlotText)">PlotText16Var</include>
+                        <include condition="Skin.HasSetting(BigPlotText)">PlotTextBigVar</include>
+                        <label fallback="195">$INFO[ListItem.Plot]</label>
+						<visible>ListItem.IsCollection</visible>
                     </control>
                 </control>
             </control>
@@ -372,36 +386,19 @@
                         <visible>!Container.Content(episodes)</visible>
                         <control type="group">
                             <control type="image" id="700">
-                                <visible>[Container.Content(movies)+Skin.HasSetting(video_art)]|[!Container.Content(movies)+Skin.HasSetting(tvshow_art)]</visible>
+                                <!-- <visible>[Container.Content(movies)+Skin.HasSetting(SkinHelper.EnableExtendedArt)]|[!Container.Content(movies)+Skin.HasSetting(SkinHelper.EnableExtendedArt)]</visible> -->
+                                <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
                                 <left>38</left>
                                 <top>34</top>
                                 <width>645</width>
                                 <height>387</height>
                                 <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture background="true">$VAR[extraart_rule]</texture>
-                            </control>
-                            <control type="image" id="701">
-                                <visible>String.IsEmpty(Control.GetLabel(700))+!Container.Content(movies)+Skin.HasSetting(tvshow_art)</visible>
-                                <left>38</left>
-                                <top>34</top>
-                                <width>645</width>
-                                <height>387</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture background="true">$VAR[extraart_tvshow_rule]</texture>
-                            </control>
-                            <control type="image" id="702">
-                                <visible>[Container.Content(movies)+!Skin.HasSetting(video_art)]|[!Container.Content(movies)+!Skin.HasSetting(tvshow_art)]|[String.IsEmpty(Control.GetLabel(700))+String.IsEmpty(Control.GetLabel(701))]+!Container.Content(seasons)</visible>
-                                <left>38</left>
-                                <top>34</top>
-                                <width>645</width>
-                                <height>387</height>
-                                <aspectratio align="center" aligny="center">scale</aspectratio>
-                                <texture background="true">$INFO[ListItem.Art(fanart)]</texture>
+                                <texture background="true">$VAR[extraart_listitem_rule]</texture>
                                 <bordertexture border="5">buttons/ButtonNF.png</bordertexture>
                                 <bordersize>4</bordersize>
                             </control>
                             <control type="image" id="703">
-                                <visible>String.IsEmpty(Control.GetLabel(702))+!Container.Content(musicvideos)</visible>
+                                <visible>String.IsEmpty(Control.GetLabel(700))+!Container.Content(musicvideos)</visible>
                                 <left>38</left>
                                 <top>34</top>
                                 <width>645</width>
@@ -420,7 +417,7 @@
                         <width>645</width>
                         <height>387</height>
                         <aspectratio align="center" aligny="center">scale</aspectratio>
-                        <texture background="true" fallback="FallbackCover.png">$VAR[ListItemIconVAR]</texture>
+                        <texture background="true" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                         <bordertexture border="5">buttons/ButtonNF.png</bordertexture>
                         <bordersize>4</bordersize>
                     </control>

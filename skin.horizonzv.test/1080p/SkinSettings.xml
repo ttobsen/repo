@@ -121,7 +121,7 @@
                             <description>Extra Art Settings</description>
                             <label>51276</label>
                             <onclick/>
-                            <visible></visible>
+                            <visible>System.HasAddon(script.skin.helper.service)</visible>
                         </item>
                         <item id="1">
                             <description>Admin Menu</description>
@@ -1167,16 +1167,6 @@
                             <onclick>Skin.SetFile(Startup_Playlist_Path,,special://musicplaylists/)</onclick>
                             <visible>Skin.HasSetting(Use_Startup_Playlist)</visible>
                         </control>
-                        <control type="radiobutton" id="551">
-                            <description>Custom Contextmenu Artwork Downloader</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>51320</label>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(context_ad)</onclick>
-                            <selected>Skin.HasSetting(context_ad)</selected>
-                            <visible>System.HasAddon(script.artwork.downloader)</visible>
-                        </control>
                         <control type="radiobutton" id="552">
                             <description>Custom Contextmenu Globalsearch</description>
                             <width>1260</width>
@@ -1761,7 +1751,7 @@
                             <width>1260</width>
                             <height>30</height>
                             <align>center</align>
-                            <label>16000</label>
+                            <label>$LOCALIZE[342] + $LOCALIZE[20343]</label>
                             <textcolor>description</textcolor>
                         </control>
                         <control type="image" id="8999">
@@ -1771,103 +1761,17 @@
                             <texture>Separator2.png</texture>
                             <colordiffuse>description</colordiffuse>
                         </control>
-                        <control type="button" id="901">
-                            <description>Extra Art's Video</description>
+                        <control type="radiobutton" id="901">
+                            <description>Skin Helper Extra Art's</description>
                             <width>1260</width>
                             <align>left</align>
                             <focusedcolor>black</focusedcolor>
                             <label>51414</label>
-                            <onclick>RunScript(script.artwork.downloader, mediatype=tvshow, silent=true, seasonposter, extrafanart, clearlogo, clearart, banner, seasonbanner, characterart, landscape)</onclick>
-                            <onclick>RunScript(script.artwork.downloader, mediatype=movie, silent=true, extrafanart, clearlogo, clearart, discart, banner, landscape)</onclick>
-                            <onclick>RunScript(script.artwork.downloader, mediatype=musicvideo, silent=true, extrafanart, clearlogo, clearart, discart, banner, landscape)</onclick>
-                            <enable>System.HasAddon(script.artwork.downloader)</enable>
-                        </control>
-                        <control type="radiobutton" id="899">
-                            <description>Extra Art's Video</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <focusedcolor>black</focusedcolor>
-                            <label>51416</label>
-                            <onclick>Skin.ToggleSetting(automaticAD)</onclick>
-                            <selected>Skin.HasSetting(automaticAD)</selected>
-                            <enable>System.HasAddon(script.artwork.downloader)</enable>
-                        </control>
-                        <control type="label" id="9001">
-                            <!-- Video Settings -->
-                            <width>1260</width>
-                            <height>15</height>
-                            <align>center</align>
-                            <label/>
-                        </control>
-                        <control type="label" id="9002">
-                            <width>1260</width>
-                            <height>30</height>
-                            <align>center</align>
-                            <label>20342</label>
-                            <textcolor>description</textcolor>
-                        </control>
-                        <control type="image" id="9003">
-                            <width>1260</width>
-                            <height>1</height>
-                            <align>center</align>
-                            <texture>Separator2.png</texture>
-                            <colordiffuse>description</colordiffuse>
-                        </control>
-                        <control type="radiobutton" id="902">
-                            <description>Extra Art's Video</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <focusedcolor>black</focusedcolor>
-                            <label>$LOCALIZE[20342] Extra Art's</label>
-                            <onclick>Skin.ToggleSetting(video_art)</onclick>
-                            <onclick condition="!Skin.HasSetting(Clearart)">Skin.ToggleSetting(Clearart)</onclick>
-                            <onclick condition="!Skin.HasSetting(Clearlogo)">Skin.ToggleSetting(Clearlogo)</onclick>
-                            <onclick condition="!Skin.HasSetting(Landscape)">Skin.ToggleSetting(Landscape)</onclick>
-                            <selected>Skin.HasSetting(video_art)</selected>
-                            <visible>System.HasAddon(script.artwork.downloader)</visible>
-                        </control>
-                        <control type="radiobutton" id="904">
-                            <description>Clearart</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <focusedcolor>black</focusedcolor>
-                            <label>- Clearart</label>
-                            <onclick>Skin.ToggleSetting(Clearart)</onclick>
-                            <selected>Skin.HasSetting(Clearart)</selected>
-                            <visible>Skin.HasSetting(video_art)</visible>
-                        </control>
-                        <control type="radiobutton" id="906">
-                            <description>Clearlogo</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <focusedcolor>black</focusedcolor>
-                            <label>- Clearlogo</label>
-                            <onclick>Skin.ToggleSetting(Clearlogo)</onclick>
-                            <selected>Skin.HasSetting(Clearlogo)</selected>
-                            <visible>Skin.HasSetting(video_art)</visible>
-                        </control>
-                        <control type="radiobutton" id="908">
-                            <description>Landscape</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <focusedcolor>black</focusedcolor>
-                            <label>- Landscape (16:9)</label>
-                            <onclick>Skin.ToggleSetting(Landscape)</onclick>
-                            <selected>Skin.HasSetting(Landscape)</selected>
-                            <visible>Skin.HasSetting(video_art)</visible>
-                        </control>
-                        <control type="radiobutton" id="909">
-                            <description>Landscape</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <focusedcolor>black</focusedcolor>
-                            <label>- Extra Fanarts</label>
-                            <onclick>Skin.ToggleSetting(no_extrafanart)</onclick>
-                            <selected>!Skin.HasSetting(no_extrafanart)</selected>
-                            <!-- <visible>Skin.HasSetting(video_art)</visible> -->
+                            <onclick>Skin.ToggleSetting(SkinHelper.EnableExtendedArt)</onclick>
+                            <selected>Skin.HasSetting(SkinHelper.EnableExtendedArt)</selected>
                         </control>
                         <control type="label" id="9004">
-                            <!-- TVShows Settings -->
+                            <!-- PVR Settings -->
                             <width>1260</width>
                             <height>15</height>
                             <align>center</align>
@@ -1877,7 +1781,7 @@
                             <width>1260</width>
                             <height>30</height>
                             <align>center</align>
-                            <label>20343</label>
+                            <label>14204</label>
                             <textcolor>description</textcolor>
                         </control>
                         <control type="image" id="9006">
@@ -1888,58 +1792,13 @@
                             <colordiffuse>description</colordiffuse>
                         </control>
                         <control type="radiobutton" id="920">
-                            <description>Extra Art's TVShow</description>
+                            <description>Skin Helper Extra Art's</description>
                             <width>1260</width>
                             <align>left</align>
                             <focusedcolor>black</focusedcolor>
-                            <label>$LOCALIZE[20343] Extra Art's</label>
-                            <onclick>Skin.ToggleSetting(tvshow_art)</onclick>
-                            <onclick condition="!Skin.HasSetting(TVShowClearart)">Skin.ToggleSetting(TVShowClearart)</onclick>
-                            <onclick condition="!Skin.HasSetting(TVShowCharacterart)">Skin.ToggleSetting(TVShowCharacterart)</onclick>
-                            <onclick condition="!Skin.HasSetting(TVShowClearlogo)">Skin.ToggleSetting(TVShowClearlogo)</onclick>
-                            <onclick condition="!Skin.HasSetting(TVShowLandscape)">Skin.ToggleSetting(TVShowLandscape)</onclick>
-                            <selected>Skin.HasSetting(tvshow_art)</selected>
-                            <visible>System.HasAddon(script.artwork.downloader)</visible>
-                        </control>
-                        <control type="radiobutton" id="922">
-                            <description>Clearart</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <focusedcolor>black</focusedcolor>
-                            <label>- Clearart</label>
-                            <onclick>Skin.ToggleSetting(TVShowClearart)</onclick>
-                            <selected>Skin.HasSetting(TVShowClearart)</selected>
-                            <visible>Skin.HasSetting(tvshow_art)</visible>
-                        </control>
-                        <control type="radiobutton" id="924">
-                            <description>Characterart</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <focusedcolor>black</focusedcolor>
-                            <label>- Characterart</label>
-                            <onclick>Skin.ToggleSetting(TVShowCharacterart)</onclick>
-                            <selected>Skin.HasSetting(TVShowCharacterart)</selected>
-                            <visible>Skin.HasSetting(tvshow_art)</visible>
-                        </control>
-                        <control type="radiobutton" id="926">
-                            <description>Clearlogo</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <focusedcolor>black</focusedcolor>
-                            <label>- Clearlogo</label>
-                            <onclick>Skin.ToggleSetting(TVShowClearlogo)</onclick>
-                            <selected>Skin.HasSetting(TVShowClearlogo)</selected>
-                            <visible>Skin.HasSetting(tvshow_art)</visible>
-                        </control>
-                        <control type="radiobutton" id="928">
-                            <description>Landscape</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <focusedcolor>black</focusedcolor>
-                            <label>- Landscape (16:9)</label>
-                            <onclick>Skin.ToggleSetting(TVShowLandscape)</onclick>
-                            <selected>Skin.HasSetting(TVShowLandscape)</selected>
-                            <visible>Skin.HasSetting(tvshow_art)</visible>
+                            <label>51414</label>
+                            <onclick>Skin.ToggleSetting(SkinHelper.EnablePVRThumbs)</onclick>
+                            <selected>Skin.HasSetting(SkinHelper.EnablePVRThumbs)</selected>
                         </control>
                         <control type="label" id="9007">
                             <!-- Music Settings -->

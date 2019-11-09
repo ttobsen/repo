@@ -55,31 +55,7 @@
                     <visible>System.HasAddon(service.kn.switchtimer) + Window.IsVisible(tvguide) + Integer.IsGreater(Window(Home).Property(SwitchTimerActiveItems),0)</visible>
                     <onclick>ActivateWindow(4111)</onclick>
                 </control>
-                <control type="button" id="2011">
-                    <description>Buttons</description>
-                    <label>$VAR[ad_mode_label]</label>
-                    <width>510</width>
-                    <onright condition="!Skin.HasSetting(ad_custom)+!Skin.HasSetting(ad_auto)+!Skin.HasSetting(ad_gui)">Skin.SetBool(ad_gui)</onright>
-                    <onright condition="Skin.HasSetting(ad_gui)">Skin.SetBool(ad_custom)</onright>
-                    <onright condition="Skin.HasSetting(ad_custom)">Skin.SetBool(ad_auto)</onright>
-                    <onright condition="Skin.HasSetting(ad_auto)">Skin.SetBool(ad_gui)</onright>
-                    <onright condition="Skin.HasSetting(ad_custom)">Skin.Reset(ad_custom)</onright>
-                    <onright condition="Skin.HasSetting(ad_gui)">Skin.Reset(ad_gui)</onright>
-                    <onright condition="Skin.HasSetting(ad_auto)">Skin.Reset(ad_auto)</onright>
-                    <onleft condition="!Skin.HasSetting(ad_custom)+!Skin.HasSetting(ad_auto)+!Skin.HasSetting(ad_gui)">Skin.SetBool(ad_gui)</onleft>
-                    <onleft condition="Skin.HasSetting(ad_gui)">Skin.SetBool(ad_auto)</onleft>
-                    <onleft condition="Skin.HasSetting(ad_auto)">Skin.SetBool(ad_custom)</onleft>
-                    <onleft condition="Skin.HasSetting(ad_custom)">Skin.SetBool(ad_gui)</onleft>
-                    <onleft condition="Skin.HasSetting(ad_custom)">Skin.Reset(ad_custom)</onleft>
-                    <onleft condition="Skin.HasSetting(ad_gui)">Skin.Reset(ad_gui)</onleft>
-                    <onleft condition="Skin.HasSetting(ad_auto)">Skin.Reset(ad_auto)</onleft>
-                    <focusedcolor>black</focusedcolor>
-                    <shadowcolor/>
-                    <texturefocus border="2">buttons/ShutdownButtonFO_AD.png</texturefocus>
-                    <texturenofocus border="2">buttons/ShutdownButtonNF.png</texturenofocus>
-                    <onclick>$VAR[ad_mode]</onclick>
-                    <visible>[Container.Content(tvshows)|Container.Content(movies)|Container.Content(musicvideos)]+Skin.HasSetting(context_ad)+system.hasaddon(script.artwork.downloader)</visible>
-                </control>
+                
                 <control type="button" id="2012">
                     <description>Library editor</description>
                     <width>510</width>

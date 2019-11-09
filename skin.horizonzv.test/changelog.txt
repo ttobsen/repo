@@ -1,4 +1,8 @@
-﻿v 1.18.0.27
+﻿v 1.18.0.30
+- Artworkdownloader unterstützung entfernt
+- Skin Helper Service für Artwork teilweise eingebaut
+
+v 1.18.0.27
 - Fehler der Ordnericon-Darstellung behoben (Ansicht Wide) - Teil2
 - Ansicht Wide - Hintergrundpanel entfernt
 

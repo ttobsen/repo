@@ -115,50 +115,11 @@
                 <control type="radiobutton" id="1706">
                     <description>Video Extra Art</description>
                     <include>custom_setting_button_property</include>
-                    <label>$LOCALIZE[20342] Extra Art</label>
-                    <onclick>Skin.ToggleSetting(video_art)</onclick>
-                    <onclick condition="!Skin.HasSetting(Clearart)">Skin.ToggleSetting(Clearart)</onclick>
-                    <onclick condition="!Skin.HasSetting(Clearlogo)">Skin.ToggleSetting(Clearlogo)</onclick>
-                    <onclick condition="!Skin.HasSetting(Landscape)">Skin.ToggleSetting(Landscape)</onclick>
-                    <selected>Skin.HasSetting(video_art)</selected>
-                    <enable>System.HasAddon(script.artwork.downloader)</enable>
-                    <visible>Window.IsVisible(videos)+![Container.Content(episodes)|Container.Content(tvshows)|Container.Content(seasons)]</visible>
-                </control>
-                <control type="label" id="1730">
-                    <!-- TVShow -->
-                    <width>592</width>
-                    <height>8</height>
-                    <label/>
-                    <visible>Container.Content(episodes)|Container.Content(tvshows)|Container.Content(seasons)</visible>
-                </control>
-                <control type="image" id="1731">
-                    <width>578</width>
-                    <height>3</height>
-                    <colordiffuse>fanartdiffuse</colordiffuse>
-                    <texture border="1">Separator1.png</texture>
-                    <visible>Container.Content(episodes)|Container.Content(tvshows)|Container.Content(seasons)</visible>
-                </control>
-                <control type="label" id="1732">
-                    <width>578</width>
-                    <height>33</height>
-                    <align>center</align>
-                    <textcolor>white</textcolor>
-                    <label>20343</label>
-                    <font>bebas19</font>
-                    <visible>Container.Content(episodes)|Container.Content(tvshows)|Container.Content(seasons)</visible>
-                </control>
-                <control type="radiobutton" id="1734">
-                    <description>TVShow Extra Art</description>
-                    <include>custom_setting_button_property</include>
-                    <label>$LOCALIZE[20343] Extra Art</label>
-                    <onclick>Skin.ToggleSetting(tvshow_art)</onclick>
-                    <onclick condition="!Skin.HasSetting(TVShowClearart)">Skin.ToggleSetting(TVShowClearart)</onclick>
-                    <onclick condition="!Skin.HasSetting(TVShowCharacterart)">Skin.ToggleSetting(TVShowCharacterart)</onclick>
-                    <onclick condition="!Skin.HasSetting(TVShowClearlogo)">Skin.ToggleSetting(TVShowClearlogo)</onclick>
-                    <onclick condition="!Skin.HasSetting(TVShowLandscape)">Skin.ToggleSetting(TVShowLandscape)</onclick>
-                    <selected>Skin.HasSetting(tvshow_art)</selected>
-                    <enable>System.HasAddon(script.artwork.downloader)</enable>
-                    <visible>Container.Content(episodes)|Container.Content(tvshows)|Container.Content(seasons)</visible>
+                    <label>Extra Art</label>
+                    <onclick>Skin.ToggleSetting(SkinHelper.EnableExtendedArt)</onclick>
+                    <selected>Skin.HasSetting(SkinHelper.EnableExtendedArt)</selected>
+                    <enable>System.HasAddon(script.skin.helper.service)</enable>
+                    <visible>Window.IsVisible(videos)</visible>
                 </control>
                 <control type="label" id="1750">
                     <!-- Music -->
@@ -325,14 +286,6 @@
                     <visible>Control.IsVisible(515)|Control.IsVisible(57)</visible>
                     <visible>Container.Content(tvshows)|Container.Content(seasons)</visible>
                 </control>
-                <control type="radiobutton" id="1807">
-                    <include>custom_setting_button_property</include>
-                    <label>$LOCALIZE[51205]</label>
-                    <onclick>Skin.ToggleSetting(logo_cover)</onclick>
-                    <selected>Skin.HasSetting(logo_cover)</selected>
-                    <visible>Control.IsVisible(500)</visible>
-                    <visible>Container.Content(movies)|Container.Content(sets)|Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)</visible>
-                </control>
                 <control type="radiobutton" id="1808">
                     <include>custom_setting_button_property</include>
                     <label>51202</label>
@@ -352,25 +305,13 @@
                     <enable>!Skin.HasSetting(hideMovieCases)</enable>
                     <visible>Window.IsVisible(videos)</visible>
                 </control>
-                <control type="button" id="1810">
-                    <include>custom_setting_button_property</include>
-                    <label>$LOCALIZE[22080] Extra Art (Liste)</label>
-                    <label2>$VAR[EpisodeArt]</label2>
-                    <onclick condition="!Skin.HasSetting(episodelogo)+!Skin.HasSetting(episodebanner)">Skin.SetBool(episodebanner)</onclick>
-                    <onclick condition="Skin.HasSetting(episodebanner)">Skin.SetBool(episodelogo)</onclick>
-                    <onclick condition="Skin.HasSetting(episodebanner)">Skin.Reset(episodebanner)</onclick>
-                    <onclick condition="Skin.HasSetting(episodelogo)">Skin.Reset(episodelogo)</onclick>
-                    <visible>Control.IsVisible(515)</visible>
-                    <visible>!Container.Content(episodes)+[Container.Content(Movies)|Container.Content(TVShows)|Container.Content(seasons)]</visible>
-                </control>
                 <control type="radiobutton" id="1812">
                     <include>custom_setting_button_property</include>
                     <label>51204</label>
                     <onclick>Skin.ToggleSetting(Fanart_ClearlogoTitle)</onclick>
                     <selected>Skin.HasSetting(Fanart_ClearlogoTitle)</selected>
                     <visible>Control.IsVisible(401)</visible>
-                    <enable>[Skin.HasSetting(tvshow_art)+[Container.Content(tvshows)|Container.Content(episodes)|Container.Content(seasons)]]
-					|[Skin.HasSetting(video_art)+Container.Content(Movies)]</enable>
+                    <enable>Skin.HasSetting(SkinHelper.EnableExtendedArt)</enable>
                 </control>
                 <control type="radiobutton" id="1814">
                     <include>custom_setting_button_property</include>

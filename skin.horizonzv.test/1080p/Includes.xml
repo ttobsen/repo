@@ -636,8 +636,8 @@
                     <fadetime>800</fadetime>
                     <randomize>true</randomize>
                     <colordiffuse>$VAR[BackgroundDim]</colordiffuse>
-                    <visible>[[Container.Content(Movies)|Container.Content(musicvideos)]+Skin.HasSetting(video_art)+!Skin.HasSetting(no_extrafanart)]
-					|[[Container.Content(Seasons)|Container.Content(tvshows)]+Skin.HasSetting(tvshow_art)]</visible>
+                    <visible>[[Container.Content(Movies)|Container.Content(musicvideos)]+Skin.HasSetting(SkinHelper.EnableExtendedArt)+!Skin.HasSetting(no_extrafanart)]
+					|[[Container.Content(Seasons)|Container.Content(tvshows)]+Skin.HasSetting(SkinHelper.EnableExtendedArt)]</visible>
                     <visible>!ListItem.IsParentFolder</visible>
                     <include>openclosevisible</include>
                 </control>
@@ -1233,10 +1233,9 @@
         </control>
     </include>
     <include name="DiscartMovies">
-        <visible>Skin.HasSetting(video_art)</visible>
+        <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
         <visible>!ListItem.IsParentFolder+!Container.Content(sets)+!ListItem.IsCollection</visible>
-        <texture>$INFO[ListItem.Art(discart)]</texture>
-        <!-- <texture fallback="cdart/default_bluray.png">$INFO[ListItem.Art(discart)]</texture> -->
+        <texture fallback="cdart/default_bluray.png">$VAR[DiscartVAR]</texture>
         <animation type="Visible" reversible="false">
             <effect type="fade" start="0" end="100" time="700" delay="200"/>
             <effect type="slide" start="0" end="172" time="800" delay="1200"/>
@@ -1244,11 +1243,10 @@
         </animation>
     </include>
     <include name="DiscartMovies_small">
-        <visible>Skin.HasSetting(video_art)</visible>
+        <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
         <visible>!ListItem.IsParentFolder+!Container.Content(sets)</visible>
         <visible>!ListItem.IsCollection</visible>
-        <texture>$INFO[ListItem.Art(discart)]$INFO[Player.Art(discart)]</texture>
-        <!-- <texture fallback="cdart/default_bluray.png">$INFO[ListItem.Art(discart)]$INFO[Player.Art(discart)]</texture> -->
+        <texture fallback="cdart/default_bluray.png">$VAR[DiscartVAR]</texture>
         <animation type="Visible" reversible="false">
             <effect type="fade" start="0" end="100" time="700" delay="200"/>
             <effect type="slide" start="0" end="90" time="800" delay="1200"/>
@@ -1732,7 +1730,6 @@
                 <height>60</height>
                 <colordiffuse>$VAR[BackgroundOverlayColorDialog]</colordiffuse>
                 <texture border="4">WhiteBack.png</texture>
-                <animation effect="slide" end="0,-64" time="200" condition="Window.IsActive(Custom_1141_refesh_videodb.xml)+[Control.HasFocus(10)|Control.HasFocus(13)]+System.HasAddon(script.artwork.downloader)">Conditional</animation>
             </control>
         </control>
     </include>
@@ -2030,7 +2027,7 @@
                 <top>848</top>
                 <width>1920</width>
                 <height>135</height>
-                <visible>ListItem.IsCollection+Control.IsVisible(742)</visible>
+                <visible>ListItem.IsCollection+[Control.IsVisible(742)|Control.IsVisible(740)]</visible>
                 <include>openclosevisible</include>
                 <control type="group">
                     <left>0</left>
@@ -2168,7 +2165,7 @@
                 <textcolor>grey1</textcolor>
                 <font>impacted21</font>
                 <label>$LOCALIZE[20161]$INFO[Container(2000).NumItems,: [COLOR=white],[/COLOR]]</label>
-                <visible>ListItem.IsCollection+Control.IsVisible(742)</visible>
+                <visible>ListItem.IsCollection++[Control.IsVisible(742)|Control.IsVisible(740)]</visible>
                 <include>openclosevisible</include>
             </control>
             <control type="group">
@@ -2198,9 +2195,8 @@
                         <width>270</width>
                         <height>51</height>
                         <aspectratio align="right">keep</aspectratio>
-                        <texture>$INFO[ListItem.Art(clearlogo)]</texture>
-                        <visible>[Skin.HasSetting(video_art)+Container.Content(movies)]
-						|[[Skin.HasSetting(tvshow_art)+!Container.Content(movies)]|String.IsEmpty(ListItem.Art(clearlogo))]</visible>
+                        <texture>$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Clearlogo)]</texture>
+                        <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)+!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Clearlogo))</visible>
                     </control>
                 </control>
                 <control type="image">
@@ -2392,7 +2388,7 @@
                 </control>
             </control>
             <control type="group">
-                <visible>!ListItem.IsCollection|!String.IsEmpty(ListItem.Plot)</visible>
+                <visible>!ListItem.IsCollection+!String.IsEmpty(ListItem.Plot)</visible>
                 <include>openclosevisible</include>
                 <control type="image">
                     <left>1215</left>
@@ -2420,6 +2416,7 @@
                 <font>menufontimpacted</font>
                 <textcolor>grey2</textcolor>
                 <label>$LOCALIZE[20457]</label>
+				<visible>!Control.IsVisible(2000)</visible>
                 <visible>ListItem.IsCollection|Container.Content(Sets)</visible>
                 <visible>String.IsEmpty(Container(2000).ListItem.Icon)</visible>
             </control>
@@ -2432,7 +2429,7 @@
                 <include condition="Skin.HasSetting(BigPlotText)">PlotTextBigVar</include>
                 <label>$VAR[InfoWallTextboxVar]</label>
                 <autoscroll delay="13000" time="4000" repeat="8000">true</autoscroll>
-                <!-- <font>ubuntu-r13</font> -->
+				<visible>!ListItem.IsCollection</visible>
             </control>
         </control>
     </include>
@@ -2948,7 +2945,7 @@
                     <width>210</width>
                     <height>210</height>
                     <aspectratio>keep</aspectratio>
-                    <texture fallback="FallbackRadio.png">$VAR[ListItemIconVAR]</texture>
+                    <texture fallback="FallbackRadio.png">$INFO[ListItem.Icon]</texture>
                 </control>
                 <control type="image">
                     <left>4</left>
@@ -3169,6 +3166,589 @@
 			<font>Home</font>
 			<aligny>center</aligny>
 			<visible>!String.IsEmpty(PVR.ChannelNumberInput)</visible>
+		</control>
+	</include>
+	<include name="DebugInfo">
+		<!-- <control type="list" id="99999">
+			<description>My first list container</description>
+			<centerleft>50%</centerleft>
+			<top>400</top>
+			<width>650</width>
+			<height>200</height>
+			<visible>Skin.HasSetting(DebugInfo)</visible>
+			<onup>2</onup>
+			<ondown>3</ondown>
+			<onleft>1</onleft>
+			<onright>1</onright>
+			<viewtype label="3D list">list</viewtype>
+			<orientation>vertical</orientation>
+			<pagecontrol>25</pagecontrol>
+			<scrolltime tween="sine" easing="out">200</scrolltime>
+				<itemlayout width="650" height="29">
+				<control type="label">
+					<left>30</left>
+					<top>3</top>
+					<width>430</width>
+					<height>22</height>
+					<font>font13</font>
+					<aligny>center</aligny>
+					<selectedcolor>green</selectedcolor>
+					<align>left</align>
+					<label>Titel: $INFO[ListItem.Label] / $INFO[Window(home).Property(ListItem.Art.Clearlogo)]</label>
+				</control>
+				</itemlayout>
+				<focusedlayout height="29" width="650">
+				<control type="label">
+					<left>30</left>
+					<top>3</top>
+					<width>430</width>
+					<height>22</height>
+					<font>font13</font>
+					<aligny>center</aligny>
+					<selectedcolor>green</selectedcolor>
+					<align>left</align>
+					<label>Titel: $INFO[ListItem.Label] / $INFO[Window(home).Property(ListItem.Art.Clearlogo)]</label>
+				</control>
+				</focusedlayout>
+			<content>videodb://movies/titles/</content>
+		</control> -->
+        <control type="grouplist"> <!-- Debuginfos -->
+            <visible>Skin.HasSetting(DebugInfo)</visible>
+            <left>30</left>
+            <top>90</top>
+            <width>1800</width>
+            <orientation>vertical</orientation>
+            <itemgap>8</itemgap>
+            <!-- <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem AddonName: $INFO[Container.ListItem.AddonName]</label>
+				<visible>!String.IsEmpty(Container.ListItem.AddonName)</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem DBTYPE: $INFO[Container.ListItem.DBTYPE]</label>
+				<visible>!String.IsEmpty(Container.ListItem.DBTYPE)</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem AddonName: $INFO[Container.ListItem.AddonName]</label>
+				<visible>!String.IsEmpty(Container.ListItem.AddonName)</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem Addon Path: $INFO[Container.ListItem.Property(Addon.Path)]</label>
+				<visible>!String.IsEmpty(Container.ListItem.Property(Addon.Path))</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>VAR Widget Label: $VAR[WidgetInProgressRow1_Label]</label>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>TITLE: $INFO[Container.ListItem.ChannelName] (Path: $INFO[Container.ListItem.Path])</label>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>Container Content: Addons</label>
+				<visible>Container.Content(Addons)</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem Label: $INFO[Container.ListItem.Label]</label>
+				<visible>!String.IsEmpty(Container.ListItem.Label)</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem Label2: $INFO[Container.ListItem.Label2]</label>
+				<visible>!String.IsEmpty(Container.ListItem.Label2)</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem Title: $INFO[Container.ListItem.Title]</label>
+				<visible>!String.IsEmpty(Container.ListItem.Title)</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem OriginalTitle: $INFO[Container.ListItem.OriginalTitle]</label>
+				<visible>!String.IsEmpty(Container.ListItem.OriginalTitle)</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem TrackNumber: $INFO[Container.ListItem.TrackNumber]</label>
+				<visible>!String.IsEmpty(Container.ListItem.TrackNumber)</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem StartTime: $INFO[Container.ListItem.StartTime]</label>
+				<visible>!String.IsEmpty(Container.ListItem.StartTime)</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem EndTime: $INFO[Container.ListItem.EndTime]</label>
+				<visible>!String.IsEmpty(Container.ListItem.EndTime)</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem Year: $INFO[Container.ListItem.Year]</label>
+				<visible>!String.IsEmpty(Container.ListItem.Year)</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem Premiered: $INFO[Container.ListItem.Premiered]</label>
+				<visible>!String.IsEmpty(Container.ListItem.Premiered)</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem Genre: $INFO[Container.ListItem.Genre]</label>
+				<visible>!String.IsEmpty(Container.ListItem.Genre)</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem Director: $INFO[Container.ListItem.Director]</label>
+				<visible>!String.IsEmpty(Container.ListItem.Director)</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem Country: $INFO[Container.ListItem.Country]</label>
+				<visible>!String.IsEmpty(Container.ListItem.Country)</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem Episode: $INFO[Container.ListItem.Episode]</label>
+				<visible>!String.IsEmpty(Container.ListItem.Episode)</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem Season: $INFO[Container.ListItem.Season]</label>
+				<visible>!String.IsEmpty(Container.ListItem.Season)</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem TVShowTitle: $INFO[Container.ListItem.TVShowTitle]</label>
+				<visible>!String.IsEmpty(Container.ListItem.TVShowTitle)</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>Container.Art(tvshow.fanart): $INFO[Container.Art(tvshow.fanart)]</label>
+				<visible>!String.IsEmpty(Container.Art(tvshow.fanart))</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>Container.Art(season.poster): $INFO[Container.Art(season.poster)]</label>
+				<visible>!String.IsEmpty(Container.Art(season.poster))</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>Container.Art(artist.fanart): $INFO[Container.Art(artist.fanart)]</label>
+				<visible>!String.IsEmpty(Container.Art(artist.fanart))</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>Container.Art(artist.thumb): $INFO[Container.Art(artist.thumb)]</label>
+				<visible>!String.IsEmpty(Container.Art(artist.thumb))</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>Fanart.Image: $INFO[Container.Fanart.Image]</label>
+				<visible>!String.IsEmpty(Container.Fanart.Image)</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem.Thumb: $INFO[Container.ListItem.Thumb]</label>
+				<visible>!String.IsEmpty(Container.ListItem.Thumb)</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem.Icon: $INFO[Container.ListItem.Icon]</label>
+				<visible>!String.IsEmpty(Container.ListItem.Icon)</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem.ActualIcon: $INFO[Container.ListItem.ActualIcon]</label>
+				<visible>!String.IsEmpty(Container.ListItem.ActualIcon)</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem.Art(landscape): $INFO[Container.ListItem.Art(landscape)]</label>
+				<visible>!String.IsEmpty(Container.ListItem.Art(landscape))</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem.Art(thumb): $INFO[Container.ListItem.Art(thumb)]</label>
+				<visible>!String.IsEmpty(Container.ListItem.Art(thumb))</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem.Art(poster): $INFO[Container.ListItem.Art(poster)]</label>
+				<visible>!String.IsEmpty(Container.ListItem.Art(poster))</visible>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>red</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem.Art(banner): $INFO[ListItem.Art(banner)]</label>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>red</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>VAR PosterThumb: $VAR[PosterThumb]</label>
+            </control> -->
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>green</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>SkinHelper Fanart: $INFO[Window(Home).Property(SkinHelper.PVR.FanArt)]</label>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>green</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>SkinHelper Poster: $INFO[Window(Home).Property(SkinHelper.PVR.Poster)]</label>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>green</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>SkinHelper Channels: $INFO[Window(Home).Property(SkinHelper.TotalTVChannels)]</label>
+            </control>
+			<control type="label">
+				<width>auto</width>
+				<height>18</height>
+				<font>font12</font>
+				<align>left</align>
+				<textcolor>green</textcolor>
+				<shadowcolor>black</shadowcolor>
+				<label>SkinHelper Clearlogo HOME: $INFO[Window(Home).Property(SkinHelper.ListItem.Art.Clearlogo)]</label>
+			</control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>green</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>SkinHelper Clearlogo VIDEOS: $INFO[Window(videos).Property(SkinHelper.ListItem.Art.Clearlogo)]</label>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>green</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>SkinHelper ExtraFanArt: $INFO[Window(Home).Property(SkinHelper.ListItem.Art.ExtraFanArt)]</label>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>green</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>SkinHelper Fanart: $INFO[Window(Home).Property(SkinHelper.ListItem.Art.Fanart)]</label>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>green</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>SkinHelper Poster: $INFO[Window(Home).Property(SkinHelper.ListItem.Art.Poster)]</label>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>green</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>SkinHelper Clearart: $INFO[Window(Home).Property(SkinHelper.ListItem.Art.Clearart)]</label>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>green</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>SkinHelper Discart: $INFO[Window(Home).Property(SkinHelper.ListItem.Art.Discart)]</label>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>green</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>SkinHelper Poster1: $INFO[Window(Home).Property(SkinHelper.ListItem.1.Art.Poster)]</label>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>green</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>SkinHelper Banner: $INFO[Window(Home).Property(SkinHelper.ListItem.Art.Banner)]</label>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>green</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>SkinHelper Artwork ListItemVAR: $VAR[extraart_listitem_rule]</label>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>green</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>SkinHelper Player Clearlogo: $INFO[Window(Home).Property(SkinHelper.Player.Art.Clearlogo)]</label>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>green</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>SkinHelper Player Clearart: $INFO[Window(Home).Property(SkinHelper.Player.Art.Clearart)]</label>
+            </control>
+			<control type="image">
+				<width>100</width>
+				<height>100</height>
+				<aspectratio>keep</aspectratio>
+				<texture>$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Poster)]</texture>
+				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Poster))</visible>
+			</control>
+			<control type="image">
+				<width>100</width>
+				<height>100</height>
+				<aspectratio>keep</aspectratio>
+				<texture>$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Clearlogo)]</texture>
+				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Clearlogo))</visible>
+			</control>
+			<control type="image">
+				<width>100</width>
+				<height>100</height>
+				<aspectratio>keep</aspectratio>
+				<texture>$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Clearart)]</texture>
+				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Clearart))</visible>
+			</control>
+			<control type="image">
+				<width>100</width>
+				<height>100</height>
+				<aspectratio>keep</aspectratio>
+				<texture>$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Fanart)]</texture>
+				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Fanart)]</visible>
+			</control>
+			<control type="image">
+				<width>100</width>
+				<height>100</height>
+				<aspectratio>keep</aspectratio>
+				<texture>$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Discart)]</texture>
+				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Discart))</visible>
+			</control>
+			<control type="image">
+				<width>100</width>
+				<height>100</height>
+				<aspectratio>keep</aspectratio>
+				<texture>$INFO[Window(Home).Property(SkinHelper.ListItem.Art.ExtraFanArt)]</texture>
+				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.ExtraFanArt))</visible>
+			</control>
+			<control type="image">
+				<width>100</width>
+				<height>100</height>
+				<aspectratio>keep</aspectratio>
+				<texture>$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Banner)]</texture>
+				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Banner))</visible>
+			</control>
 		</control>
 	</include>
 </includes>

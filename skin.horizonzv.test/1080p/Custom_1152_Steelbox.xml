@@ -25,7 +25,7 @@
             <control type="group">
                 <left>0</left>
                 <top>15</top>
-                <visible>!String.IsEmpty(ListItem.Art(clearlogo))</visible>
+				<!-- <visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Clearlogo))</visible> -->
                 <control type="image">
                     <left>333</left>
                     <top>0</top>
@@ -39,14 +39,14 @@
                     <top>1</top>
                     <width>303</width>
                     <height>162</height>
-                    <texture>$INFO[ListItem.Art(clearlogo)]</texture>
+                    <texture>$VAR[ClearlogoVAR]</texture>
                     <aspectratio align="center" aligny="center">keep</aspectratio>
                 </control>
             </control>
             <control type="group">
                 <left>316</left>
                 <top>190</top>
-                <visible>!String.IsEmpty(ListItem.Art(clearart))</visible>
+				<!-- <visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Clearart))</visible> -->
                 <control type="image">
                     <left>333</left>
                     <top>0</top>
@@ -60,14 +60,14 @@
                     <top>1</top>
                     <width>303</width>
                     <height>162</height>
-                    <texture background="true">$INFO[ListItem.Art(clearart)]</texture>
+                    <texture background="true">$VAR[ClearartVAR]</texture>
                     <aspectratio align="center" aligny="center">keep</aspectratio>
                 </control>
             </control>
             <control type="group">
                 <left>634</left>
                 <top>176</top>
-                <visible>!String.IsEmpty(ListItem.Art(landscape))</visible>
+				<!-- <visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Landscape))</visible> -->
                 <control type="image">
                     <left>333</left>
                     <top>190</top>
@@ -81,35 +81,35 @@
                     <top>192</top>
                     <width>304</width>
                     <height>164</height>
-                    <texture>$INFO[ListItem.Art(landscape)]</texture>
+                    <texture>$VAR[LandscapeVAR]</texture>
                     <aspectratio align="center" aligny="center">scale</aspectratio>
                 </control>
             </control>
             <control type="group">
                 <left>634</left>
                 <top>531</top>
-                <visible>!String.IsEmpty(ListItem.Art(banner))</visible>
+				<!-- <visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Banner))</visible> -->
                 <control type="image">
                     <left>333</left>
                     <top>190</top>
                     <width>621</width>
-                    <height>165</height>
-                    <texture>Black.png</texture>
+                    <height>166</height>
+                    <texture>BlackBack.png</texture>
                 </control>
                 <control type="image">
-                    <description>Landscape Image</description>
+                    <description>Banner Image</description>
                     <left>334</left>
                     <top>192</top>
                     <width>616</width>
                     <height>164</height>
-                    <texture>$INFO[ListItem.Art(banner)]</texture>
+                    <texture>$VAR[BannerVAR]</texture>
                     <aspectratio align="center" aligny="center">keep</aspectratio>
                 </control>
             </control>
             <control type="group">
                 <left>0</left>
                 <top>354</top>
-                <visible>!String.IsEmpty(ListItem.Art(discart))</visible>
+				<!-- <visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Discart))</visible> -->
                 <control type="image">
                     <left>333</left>
                     <top>190</top>
@@ -123,8 +123,29 @@
                     <top>190</top>
                     <width>344</width>
                     <height>344</height>
-                    <texture fallback="cdart/default_bluray.png">$INFO[ListItem.Art(discart)]</texture>
+                    <texture fallback="cdart/default_bluray.png">$VAR[DiscartVAR]</texture>
                     <aspectratio align="right" aligny="center">keep</aspectratio>
+                </control>
+            </control>
+            <control type="group">
+                <left>952</left>
+                <top>712</top>
+				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Characterart))</visible>
+                <control type="image">
+                    <left>333</left>
+                    <top>190</top>
+                    <width>304</width>
+                    <height>165</height>
+                    <texture>BlackBack.png</texture>
+                </control>
+                <control type="image">
+                    <description>Character Image</description>
+                    <left>333</left>
+                    <top>192</top>
+                    <width>304</width>
+                    <height>164</height>
+                    <texture>$VAR[CharacterArtVAR]</texture>
+                    <aspectratio align="center" aligny="center">scale</aspectratio>
                 </control>
             </control>
         </control>
@@ -139,24 +160,24 @@
             <aspectratio>keep</aspectratio>
         </control>
         <control type="image">
-            <description>Steelbox Fanart</description>
-            <left>92</left>
-            <top>420</top>
-            <width>387</width>
-            <height>662</height>
-            <colordiffuse>grey</colordiffuse>
-            <texture diffuse="clear-cases/steelbox.png">$INFO[ListItem.Art(fanart)]</texture>
-            <visible>!String.IsEmpty(ListItem.Art(fanart)</visible>
-        </control>
-        <control type="image">
             <description>Steelbox Empty</description>
             <left>92</left>
             <top>420</top>
             <width>387</width>
             <height>662</height>
-            <colordiffuse>grey</colordiffuse>
+            <colordiffuse>grey2</colordiffuse>
             <texture>clear-cases/steelbox.png</texture>
-            <visible>String.IsEmpty(ListItem.Art(fanart)</visible>
+            <!-- <visible>String.IsEmpty(ListItem.Art(fanart))</visible> -->
+        </control>
+        <control type="image">
+            <description>Steelbox Fanart</description>
+            <left>92</left>
+            <top>420</top>
+            <width>387</width>
+            <height>662</height>
+            <colordiffuse>grey1</colordiffuse>
+            <texture diffuse="clear-cases/steelbox.png">$VAR[FanartVAR]</texture>
+            <!-- <visible>!String.IsEmpty(ListItem.Art(fanart))</visible> -->
         </control>
         <control type="image">
             <description>Cover Image</description>
@@ -164,7 +185,7 @@
             <top>406</top>
             <width>320</width>
             <height>674</height>
-            <texture diffuse="clear-cases/steelbox_diffuse.png">$VAR[ListItemIconVAR]</texture>
+            <texture diffuse="clear-cases/steelbox_diffuse.png">$VAR[PosterThumb]</texture>
             <animation effect="rotatey" start="0" end="-45" condition="true">Conditional</animation>
         </control>
         <control type="label">
@@ -180,114 +201,6 @@
             <font>impacted26</font>
             <animation effect="rotatey" start="0" end="-45">WindowOpen</animation>
             <visible>String.IsEmpty(ListItem.Icon)</visible>
-        </control>
-        <!-- <include>Clock</include> -->
-        <control type="list" id="100">
-            <left>1602</left>
-            <top>6</top>
-            <width>315</width>
-            <height>1077</height>
-            <onleft/>
-            <onright/>
-            <onup>100</onup>
-            <ondown>100</ondown>
-            <viewtype label="535">list</viewtype>
-            <pagecontrol>60</pagecontrol>
-            <scrolltime>200</scrolltime>
-            <orientation>vertical</orientation>
-            <itemlayout width="300" height="177">
-                <control type="label">
-                    <left>45</left>
-                    <top>68</top>
-                    <width>300</width>
-                    <height>45</height>
-                    <align>left</align>
-                    <font>impacted26</font>
-                    <textcolor>grey</textcolor>
-                    <label>$INFO[ListItem.Label]</label>
-                </control>
-            </itemlayout>
-            <focusedlayout width="300" height="177">
-                <control type="image">
-                    <left>0</left>
-                    <top>0</top>
-                    <width>303</width>
-                    <height>177</height>
-                    <texture>BlackBack.png</texture>
-                </control>
-                <control type="label">
-                    <left>45</left>
-                    <top>68</top>
-                    <width>300</width>
-                    <height>45</height>
-                    <align>left</align>
-                    <font>impacted26</font>
-                    <textcolor>red</textcolor>
-                    <label>$INFO[ListItem.Label]</label>
-                </control>
-            </focusedlayout>
-            <content>
-                <!-- <item id="0">
-					<label>210</label>
-					<label2/>
-					<icon/>
-					<onclick>Action(back)</onclick>
-				</item> -->
-                <item id="1">
-                    <label>Logo</label>
-                    <label2/>
-                    <icon/>
-                    <onclick condition="Container.Content(tvshows)">RunScript(script.artwork.downloader, mode=custom, mediatype=tvshow, dbid=$INFO[ListItem.DBID], silent=true, clearlogo)</onclick>
-                    <onclick condition="Container.Content(movies)">RunScript(script.artwork.downloader, mode=custom, mediatype=movie, dbid=$INFO[ListItem.DBID], silent=true, clearlogo)</onclick>
-                    <onclick condition="Container.Content(musicvideos)">RunScript(script.artwork.downloader, mode=custom, mediatype=musicvideo, dbid=$INFO[ListItem.DBID], silent=true, clearlogo)</onclick>
-                    <!-- <visible>[Container.Content(tvshows)|Container.Content(movies)|Container.Content(musicvideos)]+system.hasaddon(script.artwork.downloader)</visible> -->
-                </item>
-                <item id="2">
-                    <label>Clearart</label>
-                    <label2/>
-                    <icon/>
-                    <onclick condition="Container.Content(tvshows)">RunScript(script.artwork.downloader, mode=custom, mediatype=tvshow, dbid=$INFO[ListItem.DBID], silent=true, clearart)</onclick>
-                    <onclick condition="Container.Content(movies)">RunScript(script.artwork.downloader, mode=custom, mediatype=movie, dbid=$INFO[ListItem.DBID], silent=true, clearart)</onclick>
-                    <onclick condition="Container.Content(musicvideos)">RunScript(script.artwork.downloader, mode=custom, mediatype=musicvideo, dbid=$INFO[ListItem.DBID], silent=true, clearart)</onclick>
-                    <!-- <visible>[Container.Content(tvshows)|Container.Content(movies)|Container.Content(musicvideos)]+system.hasaddon(script.artwork.downloader)</visible> -->
-                </item>
-                <item id="3">
-                    <label>Landscape</label>
-                    <label2/>
-                    <icon/>
-                    <onclick condition="Container.Content(tvshows)">RunScript(script.artwork.downloader, mode=custom, mediatype=tvshow, dbid=$INFO[ListItem.DBID], silent=true, landscape)</onclick>
-                    <onclick condition="Container.Content(movies)">RunScript(script.artwork.downloader, mode=custom, mediatype=movie, dbid=$INFO[ListItem.DBID], silent=true, landscape)</onclick>
-                    <onclick condition="Container.Content(musicvideos)">RunScript(script.artwork.downloader, mode=custom, mediatype=musicvideo, dbid=$INFO[ListItem.DBID], silent=true, landscape)</onclick>
-                    <!-- <visible>[Container.Content(tvshows)|Container.Content(movies)|Container.Content(musicvideos)]+system.hasaddon(script.artwork.downloader)</visible> -->
-                </item>
-                <item id="4">
-                    <label>Discart</label>
-                    <label2/>
-                    <icon/>
-                    <onclick condition="Container.Content(tvshows)">RunScript(script.artwork.downloader, mode=custom, mediatype=tvshow, dbid=$INFO[ListItem.DBID], silent=true, discart)</onclick>
-                    <onclick condition="Container.Content(movies)">RunScript(script.artwork.downloader, mode=custom, mediatype=movie, dbid=$INFO[ListItem.DBID], silent=true, discart)</onclick>
-                    <onclick condition="Container.Content(musicvideos)">RunScript(script.artwork.downloader, mode=custom, mediatype=musicvideo, dbid=$INFO[ListItem.DBID], silent=true, discart)</onclick>
-                    <!-- <visible>[Container.Content(tvshows)|Container.Content(movies)|Container.Content(musicvideos)]+system.hasaddon(script.artwork.downloader)</visible> -->
-                </item>
-                <item id="4">
-                    <label>Banner</label>
-                    <label2/>
-                    <icon/>
-                    <onclick condition="Container.Content(tvshows)">RunScript(script.artwork.downloader, mode=custom, mediatype=tvshow, dbid=$INFO[ListItem.DBID], silent=true, banner)</onclick>
-                    <onclick condition="Container.Content(movies)">RunScript(script.artwork.downloader, mode=custom, mediatype=movie, dbid=$INFO[ListItem.DBID], silent=true, banner)</onclick>
-                    <onclick condition="Container.Content(musicvideos)">RunScript(script.artwork.downloader, mode=custom, mediatype=musicvideo, dbid=$INFO[ListItem.DBID], silent=true, banner)</onclick>
-                    <!-- <visible>[Container.Content(tvshows)|Container.Content(movies)|Container.Content(musicvideos)]+system.hasaddon(script.artwork.downloader)</visible> -->
-                </item>
-                <item id="6">
-                    <label>51413</label>
-                    <label2/>
-                    <icon/>
-                    <onclick condition="Container.Content(tvshows)">RunScript(script.artwork.downloader, mode=custom, mediatype=tvshow, dbid=$INFO[ListItem.DBID], silent=true, seasonposter, extrafanart, clearlogo, clearart, banner, seasonbanner, characterart, landscape)</onclick>
-                    <onclick condition="Container.Content(movies)">RunScript(script.artwork.downloader, mode=custom, mediatype=movie, dbid=$INFO[ListItem.DBID], silent=true, extrafanart, clearlogo, clearart, discart, banner, landscape)</onclick>
-                    <onclick condition="Container.Content(musicvideos)">RunScript(script.artwork.downloader, mode=custom, dbid=$INFO[ListItem.DBID], silent=true, extrafanart, clearlogo, clearart, discart, banner, landscape)</onclick>
-                    <!-- <visible>[Container.Content(tvshows)|Container.Content(movies)|Container.Content(musicvideos)]+system.hasaddon(script.artwork.downloader)</visible> -->
-                </item>
-            </content>
         </control>
     </controls>
 </window>

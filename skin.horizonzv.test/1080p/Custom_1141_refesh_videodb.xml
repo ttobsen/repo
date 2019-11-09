@@ -22,9 +22,7 @@
             <control type="group">
                 <left>0</left>
                 <top>126</top>
-                <animation effect="slide" end="0,-64" time="200" condition="[Control.HasFocus(10)|Control.HasFocus(13)]+System.HasAddon(script.artwork.downloader)">Conditional</animation>
                 <control type="label" id="1">
-                    <animation effect="slide" end="0,34" time="200" condition="[Control.HasFocus(10)|Control.HasFocus(13)]+System.HasAddon(script.artwork.downloader)">Conditional</animation>
                     <description>dialog line</description>
                     <left>150</left>
                     <top>0</top>
@@ -78,23 +76,6 @@
                         <onright>10</onright>
                         <onclick>Dialog.Close(1141,true)</onclick>
                         <onclick>CleanLibrary(video)</onclick>
-                        <texturenofocus/>
-                    </control>
-                    <control type="radiobutton" id="13">
-                        <description>Extra Art's Video</description>
-                        <left>0</left>
-                        <top>120</top>
-                        <width>915</width>
-                        <align>left</align>
-                        <focusedcolor>black</focusedcolor>
-                        <label>51416</label>
-                        <onup>10</onup>
-                        <onclick>Skin.ToggleSetting(automaticAD)</onclick>
-                        <selected>Skin.HasSetting(automaticAD)</selected>
-                        <visible>System.HasAddon(script.artwork.downloader)</visible>
-                        <visible>Control.HasFocus(10)|Control.HasFocus(13)</visible>
-                        <animation effect="fade" start="0" end="100" time="100" delay="500">Visible</animation>
-                        <animation effect="fade" start="100" end="0" time="100">Hidden</animation>
                         <texturenofocus/>
                     </control>
                 </control>

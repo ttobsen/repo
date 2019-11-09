@@ -45,14 +45,14 @@
                     <height>315</height>
                     <aspectratio>stretch</aspectratio>
                     <colordiffuse>grey2</colordiffuse>
-                    <texture diffuse="masks/mask.png">$VAR[ListItemIconVAR]</texture>
+                    <texture diffuse="masks/mask.png">$INFO[ListItem.Icon]</texture>
                     <visible>Control.HasFocus(2000)</visible>
                 </control>
                 <control type="image">
                     <width>210</width>
                     <height>315</height>
                     <aspectratio>stretch</aspectratio>
-                    <texture diffuse="masks/mask.png">$VAR[ListItemIconVAR]</texture>
+                    <texture diffuse="masks/mask.png">$INFO[ListItem.Icon]</texture>
                     <visible>!Control.HasFocus(2000)</visible>
                 </control>
                 <control type="image">
@@ -61,22 +61,14 @@
                     <colordiffuse>menudiffuse</colordiffuse>
                     <texture diffuse="masks/mask.png">Shadow.png</texture>
                 </control>
-                <control type="image">
+                <!-- <control type="image">
                     <left>128</left>
                     <top>232</top>
                     <width>82</width>
                     <height>158</height>
                     <aspectratio align="left">scale</aspectratio>
-                    <texture diffuse="masks/cdart_mask.png">$INFO[ListItem.Art(discart)]</texture>
-                </control>
-                <control type="image">
-                    <left>0</left>
-                    <top>0</top>
-                    <width>210</width>
-                    <height>315</height>
-                    <aspectratio>keep</aspectratio>
-                    <texture>$INFO[ListItem.Art(TVShowClearart)]</texture>
-                </control>
+                    <texture diffuse="masks/cdart_mask.png">$VAR[DiscartVAR]</texture>
+                </control> -->
                 <control type="image">
                     <width>210</width>
                     <height>315</height>
@@ -99,7 +91,7 @@
                         <width>210</width>
                         <height>315</height>
                         <aspectratio>stretch</aspectratio>
-                        <texture diffuse="masks/mask.png">$VAR[ListItemIconVAR]</texture>
+                        <texture diffuse="masks/mask.png">$INFO[ListItem.Icon]</texture>
                         <visible>Control.HasFocus(2000)|Control.HasFocus(888)</visible>
                     </control>
                     <control type="image">
@@ -107,7 +99,7 @@
                         <height>315</height>
                         <aspectratio>stretch</aspectratio>
                         <colordiffuse>grey1</colordiffuse>
-                        <texture diffuse="masks/mask.png">$VAR[ListItemIconVAR]</texture>
+                        <texture diffuse="masks/mask.png">$INFO[ListItem.Icon]</texture>
                         <visible>![Control.HasFocus(2000)|Control.HasFocus(888)]</visible>
                     </control>
                     <control type="image">
@@ -116,22 +108,14 @@
                         <colordiffuse>menudiffuse</colordiffuse>
                         <texture>Shadow.png</texture>
                     </control>
-                    <control type="image">
+                    <!-- <control type="image">
                         <left>128</left>
                         <top>232</top>
                         <width>82</width>
                         <height>158</height>
                         <aspectratio align="left">scale</aspectratio>
-                        <texture diffuse="masks/cdart_mask.png">$INFO[ListItem.Art(discart)]</texture>
-                    </control>
-                    <control type="image">
-                        <left>0</left>
-                        <top>0</top>
-                        <width>210</width>
-                        <height>315</height>
-                        <aspectratio>keep</aspectratio>
-                        <texture>$INFO[ListItem.Art(TVShowClearart)]</texture>
-                    </control>
+                        <texture diffuse="masks/cdart_mask.png">$VAR[DiscartVAR]</texture>
+                    </control> -->
                     <control type="image">
                         <width>210</width>
                         <height>315</height>
@@ -156,7 +140,7 @@
                     <height>195</height>
                     <aspectratio>keep</aspectratio>
                     <colordiffuse>grey2</colordiffuse>
-                    <texture diffuse="masks/cdart_mask.png" fallback="WhiteBack.png">$INFO[ListItem.Art(discart)]</texture>
+                    <texture>$INFO[ListItem.Art(poster)]</texture>
                     <visible>Control.HasFocus(2000)</visible>
                 </control>
                 <control type="image">
@@ -165,15 +149,15 @@
                     <width>195</width>
                     <height>195</height>
                     <aspectratio>keep</aspectratio>
-                    <texture diffuse="masks/cdart_mask.png" fallback="WhiteBack.png">$INFO[ListItem.Art(discart)]</texture>
+                    <texture>$INFO[ListItem.Art(poster)]</texture>
                     <visible>!Control.HasFocus(2000)</visible>
                 </control>
-                <control type="image">
+                <!-- <control type="image">
                     <width>195</width>
                     <height>195</height>
                     <colordiffuse>menudiffuse</colordiffuse>
                     <texture diffuse="masks/cdart_mask.png">Shadow.png</texture>
-                </control>
+                </control> -->
                 <control type="label">
                     <left>0</left>
                     <top>158</top>
@@ -191,14 +175,14 @@
                     <width>195</width>
                     <height>195</height>
                     <aspectratio>keep</aspectratio>
-                    <texture diffuse="masks/cdart_mask.png" fallback="WhiteBack.png">$INFO[ListItem.Art(discart)]</texture>
+                    <texture>$INFO[ListItem.Art(poster)]</texture>
                 </control>
-                <control type="image">
+                <!-- <control type="image">
                     <width>195</width>
                     <height>195</height>
                     <colordiffuse>menudiffuse</colordiffuse>
                     <texture diffuse="masks/cdart_mask.png">Shadow.png</texture>
-                </control>
+                </control> -->
                 <control type="label">
                     <left>0</left>
                     <top>158</top>

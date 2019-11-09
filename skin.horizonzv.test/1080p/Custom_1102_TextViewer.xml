@@ -52,8 +52,8 @@
 					<width>1383</width>
 					<height>100</height>
 					<aspectratio aligny="bottom">keep</aspectratio>
-					<texture>$INFO[ListItem.Art(banner)]</texture>
-					<visible>!String.IsEmpty(ListItem.Art(banner))</visible>
+					<texture>$VAR[BannerVAR]</texture>
+					<!-- <visible>!String.IsEmpty(ListItem.Art(banner))</visible> -->
 				</control>
             </control>
         </control>

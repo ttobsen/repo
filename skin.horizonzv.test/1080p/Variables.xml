@@ -264,32 +264,20 @@
         <value condition="Skin.HasSetting(onlyradioviz)">$LOCALIZE[51538]</value>
         <value>$LOCALIZE[51540]</value>
     </variable>
-    <variable name="EpisodeArt">
-        <value condition="Skin.HasSetting(episodelogo)">Logo</value>
-        <value condition="Skin.HasSetting(episodebanner)">Banner</value>
-        <value>$LOCALIZE[22080]</value>
-    </variable>
     <variable name="homecover">
         <value condition="Player.HasAudio">masks/NowPlayingHome.png</value>
         <value condition="Pvr.IsPlayingTv">masks/NowPlayingHomePVR.png</value>
-        <value condition="VideoPlayer.Content(episodes)|Player.IsInternetStream+!String.Contains(Player.FolderPath,lovefilm)">masks/NowPlayingHomeClearArt.png</value>
-        <value condition="!VideoPlayer.Content(episodes)|VideoPlayer.HasMenu|String.Contains(Player.FolderPath,lovefilm)">masks/NowPlayingHomeMovie.png</value>
+        <value condition="VideoPlayer.Content(episodes)|Player.IsInternetStream">masks/NowPlayingHomeClearArt.png</value>
+        <value condition="!VideoPlayer.Content(episodes)|VideoPlayer.HasMenu">masks/NowPlayingHomeMovie.png</value>
     </variable>
     <variable name="homecover_icon">
-        <value condition="Player.IsInternetStream+!Pvr.IsPlayingTv+!String.Contains(Player.FolderPath,lovefilm)">$INFO[VideoPlayer.Cover]</value>
-        <value condition="VideoPlayer.Content(episodes)">$VAR[extraart_tvshow_player_rule]</value>
-    </variable>
-    <variable name="BannerThumb">
-        <value condition="!String.IsEmpty(ListItem.Art(banner))">$INFO[ListItem.Art(banner)]</value>
-        <value condition="String.IsEmpty(ListItem.Art(banner))">$INFO[ListItem.Art(tvshow.banner)]</value>
-        <value>$INFO[ListItem.Icon]</value>
-    </variable>
-    <variable name="SetBannerThumb">
-        <value condition="!String.IsEmpty(ListItem.Art(banner))">$INFO[ListItem.Art(banner)]</value>
-        <value condition="String.IsEmpty(ListItem.Art(banner))">SetBanner.png</value>
+        <value condition="Player.IsInternetStream+!Pvr.IsPlayingTv">$INFO[VideoPlayer.Cover]</value>
+        <value condition="VideoPlayer.Content(episodes)">$VAR[extraart_player_rule]</value>
     </variable>
     <variable name="PosterThumb">
-        <value condition="ListItem.IsCollection">$INFO[ListItem.Art(set)]</value>
+        <value condition="ListItem.IsCollection+!String.IsEmpty(ListItem.Art(set.poster))">$INFO[ListItem.Art(set.poster)]</value>
+        <value condition="ListItem.IsCollection+String.IsEmpty(ListItem.Art(set.poster))">$VAR[SetPosterVAR]</value>
+		<value condition="String.Contains(Container.ListItem.DBTYPE,episode)+!Window.IsVisible(home)">$INFO[ListItem.Thumb]</value>
         <value condition="String.Contains(Container.ListItem.DBTYPE,episode)+Window.IsVisible(home)">$INFO[ListItem.Art(tvshow.poster)]</value>
         <value condition="String.Contains(Skin.String(studiologos.name),coloured)+Container.Content(studios)+!ListItem.IsParentFolder+!Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.studios.coloured/,]$VAR[MovieMovieStudiosVar]</value>
         <value condition="String.Contains(Skin.String(studiologos.name),white)+Container.Content(studios)+!ListItem.IsParentFolder+!Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.studios.white/,]$VAR[MovieMovieStudiosVar]</value>
@@ -393,59 +381,6 @@
         <value condition="!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)+!Skin.HasSetting(hideMovieCases)+!String.IsEmpty(ListItem.FileExtension)+!String.IsEmpty(ListItem.VideoResolution)+!ListItem.IsParentFolder">$INFO[ListItem.VideoResolution,clear-cases/,.png]</value>
         <value condition="!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)+!Skin.HasSetting(hideMovieCases)+ListItem.IsCollection">clear-cases/moviesets.png</value>
         <value condition="!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)+!Skin.HasSetting(hideMovieCases)+!ListItem.IsParentFolder+[String.Contains(ListItem.FolderPath,videodb://tvshows/)|String.Contains(ListItem.FolderPath,videodb://2/2)]">clear-cases/tvshows.png</value>
-    </variable>
-    <variable name="ad_mode">
-        <value condition="Skin.HasSetting(ad_gui)+Container.Content(tvshows)">RunScript(script.artwork.downloader, mode=gui, mediatype=tvshow, silent=true, dbid=$INFO[ListItem.DBID])</value>
-        <value condition="Skin.HasSetting(ad_gui)+Container.Content(movies)">RunScript(script.artwork.downloader, mode=gui, mediatype=movie, silent=true, dbid=$INFO[ListItem.DBID])</value>
-        <value condition="Skin.HasSetting(ad_gui)+Container.Content(musicvideos)">RunScript(script.artwork.downloader, mode=gui, mediatype=musicvideos, silent=true, dbid=$INFO[ListItem.DBID])</value>
-        <value condition="Skin.HasSetting(ad_auto)+Container.Content(tvshows)">RunScript(script.artwork.downloader, silent=true, mediatype=tvshow)</value>
-        <value condition="Skin.HasSetting(ad_auto)+Container.Content(movies)">RunScript(script.artwork.downloader, silent=true, mediatype=movie)</value>
-        <value condition="Skin.HasSetting(ad_auto)+Container.Content(musicvideos)">RunScript(script.artwork.downloader, silent=true, mediatype=musicvideos)</value>
-        <value condition="Skin.HasSetting(ad_custom)+Container.Content(tvshows)">RunScript(script.artwork.downloader, mode=custom, mediatype=tvshow, dbid=$INFO[ListItem.DBID], silent=true, seasonposter, extrafanart, clearlogo, clearart, banner, seasonbanner, characterart, landscape)</value>
-        <value condition="Skin.HasSetting(ad_custom)+Container.Content(movies)">RunScript(script.artwork.downloader, mode=custom, mediatype=movie, dbid=$INFO[ListItem.DBID], silent=true, extrafanart, clearlogo, clearart, discart, banner, landscape)</value>
-        <value condition="Skin.HasSetting(ad_custom)+Container.Content(musicvideos)">RunScript(script.artwork.downloader, mode=custom, dbid=$INFO[ListItem.DBID], silent=true, extrafanart, clearlogo, clearart, discart, banner, landscape)</value>
-    </variable>
-    <variable name="ad_mode_label">
-        <value condition="Skin.HasSetting(ad_gui)">$LOCALIZE[773] Artwork (gui)</value>
-        <value condition="Skin.HasSetting(ad_custom)">$LOCALIZE[773] Artwork (custom)</value>
-        <value condition="Skin.HasSetting(ad_auto)">$LOCALIZE[773] Artwork (auto)</value>
-        <value condition="!Skin.HasSetting(ad_auto)+!Skin.HasSetting(ad_custom)+!Skin.HasSetting(ad_bulk)+!Skin.HasSetting(ad_gui)">$LOCALIZE[22080]</value>
-    </variable>
-    <variable name="extraart_rule">
-        <value condition="!Container.Content(tvshows)+[String.IsEmpty(ListItem.Art(clearart))|!Skin.HasSetting(Clearart)]+[String.IsEmpty(ListItem.Art(clearlogo))|!Skin.HasSetting(clearlogo)]+Skin.HasSetting(Landscape)">$INFO[ListItem.Art(landscape)]</value>
-        <value condition="!Container.Content(tvshows)+[String.IsEmpty(ListItem.Art(clearart))|!Skin.HasSetting(Clearart)]+Skin.HasSetting(Clearlogo)">$INFO[ListItem.Art(clearlogo)]</value>
-        <value condition="!Container.Content(tvshows)+Skin.HasSetting(Clearart)">$INFO[ListItem.Art(clearart)]</value>
-        <value condition="Container.Content(tvshows)+[String.IsEmpty(ListItem.Art(clearart))|!Skin.HasSetting(TVShowClearart)]+[String.IsEmpty(ListItem.Art(characterart))|!Skin.HasSetting(TVShowCharacterart)]+[String.IsEmpty(ListItem.Art(clearlogo))|!Skin.HasSetting(TVShowClearlogo)]+Skin.HasSetting(TVShowLandscape)">$INFO[ListItem.Art(landscape)]</value>
-        <value condition="Container.Content(tvshows)+[String.IsEmpty(ListItem.Art(clearart))|!Skin.HasSetting(TVShowClearart)]+[String.IsEmpty(ListItem.Art(characterart))|!Skin.HasSetting(TVShowCharacterart)]+Skin.HasSetting(TVShowClearlogo)">$INFO[ListItem.Art(clearlogo)]</value>
-        <value condition="Container.Content(tvshows)+[String.IsEmpty(ListItem.Art(clearart))|!Skin.HasSetting(TVShowClearart)]+Skin.HasSetting(TVShowCharacterart)">$INFO[ListItem.Art(characterart)]</value>
-        <value condition="Container.Content(tvshows)+Skin.HasSetting(TVShowClearart)">$INFO[ListItem.Art(clearart)]</value>
-    </variable>
-    <variable name="extraart_player_rule">
-        <value condition="[String.IsEmpty(Player.Art(clearart))|!Skin.HasSetting(Clearart)]+[String.IsEmpty(Player.Art(clearlogo))|!Skin.HasSetting(clearlogo)]+Skin.HasSetting(Landscape)">$INFO[Player.Art(landscape)]</value>
-        <value condition="[String.IsEmpty(Player.Art(clearart))|!Skin.HasSetting(Clearart)]+Skin.HasSetting(Clearlogo)">$INFO[Player.Art(clearlogo)]</value>
-        <value condition="Skin.HasSetting(Clearart)">$INFO[Player.Art(clearart)]</value>
-    </variable>
-    <variable name="extraart_tvshow_rule">
-        <!-- only for episodes -->
-        <value condition="[String.IsEmpty(ListItem.Art(tvshow.clearart))|!Skin.HasSetting(TVShowClearart)]+[String.IsEmpty(ListItem.Art(tvshow.characterart))|!Skin.HasSetting(TVShowCharacterart)]+[String.IsEmpty(ListItem.Art(tvshow.clearlogo))|!Skin.HasSetting(TVShowClearlogo)]+Skin.HasSetting(TVShowLandscape)">$INFO[ListItem.Art(tvshow.landscape)]</value>
-        <value condition="[String.IsEmpty(ListItem.Art(tvshow.clearart))|!Skin.HasSetting(TVShowClearart)]+[String.IsEmpty(ListItem.Art(tvshow.characterart))|!Skin.HasSetting(TVShowCharacterart)]+Skin.HasSetting(TVShowClearlogo)">$INFO[ListItem.Art(tvshow.clearlogo)]</value>
-        <value condition="[String.IsEmpty(ListItem.Art(tvshow.clearart))|!Skin.HasSetting(TVShowClearart)]+Skin.HasSetting(TVShowCharacterart)">$INFO[ListItem.Art(tvshow.characterart)]</value>
-        <value condition="Skin.HasSetting(TVShowClearart)">$INFO[ListItem.Art(tvshow.clearart)]</value>
-    </variable>
-    <variable name="extraart_tvshow_player_rule">
-        <!-- only for episodes -->
-        <value condition="Skin.HasSetting(tvshow_art)+[String.IsEmpty(Player.Art(tvshow.clearart))|!Skin.HasSetting(TVShowClearart)]+[String.IsEmpty(Player.Art(tvshow.characterart))|!Skin.HasSetting(TVShowCharacterart)]+[String.IsEmpty(Player.Art(tvshow.clearlogo))|!Skin.HasSetting(TVShowClearlogo)]+Skin.HasSetting(TVShowLandscape)+!String.IsEmpty(Player.Art(tvshow.landscape))">$INFO[Player.Art(tvshow.landscape)]</value>
-        <value condition="Skin.HasSetting(tvshow_art)+[String.IsEmpty(Player.Art(tvshow.clearart))|!Skin.HasSetting(TVShowClearart)]+[String.IsEmpty(Player.Art(tvshow.characterart))|!Skin.HasSetting(TVShowCharacterart)]+Skin.HasSetting(TVShowClearlogo)+!String.IsEmpty(Player.Art(tvshow.clearlogo))">$INFO[Player.Art(tvshow.clearlogo)]</value>
-        <value condition="Skin.HasSetting(tvshow_art)+[String.IsEmpty(Player.Art(tvshow.clearart))|!Skin.HasSetting(TVShowClearart)]+Skin.HasSetting(TVShowCharacterart)+!String.IsEmpty(Player.Art(tvshow.characterart))">$INFO[Player.Art(tvshow.characterart)]</value>
-        <value condition="Skin.HasSetting(tvshow_art)+Skin.HasSetting(TVShowClearart)+!String.IsEmpty(Player.Art(tvshow.clearart))">$INFO[Player.Art(tvshow.clearart)]</value>
-        <value>$INFO[Player.Icon]</value>
-    </variable>
-    <variable name="extraart_tvshow_player_rule_fullscreen">
-        <!-- only for episodes -->
-        <value condition="Skin.HasSetting(tvshow_art)+[String.IsEmpty(Player.Art(tvshow.clearart))|!Skin.HasSetting(TVShowClearart)]+[String.IsEmpty(Player.Art(tvshow.characterart))|!Skin.HasSetting(TVShowCharacterart)]+[String.IsEmpty(Player.Art(tvshow.clearlogo))|!Skin.HasSetting(TVShowClearlogo)]+Skin.HasSetting(TVShowLandscape)+!String.IsEmpty(Player.Art(tvshow.landscape))">$INFO[Player.Art(tvshow.landscape)]</value>
-        <value condition="Skin.HasSetting(tvshow_art)+[String.IsEmpty(Player.Art(tvshow.clearart))|!Skin.HasSetting(TVShowClearart)]+[String.IsEmpty(Player.Art(tvshow.characterart))|!Skin.HasSetting(TVShowCharacterart)]+Skin.HasSetting(TVShowClearlogo)+!String.IsEmpty(Player.Art(tvshow.clearlogo))">$INFO[Player.Art(tvshow.clearlogo)]</value>
-        <value condition="Skin.HasSetting(tvshow_art)+[String.IsEmpty(Player.Art(tvshow.clearart))|!Skin.HasSetting(TVShowClearart)]+Skin.HasSetting(TVShowCharacterart)+!String.IsEmpty(Player.Art(tvshow.characterart))">$INFO[Player.Art(tvshow.characterart)]</value>
-        <value condition="Skin.HasSetting(tvshow_art)+Skin.HasSetting(TVShowClearart)+!String.IsEmpty(Player.Art(tvshow.clearart))">$INFO[Player.Art(tvshow.clearart)]</value>
     </variable>
     <!-- <variable name="Rating_Age_Kids_Label">
         <value condition="!Skin.HasSetting(Rating_Age_Kids_0)+!Skin.HasSetting(Rating_Age_Kids_6)+!Skin.HasSetting(Rating_Age_Kids_12)+!Skin.HasSetting(Rating_Age_Kids_16)">[COLOR=description]$LOCALIZE[22080][/COLOR]</value>
@@ -995,10 +930,6 @@
 		<value condition="!System.IsMaster">$LOCALIZE[20045]</value>
 		<value>$LOCALIZE[20046]</value>
 	</variable>
-	<variable name="ListItemIconVAR">
-		<value condition="ListItem.IsFolder">DefaultFolder.png</value>
-		<value>$INFO[ListItem.Icon]</value>
-	</variable>
 	<variable name="PVRWidgetRecordsFlatVAR">
 		<value condition="Skin.HasSetting(Widget_PVR_Flat)">pvr://recordings/tv/active/</value>
 		<value>pvr://recordings/tv/active?view=flat</value>
@@ -1010,4 +941,50 @@
 	<variable name="AutoCompletionContentVar">
 		<value condition="System.HasAddon(plugin.program.autocompletion) + !System.HasHiddenInput">plugin://plugin.program.autocompletion?info=autocomplete&amp;&amp;id=$INFO[Control.GetLabel(312).index(1)]&amp;&amp;limit=9</value>
 	</variable>
+	<variable name="ClearlogoVAR">
+		<value condition="!String.IsEmpty(ListItem.Art(tvshow.clearlogo)">$INFO[ListItem.Art(tvshow.clearlogo)]</value>
+		<value condition="!String.IsEmpty(ListItem.Art(set.clearlogo)">$INFO[ListItem.Art(set.clearlogo)]</value>
+		<value condition="String.IsEmpty(ListItem.Art(tvshow.clearlogo)+String.IsEmpty(ListItem.Art(set.clearlogo)+System.HasAddon(script.skin.helper.service)+Skin.HasSetting(SkinHelper.EnableExtendedArt)">$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Clearlogo)]$INFO[Window(Home).Property(SkinHelper.Player.Art.Clearlogo)]</value>
+	</variable>
+	<variable name="ClearartVAR">
+		<value condition="System.HasAddon(script.skin.helper.service)+Skin.HasSetting(SkinHelper.EnableExtendedArt)">$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Clearart)]$INFO[Window(Home).Property(SkinHelper.Player.Art.Clearart)]</value>
+	</variable>
+	<variable name="LandscapeVAR">
+		<value condition="!String.IsEmpty(ListItem.Art(landscape)">$INFO[ListItem.Art(landscape)]</value>
+		<value condition="String.IsEmpty(ListItem.Art(landscape)+System.HasAddon(script.skin.helper.service)+Skin.HasSetting(SkinHelper.EnableExtendedArt)">$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Landscape)]$INFO[Window(Home).Property(SkinHelper.Player.Art.Landscape)]</value>
+	</variable>
+	<variable name="BannerVAR">
+		<value condition="!String.IsEmpty(ListItem.Art(tvshow.banner)">$INFO[ListItem.Art(tvshow.banner)]</value>
+		<value condition="!String.IsEmpty(ListItem.Art(banner)">$INFO[ListItem.Art(banner)]</value>
+		<value condition="String.IsEmpty(ListItem.Art(tvshow.banner)+String.IsEmpty(ListItem.Art(banner)+System.HasAddon(script.skin.helper.service)+Skin.HasSetting(SkinHelper.EnableExtendedArt)">$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Banner)]$INFO[Window(Home).Property(SkinHelper.Player.Art.Banner)]</value>
+	</variable>
+	<variable name="DiscartVAR">
+		<value condition="System.HasAddon(script.skin.helper.service)+Skin.HasSetting(SkinHelper.EnableExtendedArt)">$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Discart)]$INFO[Window(Home).Property(SkinHelper.Player.Art.Discart)]</value>
+	</variable>
+	<variable name="CharacterArtVAR">
+		<value condition="System.HasAddon(script.skin.helper.service)+Skin.HasSetting(SkinHelper.EnableExtendedArt)">$INFO[Window(Home).Property(SkinHelper.ListItem.Art.CharacterArt)]$INFO[Window(Home).Property(SkinHelper.Player.Art.CharacterArt)]</value>
+	</variable>
+	<variable name="FanartVAR">
+		<value condition="ListItem.IsCollection+!String.IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
+		<value condition="System.HasAddon(script.skin.helper.service)+Skin.HasSetting(SkinHelper.EnableExtendedArt)">$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Fanart)]$INFO[Window(Home).Property(SkinHelper.Player.Art.Fanart)]</value>
+	</variable>
+	<variable name="SetPosterVAR">
+		<value condition="ListItem.IsCollection+!String.IsEmpty(ListItem.Art(set.poster))">$INFO[ListItem.Art(set.poster)]</value>
+		<value condition="System.HasAddon(script.skin.helper.service)+Skin.HasSetting(SkinHelper.EnableExtendedArt)">$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Poster)]$INFO[Window(Home).Property(SkinHelper.Player.Art.Poster)]</value>
+	</variable>
+    <variable name="extraart_listitem_rule">
+        <value condition="!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Clearlogo))">$VAR[ClearlogoVAR]</value>
+        <value condition="!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Clearart))">$VAR[ClearartVAR]</value>
+        <value condition="!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.CharacterArt))">$VAR[CharacterArtVAR]</value>
+        <value condition="!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Landscape))">$VAR[LandscapeVAR]</value>
+        <value>$INFO[ListItem.Art(fanart)]</value>
+    </variable>
+    <variable name="extraart_player_rule">
+		<value condition="!String.IsEmpty(Player.Art(tvshow.clearlogo)">$INFO[Player.Art(tvshow.clearlogo)]</value>
+        <value condition="!String.IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Clearlogo))">$VAR[ClearlogoVAR]</value>
+        <value condition="!String.IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Clearart))">$VAR[ClearartVAR]</value>
+        <value condition="!String.IsEmpty(Window(Home).Property(SkinHelper.Player.Art.CharacterArt))">$VAR[CharacterArtVAR]</value>
+        <value condition="!String.IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Landscape))">$VAR[LandscapeVAR]</value>
+        <value>$INFO[Player.Icon]</value>
+    </variable>
 </includes>

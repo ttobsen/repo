@@ -105,15 +105,8 @@
                         <onright>12</onright>
                         <onclick>Skin.ResetSettings</onclick>
                         <onclick>Skin.SetBool(animation)</onclick>
-                        <onclick>Skin.SetBool(Clearart)</onclick>
-                        <onclick>Skin.SetBool(clearlogo)</onclick>
-                        <onclick>Skin.SetBool(Landscape)</onclick>
-                        <onclick>Skin.SetBool(video_art)</onclick>
-                        <onclick>Skin.SetBool(TVShowClearart)</onclick>
-                        <onclick>Skin.SetBool(TVShowCharacterart)</onclick>
-                        <onclick>Skin.SetBool(TVShowClearlogo)</onclick>
-                        <onclick>Skin.SetBool(TVShowLandscape)</onclick>
-                        <onclick>Skin.SetBool(tvshow_art)</onclick>
+                        <onclick>Skin.SetBool(SkinHelper.EnableExtendedArt)</onclick>
+                        <onclick>Skin.SetBool(SkinHelper.EnablePVRThumbs)</onclick>
                         <onclick>Skin.SetBool(NavInfo)</onclick>
                         <onclick>Skin.SetBool(NoDate)</onclick>
                         <onclick>Skin.SetBool(music_art)</onclick>
@@ -159,15 +152,8 @@
                         <onright>10</onright>
                         <onclick>Skin.ResetSettings</onclick>
                         <onclick>Skin.SetBool(animation)</onclick>
-                        <onclick>Skin.SetBool(Clearart)</onclick>
-                        <onclick>Skin.SetBool(clearlogo)</onclick>
-                        <onclick>Skin.SetBool(Landscape)</onclick>
-                        <onclick>Skin.SetBool(video_art)</onclick>
-                        <onclick>Skin.SetBool(TVShowClearart)</onclick>
-                        <onclick>Skin.SetBool(TVShowCharacterart)</onclick>
-                        <onclick>Skin.SetBool(TVShowClearlogo)</onclick>
-                        <onclick>Skin.SetBool(TVShowLandscape)</onclick>
-                        <onclick>Skin.SetBool(tvshow_art)</onclick>
+                        <onclick>Skin.SetBool(SkinHelper.EnableExtendedArt)</onclick>
+                        <onclick>Skin.SetBool(SkinHelper.EnablePVRThumbs)</onclick>
                         <onclick>Skin.SetBool(NavInfo)</onclick>
                         <onclick>Skin.SetBool(music_art)</onclick>
                         <onclick>Skin.SetBool(color_grey)</onclick>

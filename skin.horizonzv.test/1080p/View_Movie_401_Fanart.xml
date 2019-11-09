@@ -147,7 +147,7 @@
                         </control>
                     </itemlayout>
                     <focusedlayout condition="!Container.Content(Episodes)" height="465" width="180">
-                        <control type="image">
+                        <!-- <control type="image">
                             <visible>!Container(401).OnNext+!Container(401).OnPrevious</visible>
                             <visible>Control.HasFocus(401)</visible>
                             <left>-8</left>
@@ -156,7 +156,7 @@
                             <height>210</height>
                             <aspectratio>keep</aspectratio>
                             <include>DiscartMovies_small</include>
-                        </control>
+                        </control> -->
                         <control type="group">
                             <animation effect="zoom" center="auto" end="130" time="250" condition="Control.HasFocus(401)|Control.HasFocus(2000)">Focus</animation>
                             <animation effect="zoom" center="auto" end="110" time="200" condition="Control.HasFocus(888)">Conditional</animation>
@@ -214,7 +214,7 @@
                                 <height>236</height>
                                 <colordiffuse>dustdiffuse</colordiffuse>
                                 <texture diffuse="masks/mask.png">Shadow.png</texture>
-                                <visible>Skin.HasSetting(Fanart_ClearlogoTitle)+!String.IsEmpty(ListItem.Art(clearlogo))</visible>
+                                <visible>Skin.HasSetting(Fanart_ClearlogoTitle)</visible>
                             </control>
                         </control>
                     </focusedlayout>
@@ -226,9 +226,8 @@
             <visible>Control.IsVisible(401)+!Control.HasFocus(666)</visible>
             <top>22</top>
             <control type="group">
-                <visible>[!Skin.HasSetting(Fanart_ClearlogoTitle)|String.IsEmpty(ListItem.Art(clearlogo))]
-				|[Container.Content(Movies)+!Skin.HasSetting(video_art)]
-				|[Container.Content(tvshows)+!Skin.HasSetting(tvshow_art)]</visible>
+                <visible>[!Skin.HasSetting(Fanart_ClearlogoTitle)|!Skin.HasSetting(SkinHelper.EnableExtendedArt)]|String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Clearlogo))</visible>
+				<include>openclosevisible</include>
                 <control type="image">
                     <left>-15</left>
                     <top>996</top>
@@ -259,7 +258,7 @@
                     <label>$VAR[OriginalTitle]$INFO[ListItem.Year, (,)]</label>
                     <visible>!ListItem.IsParentFolder</visible>
                     <include>openclosevisible</include>
-                    <visible>!ListItem.IsCollection|!String.IsEmpty(ListItem.Plot)</visible>
+                    <visible>!ListItem.IsCollection+!String.IsEmpty(ListItem.Plot)</visible>
                 </control>
                 <control type="label">
                     <left>60</left>
@@ -300,9 +299,10 @@
                 <width>1800</width>
                 <height>120</height>
                 <aspectratio aligny="bottom">keep</aspectratio>
-                <texture>$INFO[ListItem.Art(clearlogo)]</texture>
-                <visible>Skin.HasSetting(Fanart_ClearlogoTitle)+!String.IsEmpty(ListItem.Art(clearlogo))</visible>
-                <visible>[!Container.Content(Movies)+Skin.HasSetting(tvshow_art)]|[Container.Content(Movies)+Skin.HasSetting(video_art)]</visible>
+                <texture>$VAR[ClearlogoVAR]</texture>
+                <visible>Skin.HasSetting(Fanart_ClearlogoTitle)+Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
+				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Clearlogo))</visible>
+				<include>openclosevisible</include>
             </control>
         </control>
         <control type="group">
@@ -316,8 +316,7 @@
                 <width>345</width>
                 <height>75</height>
                 <aspectratio>keep</aspectratio>
-                <texture>$INFO[ListItem.Art(clearlogo)]</texture>
-                <visible>Skin.HasSetting(Clearart)</visible>
+                <texture>$VAR[ClearlogoVAR]</texture>
                 <visible>!Skin.HasSetting(Fanart_ClearlogoTitle)</visible>
             </control>
             <control type="image" id="9898">
@@ -328,7 +327,7 @@
                 <height>75</height>
                 <aspectratio>keep</aspectratio>
                 <texture>$VAR[MovieStudioLogoVar]$INFO[ListItem.Studio,,.png]</texture>
-                <visible>String.IsEmpty(ListItem.Art(clearlogo))|Skin.HasSetting(Fanart_ClearlogoTitle)</visible>
+                <visible>Skin.HasSetting(Fanart_ClearlogoTitle)</visible>
                 <visible>!ListItem.IsParentFolder</visible>
             </control>
             <control type="scrollbar" id="60">
@@ -385,7 +384,7 @@
                         <shadowcolor>black</shadowcolor>
                         <label>$VAR[OriginalTitle]$INFO[ListItem.Year, (,)]</label>
                         <include>openclosevisible</include>
-                        <visible>!ListItem.IsCollection|!String.IsEmpty(ListItem.Plot)</visible>
+                        <visible>!ListItem.IsCollection+!String.IsEmpty(ListItem.Plot)</visible>
                     </control>
                     <control type="label">
                         <left>15</left>
@@ -462,7 +461,7 @@
                             <font>ubuntu-r18</font>
                             <shadowcolor>black</shadowcolor>
                             <label>$INFO[ListItem.Plot]</label>
-                            <visible>!String.IsEmpty(ListItem.Plot)</visible>
+                            <visible>!String.IsEmpty(ListItem.Plot)+!ListItem.IsCollection</visible>
                         </control>
                         <control type="group">
                             <include>openclosefanart</include>
@@ -472,9 +471,22 @@
                             <control type="grouplist">
                                 <width>570</width>
                                 <height>300</height>
-                                <visible>!System.HasAddon(script.skin.info.service)+![ListItem.IsCollection|Container.Content(Sets)]|!String.IsEmpty(ListItem.Plot)</visible>
+                                <visible>!System.HasAddon(script.skin.info.service)|!String.IsEmpty(ListItem.Plot)</visible>
+								<visible>![ListItem.IsCollection|Container.Content(Sets)]</visible>
                                 <include>MovieDataList_Content</include>
+								<include>openclosevisible</include>
                             </control>
+							<control type="textbox">
+								<description>Description</description>
+								<include>openclosevisible</include>
+                                <width>570</width>
+                                <height>350</height>
+								<include condition="Skin.HasSetting(BigPlotText)">PlotTextBigVar</include>
+								<font>ubuntu-r18</font>
+								<shadowcolor>black</shadowcolor>
+								<label>$INFO[ListItem.Plot]</label>
+								<visible>ListItem.IsCollection</visible>
+							</control>
                             <control type="group">
                                 <visible>![ListItem.IsCollection|Container.Content(Sets)]</visible>
                                 <control type="image">
@@ -529,8 +541,8 @@
                     <width>555</width>
                     <height>375</height>
                     <aspectratio>keep</aspectratio>
-                    <texture>$VAR[extraart_tvshow_rule]</texture>
-                    <visible>Skin.HasSetting(tvshow_art)</visible>
+                    <texture>$VAR[extraart_listitem_rule]</texture>
+                    <!-- <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible> -->
                 </control>
                 <control type="image">
                     <visible>Container.Content(Seasons)</visible>
@@ -541,7 +553,7 @@
                     <height>375</height>
                     <aspectratio>keep</aspectratio>
                     <texture diffuse="shine.png">special://skin/backgrounds/mediaoverlaywhite.jpg</texture>
-                    <visible>!Skin.HasSetting(tvshow_art)</visible>
+                    <visible>!Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
                 </control>
                 <control type="group">
                     <include>opencloseslideleft</include>

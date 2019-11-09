@@ -106,26 +106,13 @@
                         </control>
                         <control type="image">
                             <include>openclosevisible</include>
-                            <left>21</left>
-                            <top>12</top>
-                            <width>171</width>
-                            <height>240</height>
-                            <aspectratio>keep</aspectratio>
-                            <colordiffuse>$VAR[CoverDim]</colordiffuse>
-                            <animation effect="rotate" end="45" time="0" center="auto" condition="true">Conditional</animation>
-                            <texture>$INFO[ListItem.Art(clearlogo)]</texture>
-                            <visible>Skin.HasSetting(logo_cover)+!String.IsEmpty(ListItem.Art(clearlogo))</visible>
-                        </control>
-                        <control type="image">
-                            <include>openclosevisible</include>
                             <left>22</left>
                             <top>20</top>
                             <width>164</width>
                             <height>224</height>
                             <aspectratio>scale</aspectratio>
                             <colordiffuse>$VAR[CoverDim]</colordiffuse>
-                            <texture diffuse="masks/mask.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
-                            <visible>String.IsEmpty(ListItem.Art(clearlogo))|!Skin.HasSetting(logo_cover)</visible>
+                            <texture diffuse="masks/mask.png">$VAR[PosterThumb]</texture>
                         </control>
                         <control type="image">
                             <left>24</left>
@@ -216,7 +203,7 @@
                             <width>164</width>
                             <height>224</height>
                             <aspectratio>scale</aspectratio>
-                            <texture diffuse="masks/mask.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
+                            <texture diffuse="masks/mask.png">$VAR[PosterThumb]</texture>
                         </control>
                         <control type="group">
                             <left>24</left>
@@ -283,7 +270,7 @@
                             <height>208</height>
                             <aspectratio>keep</aspectratio>
                             <colordiffuse>$VAR[CoverDim]</colordiffuse>
-                            <texture border="2" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
+                            <texture border="2">$VAR[PosterThumb]</texture>
                         </control>
                         <control type="image">
                             <left>24</left>
@@ -393,7 +380,7 @@
                             <width>342</width>
                             <height>208</height>
                             <aspectratio>keep</aspectratio>
-                            <texture border="2" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
+                            <texture border="2">$VAR[PosterThumb]</texture>
                         </control>
                         <control type="image">
                             <left>303</left>
@@ -604,7 +591,7 @@
                                 <include condition="Skin.HasSetting(BigPlotText)">PlotTextBigVar</include>
                                 <shadowcolor>black</shadowcolor>
                                 <label>$INFO[ListItem.Plot]</label>
-                                <visible>!String.IsEmpty(ListItem.Plot)</visible>
+                                <visible>!String.IsEmpty(ListItem.Plot)+!ListItem.IsCollection</visible>
                             </control>
                             <control type="image">
                                 <visible>Container.Content(Movies)</visible>
@@ -615,8 +602,20 @@
                                 <height>240</height>
                                 <colordiffuse>menudiffuse</colordiffuse>
                                 <aspectratio align="right">keep</aspectratio>
-                                <texture diffuse="SideFadeWhite_round.png">$VAR[extraart_rule]</texture>
-                                <visible>Skin.HasSetting(video_art)</visible>
+                                <texture diffuse="SideFadeWhite_round.png">$VAR[extraart_listitem_rule]</texture>
+                            </control>
+                            <control type="textbox">
+                                <description>Description</description>
+                                <include>openclosevisible</include>
+                                <left>1245</left>
+                                <top>218</top>
+                                <width>570</width>
+                                <height>240</height>
+                                <include condition="!Skin.HasSetting(BigPlotText)">PlotText16Var</include>
+                                <include condition="Skin.HasSetting(BigPlotText)">PlotTextBigVar</include>
+                                <shadowcolor>black</shadowcolor>
+                                <label>$INFO[ListItem.Plot]</label>
+                                <visible>!String.IsEmpty(ListItem.Plot)+ListItem.IsCollection</visible>
                             </control>
                             <control type="group">
                                 <include>openclosefanart</include>
@@ -652,11 +651,10 @@
                         <width>570</width>
                         <height>240</height>
                         <aspectratio>keep</aspectratio>
-                        <texture>$VAR[extraart_tvshow_rule]</texture>
-                        <visible>Skin.HasSetting(tvshow_art)</visible>
+                        <texture>$VAR[extraart_listitem_rule]</texture>
                     </control>
                     <control type="label">
-                        <visible>Container.Content(Episodes)|[!Skin.HasSetting(tvshow_art)+Container.Content(Seasons)]</visible>
+                        <visible>Container.Content(Episodes)|[!Skin.HasSetting(SkinHelper.EnableExtendedArt)+Container.Content(Seasons)]</visible>
                         <left>1305</left>
                         <top>278</top>
                         <width>570</width>

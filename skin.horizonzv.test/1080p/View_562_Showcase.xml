@@ -77,7 +77,7 @@
 								<height>334</height>
 								<aspectratio>stretch</aspectratio>
 								<colordiffuse>$VAR[CoverDim]</colordiffuse>
-								<texture diffuse="masks/CdCoverMask_full.png" fallback="FallbackCover.png">$VAR[ListItemIconVAR]</texture>
+								<texture diffuse="masks/CdCoverMask_full.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
 							</control>
 							<control type="image">
 								<left>0</left>
@@ -95,7 +95,7 @@
 								<height>117</height>
 								<aspectratio>stretch</aspectratio>
 								<colordiffuse>$VAR[CoverDim]</colordiffuse>
-								<texture border="1" flipy="true" diffuse="ContentPanelMirror3.png" fallback="FallbackCover.png">$VAR[ListItemIconVAR]</texture>
+								<texture border="1" flipy="true" diffuse="ContentPanelMirror3.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
 								<visible>Skin.HasSetting(animation)</visible>
 							</control>
 							<control type="image">
@@ -254,7 +254,7 @@
 						</control>
 					</itemlayout>
 					<focusedlayout condition="[Container.Content(Movies)|Container.Content(Sets)|Container.Content(Seasons)|Container.Content(tvshows)|Container.Content(musicvideos)]+!Skin.HasSetting(hideMovieCases)" height="435" width="390">
-						<control type="image">
+						<!-- <control type="image">
 							<visible>!Container(562).OnNext+!Container(562).OnPrevious</visible>
 							<visible>Control.HasFocus(562)</visible>
 							<left>525</left>
@@ -263,7 +263,7 @@
 							<height>300</height>
 							<aspectratio>keep</aspectratio>
 							<include>DiscartMovies</include>
-						</control>
+						</control> -->
 						<control type="group">
 							<left>493</left>
 							<animation effect="zoom" center="auto" tween="cubic" start="80" end="100" time="300" condition="Skin.HasSetting(animation)+!Skin.HasSetting(no_wall_animation)">Focus</animation>
@@ -320,7 +320,7 @@
 						</control>
 					</focusedlayout>
 					<focusedlayout condition="[Container.Content(Movies)|Container.Content(Sets)|Container.Content(Seasons)|Container.Content(tvshows)|Container.Content(musicvideos)]+Skin.HasSetting(hideMovieCases)" height="435" width="360">
-						<control type="image">
+						<!-- <control type="image">
 							<visible>!Container(562).OnNext+!Container(562).OnPrevious</visible>
 							<visible>Control.HasFocus(562)</visible>
 							<left>627</left>
@@ -329,7 +329,7 @@
 							<height>300</height>
 							<aspectratio>keep</aspectratio>
 							<include>DiscartMovies</include>
-						</control>
+						</control> -->
 						<control type="group">
 							<left>606</left>
 							<animation effect="zoom" center="auto" tween="cubic" start="80" end="100" time="300" condition="Skin.HasSetting(animation)+!Skin.HasSetting(no_wall_animation)">Focus</animation>
@@ -498,41 +498,12 @@
             <control type="group"> <!-- Movie Info Panel & Flaggs -->
                 <visible>Container.Content(Movies)|Container.Content(Sets)|Container.Content(Seasons)|Container.Content(tvshows)|Container.Content(musicvideos)</visible>
                 <visible>!ListItem.IsParentFolder</visible>
-				<!-- <animation effect="fade" end="100" condition="![Container(562).OnNext|Container(562).OnPrevious]">Conditional</animation>
-				<animation effect="fade" end="0" condition="Container(562).OnNext|Container(562).OnPrevious">Conditional</animation> -->
 				<include>openclosemedium</include>
                 <control type="group">
                     <include>opencloseslideup</include>
                     <left>45</left>
                     <top>680</top>
                     <control type="group">
-                        <control type="image" id="1100">
-                            <left>0</left>
-                            <top>0</top>
-                            <width>586</width>
-                            <height>332</height>
-                            <aspectratio>scale</aspectratio>
-                            <texture background="true" border="1" diffuse="Shine.png" fallback="Empty.png">$INFO[ListItem.Art(fanart)]</texture>
-                            <visible>[Skin.HasSetting(fanart)+String.IsEmpty(Control.GetLabel(1101))]
-							|[[Container.Content(Movies)|Container.Content(musicvideos)]+!Skin.HasSetting(video_art)]
-							|[[Container.Content(Seasons)|Container.Content(tvshows)]+!Skin.HasSetting(tvshow_art)]</visible>
-                            <visible>!ListItem.IsCollection</visible>
-                            <include>opencloseslideup</include>
-                        </control>
-                        <control type="multiimage" id="1101">
-                            <left>0</left>
-                            <top>0</top>
-                            <width>586</width>
-                            <height>332</height>
-                            <imagepath background="true" border="1" diffuse="Shine.png">$INFO[ListItem.Path]extrafanart</imagepath>
-                            <aspectratio>scale</aspectratio>
-                            <timeperimage>4000</timeperimage>
-                            <fadetime>800</fadetime>
-                            <randomize>true</randomize>
-                            <visible>[[Container.Content(Movies)|Container.Content(musicvideos)]+Skin.HasSetting(video_art)+!Skin.HasSetting(no_extrafanart)]
-							|[[Container.Content(Seasons)|Container.Content(tvshows)]+Skin.HasSetting(tvshow_art)]</visible>
-                            <include>opencloseslideup</include>
-                        </control>
                         <control type="label" id="1102">
                             <left>0</left>
                             <top>0</top>
@@ -546,6 +517,28 @@
                             <label>$INFO[ListItem.Label]</label>
                             <scroll>true</scroll>
                             <visible>String.IsEqual(Control.GetLabel(1100),Empty.png)+String.IsEmpty(Control.GetLabel(1101))</visible>
+                            <include>opencloseslideup</include>
+                        </control>
+                        <control type="image" id="1100">
+                            <left>0</left>
+                            <top>0</top>
+                            <width>586</width>
+                            <height>332</height>
+                            <aspectratio>scale</aspectratio>
+                            <texture background="true" border="1" diffuse="Shine.png" fallback="Empty.png">$INFO[ListItem.Art(fanart)]</texture>
+                            <visible>!Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
+                            <visible>!ListItem.IsCollection</visible>
+                            <include>opencloseslideup</include>
+                        </control>
+                        <control type="image" id="1101">
+                            <left>0</left>
+                            <top>0</top>
+                            <width>586</width>
+                            <height>332</height>
+                            <aspectratio>scale</aspectratio>
+                            <texture background="true" border="1" diffuse="Shine.png">$VAR[LandscapeVAR]</texture>
+                            <visible>!ListItem.IsCollection</visible>
+                            <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
                             <include>opencloseslideup</include>
                         </control>
                     </control>
@@ -573,11 +566,10 @@
 						<top>3</top>
 						<width>615</width>
 						<height>320</height>
-						<texture diffuse="Shine.png">$VAR[extraart_rule]$VAR[extraart_tvshow_rule]</texture>
+						<texture diffuse="Shine.png">$VAR[extraart_listitem_rule]</texture>
 						<aspectratio>keep</aspectratio>
-						<visible>!ListItem.IsCollection|!String.IsEmpty(ListItem.Plot)</visible>
-						<visible>[[Container.Content(Movies)|Container.Content(Sets)|Container.Content(musicvideos)]+Skin.HasSetting(video_art)]
-						|[[Container.Content(Seasons)|Container.Content(tvshows)]+Skin.HasSetting(tvshow_art)]</visible>
+						<visible>!ListItem.IsCollection+!String.IsEmpty(ListItem.Plot)</visible>
+						<visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
 						<include>opencloseslideup</include>
 					</control>
 					<control type="textbox" id="1203">
@@ -587,9 +579,9 @@
 						<height>327</height>
 						<font>ubuntu-r16b</font>
 						<label>$INFO[ListItem.Plot]</label>
-						<visible>!String.IsEmpty(ListItem.Plot)</visible>
-						<visible>[[Container.Content(Movies)|Container.Content(Sets)|Container.Content(musicvideos)]+Skin.HasSetting(video_art)]
-						|[[Container.Content(Seasons)|Container.Content(tvshows)]+Skin.HasSetting(tvshow_art)]</visible>
+						<visible>!ListItem.IsCollection+!String.IsEmpty(ListItem.Plot)</visible>
+						<visible>[[Container.Content(Movies)|Container.Content(Sets)|Container.Content(musicvideos)]+Skin.HasSetting(SkinHelper.EnableExtendedArt)]
+						|[[Container.Content(Seasons)|Container.Content(tvshows)]+Skin.HasSetting(SkinHelper.EnableExtendedArt)]</visible>
 						<include>opencloseslideup</include>
 					</control>
 					<control type="textbox" id="1203">
@@ -599,9 +591,9 @@
 						<height>327</height>
 						<font>ubuntu-r16b</font>
 						<label>$INFO[ListItem.Plot]</label>
-						<visible>!String.IsEmpty(ListItem.Plot)</visible>
-						<visible>![[Container.Content(Movies)|Container.Content(Sets)|Container.Content(musicvideos)]+Skin.HasSetting(video_art)]
-						+![[Container.Content(Seasons)|Container.Content(tvshows)]+Skin.HasSetting(tvshow_art)]</visible>
+						<visible>!ListItem.IsCollection+!String.IsEmpty(ListItem.Plot)</visible>
+						<visible>![[Container.Content(Movies)|Container.Content(Sets)|Container.Content(musicvideos)]+Skin.HasSetting(SkinHelper.EnableExtendedArt)]
+						+![[Container.Content(Seasons)|Container.Content(tvshows)]+Skin.HasSetting(SkinHelper.EnableExtendedArt)]</visible>
 						<include>opencloseslideup</include>
 					</control>
                     <control type="image">
@@ -655,7 +647,7 @@
                         <width>471</width>
                         <height>471</height>
                         <aspectratio>stretch</aspectratio>
-                        <texture diffuse="masks/CdCoverMask_full.png" fallback="FallbackCover.png">$VAR[ListItemIconVAR]</texture>
+                        <texture diffuse="masks/CdCoverMask_full.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                     </control>
                     <control type="image">
                         <left>-51</left>
