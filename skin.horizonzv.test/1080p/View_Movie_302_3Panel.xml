@@ -171,54 +171,21 @@
                     <visible>[[Control.HasFocus(302)|Control.HasFocus(60)]+String.IsEmpty(ListItem.Art(poster))+!Control.IsVisible(600)]|String.IsEqual(Container.FolderPath,videodb://tvshows/actors/)|String.IsEqual(Container.FolderPath,videodb://movies/actors/)</visible>
                     <include>openclosevisible</include>
                 </control>
-                <control type="group">
-                    <visible>![String.IsEqual(Container.FolderPath,videodb://tvshows/actors/)|String.IsEqual(Container.FolderPath,videodb://movies/actors/)]</visible>
-                    <control type="image">
-                        <left>162</left>
-                        <top>532</top>
-                        <width>525</width>
-                        <height>330</height>
-                        <colordiffuse>menudiffuse</colordiffuse>
-                        <aspectratio aligny="bottom">keep</aspectratio>
-                        <texture background="true" border="5">$INFO[Container(302).ListItem.Art(clearlogo)]</texture>
-                        <visible>!String.IsEmpty(Container(302).ListItem.Art(clearlogo))</visible>
-                        <visible>[!ListItem.IsCollection|!String.IsEmpty(ListItem.Plot)]|Control.HasFocus(302)</visible>
-                        <visible>[Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(tvshow_art)
-						|![Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(video_art)</visible>
-                        <visible>!Skin.HasSetting(ShowCover)</visible>
-                        <include>openclosevisible</include>
-                    </control>
-                    <control type="image">
-                        <left>162</left>
-                        <top>532</top>
-                        <width>525</width>
-                        <height>330</height>
-                        <colordiffuse>menudiffuse</colordiffuse>
-                        <aspectratio aligny="bottom">keep</aspectratio>
-                        <texture background="true" border="5">$INFO[Container(303).ListItem.Art(clearlogo)]</texture>
-                        <visible>!String.IsEmpty(Container(303).ListItem.Art(clearlogo))</visible>
-                        <visible>[!ListItem.IsCollection|!String.IsEmpty(ListItem.Plot)]|Control.HasFocus(303)</visible>
-                        <visible>[Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(tvshow_art)
-						|![Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(video_art)</visible>
-                        <visible>!Skin.HasSetting(ShowCover)</visible>
-                        <include>openclosevisible</include>
-                    </control>
-                    <control type="image">
-                        <left>162</left>
-                        <top>532</top>
-                        <width>525</width>
-                        <height>330</height>
-                        <colordiffuse>menudiffuse</colordiffuse>
-                        <aspectratio aligny="bottom">keep</aspectratio>
-                        <texture background="true" border="5">$INFO[Container(600).ListItem.Art(clearlogo)]</texture>
-                        <visible>!String.IsEmpty(Container(600).ListItem.Art(clearlogo))+String.IsEmpty(Container(600).ListItem.Label)</visible>
-                        <visible>[!ListItem.IsCollection|!String.IsEmpty(ListItem.Plot)]|Control.HasFocus(600)</visible>
-                        <visible>[Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(tvshow_art)
-						|![Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(video_art)</visible>
-                        <visible>!Skin.HasSetting(ShowCover)</visible>
-                        <include>openclosevisible</include>
-                    </control>
-                </control>
+				<control type="image">
+					<left>162</left>
+					<top>532</top>
+					<width>525</width>
+					<height>330</height>
+					<colordiffuse>menudiffuse</colordiffuse>
+					<aspectratio aligny="bottom">keep</aspectratio>
+					<texture background="true" border="5">$VAR[ClearlogoVAR]</texture>
+					<!-- <visible>String.IsEmpty(ListItem.Plot)+[Control.HasFocus(302)|Control.HasFocus(303)|Control.HasFocus(600)]</visible> -->
+					<visible>Control.HasFocus(302)|Control.HasFocus(303)|Control.HasFocus(600)</visible>
+					<visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
+					<visible>!Skin.HasSetting(ShowCover)</visible>
+					<visible>![String.IsEqual(Container.FolderPath,videodb://tvshows/actors/)|String.IsEqual(Container.FolderPath,videodb://movies/actors/)]</visible>
+					<include>openclosevisible</include>
+				</control>
                 <control type="textbox">
                     <left>158</left>
                     <top>68</top>
@@ -313,7 +280,7 @@
                     <!-- <visible>!Control.IsVisible(303)</visible> -->
                     <visible>Container.Content(Movies)</visible>
                     <visible>!ListItem.IsParentFolder</visible>
-                    <visible>!System.HasAddon(script.skin.info.service)+![ListItem.IsCollection|Container.Content(Sets)]|!String.IsEmpty(ListItem.Plot)</visible>
+                    <visible>!System.HasAddon(script.skin.info.service)+![ListItem.IsCollection|Container.Content(Sets)]</visible>
                     <include>MovieDataList_Content</include>
                 </control>
                 <control type="image">
@@ -327,7 +294,7 @@
                     <include>openclosevisible</include>
                     <visible>!String.IsEmpty(Control.GetLabel(90))</visible>
                     <visible>![Container.Content(TVShows)|Container.Content(seasons)|Container.Content(episodes)|Container.Content(addons)]</visible>
-                    <visible>!ListItem.IsCollection|!String.IsEmpty(ListItem.Plot)</visible>
+                    <visible>!ListItem.IsCollection</visible>
                 </control>
                 <control type="label">
                     <left>150</left>
@@ -437,7 +404,7 @@
                     <include>openclosevisible</include>
                     <!-- <visible>!Control.IsVisible(303)</visible> -->
                     <visible>![Container.Content(TVShows)|Container.Content(seasons)|Container.Content(episodes)|Container.Content(addons)]</visible>
-                    <visible>!ListItem.IsCollection|!String.IsEmpty(ListItem.Plot)</visible>
+                    <visible>!ListItem.IsCollection</visible>
                 </control>
                 <control type="group">
                     <left>0</left>
@@ -610,23 +577,7 @@
                             <height>98</height>
                             <aspectratio>stretch</aspectratio>
                             <colordiffuse>$VAR[CoverDim]</colordiffuse>
-                            <texture diffuse="masks/banner_mask.png">$VAR[SetBannerThumb]</texture>
-                            <visible>String.IsEmpty(ListItem.VideoCodec)+!ListItem.IsParentFolder+ListItem.IsCollection</visible>
-                            <visible>[Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(tvshow_art)
-							|![Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(video_art)</visible>
-                        </control>
-                        <control type="image">
-                            <left>0</left>
-                            <top>6</top>
-                            <width>585</width>
-                            <height>98</height>
-                            <aspectratio>stretch</aspectratio>
-                            <colordiffuse>$VAR[CoverDim]</colordiffuse>
-                            <texture diffuse="masks/banner_mask.png" fallback="FallbackBanner2.png">$INFO[ListItem.Art(banner)]</texture>
-                            <visible>!ListItem.IsParentFolder</visible>
-                            <visible>![String.IsEmpty(ListItem.VideoCodec)+!ListItem.IsParentFolder+ListItem.IsCollection]</visible>
-                            <visible>[Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(tvshow_art)
-							|![Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(video_art)</visible>
+                            <texture diffuse="masks/banner_mask.png">$VAR[BannerContainerVAR]</texture>
                         </control>
                         <control type="label">
                             <left>8</left>
@@ -639,9 +590,7 @@
                             <font>impacted21</font>
                             <shadowcolor>black</shadowcolor>
                             <label>$VAR[OriginalTitle]</label>
-                            <visible>String.IsEmpty(ListItem.Art(banner))
-							|[Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+!Skin.HasSetting(tvshow_art)
-							|![Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+!Skin.HasSetting(video_art)</visible>
+							<visible>String.IsEmpty(ListItem.Art(banner))|!Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
                         </control>
                         <control type="group">
                             <left>0</left>
@@ -666,9 +615,7 @@
                             <aspectratio>stretch</aspectratio>
                             <colordiffuse>grey3</colordiffuse>
                             <texture border="5">masks/Default.png</texture>
-                            <visible>String.IsEmpty(ListItem.Art(banner))
-							|[Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+!Skin.HasSetting(tvshow_art)
-							|![Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+!Skin.HasSetting(video_art)</visible>
+							<visible>String.IsEmpty(ListItem.Art(banner))|!Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
                         </control>
                     </itemlayout>
                     <focusedlayout width="585" height="120">
@@ -681,22 +628,7 @@
                                 <width>585</width>
                                 <height>98</height>
                                 <aspectratio>stretch</aspectratio>
-                                <texture diffuse="masks/banner_mask.png">$VAR[SetBannerThumb]</texture>
-                                <visible>[String.IsEmpty(ListItem.VideoCodec)+!ListItem.IsParentFolder+ListItem.IsCollection]</visible>
-                                <visible>[Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(tvshow_art)
-								|![Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(video_art)</visible>
-                            </control>
-                            <control type="image">
-                                <left>0</left>
-                                <top>6</top>
-                                <width>585</width>
-                                <height>98</height>
-                                <aspectratio>stretch</aspectratio>
-                                <texture diffuse="masks/banner_mask.png" fallback="FallbackBanner2.png">$INFO[ListItem.Art(banner)]</texture>
-                                <visible>!ListItem.IsParentFolder</visible>
-                                <visible>![String.IsEmpty(ListItem.VideoCodec)+!ListItem.IsParentFolder+ListItem.IsCollection]</visible>
-                                <visible>[Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(tvshow_art)
-								|![Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(video_art)</visible>
+								<texture diffuse="masks/banner_mask.png">$VAR[BannerContainerVAR]</texture>
                             </control>
                             <control type="label">
                                 <left>8</left>
@@ -709,9 +641,7 @@
                                 <textcolor>white</textcolor>
                                 <shadowcolor>black</shadowcolor>
                                 <label>$VAR[OriginalTitle]</label>
-                                <visible>String.IsEmpty(ListItem.Art(banner))
-								|[Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+!Skin.HasSetting(tvshow_art)
-								|![Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+!Skin.HasSetting(video_art)</visible>
+                                <visible>String.IsEmpty(ListItem.Art(banner))|!Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
                             </control>
                             <control type="group">
                                 <left>0</left>

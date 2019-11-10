@@ -4,6 +4,7 @@
         <control type="list" id="2000">
             <!-- extended info list -->
             <visible>ListItem.IsCollection</visible>
+			<include>openclosevisible</include>
             <left>0</left>
             <top>0</top>
             <width>1740</width>
@@ -19,6 +20,7 @@
             <onup condition="Control.IsVisible(500)">500</onup>
             <onup condition="Control.IsVisible(515)">515</onup>
             <ondown condition="Control.IsVisible(17000)+Control.IsVisible(562)">17000</ondown>
+            <ondown condition="Control.IsVisible(17000)+Control.IsVisible(500)">17000</ondown>
             <ondown condition="Control.IsVisible(721)">721</ondown>
             <ondown condition="Control.IsVisible(503)">503</ondown>
             <ondown condition="Control.IsVisible(401)">401</ondown>

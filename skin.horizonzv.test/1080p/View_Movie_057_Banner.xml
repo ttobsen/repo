@@ -191,7 +191,18 @@
                                 <align>left</align>
                                 <font>font16</font>
                                 <textcolor>grey</textcolor>
+                                <label>$VAR[EpisodeSubTitleVar]</label>
+                                <visible>ListItem.IsCollection</visible>
+                            </control>
+                            <control type="label">
+                                <left>270</left>
+                                <top>62</top>
+                                <width>780</width>
+                                <align>left</align>
+                                <font>font16</font>
+                                <textcolor>grey</textcolor>
                                 <label>$VAR[EpisodeSubTitleVar]$INFO[ListItem.Votes, • $LOCALIZE[205] ,]</label>
+                                <visible>!ListItem.IsCollection</visible>
                             </control>
                             <control type="image">
                                 <description>Rated</description>
@@ -231,20 +242,18 @@
                                 <height>33</height>
                                 <aspectratio align="left">stretch</aspectratio>
                                 <texture background="true" fallback="leftratingvideo/0.0.png">$INFO[ListItem.Rating,leftratingvideo/,.png]</texture>
+                                <visible>!ListItem.IsCollection</visible>
                             </control>
-                            <control type="group">
-                                <left>420</left>
-                                <top>330</top>
-                                <control type="image">
-                                    <left>0</left>
-                                    <top>0</top>
-                                    <width>42</width>
-                                    <height>26</height>
-                                    <aspectratio align="left" aligny="bottom">keep</aspectratio>
-                                    <texture background="true">$VAR[ListFlag]</texture>
-                                    <visible>Window.IsVisible(Videos) + [Container.Content(Movies)|Container.Content(Episodes)|Container.Content(MusicVideos)]</visible>
-                                </control>
-                            </control>
+							<control type="image">
+								<left>420</left>
+								<top>330</top>
+								<width>42</width>
+								<height>26</height>
+								<aspectratio align="left" aligny="bottom">keep</aspectratio>
+								<texture background="true">$VAR[ListFlag]</texture>
+								<visible>Window.IsVisible(Videos) + [Container.Content(Movies)|Container.Content(Episodes)|Container.Content(MusicVideos)]</visible>
+                                <animation effect="slide" end="-150,0" time="0" condition="ListItem.IsCollection">Conditional</animation>
+							</control>
                             <control type="image">
                                 <include>openclosevisible</include>
                                 <left>900</left>
@@ -622,29 +631,9 @@
                     <width>302</width>
                     <height>160</height>
                     <aspectratio align="center" aligny="bottom">keep</aspectratio>
-                    <texture background="true">$VAR[extraart_tvshow_rule]</texture>
+                    <texture background="true">$VAR[extraart_listitem_rule]</texture>
                     <visible>!String.IsEmpty(Control.GetLabel(3203))</visible>
-                    <visible>Skin.HasSetting(tvshow_art)</visible>
-                </control>
-                <control type="image">
-                    <include>openclosevisible</include>
-                    <left>0</left>
-                    <top>68</top>
-                    <width>318</width>
-                    <height>172</height>
-                    <texture background="true">Black.png</texture>
-                    <visible>!String.IsEmpty(Control.GetLabel(3204))</visible>
-                </control>
-                <control type="image" id="3204">
-                    <include>openclosevisible</include>
-                    <left>12</left>
-                    <top>76</top>
-                    <width>302</width>
-                    <height>160</height>
-                    <aspectratio align="center" aligny="bottom">keep</aspectratio>
-                    <texture background="true">$VAR[extraart_rule]</texture>
-                    <visible>!String.IsEmpty(Control.GetLabel(3204))</visible>
-                    <visible>Skin.HasSetting(video_art)</visible>
+                    <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
                 </control>
             </control>
         </control>

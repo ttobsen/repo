@@ -172,18 +172,6 @@
                         <visible>System.HasAddon(script.artistslideshow)</visible>
                     </item>
                     <item>
-                        <label>Artwork Downloader</label>
-                        <label2>$LOCALIZE[24038]</label2>
-                        <onclick>InstallAddon(script.artwork.downloader)</onclick>
-                        <visible>!System.HasAddon(script.artwork.downloader)</visible>
-                    </item>
-                    <item>
-                        <label>Artwork Downloader $INFO[System.AddonVersion(script.artwork.downloader),(,)]</label>
-                        <label2>$LOCALIZE[5]</label2>
-                        <onclick>Addon.OpenSettings(script.artwork.downloader)</onclick>
-                        <visible>System.HasAddon(script.artwork.downloader)</visible>
-                    </item>
-                    <item>
                         <label>CDArt Manager</label>
                         <label2>$LOCALIZE[24038]</label2>
                         <onclick>InstallAddon(script.cdartmanager)</onclick>
@@ -314,6 +302,19 @@
                         <label2>$LOCALIZE[5]</label2>
                         <onclick>Addon.OpenSettings(script.skinhelper.ping)</onclick>
                         <visible>System.HasAddon(script.skinhelper.ping)</visible>
+                    </item>
+                    <item>
+                        <label>Skin Helper Service</label>
+                        <label2>$LOCALIZE[24038]</label2>
+                        <onclick>InstallAddon(script.skin.helper.service)</onclick>
+                        <visible>!System.HasAddon(script.skin.helper.service)</visible>
+                    </item>
+                    <item>
+                        <label>Skin Helper Service $INFO[System.AddonVersion(script.skin.helper.service),(,)]</label>
+                        <label2/>
+                        <icon>OverlayWatched.png</icon>
+                        <onclick/>
+                        <visible>System.HasAddon(script.skin.helper.service)</visible>
                     </item>
                     <item>
                         <label>Library Node Editor</label>

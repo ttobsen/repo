@@ -79,11 +79,9 @@
                         <top>8</top>
                         <width>525</width>
                         <height>87</height>
-                        <colordiffuse>$VAR[CoverDim]</colordiffuse>
-                        <texture background="true" fallback="FallbackBanner2.png">$VAR[BannerThumb]</texture>
                         <aspectratio>stretch</aspectratio>
-                        <visible>!ListItem.IsParentFolder</visible>
-                        <visible>![String.IsEmpty(ListItem.VideoCodec)+!ListItem.IsParentFolder+ListItem.IsCollection]</visible>
+                        <colordiffuse>$VAR[CoverDim]</colordiffuse>
+                        <texture background="true">$VAR[BannerContainerVAR]</texture>
                     </control>
                     <control type="image">
                         <left>8</left>
@@ -162,20 +160,8 @@
                             <top>8</top>
                             <width>525</width>
                             <height>87</height>
-                            <texture background="true" fallback="FallbackBanner2.png">$VAR[BannerThumb]</texture>
                             <aspectratio>stretch</aspectratio>
-                            <visible>!ListItem.IsParentFolder</visible>
-                            <visible>![String.IsEmpty(ListItem.VideoCodec)+!ListItem.IsParentFolder+ListItem.IsCollection]</visible>
-                        </control>
-                        <control type="image">
-                            <left>8</left>
-                            <top>8</top>
-                            <width>525</width>
-                            <height>87</height>
-                            <texture background="true">$VAR[SetBannerThumb]</texture>
-                            <aspectratio>stretch</aspectratio>
-                            <visible>!ListItem.IsParentFolder</visible>
-                            <visible>[String.IsEmpty(ListItem.VideoCodec)+!ListItem.IsParentFolder+ListItem.IsCollection]</visible>
+                            <texture background="true">$VAR[BannerContainerVAR]</texture>
                         </control>
                         <control type="image">
                             <left>0</left>
@@ -459,10 +445,9 @@
                 <width>300</width>
                 <height>63</height>
                 <aspectratio align="left">keep</aspectratio>
-                <texture background="true">$INFO[ListItem.Art(clearlogo)]</texture>
+                <texture background="true">$VAR[ClearlogoVAR]</texture>
                 <animation effect="slide" end="0,-6" time="150" condition="Skin.HasSetting(CommonPageCount)">Conditional</animation>
-                <visible>[Skin.HasSetting(video_art)+Container.Content(movies)]
-				|[[Skin.HasSetting(tvshow_art)+!Container.Content(movies)]|String.IsEmpty(ListItem.Art(clearlogo))]</visible>
+                <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
             </control>
         </control>
         <control type="group">

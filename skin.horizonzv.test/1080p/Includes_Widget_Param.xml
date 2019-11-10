@@ -1404,19 +1404,8 @@
                 <width>302</width>
                 <height>160</height>
                 <aspectratio align="left" aligny="bottom">keep</aspectratio>
-                <texture background="true">$INFO[Container.ListItem.Art(clearlogo)]$INFO[Container.ListItem.Art(tvshow.clearlogo)]</texture>
-                <visible>[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),movies)+Skin.HasSetting(video_art)]|[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)+Skin.HasSetting(tvshow_art)]</visible>
-            </control>
-            <control type="image">
-                <include>openclosemedium</include>
-                <left>57</left>
-                <top>136</top>
-                <width>302</width>
-                <height>160</height>
-                <aspectratio align="left" aligny="bottom">keep</aspectratio>
-                <texture background="true">$INFO[Container.ListItem.Art(clearlogo)]$INFO[Container.ListItem.Art(tvshow.clearlogo)]</texture>
-                <visible>[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),movies)+Skin.HasSetting(video_art)]|[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)+Skin.HasSetting(tvshow_art)]</visible>
-                <visible>!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)</visible>
+                <texture background="true">$VAR[ClearlogoVAR]</texture>
+                <visible>[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),movies)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)]+Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
             </control>
             <control type="image">
                 <include>openclosemedium</include>
@@ -1436,8 +1425,8 @@
                 <width>302</width>
                 <height>160</height>
                 <aspectratio align="left" aligny="bottom">keep</aspectratio>
-                <texture background="true">$INFO[Container.ListItem.Art(clearlogo)]</texture>
-                <visible>Skin.HasSetting(video_art)</visible>
+                <texture background="true">$VAR[ClearlogoVAR]</texture>
+                <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
                 <visible>Control.Hasfocus($PARAM[HomePageWidget_id])</visible>
             </control>
         </control>

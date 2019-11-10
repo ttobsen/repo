@@ -30,7 +30,7 @@
                         </control>
                         <control type="group">
                             <left>-3</left>
-                            <top>110</top>
+                            <top>125</top>
                             <control type="progress">
                                 <description>ProgressBarCache</description>
                                 <left>0</left>
@@ -148,16 +148,7 @@
                             <height>150</height>
                             <aspectratio align="right" aligny="bottom">keep</aspectratio>
                             <texture border="4">$VAR[extraart_player_rule]</texture>
-                            <visible>Skin.HasSetting(video_art)+!VideoPlayer.Content(episodes)</visible>
-                        </control>
-                        <control type="image">
-                            <left>1590</left>
-                            <top>8</top>
-                            <width>300</width>
-                            <height>150</height>
-                            <aspectratio align="right">keep</aspectratio>
-                            <texture border="4">$VAR[extraart_tvshow_player_rule]</texture>
-                            <visible>Skin.HasSetting(tvshow_art)+VideoPlayer.Content(episodes)</visible>
+                            <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
                         </control>
                     </control>
                     <control type="image">
@@ -534,15 +525,9 @@
                                 <content>
                                     <item id="1">
                                         <label/>
-                                        <icon>$VAR[extraart_tvshow_player_rule]</icon>
-                                        <onclick/>
-                                        <visible>VideoPlayer.Content(episodes)</visible>
-                                    </item>
-                                    <item id="2">
-                                        <label></label>
                                         <icon>$VAR[extraart_player_rule]</icon>
                                         <onclick/>
-                                        <visible>VideoPlayer.Content(movies)+Skin.HasSetting(video_art)</visible>
+                                        <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
                                     </item>
                                 </content>
                             </control>

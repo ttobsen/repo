@@ -85,8 +85,8 @@
                 <height>230</height>
                 <width>390</width>
                 <aspectratio align="center" aligny="bottom">keep</aspectratio>
-                <texture border="4">$VAR[extraart_tvshow_player_rule_fullscreen]$VAR[extraart_player_rule]</texture>
-                <visible>[Skin.HasSetting(tvshow_art)+VideoPlayer.Content(episodes)]|[Skin.HasSetting(video_art)+VideoPlayer.Content(movies)]</visible>
+                <texture border="4">$VAR[extraart_player_rule]</texture>
+                <visible>[VideoPlayer.Content(episodes)|VideoPlayer.Content(movies)]+Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
                 <visible>Window.IsVisible(fullscreenvideo)+!Window.IsVisible(SeekBar)</visible>
             </control>
             <control type="image">
@@ -102,7 +102,7 @@
                 <width>900</width>
                 <colordiffuse>menudiffuse</colordiffuse>
                 <texture background="true" border="4">effects/supernova.png</texture>
-                <visible>[Skin.HasSetting(tvshow_art)+VideoPlayer.Content(episodes)]|[Skin.HasSetting(video_art)+VideoPlayer.Content(movies)]</visible>
+                <visible>[VideoPlayer.Content(episodes)|VideoPlayer.Content(movies)]+Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
                 <visible>Window.IsVisible(fullscreenvideo)+!Window.IsVisible(SeekBar)+!String.IsEmpty(Control.GetLabel(5000))</visible>
             </control>
         </control>

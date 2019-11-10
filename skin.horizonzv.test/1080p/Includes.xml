@@ -3169,7 +3169,7 @@
 		</control>
 	</include>
 	<include name="DebugInfo">
-		<!-- <control type="list" id="99999">
+		<control type="list" id="99999">
 			<description>My first list container</description>
 			<centerleft>50%</centerleft>
 			<top>400</top>
@@ -3194,7 +3194,7 @@
 					<aligny>center</aligny>
 					<selectedcolor>green</selectedcolor>
 					<align>left</align>
-					<label>Titel: $INFO[ListItem.Label] / $INFO[Window(home).Property(ListItem.Art.Clearlogo)]</label>
+					<label>Titel: $INFO[ListItem.Label] / $INFO[Window(home).Property(SkinHelper.ListItem.Art.Clearlogo)]</label>
 				</control>
 				</itemlayout>
 				<focusedlayout height="29" width="650">
@@ -3207,11 +3207,11 @@
 					<aligny>center</aligny>
 					<selectedcolor>green</selectedcolor>
 					<align>left</align>
-					<label>Titel: $INFO[ListItem.Label] / $INFO[Window(home).Property(ListItem.Art.Clearlogo)]</label>
+					<label>Titel: $INFO[ListItem.Label] / $INFO[Window(home).Property(SkinHelper.ListItem.Art.Clearlogo)]</label>
 				</control>
 				</focusedlayout>
 			<content>videodb://movies/titles/</content>
-		</control> -->
+		</control>
         <control type="grouplist"> <!-- Debuginfos -->
             <visible>Skin.HasSetting(DebugInfo)</visible>
             <left>30</left>

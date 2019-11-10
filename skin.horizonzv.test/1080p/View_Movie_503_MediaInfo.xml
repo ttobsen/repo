@@ -42,35 +42,32 @@
                     <height>338</height>
                     <texture background="true">BlackBack.png</texture>
                 </control>
-                <control type="group">
-                    <include>openclosevisible</include>
-                    <visible>Container.Content(Movies)|Container.Content(Sets)|Container.Content(musicvideos)
+				<control type="group">
+					<left>1680</left>
+					<top>712</top>
+					<include>openclosevisible</include>
+					<visible>Container.Content(Movies)|Container.Content(Sets)|Container.Content(musicvideos)
 					|Container.Content(Seasons)|Container.Content(Episodes)|Container.Content(TVShows)</visible>
-                    <control type="group">
-                        <left>1680</left>
-                        <top>712</top>
-                        <include>openclosevisible</include>
-                        <visible>!ListItem.IsParentFolder+!Container.Content(Seasons)</visible>
-                        <control type="label">
-                            <left>405r</left>
-                            <top>315</top>
-                            <width>150</width>
-                            <height>30</height>
-                            <font>impacted18</font>
-                            <align>right</align>
-                            <textcolor>grey</textcolor>
-                            <label>$LOCALIZE[563]:</label>
-                        </control>
-                        <control type="image">
-                            <description>Rated</description>
-                            <left>0</left>
-                            <top>315</top>
-                            <width>180</width>
-                            <height>30</height>
-                            <texture background="true" fallback="leftratingvideo/0.0.png">$INFO[ListItem.Rating,leftratingvideo/,.png]</texture>
-                        </control>
-                    </control>
-                </control>
+					<visible>!ListItem.IsParentFolder+!Container.Content(Seasons)</visible>
+					<control type="label">
+						<left>405r</left>
+						<top>315</top>
+						<width>150</width>
+						<height>30</height>
+						<font>impacted18</font>
+						<align>right</align>
+						<textcolor>grey</textcolor>
+						<label>$LOCALIZE[563]:</label>
+					</control>
+					<control type="image">
+						<description>Rated</description>
+						<left>0</left>
+						<top>315</top>
+						<width>180</width>
+						<height>30</height>
+						<texture background="true" fallback="leftratingvideo/0.0.png">$INFO[ListItem.Rating,leftratingvideo/,.png]</texture>
+					</control>
+				</control>
             </control>
             <control type="group">
                 <!-- Set Information -->
@@ -278,7 +275,7 @@
                 <label>$INFO[Container.NumItems,([COLOR=black],[/COLOR]) $LOCALIZE[31025]]$INFO[Container.CurrentPage, - $LOCALIZE[31024] ([COLOR=black]]$INFO[Container.NumPages,/,[/COLOR])] $INFO[Container.TotalTime,$LOCALIZE[31009] ([COLOR=black],[/COLOR])]</label>
                 <visible>Skin.HasSetting(CommonPageCount)</visible>
             </control>
-            <control type="image">
+            <control type="image" id="50301">
                 <include>openclosevisible</include>
                 <left>1110</left>
                 <top>150</top>
@@ -334,8 +331,7 @@
                     <texture background="true">Separator2.png</texture>
                 </control>
             </control>
-            <control type="group">
-                <!-- TVShows -->
+            <control type="group"> <!-- TVShows -->
                 <visible>Container.Content(TVShows)</visible>
                 <control type="image">
                     <include>openclosevisible</include>
@@ -476,8 +472,7 @@
                     </control>
                 </control>
             </control>
-            <control type="group">
-                <!-- Episodes -->
+            <control type="group"> <!-- Episodes -->
                 <visible>Container.Content(Episodes)</visible>
                 <control type="image">
                     <include>openclosevisible</include>
@@ -539,8 +534,7 @@
                     </control>
                 </control>
             </control>
-            <control type="group">
-                <!-- Seasons -->
+            <control type="group"> <!-- Seasons -->
                 <visible>Container.Content(Seasons)</visible>
                 <control type="image">
                     <include>openclosevisible</include>
@@ -589,8 +583,7 @@
                     </control>
                 </control>
             </control>
-            <control type="group">
-                <!-- Movies -->
+            <control type="group"> <!-- Movies -->
                 <visible>Container.Content(Movies)|Container.Content(Sets)|Container.Content(musicvideos)</visible>
                 <visible>!ListItem.IsParentFolder</visible>
                 <control type="group">
@@ -641,7 +634,7 @@
                         <textcolor>grey1</textcolor>
                         <label>$LOCALIZE[20457]</label>
                         <visible>Container.Content(Sets)|ListItem.IsCollection</visible>
-                        <visible>String.IsEmpty(ListItem.Plot)+!Integer.IsGreater(Container(2000).NumItems,8)</visible>
+                        <visible>!Integer.IsGreater(Container(2000).NumItems,8)+String.IsEmpty(Control.GetLabel(50301))</visible>
                     </control>
                 </control>
                 <control type="group">
