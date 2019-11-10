@@ -138,7 +138,15 @@ msgctxt "#30127"
 msgid "Disable folder cache"
 msgstr "Ordner-Cache deaktivieren"
 
-#empty strings from id 30128 to 30229
+msgctxt "#30128"
+msgid "Recommendations count"
+msgstr "Anzahl der Empfehlungen"
+
+msgctxt "#30129"
+msgid "Show episodes immediately if only one season is available"
+msgstr "Epsioden direkt anzeigen, wenn nur eine Staffel verfügbar"
+
+#empty strings from id 30130 to 30229
 # SETTINGS-TITLES
 
 #empty strings from id 30230 to 30350
@@ -343,3 +351,23 @@ msgstr "Cache konnte nicht geleert werden"
 msgctxt "#30661"
 msgid "en"
 msgstr "de"
+
+msgctxt "#30662"
+msgid "This video is currently unavailable"
+msgstr "Dieses Video ist derzeit nicht verfügbar"
+
+msgctxt "#30663"
+msgid "GraphQL query error"
+msgstr "GraphQL Fehler"
+
+msgctxt "#30664"
+msgid "No content available"
+msgstr "Keine Inhalte verfügbar"
+
+msgctxt "#30665"
+msgid "Continue watching: {:s}"
+msgstr "Weiterschauen: {:s}"
+
+msgctxt "#30666"
+msgid "Recommendation: {:s}"
+msgstr "Empfehlung: {:s}"
