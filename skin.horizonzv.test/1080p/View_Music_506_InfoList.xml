@@ -129,7 +129,7 @@
                     <width>765</width>
                     <height>390</height>
                     <aspectratio>keep</aspectratio>
-                    <texture>$VAR[ListItemIconVAR]</texture>
+                    <texture>$INFO[ListItem.Icon]</texture>
                     <bordertexture border="8">ThumbShadow.png</bordertexture>
                     <bordersize>8</bordersize>
                 </control>

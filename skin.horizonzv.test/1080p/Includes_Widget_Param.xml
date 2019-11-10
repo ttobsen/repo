@@ -547,7 +547,7 @@
                             <top>15</top>
                             <width>172</width>
                             <height>225</height>
-                            <imagepath>$VAR[ListItemIconVAR]</imagepath>
+                            <imagepath>$INFO[ListItem.Icon]</imagepath>
                             <timeperimage>100</timeperimage>
                             <randomize>false</randomize>
                             <fadetime>10</fadetime>
@@ -629,7 +629,7 @@
                             <top>15</top>
                             <width>172</width>
                             <height>225</height>
-                            <imagepath>$VAR[ListItemIconVAR]</imagepath>
+                            <imagepath>$INFO[ListItem.Icon]</imagepath>
                             <timeperimage>100</timeperimage>
                             <randomize>false</randomize>
                             <fadetime>10</fadetime>
@@ -642,7 +642,7 @@
                             <top>15</top>
                             <width>172</width>
                             <height>225</height>
-                            <imagepath>$VAR[ListItemIconVAR]</imagepath>
+                            <imagepath>$INFO[ListItem.Icon]</imagepath>
                             <timeperimage>100</timeperimage>
                             <randomize>false</randomize>
                             <fadetime>10</fadetime>

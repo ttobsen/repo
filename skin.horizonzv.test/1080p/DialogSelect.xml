@@ -200,7 +200,7 @@
                         <top>4</top>
                         <width>120</width>
                         <height>120</height>
-                        <texture>$VAR[ListItemIconVAR]</texture>
+                        <texture>$INFO[ListItem.Icon]</texture>
                         <aspectratio>keep</aspectratio>
                         <bordertexture border="3">BlackBack.png</bordertexture>
                         <bordersize>2</bordersize>
@@ -254,7 +254,7 @@
                             <top>0</top>
                             <width>129</width>
                             <height>129</height>
-                            <texture>$VAR[ListItemIconVAR]</texture>
+                            <texture>$INFO[ListItem.Icon]</texture>
                             <aspectratio>keep</aspectratio>
                             <bordertexture border="3">BlackBack.png</bordertexture>
                             <bordersize>2</bordersize>

@@ -60,7 +60,7 @@
                     <top>6</top>
                     <width>75</width>
                     <height>75</height>
-                    <texture fallback="icons/TVShowsIcon.png">$VAR[ListItemIconVAR]</texture>
+                    <texture fallback="icons/TVShowsIcon.png">$INFO[ListItem.Icon]</texture>
                     <aspectratio>keep</aspectratio>
                     <visible>!Window.IsVisible(radiochannels)</visible>
                 </control>
@@ -69,7 +69,7 @@
                     <top>6</top>
                     <width>75</width>
                     <height>75</height>
-                    <texture fallback="FallbackRadio.png">$VAR[ListItemIconVAR]</texture>
+                    <texture fallback="FallbackRadio.png">$INFO[ListItem.Icon]</texture>
                     <aspectratio>keep</aspectratio>
                     <visible>Window.IsVisible(radiochannels)</visible>
                 </control>
@@ -160,7 +160,7 @@
                         <top>6</top>
                         <width>75</width>
                         <height>75</height>
-                        <texture fallback="icons/TVShowsIcon.png">$VAR[ListItemIconVAR]</texture>
+                        <texture fallback="icons/TVShowsIcon.png">$INFO[ListItem.Icon]</texture>
                         <aspectratio>keep</aspectratio>
                         <visible>!Window.IsVisible(radiochannels)</visible>
                     </control>
@@ -169,7 +169,7 @@
                         <top>6</top>
                         <width>75</width>
                         <height>75</height>
-                        <texture fallback="FallbackRadio.png">$VAR[ListItemIconVAR]</texture>
+                        <texture fallback="FallbackRadio.png">$INFO[ListItem.Icon]</texture>
                         <aspectratio>keep</aspectratio>
                         <visible>Window.IsVisible(radiochannels)</visible>
                     </control>
@@ -198,7 +198,7 @@
                 <width>128</width>
                 <height>128</height>
                 <colordiffuse>grey</colordiffuse>
-                <texture fallback="icons/TVShowsIcon.png">$VAR[ListItemIconVAR]</texture>
+                <texture fallback="icons/TVShowsIcon.png">$INFO[ListItem.Icon]</texture>
                 <aspectratio>keep</aspectratio>
                 <visible>!Window.IsVisible(radiochannels)</visible>
             </control>
@@ -208,7 +208,7 @@
                 <width>128</width>
                 <height>128</height>
                 <colordiffuse>grey</colordiffuse>
-                <texture fallback="FallbackRadio.png">$VAR[ListItemIconVAR]</texture>
+                <texture fallback="FallbackRadio.png">$INFO[ListItem.Icon]</texture>
                 <aspectratio>keep</aspectratio>
                 <visible>Window.IsVisible(radiochannels)</visible>
             </control>
@@ -244,7 +244,7 @@
                     <top>3</top>
                     <width>135</width>
                     <height>135</height>
-                    <texture fallback="icons/TVShowsIcon.png">$VAR[ListItemIconVAR]</texture>
+                    <texture fallback="icons/TVShowsIcon.png">$INFO[ListItem.Icon]</texture>
                     <aspectratio>keep</aspectratio>
                     <visible>!Window.IsVisible(radiochannels)</visible>
                 </control>
@@ -253,7 +253,7 @@
                     <top>3</top>
                     <width>135</width>
                     <height>135</height>
-                    <texture fallback="FallbackRadio.png">$VAR[ListItemIconVAR]</texture>
+                    <texture fallback="FallbackRadio.png">$INFO[ListItem.Icon]</texture>
                     <aspectratio>keep</aspectratio>
                     <visible>Window.IsVisible(radiochannels)</visible>
                 </control>

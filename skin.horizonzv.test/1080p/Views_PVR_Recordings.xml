@@ -53,7 +53,7 @@
                             <top>6</top>
                             <width>75</width>
                             <height>75</height>
-                            <!-- <texture fallback="DefaultVideo.png">$VAR[ListItemIconVAR]</texture> -->
+                            <!-- <texture fallback="DefaultVideo.png">$INFO[ListItem.Icon]</texture> -->
                             <texture>$VAR[PosterThumb]</texture>
                             <aspectratio>keep</aspectratio>
                         </control>

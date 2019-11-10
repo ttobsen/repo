@@ -68,7 +68,7 @@
                                     <left>0</left>
                                     <width>120</width>
                                     <height>120</height>
-                                    <texture fallback="BlackBack.png">$VAR[ListItemIconVAR]</texture>
+                                    <texture fallback="BlackBack.png">$INFO[ListItem.Icon]</texture>
                                 </control>
                                 <control type="label">
                                     <description>Album Title</description>
@@ -252,7 +252,7 @@
                                     <width>120</width>
                                     <height>120</height>
                                     <aspectratio>scale</aspectratio>
-                                    <texture fallback="BlackBack.png">$VAR[ListItemIconVAR]</texture>
+                                    <texture fallback="BlackBack.png">$INFO[ListItem.Icon]</texture>
                                 </control>
                                 <control type="label">
                                     <description>Album Title</description>

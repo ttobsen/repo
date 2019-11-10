@@ -101,7 +101,7 @@
                             <width>75</width>
                             <height>39</height>
                             <visible>!String.IsEmpty(ListItem.Date)</visible>
-                            <texture background="true" border="1">$VAR[ListItemIconVAR]</texture>
+                            <texture background="true" border="1">$INFO[ListItem.Icon]</texture>
                             <aspectratio>keep</aspectratio>
                         </control>
                         <control type="label">
@@ -179,7 +179,7 @@
                                 <width>75</width>
                                 <height>39</height>
                                 <visible>!String.IsEmpty(ListItem.Date)</visible>
-                                <texture background="true" border="1">$VAR[ListItemIconVAR]</texture>
+                                <texture background="true" border="1">$INFO[ListItem.Icon]</texture>
                                 <aspectratio>keep</aspectratio>
                             </control>
                             <control type="label">

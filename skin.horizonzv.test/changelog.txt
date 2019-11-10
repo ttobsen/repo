@@ -1,4 +1,7 @@
-﻿v 1.18.0.30
+﻿v 1.18.0.31
+- Bugfix alle Icons (Sorry ;))
+
+v 1.18.0.30
 - Artworkdownloader unterstützung entfernt
 - Skin Helper Service für Artwork teilweise eingebaut
 

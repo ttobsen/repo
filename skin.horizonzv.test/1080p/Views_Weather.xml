@@ -1070,7 +1070,7 @@
                         <top>0</top>
                         <width>840</width>
                         <height>495</height>
-                        <texture>$VAR[ListItemIconVAR]</texture>
+                        <texture>$INFO[ListItem.Icon]</texture>
                         <aspectratio>scale</aspectratio>
                     </control>
                     <control type="image">

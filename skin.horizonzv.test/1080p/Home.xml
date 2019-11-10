@@ -204,7 +204,7 @@
                                 <top>12</top>
                                 <width>51</width>
                                 <height>51</height>
-                                <texture>$VAR[ListItemIconVAR]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                             </control>
                             <control type="image">
                                 <left>0</left>
@@ -232,7 +232,7 @@
                                     <top>12</top>
                                     <width>51</width>
                                     <height>51</height>
-                                    <texture>$VAR[ListItemIconVAR]</texture>
+                                    <texture>$INFO[ListItem.Icon]</texture>
                                 </control>
                                 <control type="image">
                                     <left>0</left>

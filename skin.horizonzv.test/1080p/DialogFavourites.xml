@@ -65,7 +65,7 @@
                             <height>198</height>
                             <aspectratio>keep</aspectratio>
                             <colordiffuse>grey</colordiffuse>
-                            <texture fallback="DefaultFolder.png">$VAR[ListItemIconVAR]</texture>
+                            <texture fallback="DefaultFolder.png">$INFO[ListItem.Icon]</texture>
                         </control>
                     </itemlayout>
                     <focusedlayout height="225" width="225">
@@ -76,7 +76,7 @@
                             <width>210</width>
                             <height>210</height>
                             <aspectratio>keep</aspectratio>
-                            <texture fallback="DefaultFolder.png">$VAR[ListItemIconVAR]</texture>
+                            <texture fallback="DefaultFolder.png">$INFO[ListItem.Icon]</texture>
                             <bordertexture border="4">buttons/ButtonNF.png</bordertexture>
                             <bordersize>4</bordersize>
                             <visible>Control.HasFocus(450)</visible>
@@ -88,7 +88,7 @@
                             <height>198</height>
                             <aspectratio>keep</aspectratio>
                             <colordiffuse>grey</colordiffuse>
-                            <texture fallback="DefaultFolder.png">$VAR[ListItemIconVAR]</texture>
+                            <texture fallback="DefaultFolder.png">$INFO[ListItem.Icon]</texture>
                             <visible>!Control.HasFocus(450)</visible>
                         </control>
                     </focusedlayout>

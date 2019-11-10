@@ -518,7 +518,7 @@
                                         <height>195</height>
                                         <width>390</width>
                                         <aspectratio align="center" aligny="bottom">keep</aspectratio>
-                                        <texture>$VAR[ListItemIconVAR]</texture>
+                                        <texture>$INFO[ListItem.Icon]</texture>
                                         <visible>!String.IsEmpty(ListItem.Icon)</visible>
                                     </control>
                                 </itemlayout>
@@ -527,7 +527,7 @@
                                         <height>195</height>
                                         <width>390</width>
                                         <aspectratio align="center" aligny="bottom">keep</aspectratio>
-                                        <texture diffuse="masks/mask.png">$VAR[ListItemIconVAR]</texture>
+                                        <texture diffuse="masks/mask.png">$INFO[ListItem.Icon]</texture>
                                         <visible>!String.IsEmpty(ListItem.Icon)</visible>
                                     </control>
                                 </focusedlayout>

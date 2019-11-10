@@ -178,7 +178,7 @@
                             <top>12</top>
                             <width>75</width>
                             <height>75</height>
-                            <texture fallback="DefaultAddonNone.png">$VAR[ListItemIconVAR]</texture>
+                            <texture fallback="DefaultAddonNone.png">$INFO[ListItem.Icon]</texture>
                             <aspectratio>keep</aspectratio>
                         </control>
                     </itemlayout>
@@ -289,7 +289,7 @@
                                 <top>12</top>
                                 <width>75</width>
                                 <height>75</height>
-                                <texture fallback="DefaultAddonNone.png">$VAR[ListItemIconVAR]</texture>
+                                <texture fallback="DefaultAddonNone.png">$INFO[ListItem.Icon]</texture>
                                 <aspectratio>keep</aspectratio>
                             </control>
                             <control type="image">

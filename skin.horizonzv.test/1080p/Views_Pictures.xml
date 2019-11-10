@@ -68,7 +68,7 @@
                             <height>210</height>
                             <colordiffuse>grey</colordiffuse>
                             <aspectratio>keep</aspectratio>
-                            <texture>$VAR[ListItemIconVAR]</texture>
+                            <texture>$INFO[ListItem.Icon]</texture>
                         </control>
                         <control type="image">
                             <include>openclosevisible</include>
@@ -100,7 +100,7 @@
                             <width>210</width>
                             <height>210</height>
                             <aspectratio>keep</aspectratio>
-                            <texture>$VAR[ListItemIconVAR]</texture>
+                            <texture>$INFO[ListItem.Icon]</texture>
                             <animation reversible="false" effect="zoom" start="38,75,140,140" end="8,15,180,180" time="200">focus</animation>
                             <animation reversible="false" effect="zoom" end="38,75,140,140" start="8,15,180,180" time="200">unfocus</animation>
                         </control>
@@ -245,7 +245,7 @@
                                 <height>186</height>
                                 <colordiffuse>grey</colordiffuse>
                                 <aspectratio>keep</aspectratio>
-                                <texture>$VAR[ListItemIconVAR]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                             </control>
                         </itemlayout>
                         <focusedlayout height="216" width="216">
@@ -265,7 +265,7 @@
                                 <width>186</width>
                                 <height>186</height>
                                 <aspectratio>keep</aspectratio>
-                                <texture>$VAR[ListItemIconVAR]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                             </control>
                         </focusedlayout>
                     </control>
@@ -387,7 +387,7 @@
                                 <height>186</height>
                                 <colordiffuse>grey</colordiffuse>
                                 <aspectratio>keep</aspectratio>
-                                <texture>$VAR[ListItemIconVAR]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                             </control>
                         </itemlayout>
                         <focusedlayout height="216" width="216">
@@ -407,7 +407,7 @@
                                 <width>186</width>
                                 <height>186</height>
                                 <aspectratio>keep</aspectratio>
-                                <texture>$VAR[ListItemIconVAR]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                             </control>
                         </focusedlayout>
                     </control>

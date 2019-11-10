@@ -48,7 +48,7 @@
                             <aspectratio>keep</aspectratio>
                             <bordertexture border="10">ThumbShadow.png</bordertexture>
                             <bordersize>7</bordersize>
-                            <texture>$VAR[ListItemIconVAR]</texture>
+                            <texture>$INFO[ListItem.Icon]</texture>
                             <visible>String.IsEmpty(ListItem.AddonBroken)</visible>
                         </control>
                         <control type="image">
@@ -62,7 +62,7 @@
                             <colordiffuse>grey2</colordiffuse>
                             <bordertexture border="10">ThumbShadow.png</bordertexture>
                             <bordersize>7</bordersize>
-                            <texture>$VAR[ListItemIconVAR]</texture>
+                            <texture>$INFO[ListItem.Icon]</texture>
                             <visible>!String.IsEmpty(ListItem.AddonBroken)</visible>
                         </control>
                         <control type="image">

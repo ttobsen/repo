@@ -405,7 +405,7 @@
                         <width>66</width>
                         <height>66</height>
                         <colordiffuse>grey1</colordiffuse>
-                        <texture>$VAR[ListItemIconVAR]</texture>
+                        <texture>$INFO[ListItem.Icon]</texture>
                     </control>
                     <control type="image">
                         <left>0</left>
@@ -448,7 +448,7 @@
                         <width>68</width>
                         <height>68</height>
                         <colordiffuse>red</colordiffuse>
-                        <texture>$VAR[ListItemIconVAR]</texture>
+                        <texture>$INFO[ListItem.Icon]</texture>
                         <visible>Control.HasFocus(100)</visible>
                     </control>
                     <control type="image">
@@ -457,7 +457,7 @@
                         <width>68</width>
                         <height>68</height>
                         <colordiffuse>grey1</colordiffuse>
-                        <texture>$VAR[ListItemIconVAR]</texture>
+                        <texture>$INFO[ListItem.Icon]</texture>
                         <visible>!Control.HasFocus(100)</visible>
                     </control>
                     <control type="image">

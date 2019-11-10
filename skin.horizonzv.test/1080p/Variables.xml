@@ -276,7 +276,6 @@
     </variable>
     <variable name="PosterThumb">
         <value condition="ListItem.IsCollection+!String.IsEmpty(ListItem.Art(set.poster))">$INFO[ListItem.Art(set.poster)]</value>
-        <value condition="ListItem.IsCollection+String.IsEmpty(ListItem.Art(set.poster))">$VAR[SetPosterVAR]</value>
 		<value condition="String.Contains(Container.ListItem.DBTYPE,episode)+!Window.IsVisible(home)">$INFO[ListItem.Thumb]</value>
         <value condition="String.Contains(Container.ListItem.DBTYPE,episode)+Window.IsVisible(home)">$INFO[ListItem.Art(tvshow.poster)]</value>
         <value condition="String.Contains(Skin.String(studiologos.name),coloured)+Container.Content(studios)+!ListItem.IsParentFolder+!Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.studios.coloured/,]$VAR[MovieMovieStudiosVar]</value>

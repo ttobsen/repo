@@ -681,7 +681,7 @@
                                 <height>172</height>
                                 <aspectratio>scale</aspectratio>
                                 <colordiffuse>grey</colordiffuse>
-                                <texture border="5">$VAR[ListItemIconVAR]</texture>
+                                <texture border="5">$INFO[ListItem.Icon]</texture>
                             </control>
                         </itemlayout>
                         <focusedlayout height="195" width="195">
@@ -692,7 +692,7 @@
                                 <width>180</width>
                                 <height>180</height>
                                 <aspectratio>scale</aspectratio>
-                                <texture border="5">$VAR[ListItemIconVAR]</texture>
+                                <texture border="5">$INFO[ListItem.Icon]</texture>
                                 <bordertexture border="4">buttons/ButtonNF.png</bordertexture>
                                 <bordersize>3</bordersize>
                             </control>

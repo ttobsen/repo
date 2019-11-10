@@ -199,7 +199,7 @@
                             <height>195</height>
                             <colordiffuse>grey</colordiffuse>
                             <aspectratio>scale</aspectratio>
-                            <texture fallback="unknown-user.png">$VAR[ListItemIconVAR]</texture>
+                            <texture fallback="unknown-user.png">$INFO[ListItem.Icon]</texture>
                         </control>
                         <control type="label">
                             <left>0</left>
@@ -222,7 +222,7 @@
                             <aspectratio>scale</aspectratio>
                             <bordertexture border="5">buttons/ButtonNF.png</bordertexture>
                             <bordersize>5</bordersize>
-                            <texture fallback="unknown-user.png">$VAR[ListItemIconVAR]</texture>
+                            <texture fallback="unknown-user.png">$INFO[ListItem.Icon]</texture>
                         </control>
                         <control type="label">
                             <left>0</left>

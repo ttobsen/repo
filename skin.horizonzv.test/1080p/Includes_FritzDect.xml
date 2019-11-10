@@ -136,7 +136,7 @@
 			<width>70</width>
 			<height>90</height>
 			<aspectratio>keep</aspectratio>
-			<texture>$VAR[ListItemIconVAR]</texture>
+			<texture>$INFO[ListItem.Icon]</texture>
 			<animation effect="fade" end="40" condition="!ListItem.Property(b_state)">Conditional</animation>
 		</control>
 	</include>

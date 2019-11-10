@@ -61,7 +61,7 @@
                                 <top>4</top>
                                 <width>44</width>
                                 <height>44</height>
-                                <texture>$VAR[ListItemIconVAR]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <aspectratio>keep</aspectratio>
                             </control>
                             <control type="label">
@@ -150,7 +150,7 @@
                                 <top>4</top>
                                 <width>44</width>
                                 <height>44</height>
-                                <texture>$VAR[ListItemIconVAR]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <aspectratio>keep</aspectratio>
                             </control>
                             <control type="label">
@@ -185,7 +185,7 @@
                                 <top>4</top>
                                 <width>44</width>
                                 <height>44</height>
-                                <texture>$VAR[ListItemIconVAR]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <aspectratio>keep</aspectratio>
                             </control>
                             <control type="label">
@@ -250,7 +250,7 @@
                                 <top>4</top>
                                 <width>44</width>
                                 <height>44</height>
-                                <texture>$VAR[ListItemIconVAR]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <aspectratio>keep</aspectratio>
                             </control>
                             <control type="label">
@@ -285,7 +285,7 @@
                                 <top>4</top>
                                 <width>44</width>
                                 <height>44</height>
-                                <texture>$VAR[ListItemIconVAR]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <aspectratio>keep</aspectratio>
                             </control>
                             <control type="label">

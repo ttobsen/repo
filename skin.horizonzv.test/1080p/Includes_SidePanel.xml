@@ -232,7 +232,7 @@
                         <top>3</top>
                         <width>66</width>
                         <height>66</height>
-                        <texture>$VAR[ListItemIconVAR]</texture>
+                        <texture>$INFO[ListItem.Icon]</texture>
                     </control>
                 </itemlayout>
                 <focusedlayout height="87" width="82">
@@ -255,7 +255,7 @@
                         <top>-4</top>
                         <width>81</width>
                         <height>81</height>
-                        <texture>$VAR[ListItemIconVAR]</texture>
+                        <texture>$INFO[ListItem.Icon]</texture>
                     </control>
                 </focusedlayout>
                 <content>

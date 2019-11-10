@@ -200,7 +200,7 @@
                     <width>375</width>
                     <height>375</height>
                     <aspectratio align="center">stretch</aspectratio>
-                    <texture background="true" fallback="FallbackCover.png">$VAR[ListItemIconVAR]</texture>
+                    <texture background="true" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                     <bordertexture border="5">buttons/ButtonNF.png</bordertexture>
                     <bordersize>4</bordersize>
                     <visible>Container.Content(songs)|Container.Content(artists)|Container.Content(albums)</visible>
