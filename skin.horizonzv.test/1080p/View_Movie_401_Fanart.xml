@@ -147,7 +147,7 @@
                         </control>
                     </itemlayout>
                     <focusedlayout condition="!Container.Content(Episodes)" height="465" width="180">
-                        <!-- <control type="image">
+                        <control type="image">
                             <visible>!Container(401).OnNext+!Container(401).OnPrevious</visible>
                             <visible>Control.HasFocus(401)</visible>
                             <left>-8</left>
@@ -156,7 +156,7 @@
                             <height>210</height>
                             <aspectratio>keep</aspectratio>
                             <include>DiscartMovies_small</include>
-                        </control> -->
+                        </control>
                         <control type="group">
                             <animation effect="zoom" center="auto" end="130" time="250" condition="Control.HasFocus(401)|Control.HasFocus(2000)">Focus</animation>
                             <animation effect="zoom" center="auto" end="110" time="200" condition="Control.HasFocus(888)">Conditional</animation>

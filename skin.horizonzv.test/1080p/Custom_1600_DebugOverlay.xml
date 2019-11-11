@@ -562,13 +562,6 @@
         </control>
         <control type="label">
             <left>0</left>
-            <top>290</top>
-            <include>PathID</include>
-            <label>Background VAR: $VAR[BackgroundMyNavFanartVAR]</label>
-            <visible>Skin.HasSetting(DebugInfo)</visible>
-		</control>
-        <control type="label">
-            <left>0</left>
             <top>320</top>
             <include>PathID</include>
 			<label>SkinHelper ExtraArt: $INFO[Window(Home).Property(SkinHelper.ListItem.Art.ExtraFanart)]</label>
@@ -582,5 +575,6 @@
 			<visible>ListItem.IsCollection</visible>
             <visible>Skin.HasSetting(DebugInfo)</visible>
 		</control>
+		<include>DebugInfo</include>
     </controls>
 </window>

@@ -112,7 +112,7 @@
                     <selected>Skin.HasSetting(OriginalTitle)</selected>
                     <visible>Window.IsVisible(videos)+![Container.Content(episodes)|Container.Content(tvshows)|Container.Content(seasons)]</visible>
                 </control>
-                <control type="radiobutton" id="1706">
+                <!-- <control type="radiobutton" id="1706">
                     <description>Video Extra Art</description>
                     <include>custom_setting_button_property</include>
                     <label>Extra Art</label>
@@ -120,7 +120,7 @@
                     <selected>Skin.HasSetting(SkinHelper.EnableExtendedArt)</selected>
                     <enable>System.HasAddon(script.skin.helper.service)</enable>
                     <visible>Window.IsVisible(videos)</visible>
-                </control>
+                </control> -->
                 <control type="label" id="1750">
                     <!-- Music -->
                     <width>592</width>

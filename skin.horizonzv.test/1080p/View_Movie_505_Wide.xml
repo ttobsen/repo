@@ -82,8 +82,9 @@
                         <aspectratio>stretch</aspectratio>
                         <colordiffuse>$VAR[CoverDim]</colordiffuse>
                         <texture background="true">$VAR[BannerContainerVAR]</texture>
+						<visible>!ListItem.IsParentFolder</visible>
                     </control>
-                    <control type="image">
+                    <!-- <control type="image">
                         <left>8</left>
                         <top>8</top>
                         <width>525</width>
@@ -93,7 +94,7 @@
                         <aspectratio>stretch</aspectratio>
                         <visible>!ListItem.IsParentFolder</visible>
                         <visible>[String.IsEmpty(ListItem.VideoCodec)+!ListItem.IsParentFolder+ListItem.IsCollection]</visible>
-                    </control>
+                    </control> -->
                     <control type="label">
 						<left>18</left>
 						<top>8</top>
@@ -162,6 +163,7 @@
                             <height>87</height>
                             <aspectratio>stretch</aspectratio>
                             <texture background="true">$VAR[BannerContainerVAR]</texture>
+                            <visible>!ListItem.IsParentFolder</visible>
                         </control>
                         <control type="image">
                             <left>0</left>

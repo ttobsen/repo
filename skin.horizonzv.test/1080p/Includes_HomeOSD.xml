@@ -399,7 +399,13 @@
                             <width>210</width>
                             <height>210</height>
                             <aspectratio>keep</aspectratio>
-                            <include>DiscartMovies_small</include>
+							<texture fallback="cdart/default_bluray.png">$VAR[DiscartPlayerVAR]</texture>
+							<animation type="Visible" reversible="false">
+								<effect type="fade" start="0" end="100" time="700" delay="200"/>
+								<effect type="slide" start="0" end="90" time="800" delay="1200"/>
+								<effect type="rotate" center="auto" end="-750" time="15000" delay="2500"/>
+							</animation>
+							<visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
                             <visible>VideoPlayer.Content(movies)+!Player.IsInternetStream</visible>
                         </control>
                         <control type="image">

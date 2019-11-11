@@ -8,7 +8,7 @@
         <control type="image">
             <include>Dimensions_Fullscreen</include>
             <colordiffuse>grey1</colordiffuse>
-            <texture background="true">$INFO[ListItem.Art(fanart)]</texture>
+            <texture background="true">$VAR[FanartVAR]</texture>
         </control>
         <include>BlackGrunge</include>
         <include>VideoGrid</include>
@@ -123,14 +123,25 @@
                     <top>190</top>
                     <width>344</width>
                     <height>344</height>
-                    <texture fallback="cdart/default_bluray.png">$VAR[DiscartVAR]</texture>
+                    <texture fallback="cdart/default_bluray.png">$INFO[ListItem.Art(discart)]</texture>
                     <aspectratio align="right" aligny="center">keep</aspectratio>
+					<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Discart))</visible>
+                </control>
+                <control type="image">
+                    <description>Discart Image</description>
+                    <left>548</left>
+                    <top>190</top>
+                    <width>344</width>
+                    <height>344</height>
+                    <texture fallback="cdart/default_bluray.png">$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Discart)]</texture>
+                    <aspectratio align="right" aligny="center">keep</aspectratio>
+					<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Discart))</visible>
                 </control>
             </control>
             <control type="group">
                 <left>952</left>
                 <top>712</top>
-				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Characterart))</visible>
+				<!-- <visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Characterart))</visible> -->
                 <control type="image">
                     <left>333</left>
                     <top>190</top>

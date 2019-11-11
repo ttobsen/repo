@@ -121,7 +121,7 @@
                             <description>Extra Art Settings</description>
                             <label>51276</label>
                             <onclick/>
-                            <visible>System.HasAddon(script.skin.helper.service)</visible>
+                            <!-- <visible>System.HasAddon(script.skin.helper.service)</visible> -->
                         </item>
                         <item id="1">
                             <description>Admin Menu</description>
@@ -1740,8 +1740,7 @@
                         <pagecontrol>77</pagecontrol>
                         <visible>Container(8000).Hasfocus(7)</visible>
                         <include>openclosevisible</include>
-                        <control type="label" id="8997">
-                            <!-- General Settings -->
+                        <!-- <control type="label" id="8997">
                             <width>1260</width>
                             <height>15</height>
                             <align>center</align>
@@ -1771,7 +1770,6 @@
                             <selected>Skin.HasSetting(SkinHelper.EnableExtendedArt)</selected>
                         </control>
                         <control type="label" id="9004">
-                            <!-- PVR Settings -->
                             <width>1260</width>
                             <height>15</height>
                             <align>center</align>
@@ -1799,7 +1797,7 @@
                             <label>51414</label>
                             <onclick>Skin.ToggleSetting(SkinHelper.EnablePVRThumbs)</onclick>
                             <selected>Skin.HasSetting(SkinHelper.EnablePVRThumbs)</selected>
-                        </control>
+                        </control> -->
                         <control type="label" id="9007">
                             <!-- Music Settings -->
                             <width>1260</width>

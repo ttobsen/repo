@@ -59,8 +59,8 @@
         <value>$INFO[ListItem.Art(fanart)]</value>
     </variable>
     <variable name="Panel3Cover">
-        <value condition="Control.HasFocus(302)+!String.IsEmpty(ListItem.Art(season.post))">$INFO[ListItem.Art(season.poster)]</value>
-        <value condition="Control.HasFocus(302)+String.IsEmpty(ListItem.Art(season.post))">$INFO[ListItem.Art(poster)]</value>
+        <value condition="Control.HasFocus(302)+!String.IsEmpty(ListItem.Art(season.poster))">$INFO[ListItem.Art(season.poster)]</value>
+        <value condition="Control.HasFocus(302)+String.IsEmpty(ListItem.Art(season.poster))">$INFO[ListItem.Art(poster)]</value>
         <value condition="Control.HasFocus(303)">$INFO[Container(303).ListItem.Art(poster)]</value>
         <value>$INFO[ListItem.Art(poster)]</value>
     </variable>
@@ -280,7 +280,7 @@
                     <!-- <visible>!Control.IsVisible(303)</visible> -->
                     <visible>Container.Content(Movies)</visible>
                     <visible>!ListItem.IsParentFolder</visible>
-                    <visible>!System.HasAddon(script.skin.info.service)+![ListItem.IsCollection|Container.Content(Sets)]</visible>
+                    <visible>!System.HasAddon(script.skin.info.service)+![ListItem.IsCollection|Container.Content(Sets)|ListItem.IsFolder]</visible>
                     <include>MovieDataList_Content</include>
                 </control>
                 <control type="image">
@@ -293,7 +293,7 @@
                     <texture background="true" border="1">Separator1.png</texture>
                     <include>openclosevisible</include>
                     <visible>!String.IsEmpty(Control.GetLabel(90))</visible>
-                    <visible>![Container.Content(TVShows)|Container.Content(seasons)|Container.Content(episodes)|Container.Content(addons)]</visible>
+                    <visible>![Container.Content(TVShows)|Container.Content(seasons)|Container.Content(episodes)|Container.Content(addons)|ListItem.IsFolder]</visible>
                     <visible>!ListItem.IsCollection</visible>
                 </control>
                 <control type="label">
@@ -316,7 +316,7 @@
                     <aspectratio>keep</aspectratio>
                     <texture background="true" border="5">$INFO[ListItem.Icon]</texture>
                     <visible>Container.Content(episodes)</visible>
-                    <visible>!ListItem.IsParentFolder</visible>
+                    <visible>!ListItem.IsParentFolder+!ListItem.IsFolder</visible>
                     <visible>!String.IsEmpty(ListItem.Icon)</visible>
                     <include>openclosevisible</include>
                 </control>
@@ -403,15 +403,16 @@
                     <label>$VAR[InfoWallTextboxVar]</label>
                     <include>openclosevisible</include>
                     <!-- <visible>!Control.IsVisible(303)</visible> -->
-                    <visible>![Container.Content(TVShows)|Container.Content(seasons)|Container.Content(episodes)|Container.Content(addons)]</visible>
+                    <visible>![Container.Content(TVShows)|Container.Content(seasons)|Container.Content(episodes)|Container.Content(addons)|ListItem.IsFolder]</visible>
                     <visible>!ListItem.IsCollection</visible>
                 </control>
                 <control type="group">
                     <left>0</left>
                     <top>30</top>
-                    <!-- <include>openclosevisible</include> -->
-					<visible>!String.IsEmpty(ListItem.Label)+!ListItem.IsParentFolder</visible>
-                    <visible>!Container.Content(episodes)+Window.IsVisible(videos)</visible>
+                    <include>openclosevisible</include>
+					<!-- <visible>!String.IsEmpty(ListItem.Label)+!ListItem.IsParentFolder</visible>
+                    <visible>!Container.Content(episodes)+Window.IsVisible(videos)</visible> -->
+					<visible>!ListItem.IsParentFolder+ListItem.IsFolder</visible>
                     <control type="list" id="303">
                         <left>142</left>
                         <top>90</top>
@@ -590,7 +591,7 @@
                             <font>impacted21</font>
                             <shadowcolor>black</shadowcolor>
                             <label>$VAR[OriginalTitle]</label>
-							<visible>String.IsEmpty(ListItem.Art(banner))|!Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
+							<visible>[[String.IsEmpty(ListItem.Art(banner))+String.IsEmpty(ListItem.Art(tvshow.banner))]|Container.Content(episodes)]|!Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
                         </control>
                         <control type="group">
                             <left>0</left>
@@ -630,19 +631,6 @@
                                 <aspectratio>stretch</aspectratio>
 								<texture diffuse="masks/banner_mask.png">$VAR[BannerContainerVAR]</texture>
                             </control>
-                            <control type="label">
-                                <left>8</left>
-                                <top>9</top>
-                                <width>570</width>
-                                <height>98</height>
-                                <align>center</align>
-                                <aligny>center</aligny>
-                                <font>impacted21</font>
-                                <textcolor>white</textcolor>
-                                <shadowcolor>black</shadowcolor>
-                                <label>$VAR[OriginalTitle]</label>
-                                <visible>String.IsEmpty(ListItem.Art(banner))|!Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
-                            </control>
                             <control type="group">
                                 <left>0</left>
                                 <top>8</top>
@@ -674,6 +662,19 @@
                                 <height>98</height>
                                 <texture border="5">masks/Default.png</texture>
                                 <visible>Control.HasFocus(302)</visible>
+                            </control>
+                            <control type="label">
+                                <left>8</left>
+                                <top>9</top>
+                                <width>570</width>
+                                <height>98</height>
+                                <align>center</align>
+                                <aligny>center</aligny>
+                                <font>impacted21</font>
+                                <textcolor>white</textcolor>
+                                <shadowcolor>black</shadowcolor>
+                                <label>$VAR[OriginalTitle]</label>
+								<visible>[[String.IsEmpty(ListItem.Art(banner))+String.IsEmpty(ListItem.Art(tvshow.banner))]|Container.Content(episodes)]|!Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
                             </control>
                         </control>
                     </focusedlayout>

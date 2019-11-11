@@ -625,7 +625,7 @@
                 <control type="image">
                     <include>Dimensions_Fullscreen</include>
                     <fadetime>800</fadetime>
-                    <texture background="true">$INFO[ListItem.Art(fanart)]</texture>
+                    <texture background="true">$VAR[FanartVAR]</texture>
                     <colordiffuse>$VAR[BackgroundDim]</colordiffuse>
                 </control>
                 <control type="multiimage">
@@ -1235,7 +1235,7 @@
     <include name="DiscartMovies">
         <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
         <visible>!ListItem.IsParentFolder+!Container.Content(sets)+!ListItem.IsCollection</visible>
-        <texture fallback="cdart/default_bluray.png">$VAR[DiscartVAR]</texture>
+        <texture fallback="cdart/default_bluray.png">$VAR[DiscartContainerVAR]</texture>
         <animation type="Visible" reversible="false">
             <effect type="fade" start="0" end="100" time="700" delay="200"/>
             <effect type="slide" start="0" end="172" time="800" delay="1200"/>
@@ -1246,7 +1246,7 @@
         <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
         <visible>!ListItem.IsParentFolder+!Container.Content(sets)</visible>
         <visible>!ListItem.IsCollection</visible>
-        <texture fallback="cdart/default_bluray.png">$VAR[DiscartVAR]</texture>
+        <texture fallback="cdart/default_bluray.png">$VAR[DiscartContainerVAR]</texture>
         <animation type="Visible" reversible="false">
             <effect type="fade" start="0" end="100" time="700" delay="200"/>
             <effect type="slide" start="0" end="90" time="800" delay="1200"/>
@@ -3175,7 +3175,7 @@
 			<top>400</top>
 			<width>650</width>
 			<height>200</height>
-			<visible>Skin.HasSetting(DebugInfo)</visible>
+			<visible>Skin.HasSetting(DebugInfo)+Window.IsVisible(home)</visible>
 			<onup>2</onup>
 			<ondown>3</ondown>
 			<onleft>1</onleft>
@@ -3554,6 +3554,15 @@
                 <align>left</align>
                 <textcolor>red</textcolor>
                 <shadowcolor>black</shadowcolor>
+                <label>VAR PosterThumb: $VAR[PosterThumb]</label>
+            </control> -->
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>red</textcolor>
+                <shadowcolor>black</shadowcolor>
                 <label>ListItem.Art(banner): $INFO[ListItem.Art(banner)]</label>
             </control>
             <control type="label">
@@ -3563,9 +3572,36 @@
                 <align>left</align>
                 <textcolor>red</textcolor>
                 <shadowcolor>black</shadowcolor>
-                <label>VAR PosterThumb: $VAR[PosterThumb]</label>
-            </control> -->
+                <label>ListItem.Art(tvshow.banner): $INFO[ListItem.Art(tvshow.banner)]</label>
+            </control>
             <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>red</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>BannerContainerVAR: $VAR[BannerContainerVAR]</label>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>red</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ListItem.Art(set.poster): $INFO[ListItem.Art(set.poster)]</label>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>red</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>ClearlogoVAR: $VAR[ClearlogoVAR]</label>
+            </control>
+            <!-- <control type="label">
                 <width>auto</width>
                 <height>18</height>
                 <font>font12</font>
@@ -3748,7 +3784,7 @@
 				<aspectratio>keep</aspectratio>
 				<texture>$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Banner)]</texture>
 				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Banner))</visible>
-			</control>
+			</control> -->
 		</control>
 	</include>
 </includes>

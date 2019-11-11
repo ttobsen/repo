@@ -1374,8 +1374,8 @@
                 <width>600</width>
                 <height>237</height>
                 <aspectratio align="left" aligny="center">scale</aspectratio>
-                <texture background="true" diffuse="SideFadeWhiteHalf.png">$INFO[Container.ListItem.Art(fanart)]</texture>
-                <visible>Skin.HasSetting(fanart)</visible>
+                <texture background="true" diffuse="SideFadeWhiteHalf.png">$INFO[ListItem.Art(fanart)]</texture>
+                <visible>Skin.HasSetting(fanart)+!String.IsEmpty(ListItem.Art(fanart))</visible>
             </control>
             <control type="image">
                 <description>background</description>
@@ -1385,8 +1385,8 @@
                 <width>600</width>
                 <height>237</height>
                 <aspectratio align="left" aligny="center">scale</aspectratio>
-                <texture background="true" diffuse="SideFadeWhiteHalf.png">$INFO[Container.ListItem.Property(fanart_image)]</texture>
-                <visible>Skin.HasSetting(fanart)</visible>
+                <texture background="true" diffuse="SideFadeWhiteHalf.png">$INFO[ListItem.Property(fanart_image)]</texture>
+                <visible>Skin.HasSetting(fanart)+!String.IsEmpty(ListItem.Property(fanart_image))+String.IsEmpty(ListItem.Art(fanart))</visible>
             </control>
             <control type="image">
                 <description>background</description>
@@ -1395,7 +1395,7 @@
                 <width>1125</width>
                 <height>240</height>
                 <texture border="15" flipx="true">buttons\ButtonNFhalf.png</texture>
-                <visible>Skin.HasSetting(fanart)+!String.IsEmpty(Container.ListItem.Art(fanart))+!String.IsEmpty(Container.ListItem.Property(fanart_image))</visible>
+                <visible>Skin.HasSetting(fanart)+!String.IsEmpty(ListItem.Art(fanart))+!String.IsEmpty(ListItem.Property(fanart_image))</visible>
             </control>
             <control type="image">
                 <include>openclosemedium</include>
@@ -1405,7 +1405,9 @@
                 <height>160</height>
                 <aspectratio align="left" aligny="bottom">keep</aspectratio>
                 <texture background="true">$VAR[ClearlogoVAR]</texture>
-                <visible>[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),movies)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)]+Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
+                <visible>Control.Hasfocus($PARAM[HomePageWidget_id])</visible>
+                <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
+                <!-- <visible>[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),movies)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)]+Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible> -->
             </control>
             <control type="image">
                 <include>openclosemedium</include>
@@ -1414,20 +1416,9 @@
                 <width>302</width>
                 <height>160</height>
                 <aspectratio align="left" aligny="bottom">keep</aspectratio>
-                <texture>$INFO[Skin.String(Music_Folder_Path)]$INFO[Container.ListItem.Artist,,/logo.png]</texture>
+                <texture>$INFO[Skin.String(Music_Folder_Path)]$INFO[ListItem.Artist,,/logo.png]</texture>
                 <visible>Skin.HasSetting(music_art)</visible>
                 <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)</visible>
-            </control>
-            <control type="image">
-                <include>openclosemedium</include>
-                <left>57</left>
-                <top>136</top>
-                <width>302</width>
-                <height>160</height>
-                <aspectratio align="left" aligny="bottom">keep</aspectratio>
-                <texture background="true">$VAR[ClearlogoVAR]</texture>
-                <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
-                <visible>Control.Hasfocus($PARAM[HomePageWidget_id])</visible>
             </control>
         </control>
     </include>

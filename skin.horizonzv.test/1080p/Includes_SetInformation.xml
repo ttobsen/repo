@@ -63,14 +63,15 @@
                     <colordiffuse>menudiffuse</colordiffuse>
                     <texture diffuse="masks/mask.png">Shadow.png</texture>
                 </control>
-                <!-- <control type="image">
+                <control type="image">
                     <left>128</left>
                     <top>232</top>
                     <width>82</width>
                     <height>158</height>
                     <aspectratio align="left">scale</aspectratio>
-                    <texture diffuse="masks/cdart_mask.png">$VAR[DiscartVAR]</texture>
-                </control> -->
+					<texture diffuse="masks/cdart_mask.png">$INFO[ListItem.Art(discart)]</texture>
+					<visible>!String.IsEmpty(ListItem.Art(discart))</visible>
+                </control>
                 <control type="image">
                     <width>210</width>
                     <height>315</height>
@@ -110,14 +111,15 @@
                         <colordiffuse>menudiffuse</colordiffuse>
                         <texture>Shadow.png</texture>
                     </control>
-                    <!-- <control type="image">
+                    <control type="image">
                         <left>128</left>
                         <top>232</top>
                         <width>82</width>
                         <height>158</height>
                         <aspectratio align="left">scale</aspectratio>
-                        <texture diffuse="masks/cdart_mask.png">$VAR[DiscartVAR]</texture>
-                    </control> -->
+                        <texture diffuse="masks/cdart_mask.png">$INFO[ListItem.Art(discart)]</texture>
+						<visible>!String.IsEmpty(ListItem.Art(discart))</visible>
+                    </control>
                     <control type="image">
                         <width>210</width>
                         <height>315</height>
@@ -142,7 +144,7 @@
                     <height>195</height>
                     <aspectratio>keep</aspectratio>
                     <colordiffuse>grey2</colordiffuse>
-                    <texture>$INFO[ListItem.Art(poster)]</texture>
+                    <texture>$VAR[DiscartContainerVAR]</texture>
                     <visible>Control.HasFocus(2000)</visible>
                 </control>
                 <control type="image">
@@ -151,15 +153,16 @@
                     <width>195</width>
                     <height>195</height>
                     <aspectratio>keep</aspectratio>
-                    <texture>$INFO[ListItem.Art(poster)]</texture>
+                    <texture>$VAR[DiscartContainerVAR]</texture>
                     <visible>!Control.HasFocus(2000)</visible>
                 </control>
-                <!-- <control type="image">
+                <control type="image">
                     <width>195</width>
                     <height>195</height>
                     <colordiffuse>menudiffuse</colordiffuse>
                     <texture diffuse="masks/cdart_mask.png">Shadow.png</texture>
-                </control> -->
+					<visible>!String.IsEmpty(ListItem.Art(discart))</visible>
+                </control>
                 <control type="label">
                     <left>0</left>
                     <top>158</top>
@@ -177,14 +180,15 @@
                     <width>195</width>
                     <height>195</height>
                     <aspectratio>keep</aspectratio>
-                    <texture>$INFO[ListItem.Art(poster)]</texture>
+                    <texture>$VAR[DiscartContainerVAR]</texture>
                 </control>
-                <!-- <control type="image">
+                <control type="image">
                     <width>195</width>
                     <height>195</height>
                     <colordiffuse>menudiffuse</colordiffuse>
                     <texture diffuse="masks/cdart_mask.png">Shadow.png</texture>
-                </control> -->
+					<visible>!String.IsEmpty(ListItem.Art(discart))</visible>
+                </control>
                 <control type="label">
                     <left>0</left>
                     <top>158</top>

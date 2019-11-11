@@ -254,7 +254,7 @@
 						</control>
 					</itemlayout>
 					<focusedlayout condition="[Container.Content(Movies)|Container.Content(Sets)|Container.Content(Seasons)|Container.Content(tvshows)|Container.Content(musicvideos)]+!Skin.HasSetting(hideMovieCases)" height="435" width="390">
-						<!-- <control type="image">
+						<control type="image">
 							<visible>!Container(562).OnNext+!Container(562).OnPrevious</visible>
 							<visible>Control.HasFocus(562)</visible>
 							<left>525</left>
@@ -263,7 +263,7 @@
 							<height>300</height>
 							<aspectratio>keep</aspectratio>
 							<include>DiscartMovies</include>
-						</control> -->
+						</control>
 						<control type="group">
 							<left>493</left>
 							<animation effect="zoom" center="auto" tween="cubic" start="80" end="100" time="300" condition="Skin.HasSetting(animation)+!Skin.HasSetting(no_wall_animation)">Focus</animation>
@@ -320,7 +320,7 @@
 						</control>
 					</focusedlayout>
 					<focusedlayout condition="[Container.Content(Movies)|Container.Content(Sets)|Container.Content(Seasons)|Container.Content(tvshows)|Container.Content(musicvideos)]+Skin.HasSetting(hideMovieCases)" height="435" width="360">
-						<!-- <control type="image">
+						<control type="image">
 							<visible>!Container(562).OnNext+!Container(562).OnPrevious</visible>
 							<visible>Control.HasFocus(562)</visible>
 							<left>627</left>
@@ -329,7 +329,7 @@
 							<height>300</height>
 							<aspectratio>keep</aspectratio>
 							<include>DiscartMovies</include>
-						</control> -->
+						</control>
 						<control type="group">
 							<left>606</left>
 							<animation effect="zoom" center="auto" tween="cubic" start="80" end="100" time="300" condition="Skin.HasSetting(animation)+!Skin.HasSetting(no_wall_animation)">Focus</animation>
