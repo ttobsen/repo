@@ -84,17 +84,6 @@
                         <texture background="true">$VAR[BannerContainerVAR]</texture>
 						<visible>!ListItem.IsParentFolder</visible>
                     </control>
-                    <!-- <control type="image">
-                        <left>8</left>
-                        <top>8</top>
-                        <width>525</width>
-                        <height>87</height>
-                        <colordiffuse>$VAR[CoverDim]</colordiffuse>
-                        <texture background="true">$VAR[SetBannerThumb]</texture>
-                        <aspectratio>stretch</aspectratio>
-                        <visible>!ListItem.IsParentFolder</visible>
-                        <visible>[String.IsEmpty(ListItem.VideoCodec)+!ListItem.IsParentFolder+ListItem.IsCollection]</visible>
-                    </control> -->
                     <control type="label">
 						<left>18</left>
 						<top>8</top>

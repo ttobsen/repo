@@ -1235,7 +1235,7 @@
     <include name="DiscartMovies">
         <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
         <visible>!ListItem.IsParentFolder+!Container.Content(sets)+!ListItem.IsCollection</visible>
-        <texture fallback="cdart/default_bluray.png">$VAR[DiscartContainerVAR]</texture>
+        <texture fallback="cdart/default_bluray.png">$INFO[ListItem.Art(discart)]</texture>
         <animation type="Visible" reversible="false">
             <effect type="fade" start="0" end="100" time="700" delay="200"/>
             <effect type="slide" start="0" end="172" time="800" delay="1200"/>
