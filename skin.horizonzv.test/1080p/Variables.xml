@@ -275,6 +275,7 @@
         <value condition="VideoPlayer.Content(episodes)">$VAR[extraart_player_rule]</value>
     </variable>
     <variable name="PosterThumb">
+        <value condition="ListItem.IsCollection+!String.IsEmpty(ListItem.Art(set))">$INFO[ListItem.Art(set)]</value>
         <value condition="ListItem.IsCollection+!String.IsEmpty(ListItem.Art(set.poster))">$INFO[ListItem.Art(set.poster)]</value>
 		<value condition="String.Contains(Container.ListItem.DBTYPE,episode)+!Window.IsVisible(home)">$INFO[ListItem.Thumb]</value>
         <value condition="String.Contains(Container.ListItem.DBTYPE,episode)+Window.IsVisible(home)">$INFO[ListItem.Art(tvshow.poster)]</value>
@@ -976,6 +977,7 @@
 		<value condition="String.IsEmpty(ListItem.Art(discart))">$INFO[ListItem.Art(poster)]</value>
 	</variable>
 	<variable name="CharacterArtVAR">
+		<value condition="!String.IsEmpty(ListItem.Art(characterart))">$INFO[ListItem.Art(characterart)]</value>
 		<value condition="System.HasAddon(script.skin.helper.service)+Skin.HasSetting(SkinHelper.EnableExtendedArt)">$INFO[Window(Home).Property(SkinHelper.ListItem.Art.CharacterArt)]</value>
 	</variable>
 	<variable name="FanartVAR">
