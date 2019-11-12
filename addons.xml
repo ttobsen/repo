@@ -938,45 +938,6 @@
     </extension>
 </addon>
 
-<addon id="service.fussballpopup" name="Fussball Ticker" version="0.5.0" provider-name="L0RE">
-	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="script.module.dateutil" version="2.5.3"/>
-		<import addon="service.popwindow" version="0.4.0"/>
-	</requires>
-	<extension point="xbmc.service" library="service.py" start="login" />
-	<extension point="xbmc.python.pluginsource" library="menu.py" >
-		<provides>executable</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Current football events as overlay</summary>
-		<summary lang="de">Aktuelle Fussball-Ereignisse als Einblendung</summary>
-		<description lang="en">Shows actual Football-Messages in Overlay Windows. Under Programs Addons you can enter the desired games.</description>
-		<description lang="de">Zeigt aktuelle Fussball-Meldungen im Popup Fenster. Unter Programme Addons kann man die gewünschten Spiele eintragen.</description>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum>http://www.kodinerds.net/index.php/Thread/52014-Fussball-Meldungen-via-Popup-um-auf-dem-Laufenden-zu-bleiben/</forum>
-		<website></website>
-		<email>andreas at vogler dot name</email>
-		<source>https://github.com/kodinerds/repo/tree/master/service.fussballpopup</source>
-		<assets>
-			<icon>icon.png</icon>
-			<fanart>fanart.jpg</fanart>
-		</assets>
-		<news>[B][COLOR orangered]Version 0.5.0  (16.09.2018)[/COLOR][/B] by realvito[CR]
-- fixed: Die meisten Ordner sind leer (Webseitenveränderung)
-- fixed: Interne Scriptfehler im Ablauf
-- fixed: Interne Adressen angepasst - Spieler-Bilder werden vor Einblendung auf Existenz getestet
-- added: Fehlerzähler - damit der Service bei Fehlern nicht sofort abbricht (Settings)
-- optimized: Neue Media-Bilder hinzugefügt
-- optimized: Texte und Übersetzungen bereinigt, unnötige Codeschnipsel entfernt
-		</news>
-	</extension>
-</addon>
-
 <addon id="plugin.program.fritzact" name="Fritz Smart Home" version="0.0.16" provider-name="Birger Jesch">
     <requires>
         <import addon="xbmc.python" version="2.24.0" />
@@ -1828,40 +1789,6 @@ NOTE: Streams are available in SD only
     </extension>
 </addon>
 
-<addon id="plugin.video.akibapass" name="Akibapass" version="0.6.4" provider-name="MrKrabat">
-    <requires>
-        <import addon="xbmc.python" version="2.25.0"/>
-        <import addon="script.module.beautifulsoup4" version="4.5.3"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <language>de</language>
-        <summary lang="en_GB">Watch videos from the german platform Akibapass.de!</summary>
-        <summary lang="de_DE">Schaue Videos von der deutschen Streaming Plattform Akibapass.de!</summary>
-        <description lang="en_GB">All of your favorite series directly from japan here at Akibapass.de. Access new simulcasts and a lot of classics.</description>
-        <description lang="de_DE">Alle deine Lieblingsserien direkt aus Japan bei Akibapass.de. Zugang zu aktuellen Simulcasts und jeder Menge Klassikern.</description>
-        <disclaimer lang="en_GB">WARNING: You MUST be a PREMIUM member or BUY videos to use this plugin</disclaimer>
-        <disclaimer lang="de_DE">HINWEIS: Du MUSST PREMIUM Mitglied sein oder Videos KAUFEN um dieses Plugin zu benutzen</disclaimer>
-        <broken>Akibapass shut down its streaming service on 2018-07-31</broken>
-        <news>v0.6.4 (2018.08.07)[CR]- Akibapass shut down its streaming service on 2018-07-31</news>
-        <license>GNU Affero General Public License, v3</license>
-        <forum>https://www.kodinerds.net/index.php/Thread/58346-Release-Akibapass-de/</forum>
-        <website>https://www.akibapass.de/de/v2</website>
-        <source>https://github.com/MrKrabat/plugin.video.akibapass</source>
-        <email></email>
-        <assets>
-            <icon>icon.png</icon>
-            <fanart>fanart.jpg</fanart>
-            <screenshot>resources/media/screenshot-01.jpg</screenshot>
-            <screenshot>resources/media/screenshot-02.jpg</screenshot>
-            <screenshot>resources/media/screenshot-03.jpg</screenshot>
-        </assets>
-    </extension>
-</addon>
-
 <addon id="plugin.video.spotitube" name="Youtube Music" version="2.1.4" provider-name="realvito (inspired by L0RE)">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
@@ -2169,27 +2096,6 @@ v2.0.0
     <email>4lb3rtO@gmx.de</email>
     <source></source>
   </extension>
-</addon>
-
-<addon id="plugin.video.n24_de" name="N24.de" version="2.0.14" provider-name="AddonScriptorDE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <broken>mUss neu geschrieben werden</broken>
-        <summary lang="de">N24 Mediathek und Livestream</summary>
-        <summary lang="en">N24 Media Library and Livestream</summary>
-        <language>de</language>
-        <description lang="de">N24 Mediathek und Livestream</description>
-        <description lang="en">N24 Media Library and Livestream</description>
-        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
-        <broken>Siehe http://www.kodinerds.net/index.php/Thread/54232-Planung-N24/</broken>
-    <platform>all</platform>
-    </extension>
 </addon>
 
 <addon id="plugin.video.L0RE.aftv" name="1. FC Union Berlin Mediathek" version="0.1.1" provider-name="L0RE">
@@ -3360,27 +3266,6 @@ Thank you ran.de for your great service, especially for providing ranNFL reLives
     </extension>
 </addon>
 
-<addon id="plugin.video.russiantv" name="Russian TV" version="0.1" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="de">Film und Serien (Trailer, Making of,Teaser,...)  von http://www.filmstarts.de/</summary>
-    <summary lang="en">Film an Series (Trailer, Making of,Teaser,...) from http://www.filmstarts.de/</summary>
-    <description lang="en">Film an Series (Trailer, Making of,Teaser,...) from http://www.filmstarts.de/</description>
-    <description lang="de">Film und Serien (Trailer, Making of,Teaser,...) von http://www.filmstarts.de/</description>
-    <website></website>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.filmstarts</source>
-    <forum>https://www.kodinerds.net/index.php/Thread/53743-RERelease-filmstarts/</forum>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
-</addon>
-
 <addon id="plugin.video.mediathekdirekt" name="Mediathek Direkt" version="0.0.13" provider-name="P_Aeh">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -3593,41 +3478,6 @@ Thank you ran.de for your great service, especially for providing ranNFL reLives
         <website>https://www.last.fm/</website>
         <email>[jin] at [xyz] dot [de]</email>
         <source>https://github.com/kodinerds/repo/tree/master/plugin.video.mvmix</source>
-    </extension>
-</addon>
-
-<addon id="plugin.video.watchbox" name="Watchbox" version="0.5.2" provider-name="MrKrabat">
-    <requires>
-        <import addon="xbmc.python" version="2.25.0"/>
-        <import addon="script.module.beautifulsoup4" version="4.5.3"/>
-        <import addon="script.module.inputstreamhelper" version="0.3.3"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <language>de</language>
-        <summary lang="en_GB">Movies and series from the top genres | WATCHBOX</summary>
-        <summary lang="de_DE">Filme und Serien aus den Top Genres | WATCHBOX</summary>
-        <description lang="en_GB">Whether anime, horror, action or comedy! Browse through our top genres! All films and series for free as online stream at WATCHBOX.</description>
-        <description lang="de_DE">Ob Anime, Horror, Action oder Komödie! Stöber durch unsere Top Genres! Alle Filme und Serien kostenlos im Online-Stream bei WATCHBOX.</description>
-        <disclaimer lang="en_GB">WARNING: This plugin is only available from Germany by geo blocking!</disclaimer>
-        <disclaimer lang="de_DE">HINWEIS: Dieses Plugin ist durch Geoblocking nur von Deutschland aus verfügbar!</disclaimer>
-        <broken>Watchbox was integrated into the service of TVNow on 2019-03-27</broken>
-        <news>v0.5.2 (2019.03.27)[CR]- Watchbox was integrated into the service of TVNow on 2019-03-27</news>
-        <license>GNU Affero General Public License, v3</license>
-        <forum>https://www.kodinerds.net/index.php/Thread/58398-Release-Watchbox-de/</forum>
-        <website>https://www.watchbox.de/</website>
-        <source>https://github.com/MrKrabat/plugin.video.watchbox</source>
-        <email></email>
-        <assets>
-            <icon>icon.png</icon>
-            <fanart>fanart.jpg</fanart>
-            <screenshot>resources/media/screenshot-01.jpg</screenshot>
-            <screenshot>resources/media/screenshot-02.jpg</screenshot>
-            <screenshot>resources/media/screenshot-03.jpg</screenshot>
-        </assets>
     </extension>
 </addon>
 
@@ -3991,7 +3841,7 @@ Thank you ran.de for your great service, especially for providing ranNFL reLives
   </extension>
 </addon>
 
-<addon id="plugin.video.wakanim" name="Wakanim" version="0.7.5" provider-name="MrKrabat">
+<addon id="plugin.video.wakanim" name="Wakanim" version="0.7.6" provider-name="MrKrabat">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.beautifulsoup4" version="4.5.3"/>
@@ -4015,7 +3865,7 @@ Thank you ran.de for your great service, especially for providing ranNFL reLives
         <disclaimer lang="de_DE">HINWEIS: Du MUSST PREMIUM Mitglied sein oder Videos KAUFEN um dieses Plugin zu benutzen</disclaimer>
         <disclaimer lang="fr_FR">AVERTISSEMENT: VOUS DEVEZ être un membre PREMIUM ou ACHETER des vidéos pour utiliser ce plugin</disclaimer>
         <disclaimer lang="ru_RU">ВНИМАНИЕ: Для использования этого плагина Вы должны оформить подписку или купить аниме</disclaimer>
-        <news>v0.7.5 (2018.09.27)[CR]- Small fixes</news>
+        <news>v0.7.6 (2019.05.06)[CR]- Fix login not working[CR]- Small fixes</news>
         <license>GNU Affero General Public License, v3</license>
         <forum>https://forum.kodi.tv/showthread.php?tid=322763</forum>
         <website>https://www.wakanim.tv/</website>
