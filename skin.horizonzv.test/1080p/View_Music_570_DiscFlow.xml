@@ -26,20 +26,9 @@
                     <top>465</top>
                     <width>1200</width>
                     <height>1200</height>
-                    <texture background="true" fallback="cdart/default_glass.png" diffuse="masks/cdart_mask.png">$INFO[Skin.String(Music_Folder_Path),,../]$INFO[ListItem.Artist,,/]$INFO[ListItem.Album,,/cdart.png]</texture>
-                    <visible>Skin.HasSetting(music_art)</visible>
-                    <visible>!Container.Content(songs)</visible>
-                </control>
-                <control type="image">
-                    <include>opencloseslideleft</include>
-                    <animation effect="rotate" center="auto" start="0" end="360" time="22000" loop="true" condition="true">Conditional</animation>
-                    <left>615r</left>
-                    <top>465</top>
-                    <width>1200</width>
-                    <height>1200</height>
-                    <texture background="true" fallback="cdart/default_glass.png" diffuse="masks/cdart_mask.png">$INFO[ListItem.Path,,cdart.png]</texture>
-                    <visible>Skin.HasSetting(music_art)</visible>
-                    <visible>Container.Content(songs)</visible>
+                    <texture background="true" fallback="cdart/default_glass.png" diffuse="masks/cdart_mask.png">$INFO[ListItem.Art(discart)]</texture>
+                    <visible>Skin.HasSetting(EnableExtendedArt)</visible>
+                    <!-- <visible>Container.Content(songs)</visible> -->
                 </control>
                 <control type="image">
                     <include>opencloseslideleft</include>
@@ -50,7 +39,7 @@
                     <height>1200</height>
                     <aspectratio>keep</aspectratio>
                     <texture background="true">cdart/default_glass.png</texture>
-                    <visible>!Skin.HasSetting(music_art)</visible>
+                    <visible>!Skin.HasSetting(EnableExtendedArt)</visible>
                 </control>
             </control>
         </control>
@@ -58,7 +47,7 @@
             <include>openclosevisible</include>
             <visible>Control.IsVisible(570)+!Control.HasFocus(666)</visible>
             <control type="image">
-                <visible>Skin.HasSetting(music_art)+!String.IsEmpty(Control.GetLabel(5700))</visible>
+                <visible>Skin.HasSetting(EnableExtendedArt)+!String.IsEmpty(Control.GetLabel(5700))</visible>
                 <include>openclosevisible</include>
                 <left>962</left>
                 <top>184</top>
@@ -67,14 +56,14 @@
                 <texture background="true">Black.png</texture>
             </control>
             <control type="image" id="5700">
-                <visible>Skin.HasSetting(music_art)</visible>
+                <visible>Skin.HasSetting(EnableExtendedArt)</visible>
                 <include>openclosevisible</include>
                 <left>969</left>
                 <top>192</top>
                 <width>300</width>
                 <height>160</height>
                 <aspectratio>keep</aspectratio>
-                <texture background="true" diffuse="masks/flagging_mask.png">$INFO[Skin.String(Music_Folder_Path)]$INFO[ListItem.Artist,,/logo.png]</texture>
+                <texture background="true" diffuse="masks/flagging_mask.png">$INFO[ListItem.Art(clearlogo)]</texture>
             </control>
         </control>
         <control type="group">

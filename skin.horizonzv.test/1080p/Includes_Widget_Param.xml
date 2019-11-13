@@ -1406,8 +1406,8 @@
                 <aspectratio align="left" aligny="bottom">keep</aspectratio>
                 <texture background="true">$VAR[ClearlogoVAR]</texture>
                 <visible>Control.Hasfocus($PARAM[HomePageWidget_id])</visible>
-                <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
-                <!-- <visible>[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),movies)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)]+Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible> -->
+                <visible>Skin.HasSetting(EnableExtendedArt)</visible>
+                <!-- <visible>[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),movies)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)]+Skin.HasSetting(EnableExtendedArt)</visible> -->
             </control>
             <control type="image">
                 <include>openclosemedium</include>
@@ -1416,8 +1416,8 @@
                 <width>302</width>
                 <height>160</height>
                 <aspectratio align="left" aligny="bottom">keep</aspectratio>
-                <texture>$INFO[Skin.String(Music_Folder_Path)]$INFO[ListItem.Artist,,/logo.png]</texture>
-                <visible>Skin.HasSetting(music_art)</visible>
+                <texture>$INFO[ListItem.Art(clearlogo)]</texture>
+                <visible>Skin.HasSetting(EnableExtendedArt)</visible>
                 <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)</visible>
             </control>
         </control>

@@ -155,8 +155,8 @@
                 <width>345</width>
                 <height>105</height>
                 <aspectratio>keep</aspectratio>
-                <texture background="true">$INFO[Skin.String(Music_Folder_Path)]$INFO[ListItem.Artist,,/logo.png]</texture>
-                <visible>Skin.HasSetting(music_art)</visible>
+                <texture background="true">$INFO[ListItem.Art(clearlogo)]</texture>
+                <visible>Skin.HasSetting(EnableExtendedArt)</visible>
             </control>
             <control type="group">
                 <visible>Control.IsVisible(509)+[Control.HasFocus(888)|Skin.HasSetting(MusicInfo)]</visible>
@@ -196,7 +196,7 @@
                         </control>
                         <control type="group">
                             <visible>!String.IsEmpty(Control.GetLabel(1203))+!Container.Content(artists)</visible>
-                            <visible>Skin.HasSetting(music_art)</visible>
+                            <visible>Skin.HasSetting(EnableExtendedArt)</visible>
                             <include>openclosevisible</include>
                             <control type="image">
                                 <description>Separator</description>
@@ -236,7 +236,7 @@
                             </control>
                         </control>
                         <control type="group">
-                            <visible>String.IsEmpty(Control.GetLabel(1203))|Container.Content(artists)|!Skin.HasSetting(music_art)</visible>
+                            <visible>String.IsEmpty(Control.GetLabel(1203))|Container.Content(artists)|!Skin.HasSetting(EnableExtendedArt)</visible>
                             <include>openclosevisible</include>
                             <control type="image">
                                 <description>Separator</description>
@@ -462,19 +462,6 @@
                     <colordiffuse>fanartdiffuse</colordiffuse>
                     <texture background="true" border="1">Separator4.png</texture>
                 </control>
-                <control type="multiimage" id="1200">
-                    <include>opencloseslideleft</include>
-                    <left>1320</left>
-                    <top>258</top>
-                    <width>558</width>
-                    <height>375</height>
-                    <aspectratio>keep</aspectratio>
-                    <imagepath background="true">$INFO[Skin.String(Music_Folder_Path)]$INFO[ListItem.Artist]/extrafanart</imagepath>
-                    <timeperimage>4000</timeperimage>
-                    <fadetime>800</fadetime>
-                    <randomize>true</randomize>
-                    <visible>Skin.HasSetting(music_art)</visible>
-                </control>
                 <control type="image" id="1201">
                     <include>opencloseslideleft</include>
                     <left>1320</left>
@@ -483,7 +470,7 @@
                     <height>375</height>
                     <aspectratio>keep</aspectratio>
                     <texture background="true" fallback="special://skin/backgrounds/fallback_background.jpg">$INFO[ListItem.Art(fanart)]</texture>
-                    <visible>String.IsEmpty(Control.GetLabel(1200))|!Skin.HasSetting(music_art)</visible>
+                    <!-- <visible>!Skin.HasSetting(EnableExtendedArt)</visible> -->
                 </control>
                 <control type="image">
                     <description>Separator</description>
@@ -516,17 +503,17 @@
             </control>
             <control type="image" id="1203">
                 <visible>!Container(509).OnNext+!Container(509).OnPrevious</visible>
-                <visible>!ListItem.IsParentFolder+Skin.HasSetting(music_art)+[Container.Content(albums)|Container.Content(artists)|Container.Content(songs)]</visible>
+                <visible>!ListItem.IsParentFolder+Skin.HasSetting(EnableExtendedArt)+[Container.Content(albums)|Container.Content(artists)|Container.Content(songs)]</visible>
                 <visible>Control.IsVisible(509)+[Control.HasFocus(888)|Skin.HasSetting(MusicInfo)]</visible>
                 <left>660</left>
                 <top>-300</top>
                 <width>600</width>
                 <height>600</height>
                 <aspectratio>keep</aspectratio>
-                <texture background="true">$INFO[Skin.String(Music_Folder_Path)]$INFO[ListItem.Artist,,/]$INFO[ListItem.Album,,/cdart.png]</texture>
+                <texture background="true">$INFO[ListItem.Art(discart)]</texture>
                 <animation type="Visible" reversible="false">
                     <effect type="slide" start="0,-330" end="0" time="800" delay="800" />
-                    <effect type="rotate" center="auto" end="-900" time="15000" delay="1700" />
+                    <effect type="rotate" center="auto" end="-900" time="30000" delay="1700" />
                 </animation>
             </control>
             <control type="group">

@@ -498,103 +498,79 @@
             <control type="group"> <!-- Movie Info Panel & Flaggs -->
                 <visible>Container.Content(Movies)|Container.Content(Sets)|Container.Content(Seasons)|Container.Content(tvshows)|Container.Content(musicvideos)</visible>
                 <visible>!ListItem.IsParentFolder</visible>
+				<visible>!ListItem.IsCollection</visible>
 				<include>openclosemedium</include>
                 <control type="group">
-                    <include>opencloseslideup</include>
                     <left>45</left>
                     <top>680</top>
-                    <control type="group">
-                        <control type="label" id="1102">
-                            <left>0</left>
-                            <top>0</top>
-                            <width>586</width>
-                            <height>332</height>
-                            <align>center</align>
-                            <aligny>center</aligny>
-                            <textcolor>grey</textcolor>
-                            <font>aaaiight32</font>
-                            <wrapmultiline>true</wrapmultiline>
-                            <label>$INFO[ListItem.Label]</label>
-                            <scroll>true</scroll>
-                            <visible>String.IsEqual(Control.GetLabel(1100),Empty.png)+String.IsEmpty(Control.GetLabel(1101))</visible>
-                            <include>opencloseslideup</include>
-                        </control>
-                        <control type="image" id="1100">
-                            <left>0</left>
-                            <top>0</top>
-                            <width>586</width>
-                            <height>332</height>
-                            <aspectratio>scale</aspectratio>
-                            <texture background="true" border="1" diffuse="Shine.png" fallback="Empty.png">$INFO[ListItem.Art(fanart)]</texture>
-                            <visible>!Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
-                            <visible>!ListItem.IsCollection</visible>
-                            <include>opencloseslideup</include>
-                        </control>
-                        <control type="image" id="1101">
-                            <left>0</left>
-                            <top>0</top>
-                            <width>586</width>
-                            <height>332</height>
-                            <aspectratio>scale</aspectratio>
-                            <texture background="true" border="1" diffuse="Shine.png">$VAR[LandscapeVAR]</texture>
-                            <visible>!ListItem.IsCollection</visible>
-                            <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
-                            <include>opencloseslideup</include>
-                        </control>
-                    </control>
-                    <control type="group">
-                        <left>0</left>
-                        <top>20</top>
-                        <include>MovieSetInformationCover</include>
-                        <visible>ListItem.IsCollection</visible>
-                        <include>openclosevisible</include>
-                    </control>
-                    <control type="label">
-                        <left>30</left>
-                        <top>-40</top>
-                        <width>1740</width>
-                        <height>75</height>
-                        <align>center</align>
-                        <textcolor>grey1</textcolor>
-                        <font>impacted21</font>
-                        <label>$LOCALIZE[20161]$INFO[Container(2000).NumItems,: [COLOR=white],[/COLOR]]</label>
-                        <visible>ListItem.IsCollection</visible>
-                        <include>openclosevisible</include>
-                    </control>
+					<control type="label">
+						<left>0</left>
+						<top>0</top>
+						<width>586</width>
+						<height>332</height>
+						<align>center</align>
+						<aligny>center</aligny>
+						<textcolor>grey</textcolor>
+						<font>aaaiight32</font>
+						<wrapmultiline>true</wrapmultiline>
+						<label>$INFO[ListItem.Label]</label>
+						<scroll>true</scroll>
+						<visible>String.IsEmpty(Control.GetLabel(1201))</visible>
+						<include>openclosevisible</include>
+					</control>
+					<control type="image" id="1201">
+						<left>0</left>
+						<top>0</top>
+						<width>586</width>
+						<height>332</height>
+						<aspectratio>scale</aspectratio>
+						<texture background="true" border="1" diffuse="Shine.png">$INFO[ListItem.Art(fanart)]</texture>
+						<visible>!String.IsEmpty(ListItem.Art(fanart))</visible>
+						<!-- <visible>!Skin.HasSetting(EnableExtendedArt)|[String.IsEmpty(ListItem.Art(landscape))+String.IsEmpty(ListItem.Art(set.landscape))]</visible> -->
+						<include>openclosevisible</include>
+					</control>
+					<control type="image">
+						<left>0</left>
+						<top>0</top>
+						<width>586</width>
+						<height>332</height>
+						<aspectratio>scale</aspectratio>
+						<texture background="true" border="1" diffuse="Shine.png">$VAR[LandscapeVAR]</texture>
+						<visible>String.IsEmpty(ListItem.Art(fanart))</visible>
+						<visible>Skin.HasSetting(EnableExtendedArt)</visible>
+						<include>openclosevisible</include>
+					</control>
 					<control type="image" id="1202">
 						<left>1200</left>
 						<top>3</top>
 						<width>615</width>
 						<height>320</height>
-						<texture diffuse="Shine.png">$VAR[extraart_listitem_rule]</texture>
+						<texture diffuse="Shine.png">$VAR[extraart_listitem_rule_without_fallback]</texture>
 						<aspectratio>keep</aspectratio>
 						<visible>!ListItem.IsCollection+!String.IsEmpty(ListItem.Plot)</visible>
-						<visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
-						<include>opencloseslideup</include>
+						<visible>Skin.HasSetting(EnableExtendedArt)</visible>
+						<include>openclosevisible</include>
 					</control>
-					<control type="textbox" id="1203">
+					<control type="textbox">
 						<left>620</left>
 						<top>3</top>
 						<width>560</width>
 						<height>327</height>
 						<font>ubuntu-r16b</font>
 						<label>$INFO[ListItem.Plot]</label>
-						<visible>!ListItem.IsCollection+!String.IsEmpty(ListItem.Plot)</visible>
-						<visible>[[Container.Content(Movies)|Container.Content(Sets)|Container.Content(musicvideos)]+Skin.HasSetting(SkinHelper.EnableExtendedArt)]
-						|[[Container.Content(Seasons)|Container.Content(tvshows)]+Skin.HasSetting(SkinHelper.EnableExtendedArt)]</visible>
-						<include>opencloseslideup</include>
+						<visible>!String.IsEmpty(Control.GetLabel(1202))+Skin.HasSetting(EnableExtendedArt)</visible>
+						<include>openclosevisible</include>
 					</control>
-					<control type="textbox" id="1203">
+					<control type="textbox">
 						<left>620</left>
 						<top>3</top>
 						<width>1200</width>
 						<height>327</height>
 						<font>ubuntu-r16b</font>
 						<label>$INFO[ListItem.Plot]</label>
-						<visible>!ListItem.IsCollection+!String.IsEmpty(ListItem.Plot)</visible>
-						<visible>![[Container.Content(Movies)|Container.Content(Sets)|Container.Content(musicvideos)]+Skin.HasSetting(SkinHelper.EnableExtendedArt)]
-						+![[Container.Content(Seasons)|Container.Content(tvshows)]+Skin.HasSetting(SkinHelper.EnableExtendedArt)]</visible>
-						<include>opencloseslideup</include>
+						<visible>!String.IsEmpty(ListItem.Plot)</visible>
+						<visible>String.IsEmpty(Control.GetLabel(1202))|!Skin.HasSetting(EnableExtendedArt)</visible>
+						<include>openclosevisible</include>
 					</control>
                     <control type="image">
                         <!-- <visible>Skin.HasSetting(fsk_original)|Skin.HasSetting(fsk_dual)</visible> -->
@@ -620,6 +596,29 @@
                     <include>FlagVideoSubtitles</include>
                 </control>
             </control>
+			<control type="group">
+				<left>45</left>
+				<top>680</top>
+				<visible>ListItem.IsCollection</visible>
+				<include>openclosevisible</include>
+				<control type="group">
+					<left>0</left>
+					<top>20</top>
+					<include>MovieSetInformationCover</include>
+					<include>openclosevisible</include>
+				</control>
+				<control type="label">
+					<left>30</left>
+					<top>-40</top>
+					<width>1740</width>
+					<height>75</height>
+					<align>center</align>
+					<textcolor>grey1</textcolor>
+					<font>impacted21</font>
+					<label>$LOCALIZE[20161]$INFO[Container(2000).NumItems,: [COLOR=white],[/COLOR]]</label>
+					<include>openclosevisible</include>
+				</control>
+			</control>
             <control type="group"> <!-- Music Cover -->
                 <left>990</left>
                 <top>135</top>
@@ -627,7 +626,7 @@
                 <control type="image">
                     <visible>!Container(562).OnNext+!Container(562).OnPrevious</visible>
                     <visible>Control.HasFocus(562)</visible>
-                    <visible>!ListItem.IsParentFolder+Skin.HasSetting(music_art)+Container.Content(albums)</visible>
+                    <visible>!ListItem.IsParentFolder+Skin.HasSetting(EnableExtendedArt)+Container.Content(albums)</visible>
                     <left>22</left>
                     <top>27</top>
                     <width>435</width>
@@ -692,7 +691,7 @@
                 <visible>!Skin.HasSetting(extendedinfo_music)</visible>
                 <visible>Container.Content(Albums)|Container.Content(artists)|Container.Content(Songs)</visible>
                 <visible>!ListItem.IsParentFolder</visible>
-                <include>opencloseslideup</include>
+                <include>openclosevisible</include>
                 <control type="group">
                     <left>45</left>
                     <top>705</top>
@@ -703,22 +702,9 @@
                             <width>586</width>
                             <height>332</height>
                             <aspectratio>scale</aspectratio>
-                            <texture border="1" diffuse="Shine.png" fallback="Empty.png">$INFO[ListItem.Art(fanart)]</texture>
-                            <visible>Skin.HasSetting(fanart)+[String.IsEmpty(Control.GetLabel(1301))|!Skin.HasSetting(music_art)]</visible>
-                            <include>opencloseslideup</include>
-                        </control>
-                        <control type="multiimage" id="1301">
-                            <left>0</left>
-                            <top>0</top>
-                            <width>586</width>
-                            <height>332</height>
-                            <imagepath diffuse="Shine.png">$INFO[Skin.String(Music_Folder_Path)]$INFO[ListItem.Artist]/extrafanart</imagepath>
-                            <aspectratio>scale</aspectratio>
-                            <timeperimage>4000</timeperimage>
-                            <fadetime>800</fadetime>
-                            <randomize>true</randomize>
-                            <visible>Skin.HasSetting(music_art)</visible>
-                            <include>opencloseslideup</include>
+                            <texture border="1" diffuse="Shine.png">$INFO[ListItem.Art(fanart)]</texture>
+                            <visible>Skin.HasSetting(fanart)</visible>
+                            <include>openclosevisible</include>
                         </control>
                         <control type="label" id="1302">
                             <left>0</left>
@@ -731,8 +717,8 @@
                             <wrapmultiline>true</wrapmultiline>
                             <label>$INFO[ListItem.Artist]</label>
                             <scroll>true</scroll>
-                            <visible>String.IsEqual(Control.GetLabel(1300),Empty.png)+String.IsEmpty(Control.GetLabel(1301))+[Container.Content(Albums)|Container.Content(artists)]</visible>
-                            <include>opencloseslideup</include>
+                            <visible>String.IsEmpty(ListItem.Art(fanart))+[Container.Content(Albums)|Container.Content(artists)]</visible>
+                            <include>openclosevisible</include>
                         </control>
 						<control type="textbox">
 							<left>620</left>
@@ -740,7 +726,17 @@
 							<width>560</width>
 							<height>327</height>
                             <label>$INFO[ListItem.Property(Artist_Description)]$INFO[ListItem.Property(Album_Description)]</label>
-                            <include>opencloseslideup</include>
+							<visible>!String.IsEmpty(ListItem.Art(clearlogo))+Skin.HasSetting(EnableExtendedArt)</visible>
+                            <include>openclosevisible</include>
+						</control>
+						<control type="textbox">
+							<left>620</left>
+							<top>3</top>
+							<width>1220</width>
+							<height>327</height>
+                            <label>$INFO[ListItem.Property(Artist_Description)]$INFO[ListItem.Property(Album_Description)]</label>
+							<visible>String.IsEmpty(ListItem.Art(clearlogo))|!Skin.HasSetting(EnableExtendedArt)</visible>
+                            <include>openclosevisible</include>
 						</control>
 						<control type="image">
 							<left>1200</left>
@@ -748,15 +744,15 @@
 							<width>615</width>
 							<height>320</height>
                             <aspectratio>keep</aspectratio>
-							<texture background="true" diffuse="masks/flagging_mask.png">$INFO[Skin.String(Music_Folder_Path)]$INFO[ListItem.Artist,,/logo.png]</texture>
-							<visible>Skin.HasSetting(music_art)</visible>
-                            <include>opencloseslideup</include>
+							<texture background="true" diffuse="masks/flagging_mask.png">$INFO[ListItem.Art(clearlogo)]</texture>
+							<visible>Skin.HasSetting(EnableExtendedArt)+!String.IsEmpty(ListItem.Art(clearlogo))</visible>
+                            <include>openclosevisible</include>
 						</control>
                     </control>
                 </control>
                 <control type="group">
                     <visible>Container.Content(Albums)+!ListItem.IsParentFolder</visible>
-                    <include>opencloseslideup</include>
+                    <include>openclosevisible</include>
                     <left>60</left>
                     <top>1005</top>
                     <control type="image">
@@ -776,7 +772,7 @@
                 <control type="group">
                     <left>818</left>
                     <top>675</top>
-                    <include>opencloseslideup</include>
+                    <include>openclosevisible</include>
                     <include>MusicArtitsEvents</include>
                 </control>
             </control>

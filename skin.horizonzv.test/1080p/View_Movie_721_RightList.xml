@@ -386,8 +386,8 @@
                         <visible>!Container.Content(episodes)</visible>
                         <control type="group">
                             <control type="image" id="700">
-                                <!-- <visible>[Container.Content(movies)+Skin.HasSetting(SkinHelper.EnableExtendedArt)]|[!Container.Content(movies)+Skin.HasSetting(SkinHelper.EnableExtendedArt)]</visible> -->
-                                <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
+                                <!-- <visible>[Container.Content(movies)+Skin.HasSetting(EnableExtendedArt)]|[!Container.Content(movies)+Skin.HasSetting(EnableExtendedArt)]</visible> -->
+                                <visible>Skin.HasSetting(EnableExtendedArt)</visible>
                                 <left>38</left>
                                 <top>34</top>
                                 <width>645</width>

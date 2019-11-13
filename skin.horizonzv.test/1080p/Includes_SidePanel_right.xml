@@ -112,15 +112,15 @@
                     <selected>Skin.HasSetting(OriginalTitle)</selected>
                     <visible>Window.IsVisible(videos)+![Container.Content(episodes)|Container.Content(tvshows)|Container.Content(seasons)]</visible>
                 </control>
-                <!-- <control type="radiobutton" id="1706">
+                <control type="radiobutton" id="1706">
                     <description>Video Extra Art</description>
                     <include>custom_setting_button_property</include>
                     <label>Extra Art</label>
-                    <onclick>Skin.ToggleSetting(SkinHelper.EnableExtendedArt)</onclick>
-                    <selected>Skin.HasSetting(SkinHelper.EnableExtendedArt)</selected>
-                    <enable>System.HasAddon(script.skin.helper.service)</enable>
+                    <onclick>Skin.ToggleSetting(EnableExtendedArt)</onclick>
+                    <selected>Skin.HasSetting(EnableExtendedArt)</selected>
+                    <!-- <enable>System.HasAddon(script.artwork.beef)</enable> -->
                     <visible>Window.IsVisible(videos)</visible>
-                </control> -->
+                </control>
                 <control type="label" id="1750">
                     <!-- Music -->
                     <width>592</width>
@@ -157,9 +157,9 @@
                 <control type="radiobutton" id="1754">
                     <include>custom_setting_button_property</include>
                     <label>$LOCALIZE[2] Extra Art</label>
-                    <onclick>Skin.ToggleSetting(music_art)</onclick>
-                    <onclick condition="String.IsEmpty(Skin.String(Music_Folder_Path))+!Skin.HasSetting(music_art)">Skin.SetPath(Music_Folder_Path)</onclick>
-                    <selected>Skin.HasSetting(music_art)</selected>
+                    <onclick>Skin.ToggleSetting(EnableExtendedArt)</onclick>
+                    <selected>Skin.HasSetting(EnableExtendedArt)</selected>
+                    <!-- <enable>System.HasAddon(script.artwork.beef)</enable> -->
                     <visible>!Control.IsVisible(513)+!Control.IsVisible(512)+!Control.IsVisible(506)</visible>
                     <visible>Window.IsVisible(music)|Window.IsVisible(MusicPlaylist)</visible>
                 </control>
@@ -311,7 +311,7 @@
                     <onclick>Skin.ToggleSetting(Fanart_ClearlogoTitle)</onclick>
                     <selected>Skin.HasSetting(Fanart_ClearlogoTitle)</selected>
                     <visible>Control.IsVisible(401)</visible>
-                    <enable>Skin.HasSetting(SkinHelper.EnableExtendedArt)</enable>
+                    <enable>Skin.HasSetting(EnableExtendedArt)</enable>
                 </control>
                 <control type="radiobutton" id="1814">
                     <include>custom_setting_button_property</include>

@@ -86,7 +86,7 @@
                 <width>390</width>
                 <aspectratio align="center" aligny="bottom">keep</aspectratio>
                 <texture border="4">$VAR[extraart_player_rule]</texture>
-                <visible>[VideoPlayer.Content(episodes)|VideoPlayer.Content(movies)]+Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
+                <visible>[VideoPlayer.Content(episodes)|VideoPlayer.Content(movies)]+Skin.HasSetting(EnableExtendedArt)</visible>
                 <visible>Window.IsVisible(fullscreenvideo)+!Window.IsVisible(SeekBar)</visible>
             </control>
             <control type="image">
@@ -102,7 +102,7 @@
                 <width>900</width>
                 <colordiffuse>menudiffuse</colordiffuse>
                 <texture background="true" border="4">effects/supernova.png</texture>
-                <visible>[VideoPlayer.Content(episodes)|VideoPlayer.Content(movies)]+Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
+                <visible>[VideoPlayer.Content(episodes)|VideoPlayer.Content(movies)]+Skin.HasSetting(EnableExtendedArt)</visible>
                 <visible>Window.IsVisible(fullscreenvideo)+!Window.IsVisible(SeekBar)+!String.IsEmpty(Control.GetLabel(5000))</visible>
             </control>
         </control>
@@ -560,13 +560,6 @@
             <visible>PVR.IsPlayingRadio</visible>
             <visible>Skin.HasSetting(DebugInfo)</visible>
         </control>
-        <control type="label">
-            <left>0</left>
-            <top>320</top>
-            <include>PathID</include>
-			<label>SkinHelper ExtraArt: $INFO[Window(Home).Property(SkinHelper.ListItem.Art.ExtraFanart)]</label>
-            <visible>Skin.HasSetting(DebugInfo)</visible>
-		</control>
         <control type="label">
             <left>0</left>
             <top>350</top>

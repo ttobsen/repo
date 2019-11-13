@@ -282,14 +282,14 @@
 			</control>
 			<control type="image">
 				<!-- Artistlogo -->
-				<visible>Skin.HasSetting(music_art)</visible>
+				<visible>Skin.HasSetting(EnableExtendedArt)</visible>
 				<include>openclosevisible</include>
 				<left>0</left>
 				<top>465</top>
 				<width>510</width>
 				<height>180</height>
 				<aspectratio align="left" aligny="top">keep</aspectratio>
-				<texture>$INFO[Skin.String(Music_Folder_Path)]$INFO[MusicPlayer.Artist,,/logo.png]</texture>
+				<texture>$INFO[ListItem.Art(clearlogo)]</texture>
 				<visible>Player.HasMedia</visible>
 			</control>
         </control>

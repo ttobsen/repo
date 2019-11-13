@@ -181,7 +181,7 @@
 					<texture background="true" border="5">$VAR[ClearlogoVAR]</texture>
 					<!-- <visible>String.IsEmpty(ListItem.Plot)+[Control.HasFocus(302)|Control.HasFocus(303)|Control.HasFocus(600)]</visible> -->
 					<visible>Control.HasFocus(302)|Control.HasFocus(303)|Control.HasFocus(600)</visible>
-					<visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
+					<visible>Skin.HasSetting(EnableExtendedArt)</visible>
 					<visible>!Skin.HasSetting(ShowCover)</visible>
 					<visible>![String.IsEqual(Container.FolderPath,videodb://tvshows/actors/)|String.IsEqual(Container.FolderPath,videodb://movies/actors/)]</visible>
 					<include>openclosevisible</include>
@@ -576,22 +576,20 @@
                             <top>6</top>
                             <width>585</width>
                             <height>98</height>
+                            <aspectratio>keep</aspectratio>
+                            <colordiffuse>$VAR[CoverDim]</colordiffuse>
+							<texture diffuse="masks/banner_mask.png">$VAR[PosterThumb]</texture>
+							<visible>ListItem.IsParentFolder</visible>
+                        </control>
+                        <control type="image">
+                            <left>0</left>
+                            <top>6</top>
+                            <width>585</width>
+                            <height>98</height>
                             <aspectratio>stretch</aspectratio>
                             <colordiffuse>$VAR[CoverDim]</colordiffuse>
-                            <texture diffuse="masks/banner_mask.png">$VAR[BannerContainerVAR]</texture>
-                        </control>
-                        <control type="label">
-                            <left>8</left>
-                            <top>9</top>
-                            <width>570</width>
-                            <height>98</height>
-                            <align>center</align>
-                            <aligny>center</aligny>
-                            <textcolor>grey</textcolor>
-                            <font>impacted21</font>
-                            <shadowcolor>black</shadowcolor>
-                            <label>$VAR[OriginalTitle]</label>
-							<visible>[[String.IsEmpty(ListItem.Art(banner))+String.IsEmpty(ListItem.Art(tvshow.banner))]|Container.Content(episodes)]|!Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
+                            <texture diffuse="masks/banner_mask.png" fallback="FallbackBanner2.png">$VAR[BannerVAR]</texture>
+							<visible>!ListItem.IsParentFolder</visible>
                         </control>
                         <control type="group">
                             <left>0</left>
@@ -616,7 +614,21 @@
                             <aspectratio>stretch</aspectratio>
                             <colordiffuse>grey3</colordiffuse>
                             <texture border="5">masks/Default.png</texture>
-							<visible>String.IsEmpty(ListItem.Art(banner))|!Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
+							<!-- <visible>String.IsEmpty(ListItem.Art(banner))|!Skin.HasSetting(EnableExtendedArt)</visible> -->
+                        </control>
+                        <control type="label">
+                            <left>8</left>
+                            <top>9</top>
+                            <width>570</width>
+                            <height>98</height>
+                            <align>center</align>
+                            <aligny>center</aligny>
+                            <textcolor>grey</textcolor>
+                            <font>impacted21</font>
+                            <shadowcolor>black</shadowcolor>
+                            <label>$VAR[OriginalTitle]</label>
+							<visible>!ListItem.IsParentFolder</visible>
+							<visible>[String.IsEmpty(ListItem.Art(banner))+String.IsEmpty(ListItem.Art(set.banner))+String.IsEmpty(ListItem.Art(tvshow.banner))]|Container.Content(episodes)</visible>
                         </control>
                     </itemlayout>
                     <focusedlayout width="585" height="120">
@@ -628,8 +640,18 @@
                                 <top>6</top>
                                 <width>585</width>
                                 <height>98</height>
+                                <aspectratio>keep</aspectratio>
+								<texture diffuse="masks/banner_mask.png">$VAR[PosterThumb]</texture>
+								<visible>ListItem.IsParentFolder</visible>
+                            </control>
+                            <control type="image">
+                                <left>0</left>
+                                <top>6</top>
+                                <width>585</width>
+                                <height>98</height>
                                 <aspectratio>stretch</aspectratio>
-								<texture diffuse="masks/banner_mask.png">$VAR[BannerContainerVAR]</texture>
+								<texture diffuse="masks/banner_mask.png" fallback="FallbackBanner2.png">$VAR[BannerVAR]</texture>
+								<visible>!ListItem.IsParentFolder</visible>
                             </control>
                             <control type="group">
                                 <left>0</left>
@@ -674,7 +696,9 @@
                                 <textcolor>white</textcolor>
                                 <shadowcolor>black</shadowcolor>
                                 <label>$VAR[OriginalTitle]</label>
-								<visible>[[String.IsEmpty(ListItem.Art(banner))+String.IsEmpty(ListItem.Art(tvshow.banner))]|Container.Content(episodes)]|!Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
+								<visible>!ListItem.IsParentFolder</visible>
+								<visible>[String.IsEmpty(ListItem.Art(banner))+String.IsEmpty(ListItem.Art(set.banner))+String.IsEmpty(ListItem.Art(tvshow.banner))]|Container.Content(episodes)</visible>
+								<!-- <visible>[[String.IsEmpty(ListItem.Art(banner))+String.IsEmpty(ListItem.Art(tvshow.banner))]|Container.Content(episodes)]|[!Skin.HasSetting(EnableExtendedArt)|ListItem.IsParentFolder]</visible> -->
                             </control>
                         </control>
                     </focusedlayout>

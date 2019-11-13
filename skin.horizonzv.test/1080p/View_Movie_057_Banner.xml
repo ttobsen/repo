@@ -285,7 +285,7 @@
                             <width>1054</width>
                             <height>195</height>
                             <aspectratio>scale</aspectratio>
-                            <texture border="10" background="true" diffuse="ShadowWhiteFlipy.png" fallback="FallbackBanner.png">$VAR[BannerThumb]</texture>
+                            <texture border="10" background="true" diffuse="ShadowWhiteFlipy.png" fallback="FallbackBanner2.png">$VAR[BannerVAR]</texture>
                             <visible>!ListItem.IsParentFolder</visible>
                         </control>
                         <control type="image">
@@ -568,19 +568,7 @@
                     <width>315</width>
                     <height>172</height>
                     <texture background="true">Black.png</texture>
-                    <visible>![String.IsEmpty(Control.GetLabel(1099))+String.IsEmpty(Control.GetLabel(1100))]</visible>
-                </control>
-                <control type="multiimage" id="1099">
-                    <include>openclosevisible</include>
-                    <left>141</left>
-                    <top>537</top>
-                    <width>304</width>
-                    <height>164</height>
-                    <imagepath border="1" background="true">$INFO[ListItem.Path]extrafanart</imagepath>
-                    <aspectratio>keep</aspectratio>
-                    <timeperimage>5000</timeperimage>
-                    <randomize>true</randomize>
-                    <visible>Skin.HasSetting(music_art)</visible>
+                    <visible>!String.IsEmpty(ListItem.Art(fanart))</visible>
                 </control>
                 <control type="image" id="1100">
                     <include>openclosevisible</include>
@@ -590,7 +578,7 @@
                     <height>164</height>
                     <aspectratio align="left" aligny="bottom">scale</aspectratio>
                     <texture background="true">$INFO[ListItem.Art(fanart)]</texture>
-                    <visible>!String.IsEmpty(ListItem.Art(fanart))+String.IsEmpty(Control.GetLabel(1099))</visible>
+                    <visible>!String.IsEmpty(ListItem.Art(fanart))</visible>
                 </control>
                 <control type="image">
                     <include>openclosevisible</include>
@@ -633,7 +621,7 @@
                     <aspectratio align="center" aligny="bottom">keep</aspectratio>
                     <texture background="true">$VAR[extraart_listitem_rule]</texture>
                     <visible>!String.IsEmpty(Control.GetLabel(3203))</visible>
-                    <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
+                    <visible>Skin.HasSetting(EnableExtendedArt)</visible>
                 </control>
             </control>
         </control>

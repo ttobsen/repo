@@ -39,10 +39,10 @@
                             <height>300</height>
                             <aspectratio align="center" aligny="center">keep</aspectratio>
                             <texture>$VAR[extraart_player_rule]</texture>
-                            <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
+                            <visible>Skin.HasSetting(EnableExtendedArt)</visible>
                         </control>
                         <control type="group">
-                            <visible>!Skin.HasSetting(SkinHelper.EnableExtendedArt)|[String.IsEmpty(Control.GetLabel(71))]</visible>
+                            <visible>!Skin.HasSetting(EnableExtendedArt)|[String.IsEmpty(Control.GetLabel(71))]</visible>
                             <control type="image" id="72">
                                 <left>38</left>
                                 <top>45</top>

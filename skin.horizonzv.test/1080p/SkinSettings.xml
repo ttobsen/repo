@@ -121,7 +121,7 @@
                             <description>Extra Art Settings</description>
                             <label>51276</label>
                             <onclick/>
-                            <!-- <visible>System.HasAddon(script.skin.helper.service)</visible> -->
+							<visible/>
                         </item>
                         <item id="1">
                             <description>Admin Menu</description>
@@ -1740,7 +1740,7 @@
                         <pagecontrol>77</pagecontrol>
                         <visible>Container(8000).Hasfocus(7)</visible>
                         <include>openclosevisible</include>
-                        <!-- <control type="label" id="8997">
+                        <control type="label" id="8997">
                             <width>1260</width>
                             <height>15</height>
                             <align>center</align>
@@ -1750,7 +1750,7 @@
                             <width>1260</width>
                             <height>30</height>
                             <align>center</align>
-                            <label>$LOCALIZE[342] + $LOCALIZE[20343]</label>
+                            <label>$LOCALIZE[342] + $LOCALIZE[20343] + $LOCALIZE[2]</label>
                             <textcolor>description</textcolor>
                         </control>
                         <control type="image" id="8999">
@@ -1761,15 +1761,15 @@
                             <colordiffuse>description</colordiffuse>
                         </control>
                         <control type="radiobutton" id="901">
-                            <description>Skin Helper Extra Art's</description>
+                            <description>Extra Art's</description>
                             <width>1260</width>
                             <align>left</align>
                             <focusedcolor>black</focusedcolor>
                             <label>51414</label>
-                            <onclick>Skin.ToggleSetting(SkinHelper.EnableExtendedArt)</onclick>
-                            <selected>Skin.HasSetting(SkinHelper.EnableExtendedArt)</selected>
+                            <onclick>Skin.ToggleSetting(EnableExtendedArt)</onclick>
+                            <selected>Skin.HasSetting(EnableExtendedArt)</selected>
                         </control>
-                        <control type="label" id="9004">
+                        <!-- <control type="label" id="9004">
                             <width>1260</width>
                             <height>15</height>
                             <align>center</align>
@@ -1818,25 +1818,6 @@
                             <align>center</align>
                             <texture>Separator2.png</texture>
                             <colordiffuse>description</colordiffuse>
-                        </control>
-                        <control type="radiobutton" id="940">
-                            <description>Extra Art's Music</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>51252</label>
-                            <label>default focus</label>
-                            <onclick>Skin.ToggleSetting(music_art)</onclick>
-                            <onclick condition="String.IsEmpty(Skin.String(Music_Folder_Path))+!Skin.HasSetting(music_art)">Skin.SetPath(Music_Folder_Path)</onclick>
-                            <selected>Skin.HasSetting(music_art)</selected>
-                        </control>
-                        <control type="button" id="942">
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>51332</label>
-                            <label2>$INFO[Skin.String(Music_Folder_Path)]</label2>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.SetPath(Music_Folder_Path)</onclick>
-                            <visible>Skin.HasSetting(music_art)</visible>
                         </control>
                         <control type="button" id="944">
                             <description>CDArt Fallback</description>
