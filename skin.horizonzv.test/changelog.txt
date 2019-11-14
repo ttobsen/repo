@@ -1,4 +1,7 @@
-﻿v 1.18.0.37
+﻿v 1.18.0.38
+- Bugfix Fanart-View Discart
+
+v 1.18.0.37
 - Extraarts (Musik und Film/Serien) überarbeitet (ich empfehle Emby oder Artwork Beef)
 - View Wide für Interpreten
 - Bugfixes
