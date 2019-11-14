@@ -1,4 +1,10 @@
-﻿v 1.18.0.31
+﻿v 1.18.0.37
+- Extraarts (Musik und Film/Serien) überarbeitet (ich empfehle Emby oder Artwork Beef)
+- View Wide für Interpreten
+- Bugfixes
+- Code aufgeräumt
+
+v 1.18.0.31
 - Bugfix alle Icons (Sorry ;))
 
 v 1.18.0.30

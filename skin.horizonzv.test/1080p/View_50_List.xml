@@ -339,6 +339,7 @@
                 </control>
                 <control type="image">
                     <include>opencloseslow</include>
+                    <animation effect="slide" end="0,-30" time="0" condition="Window.IsVisible(videos)">Conditional</animation>
                     <left>585r</left>
                     <top>90</top>
                     <width>420</width>

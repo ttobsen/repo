@@ -28,12 +28,23 @@
                     <texture border="4">masks/Default_sharp.png</texture>
                 </control>
             </control> -->
+            <control type="label">
+                <visible>Skin.HasSetting(CommonPageCount)</visible>
+                <left>150</left>
+                <top>100</top>
+                <width>1620</width>
+                <height>38</height>
+                <align>center</align>
+                <font>impacted24</font>
+                <label>$INFO[ListItem.Label]</label>
+                <visible>Container.Content(episodes)|Container.Content(movies)|Container.Content(Sets)|Container.Content(artists)</visible>
+            </control>
             <control type="panel" id="505">
-                <visible>Container.Content(TVShows)|Container.Content(Sets)|Container.Content(Movies)|Container.Content(episodes)|Container.Content(seasons)|Container.Content(Files)</visible>
+                <visible>Container.Content(TVShows)|Container.Content(Sets)|Container.Content(Movies)|Container.Content(episodes)|Container.Content(seasons)|Container.Content(Files)|Container.Content(artists)</visible>
                 <left>150</left>
                 <top>180</top>
                 <width>1620</width>
-                <height>723</height>
+                <height>727</height>
                 <onleft>9000</onleft>
                 <onright condition="[Skin.HasSetting(HideJumpSMSBar)|Container.Content(episodes)|Container.Content(seasons)]+[Container(505).HasNext|Container(505).HasPrevious]">60</onright>
                 <onright condition="[Skin.HasSetting(HideJumpSMSBar)|Container.Content(episodes)|Container.Content(seasons)]+![Container(505).HasNext|Container(505).HasPrevious]">SetFocus(732)</onright>
@@ -45,7 +56,7 @@
                 <scrolltime>200</scrolltime>
                 <preloaditems>2</preloaditems>
                 <animation effect="slide" end="0,-15" time="150" condition="Skin.HasSetting(CommonPageCount)">Conditional</animation>
-                <itemlayout height="104" width="540" condition="Container.Content(TVShows)|Container.Content(Movies)|Container.Content(Sets)|Container.Content(Files)">
+                <itemlayout height="104" width="540" condition="Container.Content(TVShows)|Container.Content(Movies)|Container.Content(Sets)|Container.Content(Files)|Container.Content(artists)">
                     <control type="image">
                         <left>0</left>
                         <top>0</top>
@@ -114,7 +125,7 @@
                         <include>Set_Flagg_Small</include>
                     </control>
                 </itemlayout>
-                <focusedlayout height="104" width="540" condition="Container.Content(TVShows)|Container.Content(Movies)|Container.Content(Sets)|Container.Content(Files)">
+                <focusedlayout height="104" width="540" condition="Container.Content(TVShows)|Container.Content(Movies)|Container.Content(Sets)|Container.Content(Files)|Container.Content(artists)">
                     <control type="group">
                         <include>focuseffect</include>
                         <control type="image">
@@ -193,7 +204,7 @@
                         </control>
                     </control>
                 </focusedlayout>
-                <itemlayout height="241" width="324" condition="Container.Content(episodes)">
+                <itemlayout height="243" width="324" condition="Container.Content(episodes)">
                     <control type="image">
                         <left>0</left>
                         <top>0</top>
@@ -220,7 +231,7 @@
                         <height>165</height>
                         <colordiffuse>$VAR[CoverDim]</colordiffuse>
                         <texture>$VAR[PosterThumb]</texture>
-                        <aspectratio>scale</aspectratio>
+                        <aspectratio>keep</aspectratio>
                     </control>
                     <control type="label">
                         <left>8</left>
@@ -243,7 +254,7 @@
                         <include>Amazon_Flagg_Small</include>
                     </control>
                 </itemlayout>
-                <focusedlayout height="241" width="324" condition="Container.Content(episodes)">
+                <focusedlayout height="243" width="324" condition="Container.Content(episodes)">
                     <control type="group">
                         <include>focuseffect</include>
                         <control type="image">
@@ -262,7 +273,7 @@
                             <width>309</width>
                             <height>165</height>
 							<texture>$VAR[PosterThumb]</texture>
-                            <aspectratio>scale</aspectratio>
+                            <aspectratio>keep</aspectratio>
                         </control>
                         <control type="image">
                             <left>0</left>
@@ -320,7 +331,7 @@
                         <height>342</height>
                         <colordiffuse>$VAR[CoverDim]</colordiffuse>
                         <texture>$VAR[PosterThumb]</texture>
-                        <aspectratio>stretch</aspectratio>
+                        <aspectratio>keep</aspectratio>
                     </control>
                     <control type="image">
                         <left>8</left>
@@ -370,7 +381,7 @@
                             <width>240</width>
                             <height>342</height>
 							<texture>$VAR[PosterThumb]</texture>
-                            <aspectratio>stretch</aspectratio>
+                            <aspectratio>keep</aspectratio>
                         </control>
                         <control type="image">
                             <left>0</left>
@@ -432,10 +443,10 @@
             </control>
             <control type="image">
                 <left>150</left>
-                <top>906</top>
+                <top>914</top>
                 <width>300</width>
-                <height>63</height>
-                <aspectratio align="left">keep</aspectratio>
+                <height>80</height>
+                <aspectratio align="left" aligny="center">keep</aspectratio>
                 <texture background="true">$VAR[ClearlogoVAR]</texture>
                 <animation effect="slide" end="0,-6" time="150" condition="Skin.HasSetting(CommonPageCount)">Conditional</animation>
                 <visible>Skin.HasSetting(EnableExtendedArt)</visible>

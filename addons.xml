@@ -127,7 +127,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.skygo.de" name="Sky Go" version="1.13.4" provider-name="jojo, frankr612, Maven, Linkinsoldier">
+<addon id="plugin.video.skygo.de" name="Sky Go" version="1.13.5" provider-name="jojo, frankr612, Maven, Linkinsoldier">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.requests" version="2.9.1"/>
@@ -154,7 +154,7 @@
 		<website></website>
 		<email></email>
 		<source></source>
-		<news>1.13.4[CR]- Wechsel der API[CR][CR]1.13.3[CR]- Fix für die Anzeige von Episoden[CR][CR]1.13.2[CR]- Widgets: Fix für die Anzeige von Arts im Video OSD[CR]- 1. Ebene unter Livesender auf statische Liste geändert[CR][CR]1.13.1[CR]- Fix für Widgets[CR]- LiveTV: Streams ohne Manifest herausfiltern[CR][CR]1.13.0[CR]- Fix für Änderungen seitens SkyGo[CR]</news>
+		<news>1.13.5[CR]-LiveTV: Überprüfung auf Manifest-Url = None[CR]-Wiederholungen aus Sportsektion entfernt[CR]-Watchlist: Einträge überspringen, für die keine Details abrufbar sind</news>
 		<reuselanguageinvoker>true</reuselanguageinvoker>
 	</extension>
 </addon>
@@ -1045,7 +1045,7 @@
     </extension>
 </addon>
 
-<addon id="skin.horizonzv.test" name="Horizonz V (Kodi 18)" version="1.18.0.36" provider-name="blauesgruen">
+<addon id="skin.horizonzv.test" name="Horizonz V (Kodi 18)" version="1.18.0.37" provider-name="blauesgruen">
 	<requires>
 		<import addon="xbmc.gui" version="5.14.0"/>
 		<import addon="script.image.resource.select" version="2.0.1"/>
@@ -1368,7 +1368,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
     </extension>
 </addon>
 
-<addon id="plugin.video.skyticket.de" name="Sky Ticket" version="1.1.4" provider-name="jojo, frankr612, Maven, Linkinsoldier">
+<addon id="plugin.video.skyticket.de" name="Sky Ticket" version="1.1.5" provider-name="jojo, frankr612, Maven, Linkinsoldier">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.requests" version="2.9.1"/>
@@ -1403,14 +1403,8 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
 		<website></website>
 		<email></email>
 		<source></source>
-		<news>
-V1.1.2
-- Widgets: Anzeige von Arts
-- LiveTV: Option, um den Listeneintrag 'Aktualisieren' auszublenden
-V1.1.1
-- "inputstream.adaptive" V2.2.27 ist erforderlich
-- Property "inputstream.adaptive.license_flags=persistent_storage" gesetzt
-		</news>
+		<broken>Aufgrund der Abschaltung der alten API, ist das Add-on nicht mehr funktionsfähig.</broken>
+		<news>1.1.5[CR]-Aufgrund der Abschaltung der alten API, ist das Add-on nicht mehr funktionsfähig</news>
 		<reuselanguageinvoker>true</reuselanguageinvoker>
 	</extension>
 </addon>

@@ -513,7 +513,7 @@
                 <texture background="true">$INFO[ListItem.Art(discart)]</texture>
                 <animation type="Visible" reversible="false">
                     <effect type="slide" start="0,-330" end="0" time="800" delay="800" />
-                    <effect type="rotate" center="auto" end="-900" time="15000" delay="1700" />
+                    <effect type="rotate" center="auto" end="-900" time="30000" delay="1700" />
                 </animation>
             </control>
             <control type="group">

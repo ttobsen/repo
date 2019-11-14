@@ -2,7 +2,7 @@
 <includes>
     <!-- 10,11,50,57,58,500,302,401,402,503,505,506,509,510,512,513,514,515,516,541,550,551,562,570,721,722,742,740,741 -->
     <include name="ViewidAudio">
-        <views>50,58,506,509,512,513,515,550,551,562,570,722,741</views>
+        <views>50,58,505,506,509,512,513,515,550,551,562,570,722,741</views>
     </include>
     <include name="ViewsAudio">
         <control type="group" id="777">
@@ -11,6 +11,8 @@
             <!-- id 50 -->
             <include>BannerView_Music</include>
             <!-- id 58 -->
+            <include>WideIconView</include>
+            <!-- id 505 -->
             <include>MusicInfoListView</include>
             <!-- id 506 -->
             <include>MusicFanart</include>
@@ -312,8 +314,8 @@
                     <onclick>Container.SetViewMode(505)</onclick>
                     <onclick>Action(down)</onclick>
                     <include>SidePanelButton</include>
-                    <visible>Window.IsVisible(videos)</visible>
-                    <visible>Container.Content(TVShows)|Container.Content(Sets)|Container.Content(Movies)|Container.Content(episodes)|Container.Content(seasons)|Container.Content(Files)</visible>
+                    <!-- <visible>Window.IsVisible(videos)</visible> -->
+                    <visible>Container.Content(TVShows)|Container.Content(Sets)|Container.Content(Movies)|Container.Content(episodes)|Container.Content(seasons)|Container.Content(Files)|Container.Content(artists)</visible>
                     <visible>!String.StartsWith(Container.FolderPath,plugin://)+!Container.Content(Addons)</visible>
                 </control>
                 <control type="button" id="832">
