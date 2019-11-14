@@ -1,3 +1,5 @@
+1.1.5
+- Aufgrund der Abschaltung der alten API, ist das Add-on nicht mehr funktionsfähig
 1.1.2
 - Widgets: Anzeige von Arts
 - LiveTV: Option, um den Listeneintrag 'Aktualisieren' auszublenden
