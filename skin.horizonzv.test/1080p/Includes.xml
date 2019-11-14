@@ -484,7 +484,7 @@
             <include>openclosevisible</include>
             <visible>Skin.HasSetting(gambit_background)</visible>
             <visible>
-			[Player.HasAudio+!Control.IsVisible(2011)+!String.Contains(Control.GetLabel(2012),.jpg)+!Control.IsVisible(2013)+String.IsEmpty(Player.Art(fanart))]
+			[Player.HasAudio+!Control.IsVisible(2011)+!Control.IsVisible(2013)+String.IsEmpty(Player.Art(fanart))]
 			|[[Player.HasVideo|Pvr.IsPlayingTv]+!Control.IsVisible(2015)+!String.Contains(Control.GetLabel(2016),.jpg)+!Control.IsVisible(2017)]
 			|!Player.HasMedia
 			</visible>
@@ -506,7 +506,7 @@
             <colordiffuse>$VAR[BackgroundDim]</colordiffuse>
             <imagepath>$VAR[background]</imagepath>
             <visible>
-			[Player.HasAudio+!Control.IsVisible(2011)+!String.Contains(Control.GetLabel(2012),.jpg)+!Control.IsVisible(2013)+!Control.IsVisible(2014)]
+			[Player.HasAudio+!Control.IsVisible(2011)+!Control.IsVisible(2013)+!Control.IsVisible(2014)]
 			|[[Player.HasVideo|Pvr.IsPlayingTv]+!Control.IsVisible(2015)+!String.Contains(Control.GetLabel(2016),.jpg)+!Control.IsVisible(2017)]
 			|!Player.HasMedia
 			</visible>
@@ -528,18 +528,7 @@
                 <colordiffuse>$VAR[BackgroundDim]</colordiffuse>
                 <aspectratio>keep</aspectratio>
                 <texture background="true">$INFO[Player.Art(fanart)]</texture>
-                <visible>[!Visualisation.Enabled|[!Skin.HasSetting(ShowBackgroundVis)+Window.IsVisible(Home)]]+Skin.HasSetting(fanart)+!String.IsEmpty(Player.Art(fanart))+!Control.IsVisible(2013)+!String.Contains(Control.GetLabel(2012),.jpg)</visible>
-            </control>
-            <control type="multiimage" id="2012">
-                <include>Dimensions_Fullscreen</include>
-                <timeperimage>10000</timeperimage>
-                <fadetime>500</fadetime>
-                <randomize>true</randomize>
-                <aspectratio>keep</aspectratio>
-                <colordiffuse>$VAR[BackgroundDim]</colordiffuse>
-                <imagepath background="true">$INFO[Skin.String(Music_Folder_Path)]$INFO[MusicPlayer.Artist,,/extrafanart]</imagepath>
-                <visible>!Visualisation.Enabled|[!Skin.HasSetting(ShowBackgroundVis)+Window.IsVisible(Home)]</visible>
-				<visible>Skin.HasSetting(fanart)+!Control.IsVisible(2011)</visible>
+                <visible>[!Visualisation.Enabled|[!Skin.HasSetting(ShowBackgroundVis)+Window.IsVisible(Home)]]+Skin.HasSetting(fanart)+!String.IsEmpty(Player.Art(fanart))+!Control.IsVisible(2013)</visible>
             </control>
             <control type="multiimage" id="2013">
                 <include>Dimensions_Fullscreen</include>
@@ -550,7 +539,7 @@
                 <colordiffuse>$VAR[BackgroundDim]</colordiffuse>
                 <imagepath background="true">$INFO[Window(Visualisation).Property(ArtistSlideshow)]</imagepath>
                 <visible>System.HasAddon(script.artistslideshow)+!Window.IsVisible(Home)</visible>
-                <visible>Skin.HasSetting(fanart)+!String.Contains(Control.GetLabel(2012),.jpg)</visible>
+                <visible>Skin.HasSetting(fanart)</visible>
                 <visible>!String.Contains(Window(Visualisation).Property(ArtistSlideshow),black)+!String.Contains(Window(Visualisation).Property(ArtistSlideshow),transparent)</visible>
                 <visible>!Visualisation.Enabled+Window.IsVisible(visualisation)</visible>
             </control>
@@ -636,8 +625,8 @@
                     <fadetime>800</fadetime>
                     <randomize>true</randomize>
                     <colordiffuse>$VAR[BackgroundDim]</colordiffuse>
-                    <visible>[[Container.Content(Movies)|Container.Content(musicvideos)]+Skin.HasSetting(SkinHelper.EnableExtendedArt)+!Skin.HasSetting(no_extrafanart)]
-					|[[Container.Content(Seasons)|Container.Content(tvshows)]+Skin.HasSetting(SkinHelper.EnableExtendedArt)]</visible>
+                    <visible>[[Container.Content(Movies)|Container.Content(musicvideos)]+Skin.HasSetting(EnableExtendedArt)+!Skin.HasSetting(no_extrafanart)]
+					|[[Container.Content(Seasons)|Container.Content(tvshows)]+Skin.HasSetting(EnableExtendedArt)]</visible>
                     <visible>!ListItem.IsParentFolder</visible>
                     <include>openclosevisible</include>
                 </control>
@@ -1024,7 +1013,7 @@
     <include name="BandLogo">
         <control type="image">
             <!-- Artistlogo -->
-            <visible>Skin.HasSetting(music_art)</visible>
+            <visible>Skin.HasSetting(EnableExtendedArt)</visible>
             <include>opencloseslow</include>
             <left>60</left>
             <top>60</top>
@@ -1033,7 +1022,7 @@
             <fadetime>400</fadetime>
             <animation effect="fade" start="100" end="50" time="200" reversible="true" condition="!Player.ShowInfo">Conditional</animation>
             <aspectratio align="left" aligny="top">keep</aspectratio>
-            <texture diffuse="masks/flagging_mask.png">$INFO[Skin.String(Music_Folder_Path)]$INFO[MusicPlayer.Artist,,/logo.png]</texture>
+            <texture diffuse="masks/flagging_mask.png">$INFO[ListItem.Art(clearlogo)]</texture>
         </control>
     </include>
     <include name="WatchedIcon">
@@ -1233,7 +1222,7 @@
         </control>
     </include>
     <include name="DiscartMovies">
-        <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
+        <visible>Skin.HasSetting(EnableExtendedArt)</visible>
         <visible>!ListItem.IsParentFolder+!Container.Content(sets)+!ListItem.IsCollection</visible>
         <texture fallback="cdart/default_bluray.png">$INFO[ListItem.Art(discart)]</texture>
         <animation type="Visible" reversible="false">
@@ -1243,10 +1232,10 @@
         </animation>
     </include>
     <include name="DiscartMovies_small">
-        <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
+        <visible>Skin.HasSetting(EnableExtendedArt)</visible>
         <visible>!ListItem.IsParentFolder+!Container.Content(sets)</visible>
         <visible>!ListItem.IsCollection</visible>
-        <texture fallback="cdart/default_bluray.png">$VAR[DiscartContainerVAR]</texture>
+        <texture fallback="cdart/default_bluray.png">$INFO[ListItem.Art(discart)]</texture>
         <animation type="Visible" reversible="false">
             <effect type="fade" start="0" end="100" time="700" delay="200"/>
             <effect type="slide" start="0" end="90" time="800" delay="1200"/>
@@ -1389,7 +1378,7 @@
         </control>
     </include>
     <include name="cdart_listitem">
-        <texture fallback="cdart/default_glass.png" diffuse="masks/cdart_mask.png">$INFO[Skin.String(Music_Folder_Path)]$INFO[ListItem.Artist,,/]$INFO[ListItem.Album,,/cdart.png]</texture>
+        <texture fallback="cdart/default_glass.png" diffuse="masks/cdart_mask.png">$INFO[ListItem.Art(discart)]</texture>
         <animation type="Visible" reversible="false">
             <effect type="fade" start="0" end="100" time="700" delay="200"/>
             <effect type="slide" start="0" end="218" time="800" delay="1200"/>
@@ -1398,7 +1387,7 @@
     </include>
     <include name="cdart_player">
         <control type="group">
-            <visible>Skin.HasSetting(music_art)+Player.HasAudio+!Player.IsInternetStream+!Pvr.IsPlayingRadio</visible>
+            <visible>Skin.HasSetting(EnableExtendedArt)+Player.HasAudio+!Player.IsInternetStream+!Pvr.IsPlayingRadio</visible>
             <left>0</left>
             <top>0</top>
             <control type="image" id="69">
@@ -1408,7 +1397,7 @@
                 <height>255</height>
                 <left>-8</left>
                 <top>8</top>
-                <texture fallback="Empty.png" diffuse="masks/cdart_mask.png">$INFO[Player.FolderPath,,cdart.png]</texture>
+                <texture fallback="Empty.png" diffuse="masks/cdart_mask.png">$INFO[Player.Art(discart)]</texture>
                 <!-- <aspectratio>keep</aspectratio> -->
             </control>
             <control type="image" id="71">
@@ -2195,8 +2184,8 @@
                         <width>270</width>
                         <height>51</height>
                         <aspectratio align="right">keep</aspectratio>
-                        <texture>$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Clearlogo)]</texture>
-                        <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)+!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Clearlogo))</visible>
+                        <texture>$VAR[ClearlogoVAR]</texture>
+                        <visible>Skin.HasSetting(EnableExtendedArt)</visible>
                     </control>
                 </control>
                 <control type="image">
@@ -3169,49 +3158,6 @@
 		</control>
 	</include>
 	<include name="DebugInfo">
-		<control type="list" id="99999">
-			<description>My first list container</description>
-			<centerleft>50%</centerleft>
-			<top>400</top>
-			<width>650</width>
-			<height>200</height>
-			<visible>Skin.HasSetting(DebugInfo)+Window.IsVisible(home)</visible>
-			<onup>2</onup>
-			<ondown>3</ondown>
-			<onleft>1</onleft>
-			<onright>1</onright>
-			<viewtype label="3D list">list</viewtype>
-			<orientation>vertical</orientation>
-			<pagecontrol>25</pagecontrol>
-			<scrolltime tween="sine" easing="out">200</scrolltime>
-				<itemlayout width="650" height="29">
-				<control type="label">
-					<left>30</left>
-					<top>3</top>
-					<width>430</width>
-					<height>22</height>
-					<font>font13</font>
-					<aligny>center</aligny>
-					<selectedcolor>green</selectedcolor>
-					<align>left</align>
-					<label>Titel: $INFO[ListItem.Label] / $INFO[Window(home).Property(SkinHelper.ListItem.Art.Clearlogo)]</label>
-				</control>
-				</itemlayout>
-				<focusedlayout height="29" width="650">
-				<control type="label">
-					<left>30</left>
-					<top>3</top>
-					<width>430</width>
-					<height>22</height>
-					<font>font13</font>
-					<aligny>center</aligny>
-					<selectedcolor>green</selectedcolor>
-					<align>left</align>
-					<label>Titel: $INFO[ListItem.Label] / $INFO[Window(home).Property(SkinHelper.ListItem.Art.Clearlogo)]</label>
-				</control>
-				</focusedlayout>
-			<content>videodb://movies/titles/</content>
-		</control>
         <control type="grouplist"> <!-- Debuginfos -->
             <visible>Skin.HasSetting(DebugInfo)</visible>
             <left>30</left>
@@ -3581,15 +3527,6 @@
                 <align>left</align>
                 <textcolor>red</textcolor>
                 <shadowcolor>black</shadowcolor>
-                <label>BannerContainerVAR: $VAR[BannerContainerVAR]</label>
-            </control>
-            <control type="label">
-                <width>auto</width>
-                <height>18</height>
-                <font>font12</font>
-                <align>left</align>
-                <textcolor>red</textcolor>
-                <shadowcolor>black</shadowcolor>
                 <label>ListItem.Art(set.poster): $INFO[ListItem.Art(set.poster)]</label>
             </control>
             <control type="label">
@@ -3601,190 +3538,15 @@
                 <shadowcolor>black</shadowcolor>
                 <label>ClearlogoVAR: $VAR[ClearlogoVAR]</label>
             </control>
-            <!-- <control type="label">
-                <width>auto</width>
-                <height>18</height>
-                <font>font12</font>
-                <align>left</align>
-                <textcolor>green</textcolor>
-                <shadowcolor>black</shadowcolor>
-                <label>SkinHelper Fanart: $INFO[Window(Home).Property(SkinHelper.PVR.FanArt)]</label>
-            </control>
             <control type="label">
                 <width>auto</width>
                 <height>18</height>
                 <font>font12</font>
                 <align>left</align>
-                <textcolor>green</textcolor>
+                <textcolor>red</textcolor>
                 <shadowcolor>black</shadowcolor>
-                <label>SkinHelper Poster: $INFO[Window(Home).Property(SkinHelper.PVR.Poster)]</label>
+                <label>extraart_listitem_rule: $VAR[extraart_listitem_rule]</label>
             </control>
-            <control type="label">
-                <width>auto</width>
-                <height>18</height>
-                <font>font12</font>
-                <align>left</align>
-                <textcolor>green</textcolor>
-                <shadowcolor>black</shadowcolor>
-                <label>SkinHelper Channels: $INFO[Window(Home).Property(SkinHelper.TotalTVChannels)]</label>
-            </control>
-			<control type="label">
-				<width>auto</width>
-				<height>18</height>
-				<font>font12</font>
-				<align>left</align>
-				<textcolor>green</textcolor>
-				<shadowcolor>black</shadowcolor>
-				<label>SkinHelper Clearlogo HOME: $INFO[Window(Home).Property(SkinHelper.ListItem.Art.Clearlogo)]</label>
-			</control>
-            <control type="label">
-                <width>auto</width>
-                <height>18</height>
-                <font>font12</font>
-                <align>left</align>
-                <textcolor>green</textcolor>
-                <shadowcolor>black</shadowcolor>
-                <label>SkinHelper Clearlogo VIDEOS: $INFO[Window(videos).Property(SkinHelper.ListItem.Art.Clearlogo)]</label>
-            </control>
-            <control type="label">
-                <width>auto</width>
-                <height>18</height>
-                <font>font12</font>
-                <align>left</align>
-                <textcolor>green</textcolor>
-                <shadowcolor>black</shadowcolor>
-                <label>SkinHelper ExtraFanArt: $INFO[Window(Home).Property(SkinHelper.ListItem.Art.ExtraFanArt)]</label>
-            </control>
-            <control type="label">
-                <width>auto</width>
-                <height>18</height>
-                <font>font12</font>
-                <align>left</align>
-                <textcolor>green</textcolor>
-                <shadowcolor>black</shadowcolor>
-                <label>SkinHelper Fanart: $INFO[Window(Home).Property(SkinHelper.ListItem.Art.Fanart)]</label>
-            </control>
-            <control type="label">
-                <width>auto</width>
-                <height>18</height>
-                <font>font12</font>
-                <align>left</align>
-                <textcolor>green</textcolor>
-                <shadowcolor>black</shadowcolor>
-                <label>SkinHelper Poster: $INFO[Window(Home).Property(SkinHelper.ListItem.Art.Poster)]</label>
-            </control>
-            <control type="label">
-                <width>auto</width>
-                <height>18</height>
-                <font>font12</font>
-                <align>left</align>
-                <textcolor>green</textcolor>
-                <shadowcolor>black</shadowcolor>
-                <label>SkinHelper Clearart: $INFO[Window(Home).Property(SkinHelper.ListItem.Art.Clearart)]</label>
-            </control>
-            <control type="label">
-                <width>auto</width>
-                <height>18</height>
-                <font>font12</font>
-                <align>left</align>
-                <textcolor>green</textcolor>
-                <shadowcolor>black</shadowcolor>
-                <label>SkinHelper Discart: $INFO[Window(Home).Property(SkinHelper.ListItem.Art.Discart)]</label>
-            </control>
-            <control type="label">
-                <width>auto</width>
-                <height>18</height>
-                <font>font12</font>
-                <align>left</align>
-                <textcolor>green</textcolor>
-                <shadowcolor>black</shadowcolor>
-                <label>SkinHelper Poster1: $INFO[Window(Home).Property(SkinHelper.ListItem.1.Art.Poster)]</label>
-            </control>
-            <control type="label">
-                <width>auto</width>
-                <height>18</height>
-                <font>font12</font>
-                <align>left</align>
-                <textcolor>green</textcolor>
-                <shadowcolor>black</shadowcolor>
-                <label>SkinHelper Banner: $INFO[Window(Home).Property(SkinHelper.ListItem.Art.Banner)]</label>
-            </control>
-            <control type="label">
-                <width>auto</width>
-                <height>18</height>
-                <font>font12</font>
-                <align>left</align>
-                <textcolor>green</textcolor>
-                <shadowcolor>black</shadowcolor>
-                <label>SkinHelper Artwork ListItemVAR: $VAR[extraart_listitem_rule]</label>
-            </control>
-            <control type="label">
-                <width>auto</width>
-                <height>18</height>
-                <font>font12</font>
-                <align>left</align>
-                <textcolor>green</textcolor>
-                <shadowcolor>black</shadowcolor>
-                <label>SkinHelper Player Clearlogo: $INFO[Window(Home).Property(SkinHelper.Player.Art.Clearlogo)]</label>
-            </control>
-            <control type="label">
-                <width>auto</width>
-                <height>18</height>
-                <font>font12</font>
-                <align>left</align>
-                <textcolor>green</textcolor>
-                <shadowcolor>black</shadowcolor>
-                <label>SkinHelper Player Clearart: $INFO[Window(Home).Property(SkinHelper.Player.Art.Clearart)]</label>
-            </control>
-			<control type="image">
-				<width>100</width>
-				<height>100</height>
-				<aspectratio>keep</aspectratio>
-				<texture>$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Poster)]</texture>
-				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Poster))</visible>
-			</control>
-			<control type="image">
-				<width>100</width>
-				<height>100</height>
-				<aspectratio>keep</aspectratio>
-				<texture>$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Clearlogo)]</texture>
-				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Clearlogo))</visible>
-			</control>
-			<control type="image">
-				<width>100</width>
-				<height>100</height>
-				<aspectratio>keep</aspectratio>
-				<texture>$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Clearart)]</texture>
-				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Clearart))</visible>
-			</control>
-			<control type="image">
-				<width>100</width>
-				<height>100</height>
-				<aspectratio>keep</aspectratio>
-				<texture>$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Fanart)]</texture>
-				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Fanart)]</visible>
-			</control>
-			<control type="image">
-				<width>100</width>
-				<height>100</height>
-				<aspectratio>keep</aspectratio>
-				<texture>$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Discart)]</texture>
-				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Discart))</visible>
-			</control>
-			<control type="image">
-				<width>100</width>
-				<height>100</height>
-				<aspectratio>keep</aspectratio>
-				<texture>$INFO[Window(Home).Property(SkinHelper.ListItem.Art.ExtraFanArt)]</texture>
-				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.ExtraFanArt))</visible>
-			</control>
-			<control type="image">
-				<width>100</width>
-				<height>100</height>
-				<aspectratio>keep</aspectratio>
-				<texture>$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Banner)]</texture>
-				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Banner))</visible>
-			</control> -->
 		</control>
 	</include>
 </includes>

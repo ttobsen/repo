@@ -25,7 +25,6 @@
             <control type="group">
                 <left>0</left>
                 <top>15</top>
-				<!-- <visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Clearlogo))</visible> -->
                 <control type="image">
                     <left>333</left>
                     <top>0</top>
@@ -46,7 +45,6 @@
             <control type="group">
                 <left>316</left>
                 <top>190</top>
-				<!-- <visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Clearart))</visible> -->
                 <control type="image">
                     <left>333</left>
                     <top>0</top>
@@ -67,7 +65,6 @@
             <control type="group">
                 <left>634</left>
                 <top>176</top>
-				<!-- <visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Landscape))</visible> -->
                 <control type="image">
                     <left>333</left>
                     <top>190</top>
@@ -82,13 +79,12 @@
                     <width>304</width>
                     <height>164</height>
                     <texture>$VAR[LandscapeVAR]</texture>
-                    <aspectratio align="center" aligny="center">scale</aspectratio>
+                    <aspectratio align="center" aligny="center">keep</aspectratio>
                 </control>
             </control>
             <control type="group">
                 <left>634</left>
                 <top>531</top>
-				<!-- <visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Banner))</visible> -->
                 <control type="image">
                     <left>333</left>
                     <top>190</top>
@@ -109,7 +105,7 @@
             <control type="group">
                 <left>0</left>
                 <top>354</top>
-				<!-- <visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Discart))</visible> -->
+				<visible>!String.IsEmpty(ListItem.Art(discart))</visible>
                 <control type="image">
                     <left>333</left>
                     <top>190</top>
@@ -125,23 +121,11 @@
                     <height>344</height>
                     <texture fallback="cdart/default_bluray.png">$INFO[ListItem.Art(discart)]</texture>
                     <aspectratio align="right" aligny="center">keep</aspectratio>
-					<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Discart))</visible>
-                </control>
-                <control type="image">
-                    <description>Discart Image</description>
-                    <left>548</left>
-                    <top>190</top>
-                    <width>344</width>
-                    <height>344</height>
-                    <texture fallback="cdart/default_bluray.png">$INFO[Window(Home).Property(SkinHelper.ListItem.Art.Discart)]</texture>
-                    <aspectratio align="right" aligny="center">keep</aspectratio>
-					<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Discart))</visible>
                 </control>
             </control>
             <control type="group">
                 <left>952</left>
                 <top>712</top>
-				<!-- <visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Characterart))</visible> -->
                 <control type="image">
                     <left>333</left>
                     <top>190</top>
@@ -156,7 +140,7 @@
                     <width>304</width>
                     <height>164</height>
                     <texture>$VAR[CharacterArtVAR]</texture>
-                    <aspectratio align="center" aligny="center">scale</aspectratio>
+                    <aspectratio align="center" aligny="center">keep</aspectratio>
                 </control>
             </control>
         </control>

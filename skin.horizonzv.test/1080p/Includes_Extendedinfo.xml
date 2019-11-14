@@ -335,8 +335,8 @@
                 <width>900</width>
                 <height>300</height>
                 <aspectratio>keep</aspectratio>
-                <texture>$INFO[Skin.String(Music_Folder_Path)]$INFO[ListItem.Artist,,/logo.png]</texture>
-                <visible>Skin.HasSetting(music_art)</visible>
+                <texture>$INFO[ListItem.Art(clearlogo)]</texture>
+                <visible>Skin.HasSetting(EnableExtendedArt)</visible>
                 <include>opencloseslideup</include>
                 <animation effect="fade" start="100" end="30" time="200" condition="Integer.IsGreater(Window(Home).Property(ArtistEvents.Count),0)+Skin.HasSetting(extendedinfo_music_concerts)">Conditional</animation>
             </control>

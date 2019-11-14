@@ -81,7 +81,7 @@
                         <height>87</height>
                         <aspectratio>stretch</aspectratio>
                         <colordiffuse>$VAR[CoverDim]</colordiffuse>
-                        <texture background="true">$VAR[BannerContainerVAR]</texture>
+                        <texture background="true" fallback="FallbackBanner2.png">$VAR[BannerVAR]</texture>
 						<visible>!ListItem.IsParentFolder</visible>
                     </control>
                     <control type="label">
@@ -95,8 +95,8 @@
                         <textcolor>$VAR[CoverDim]</textcolor>
                         <shadowcolor>black</shadowcolor>
                         <label>$VAR[OriginalTitle]</label>
-                        <visible>String.IsEmpty(ListItem.Art(banner))</visible>
-                        <visible>!ListItem.IsParentFolder</visible>
+						<visible>!ListItem.IsParentFolder</visible>
+						<visible>[String.IsEmpty(ListItem.Art(banner))+String.IsEmpty(ListItem.Art(set.banner))+String.IsEmpty(ListItem.Art(tvshow.banner))]|Container.Content(episodes)</visible>
                     </control>
                     <control type="group">
                         <left>8</left>
@@ -151,7 +151,7 @@
                             <width>525</width>
                             <height>87</height>
                             <aspectratio>stretch</aspectratio>
-                            <texture background="true">$VAR[BannerContainerVAR]</texture>
+                            <texture background="true" fallback="FallbackBanner2.png">$VAR[BannerVAR]</texture>
                             <visible>!ListItem.IsParentFolder</visible>
                         </control>
                         <control type="image">
@@ -173,8 +173,8 @@
                             <textcolor>white</textcolor>
                             <shadowcolor>black</shadowcolor>
                             <label>$VAR[OriginalTitle]</label>
-                            <visible>String.IsEmpty(ListItem.Art(banner))</visible>
-                            <visible>!ListItem.IsParentFolder</visible>
+							<visible>!ListItem.IsParentFolder</visible>
+							<visible>[String.IsEmpty(ListItem.Art(banner))+String.IsEmpty(ListItem.Art(set.banner))+String.IsEmpty(ListItem.Art(tvshow.banner))]|Container.Content(episodes)</visible>
                         </control>
                         <control type="group">
                             <left>8</left>
@@ -438,7 +438,7 @@
                 <aspectratio align="left">keep</aspectratio>
                 <texture background="true">$VAR[ClearlogoVAR]</texture>
                 <animation effect="slide" end="0,-6" time="150" condition="Skin.HasSetting(CommonPageCount)">Conditional</animation>
-                <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
+                <visible>Skin.HasSetting(EnableExtendedArt)</visible>
             </control>
         </control>
         <control type="group">

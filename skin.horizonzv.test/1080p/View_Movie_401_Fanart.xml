@@ -226,7 +226,7 @@
             <visible>Control.IsVisible(401)+!Control.HasFocus(666)</visible>
             <top>22</top>
             <control type="group">
-                <visible>[!Skin.HasSetting(Fanart_ClearlogoTitle)|!Skin.HasSetting(SkinHelper.EnableExtendedArt)]|String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Clearlogo))</visible>
+                <visible>!Skin.HasSetting(Fanart_ClearlogoTitle)|!Skin.HasSetting(EnableExtendedArt)</visible>
 				<include>openclosevisible</include>
                 <control type="image">
                     <left>-15</left>
@@ -300,8 +300,7 @@
                 <height>120</height>
                 <aspectratio aligny="bottom">keep</aspectratio>
                 <texture>$VAR[ClearlogoVAR]</texture>
-                <visible>Skin.HasSetting(Fanart_ClearlogoTitle)+Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
-				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Clearlogo))</visible>
+                <visible>Skin.HasSetting(Fanart_ClearlogoTitle)+Skin.HasSetting(EnableExtendedArt)</visible>
 				<include>openclosevisible</include>
             </control>
         </control>
@@ -542,7 +541,7 @@
                     <height>375</height>
                     <aspectratio>keep</aspectratio>
                     <texture>$VAR[extraart_listitem_rule]</texture>
-                    <!-- <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible> -->
+                    <!-- <visible>Skin.HasSetting(EnableExtendedArt)</visible> -->
                 </control>
                 <control type="image">
                     <visible>Container.Content(Seasons)</visible>
@@ -553,7 +552,7 @@
                     <height>375</height>
                     <aspectratio>keep</aspectratio>
                     <texture diffuse="shine.png">special://skin/backgrounds/mediaoverlaywhite.jpg</texture>
-                    <visible>!Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
+                    <visible>!Skin.HasSetting(EnableExtendedArt)</visible>
                 </control>
                 <control type="group">
                     <include>opencloseslideleft</include>

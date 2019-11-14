@@ -73,8 +73,8 @@
                     <width>375</width>
                     <height>300</height>
                     <aspectratio align="left" aligny="bottom">keep</aspectratio>
-                    <texture diffuse="masks/flagging_mask.png">$INFO[Skin.String(Music_Folder_Path)]$INFO[ListItem.Artist,,/logo.png]</texture>
-                    <visible>Skin.HasSetting(music_art)</visible>
+                    <texture diffuse="masks/flagging_mask.png">$INFO[ListItem.Art(clearlogo)]</texture>
+                    <visible>Skin.HasSetting(EnableExtendedArt)</visible>
                     <visible>Window.IsActive(music)</visible>
                 </control>
                 <control type="group">

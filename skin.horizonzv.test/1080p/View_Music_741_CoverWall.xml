@@ -304,16 +304,16 @@
                         <texture background="true">Separator2.png</texture>
                     </control>
                 </control>
-                <control type="image">
+                <!-- <control type="image">
                     <include>opencloseslidedown</include>
                     <left>735</left>
                     <top>60</top>
                     <width>450</width>
                     <height>120</height>
                     <aspectratio>keep</aspectratio>
-                    <texture background="true" diffuse="masks/flagging_mask.png">$INFO[Skin.String(Music_Folder_Path)]$INFO[ListItem.Artist,,/logo.png]</texture>
-                    <visible>Skin.HasSetting(music_art)+!Skin.HasSetting(extendedinfo_music)</visible>
-                </control>
+                    <texture background="true" diffuse="masks/flagging_mask.png">$INFO[ListItem.Art(clearlogo)]</texture>
+                    <visible>Skin.HasSetting(EnableExtendedArt)+!Skin.HasSetting(extendedinfo_music)</visible>
+                </control> -->
                 <control type="group">
                     <description>Info Panel</description>
                     <visible>!Container.Content(artists)</visible>
@@ -414,8 +414,8 @@
                     <width>450</width>
                     <height>120</height>
                     <aspectratio>keep</aspectratio>
-                    <texture background="true" diffuse="masks/flagging_mask.png">$INFO[Skin.String(Music_Folder_Path)]$INFO[ListItem.Artist,,/logo.png]</texture>
-                    <visible>Skin.HasSetting(music_art)+!Skin.HasSetting(extendedinfo_music)</visible>
+                    <texture background="true" diffuse="masks/flagging_mask.png">$INFO[ListItem.Art(clearlogo)]</texture>
+                    <visible>Skin.HasSetting(EnableExtendedArt)+!Skin.HasSetting(extendedinfo_music)</visible>
                 </control>
                 <control type="group">
                     <visible>Container.Content(artists)</visible>

@@ -283,7 +283,7 @@
                 <height>120</height>
                 <aspectratio align="right">keep</aspectratio>
                 <texture background="true">$VAR[ClearlogoVAR]</texture>
-                <visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
+                <visible>Skin.HasSetting(EnableExtendedArt)</visible>
             </control>
             <control type="image">
                 <left>1011</left>
@@ -484,7 +484,7 @@
                     <texture background="true">$VAR[BannerVAR]</texture>
                     <bordertexture border="10">ThumbShadowWhite.png</bordertexture>
                     <bordersize>7</bordersize>
-					<visible>Skin.HasSetting(SkinHelper.EnableExtendedArt)</visible>
+					<visible>Skin.HasSetting(EnableExtendedArt)</visible>
                 </control>
                 <control type="group">
                     <left>1065</left>

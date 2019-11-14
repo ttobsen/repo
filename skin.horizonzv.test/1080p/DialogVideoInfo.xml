@@ -855,6 +855,7 @@
                         <include>dialogbutton</include>
                         <label>Steelbox</label>
                         <onclick>ActivateWindow(1152)</onclick>
+						<visible>!Window.IsVisible(Home)</visible>
                         <visible>!Container.Content(episodes)+!String.Contains(ListItem.Filenameandpath,plugin://)</visible>
                         <!-- <enable>System.HasAddon(script.artwork.downloader)</enable> -->
                     </control>

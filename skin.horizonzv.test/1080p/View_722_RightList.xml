@@ -250,9 +250,9 @@
                 <width>780</width>
                 <height>435</height>
                 <aspectratio>keep</aspectratio>
-                <texture background="true">$INFO[Skin.String(Music_Folder_Path)]$INFO[ListItem.Artist,,/logo.png]</texture>
+                <texture background="true">$INFO[ListItem.Art(clearlogo)]</texture>
                 <visible>Container.Content(songs)|Container.Content(artists)|Container.Content(albums)</visible>
-                <visible>Skin.HasSetting(music_art)</visible>
+                <visible>Skin.HasSetting(EnableExtendedArt)</visible>
             </control>
         </control>
         <control type="group">

@@ -221,27 +221,6 @@
                 <top>186</top>
                 <control type="group">
                     <visible>Skin.HasSetting(fanart)</visible>
-                    <control type="image">
-                        <include>openclosevisible</include>
-                        <left>141</left>
-                        <top>532</top>
-                        <width>315</width>
-                        <height>172</height>
-                        <texture background="true">Black.png</texture>
-                        <visible>![String.IsEmpty(Control.GetLabel(1099))+String.IsEmpty(Control.GetLabel(1100))]</visible>
-                    </control>
-                    <control type="multiimage" id="1099">
-                        <include>openclosevisible</include>
-                        <left>141</left>
-                        <top>537</top>
-                        <width>304</width>
-                        <height>164</height>
-                        <aspectratio>keep</aspectratio>
-                        <imagepath background="true">$INFO[Skin.String(Music_Folder_Path)]$INFO[ListItem.Artist,,/extrafanart]</imagepath>
-                        <timeperimage>5000</timeperimage>
-                        <randomize>true</randomize>
-                        <visible>Skin.HasSetting(music_art)</visible>
-                    </control>
                     <control type="image" id="1100">
                         <include>openclosevisible</include>
                         <left>141</left>
@@ -250,11 +229,11 @@
                         <height>164</height>
                         <aspectratio align="left" aligny="bottom">scale</aspectratio>
                         <texture background="true">$INFO[ListItem.Art(fanart)]</texture>
-                        <visible>!String.IsEmpty(ListItem.Art(fanart))+String.IsEmpty(Control.GetLabel(1099))</visible>
+                        <visible>!String.IsEmpty(ListItem.Art(fanart))</visible>
                     </control>
                 </control>
                 <control type="group">
-                    <visible>Skin.HasSetting(music_art)</visible>
+                    <visible>Skin.HasSetting(EnableExtendedArt)</visible>
                     <control type="image">
                         <include>openclosevisible</include>
                         <left>135</left>
@@ -278,7 +257,7 @@
             <control type="group">
                 <top>292</top>
                 <left>3</left>
-                <visible>Skin.HasSetting(music_art)</visible>
+                <visible>Skin.HasSetting(EnableExtendedArt)</visible>
                 <control type="image">
                     <include>openclosevisible</include>
                     <left>0</left>
@@ -286,16 +265,16 @@
                     <width>318</width>
                     <height>172</height>
                     <texture background="true">Black.png</texture>
-                    <visible>!String.IsEmpty(Control.GetLabel(1102))</visible>
+                    <visible>!String.IsEmpty(ListItem.Art(clearlogo))</visible>
                 </control>
-                <control type="image" id="1102">
+                <control type="image">
                     <include>openclosevisible</include>
                     <left>12</left>
                     <top>76</top>
                     <width>302</width>
                     <height>160</height>
                     <aspectratio>keep</aspectratio>
-                    <texture background="true" diffuse="masks/flagging_mask.png">$INFO[Skin.String(Music_Folder_Path)]$INFO[ListItem.Artist,,/logo.png]</texture>
+                    <texture background="true" diffuse="masks/flagging_mask.png">$INFO[ListItem.Art(clearlogo)]</texture>
                 </control>
             </control>
             <control type="group">

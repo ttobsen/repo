@@ -114,7 +114,7 @@
                                 <width>363</width>
                                 <height>333</height>
                                 <aspectratio>keep</aspectratio>
-                                <texture fallback="center/Center_Fav.png">$INFO[Skin.String(Music_Folder_Path)]$INFO[MusicPlayer.Artist,,/logo.png]</texture>
+                                <texture fallback="center/Center_Fav.png">$INFO[Player.Art(clearlogo)]</texture>
                             </control>
                             <control type="image">
                                 <left>30</left>
@@ -378,19 +378,6 @@
                                         <label>[COLOR=grey]$LOCALIZE[31301]: [/COLOR]$INFO[Window(Weather).Property(Updated),,]</label>
                                     </control>
                                 </control>
-                                <control type="multiimage">
-                                    <left>0</left>
-                                    <top>30</top>
-                                    <width>378</width>
-                                    <height>348</height>
-                                    <aspectratio>scale</aspectratio>
-                                    <timeperimage>4000</timeperimage>
-                                    <fadetime>800</fadetime>
-                                    <randomize>true</randomize>
-                                    <visible>Skin.HasSetting(music_art)</visible>
-                                    <imagepath background="true" border="4" diffuse="masks/mask.png">$INFO[Skin.String(Music_Folder_Path)]$INFO[MusicPlayer.Artist,,/extrafanart]</imagepath>
-                                    <visible>!Player.IsInternetStream+!Pvr.IsPlayingRadio</visible>
-                                </control>
                                 <control type="image">
                                     <left>8</left>
                                     <top>38</top>
@@ -464,7 +451,7 @@
                                         <left>291</left>
                                         <top>615</top>
                                         <include>cdart_player</include>
-                                        <visible>Skin.HasSetting(music_art)</visible>
+                                        <visible>Skin.HasSetting(EnableExtendedArt)</visible>
                                         <visible>!Player.IsInternetStream</visible>
                                         <animation effect="fade" time="200">VisibleChange</animation>
                                     </control>
@@ -790,8 +777,8 @@
                                                     <top>225</top>
                                                     <width>255</width>
                                                     <height>255</height>
-                                                    <texture fallback="Empty.png" background="true" diffuse="masks/cdart_mask.png">$INFO[Player.FolderPath,,cdart.png]</texture>
-                                                    <visible>Skin.HasSetting(music_art)</visible>
+                                                    <texture fallback="Empty.png" background="true" diffuse="masks/cdart_mask.png">$INFO[Player.Art(discart)]</texture>
+                                                    <visible>Skin.HasSetting(EnableExtendedArt)</visible>
                                                 </control>
                                                 <control type="image">
                                                     <left>0</left>
@@ -807,7 +794,7 @@
                                                     <width>255</width>
                                                     <height>255</height>
                                                     <texture background="true" diffuse="masks/cdart_mask.png">$INFO[MusicPlayer.Cover]</texture>
-                                                    <visible>String.Contains(Control.GetLabel(80),Empty.png)|!Skin.HasSetting(music_art)</visible>
+                                                    <visible>String.Contains(Control.GetLabel(80),Empty.png)|!Skin.HasSetting(EnableExtendedArt)</visible>
                                                 </control>
                                                 <control type="group">
                                                     <visible>!Player.IsInternetStream</visible>
@@ -823,7 +810,7 @@
                                                         <aligny>top</aligny>
                                                         <wrapmultiline>true</wrapmultiline>
                                                         <label>$INFO[MusicPlayer.Artist]</label>
-                                                        <visible>String.Contains(Control.GetLabel(80),black.png)|!Skin.HasSetting(music_art)</visible>
+                                                        <visible>String.Contains(Control.GetLabel(80),black.png)|!Skin.HasSetting(EnableExtendedArt)</visible>
                                                     </control>
                                                     <control type="label">
                                                         <left>255</left>
@@ -838,7 +825,7 @@
                                                         <aligny>top</aligny>
                                                         <wrapmultiline>true</wrapmultiline>
                                                         <label>$INFO[MusicPlayer.Album]</label>
-                                                        <visible>String.Contains(Control.GetLabel(80),black.png)|!Skin.HasSetting(music_art)</visible>
+                                                        <visible>String.Contains(Control.GetLabel(80),black.png)|!Skin.HasSetting(EnableExtendedArt)</visible>
                                                     </control>
                                                 </control>
                                             </control>
@@ -1420,103 +1407,6 @@
                 <colordiffuse>grey2</colordiffuse>
                 <texture background="true" flipy="true">ShadowWhite.png</texture>
                 <visible>Window.IsVisible(musicosd)</visible>
-            </control>
-            <control type="grouplist">
-                <visible>Skin.HasSetting(DebugInfo)</visible>
-                <left>30</left>
-                <top>225</top>
-                <width>1800</width>
-                <control type="label">
-                    <left>30</left>
-                    <top>225</top>
-                    <width>1800</width>
-                    <height>33</height>
-                    <textcolor>orange</textcolor>
-                    <shadowcolor>black</shadowcolor>
-                    <label>2011 sichtbar (Musik Visualisierung) [COLOR=red]$INFO[Control.GetLabel(2011)][/COLOR]</label>
-                    <visible>Control.IsVisible(2011)</visible>
-                </control>
-                <control type="label">
-                    <left>30</left>
-                    <top>225</top>
-                    <width>1800</width>
-                    <height>66</height>
-                    <textcolor>orange</textcolor>
-                    <shadowcolor>black</shadowcolor>
-                    <label>[COLOR=red]Musik Pfad muss für lokale EXTRAFANARTs angegeben werden ![/COLOR][CR]</label>
-                    <visible>String.IsEmpty(Skin.String(Music_Folder_Path))</visible>
-                </control>
-                <control type="label">
-                    <left>30</left>
-                    <top>225</top>
-                    <width>1800</width>
-                    <height>66</height>
-                    <textcolor>orange</textcolor>
-                    <shadowcolor>black</shadowcolor>
-                    <label>Musikpfad: [COLOR=red]$INFO[Skin.String(Music_Folder_Path)][/COLOR][CR]</label>
-                    <visible>!String.IsEmpty(Skin.String(Music_Folder_Path))</visible>
-                </control>
-                <control type="label">
-                    <left>30</left>
-                    <top>225</top>
-                    <width>1800</width>
-                    <height>33</height>
-                    <textcolor>orange</textcolor>
-                    <shadowcolor>black</shadowcolor>
-                    <label>2012 Musik Extrafanart lokal (ControlLabel): [COLOR=red]$INFO[Control.GetLabel(2012)][/COLOR]</label>
-                    <!-- <visible>Control.IsVisible(2012)</visible> -->
-                    <visible>!String.IsEmpty(Skin.String(Music_Folder_Path))</visible>
-                </control>
-                <control type="label">
-                    <left>30</left>
-                    <top>225</top>
-                    <width>1800</width>
-                    <height>33</height>
-                    <textcolor>orange</textcolor>
-                    <shadowcolor>black</shadowcolor>
-                    <label>2012 Musik Extrafanart lokal (direkter Code): [COLOR=red]$INFO[Skin.String(Music_Folder_Path)]$INFO[MusicPlayer.Artist,,/extrafanart][/COLOR]</label>
-                    <!-- <visible>Control.IsVisible(2012)</visible> -->
-                    <visible>!String.IsEmpty(Skin.String(Music_Folder_Path))</visible>
-                </control>
-                <control type="label">
-                    <left>30</left>
-                    <top>225</top>
-                    <width>1800</width>
-                    <height>33</height>
-                    <textcolor>orange</textcolor>
-                    <shadowcolor>black</shadowcolor>
-                    <label>2013 ArtistSlideshow (ControlLabel): [COLOR=red]$INFO[Control.GetLabel(2013)][/COLOR]</label>
-                    <!-- <visible>Control.IsVisible(2013)</visible> -->
-                </control>
-                <control type="label">
-                    <left>30</left>
-                    <top>225</top>
-                    <width>1800</width>
-                    <height>33</height>
-                    <textcolor>orange</textcolor>
-                    <shadowcolor>black</shadowcolor>
-                    <label>2013 ArtistSlideshow (direkter Code): [COLOR=red]$INFO[Window(Visualisation).Property(ArtistSlideshow)][/COLOR]</label>
-                    <!-- <visible>Control.IsVisible(2013)</visible> -->
-                </control>
-                <control type="label">
-                    <left>30</left>
-                    <top>225</top>
-                    <width>1800</width>
-                    <height>33</height>
-                    <textcolor>orange</textcolor>
-                    <shadowcolor>black</shadowcolor>
-                    <label>2014 Player.Fanart: [COLOR=red]$INFO[Control.GetLabel(2014)][/COLOR]</label>
-                    <!-- <visible>Control.IsVisible(2014)</visible> -->
-                </control>
-                <control type="label">
-                    <left>30</left>
-                    <top>225</top>
-                    <width>1800</width>
-                    <height>33</height>
-                    <textcolor>orange</textcolor>
-                    <shadowcolor>black</shadowcolor>
-                    <label>ArtworkReady: [COLOR=red]$INFO[Window(Visualisation).Property(ArtistSlideshow.ArtworkReady)][/COLOR]</label>
-                </control>
             </control>
         </control>
     </controls>

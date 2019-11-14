@@ -654,7 +654,7 @@
                         <texture>$VAR[extraart_listitem_rule]</texture>
                     </control>
                     <control type="label">
-                        <visible>Container.Content(Episodes)|[!Skin.HasSetting(SkinHelper.EnableExtendedArt)+Container.Content(Seasons)]</visible>
+                        <visible>Container.Content(Episodes)|[!Skin.HasSetting(EnableExtendedArt)+Container.Content(Seasons)]</visible>
                         <left>1305</left>
                         <top>278</top>
                         <width>570</width>

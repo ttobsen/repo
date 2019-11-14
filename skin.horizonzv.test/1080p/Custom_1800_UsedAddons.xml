@@ -306,15 +306,15 @@
                     <item>
                         <label>Skin Helper Service</label>
                         <label2>$LOCALIZE[24038]</label2>
-                        <onclick>InstallAddon(script.skin.helper.service)</onclick>
-                        <visible>!System.HasAddon(script.skin.helper.service)</visible>
+                        <onclick>InstallAddon(script.artwork.beef)</onclick>
+                        <visible>!System.HasAddon(script.artwork.beef)</visible>
                     </item>
                     <item>
-                        <label>Skin Helper Service $INFO[System.AddonVersion(script.skin.helper.service),(,)]</label>
+                        <label>Skin Helper Service $INFO[System.AddonVersion(script.artwork.beef),(,)]</label>
                         <label2/>
                         <icon>OverlayWatched.png</icon>
                         <onclick/>
-                        <visible>System.HasAddon(script.skin.helper.service)</visible>
+                        <visible>System.HasAddon(script.artwork.beef)</visible>
                     </item>
                     <item>
                         <label>Library Node Editor</label>

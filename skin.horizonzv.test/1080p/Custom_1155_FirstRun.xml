@@ -105,11 +105,9 @@
                         <onright>12</onright>
                         <onclick>Skin.ResetSettings</onclick>
                         <onclick>Skin.SetBool(animation)</onclick>
-                        <onclick>Skin.SetBool(SkinHelper.EnableExtendedArt)</onclick>
-                        <onclick>Skin.SetBool(SkinHelper.EnablePVRThumbs)</onclick>
+                        <onclick>Skin.SetBool(EnableExtendedArt)</onclick>
                         <onclick>Skin.SetBool(NavInfo)</onclick>
                         <onclick>Skin.SetBool(NoDate)</onclick>
-                        <onclick>Skin.SetBool(music_art)</onclick>
                         <onclick>Skin.SetBool(background_dim_1)</onclick>
                         <onclick>Skin.SetBool(standart_bkg)</onclick>
                         <onclick>Skin.SetBool(HideSysteminfo)</onclick>
@@ -152,10 +150,8 @@
                         <onright>10</onright>
                         <onclick>Skin.ResetSettings</onclick>
                         <onclick>Skin.SetBool(animation)</onclick>
-                        <onclick>Skin.SetBool(SkinHelper.EnableExtendedArt)</onclick>
-                        <onclick>Skin.SetBool(SkinHelper.EnablePVRThumbs)</onclick>
+                        <onclick>Skin.SetBool(EnableExtendedArt)</onclick>
                         <onclick>Skin.SetBool(NavInfo)</onclick>
-                        <onclick>Skin.SetBool(music_art)</onclick>
                         <onclick>Skin.SetBool(color_grey)</onclick>
                         <onclick>Skin.SetBool(background_dim_1)</onclick>
                         <onclick>Skin.SetBool(background_dim_2)</onclick>
