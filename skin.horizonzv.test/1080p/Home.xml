@@ -539,6 +539,7 @@
 			</control>
 		</control>
         <include>DebugInfo</include>
+        <include>HomemenuDiashowInclude</include>
 		<!-- <control type="list" id="784512">
             <left>30</left>
             <top>60r</top>

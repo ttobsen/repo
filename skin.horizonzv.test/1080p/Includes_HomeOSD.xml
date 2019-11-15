@@ -46,7 +46,7 @@
                         <height>165</height>
                         <aspectratio>keep</aspectratio>
                         <include>opencloseslow</include>
-                        <texture diffuse="masks/flagging_mask.png">$INFO[ListItem.Art(clearlogo)]</texture>
+                        <texture diffuse="masks/flagging_mask.png">$INFO[Player.Art(clearlogo)]</texture>
                         <animation effect="zoom" start="100" end="85" center="0,1140" time="150" condition="!Skin.HasSetting(HidePlayerControlsHome)">Conditional</animation>
                     </control>
                 </control>

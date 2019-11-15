@@ -1,4 +1,7 @@
-﻿v 1.18.0.38
+﻿v 1.18.0.39
+- Fanartdiashow für Musik, Filme, Serien im Hauptmenü eingebaut (Einstellungen - Skin - Design/Performance - Fanartdiashow). Fanart muss aktiviert sein
+
+v 1.18.0.38
 - Bugfix Fanart-View Discart
 
 v 1.18.0.37

@@ -1489,6 +1489,17 @@
                             <selected>Skin.HasSetting(Home_Custom_Back_Picture_OnlyOne_Path)</selected>
                             <visible>Skin.HasSetting(onlyone)</visible>
                         </control>
+                        <control type="radiobutton" id="806">
+                            <include>openclosevisible</include>
+                            <description>Diashow Movie TVShow Musik</description>
+                            <label>Fanartdiashow - Filme + Serien + Musik -</label>
+                            <width>1260</width>
+                            <align>left</align>
+                            <textcolor>white</textcolor>
+                            <focusedcolor>black</focusedcolor>
+                            <onclick>Skin.ToggleSetting(HomeFanartDiashow)</onclick>
+                            <selected>Skin.HasSetting(HomeFanartDiashow)</selected>
+                        </control>
                         <control type="button" id="815">
                             <description>Background DIM</description>
                             <width>1260</width>

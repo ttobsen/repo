@@ -1663,7 +1663,7 @@
 			<control type="group">
 				<width>960</width>
 				<height>330</height>
-				<visible>Control.IsVisible($PARAM[HomePageWidget_list_id])|Container($PARAM[HomePageWidget_list_id]).IsUpdating</visible>
+				<visible>Control.IsVisible($PARAM[HomePageWidget_list_id])</visible>
 				<control type="group">
 					<visible>Control.IsVisible($PARAM[HomePageWidget_list_id])</visible>
 					<include content="HomepageWidgetInfoPanel">
@@ -1766,16 +1766,6 @@
                     <align>center</align>
                     <label>$INFO[ListItem.Label]</label>
                     <visible>String.IsEmpty(ListItem.Icon)</visible>
-                </control>
-                <control type="label">
-					<left>8</left>
-					<top>180</top>
-					<width>161</width>
-					<height>75</height>
-                    <font>ubuntu-r13b</font>
-                    <align>center</align>
-                    <label>UPDATE...</label>
-                    <visible>Container($PARAM[HomePageWidget_list_id]).IsUpdating</visible>
                 </control>
                 <control type="group">
                     <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)</visible>

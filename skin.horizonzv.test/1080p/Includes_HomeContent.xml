@@ -627,7 +627,8 @@
             <description>Music Library</description>
             <label>$VAR[Home_Music_Label]</label>
             <label2>$VAR[backgroundfolder]home_music$VAR[bkg_fileext]</label2>
-            <icon>$INFO[Skin.String(user_bkg_music)]</icon>
+            <icon>$VAR[HomemenuDiashow_ContentIcon]</icon>
+            <!-- <icon>$INFO[Skin.String(user_bkg_music)]</icon> -->
             <property name="homemenu_id">music</property>
             <property name="homemenu_category">$VAR[Home_Music_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_Music_Custom_Path)]</property>
@@ -671,7 +672,8 @@
             <description>Movie Library</description>
             <label>$VAR[Home_Movie_Label]</label>
             <label2>$VAR[backgroundfolder]home_movie$VAR[bkg_fileext]</label2>
-            <icon>$INFO[Skin.String(user_bkg_movie)]</icon>
+            <icon>$VAR[HomemenuDiashow_ContentIcon]</icon>
+            <!-- <icon>$INFO[Skin.String(user_bkg_movie)]</icon> -->
             <property name="homemenu_id">movies</property>
             <property name="homemenu_category">$VAR[Home_Movie_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_Movie_Custom_Path)]</property>
@@ -699,7 +701,8 @@
             <description>TV Show Library</description>
             <label>$VAR[Home_TVShow_Label]</label>
             <label2>$VAR[backgroundfolder]home_tvshows$VAR[bkg_fileext]</label2>
-            <icon>$INFO[Skin.String(user_bkg_tvshow)]</icon>
+            <icon>$VAR[HomemenuDiashow_ContentIcon]</icon>
+            <!-- <icon>$INFO[Skin.String(user_bkg_tvshow)]</icon> -->
             <property name="homemenu_id">tvshow</property>
             <property name="homemenu_category">$VAR[Home_TVShow_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_TVShow_Custom_Path)]</property>

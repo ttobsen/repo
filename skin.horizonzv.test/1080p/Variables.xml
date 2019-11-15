@@ -994,4 +994,21 @@
         <value condition="!String.IsEmpty(Player.Art(CharacterArt))">$INFO[Player.Art(CharacterArt)]</value>
         <value condition="!String.IsEmpty(Player.Art(Landscape))">$INFO[Player.Art(Landscape)]</value>
     </variable>
+    <variable name="HomemenuDiashow">
+		<value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),movies)">videodb://movies/titles/</value>
+		<value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)">videodb://tvshows/titles/</value>
+		<value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)">musicdb://artists/</value>
+    </variable>
+    <variable name="HomemenuDiashow_ContentIcon">
+		<value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),movies)+!Skin.HasSetting(HomeFanartDiashow)+Control.IsVisible(787878)">$INFO[Skin.String(user_bkg_movie)]</value>
+		<value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)+!Skin.HasSetting(HomeFanartDiashow)+Control.IsVisible(787878)">$INFO[Skin.String(user_bkg_tvshow)]</value>
+		<value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)+!Skin.HasSetting(HomeFanartDiashow)+Control.IsVisible(787878)">$INFO[Skin.String(user_bkg_music)]</value>
+		<value>$INFO[Container(787878).ListItem.Art(fanart)]</value>
+    </variable>
+    <variable name="HomemenuDiashow_Visible">
+		<value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),movies)+Library.HasContent(Movies)">true</value>
+		<value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)+Library.HasContent(TVShows)">true</value>
+		<value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)+Library.HasContent(Music)">true</value>
+		<!-- <value>false</value> -->
+    </variable>
 </includes>
