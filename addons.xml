@@ -1783,7 +1783,7 @@ NOTE: Streams are available in SD only
     </extension>
 </addon>
 
-<addon id="plugin.video.spotitube" name="Youtube Music" version="2.1.4" provider-name="realvito (inspired by L0RE)">
+<addon id="plugin.video.spotitube" name="Youtube Music" version="2.1.5" provider-name="realvito (inspired by L0RE)">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="plugin.video.youtube" version="6.1.0"/>
@@ -1809,11 +1809,10 @@ NOTE: Streams are available in SD only
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 2.1.4  (17.08.2019)[/COLOR][/B] by realvito[CR]
-- fixed: Double-entry of the first Title in Billboard-Videolists
-- added: Some Lists in Billboard with different greatest of all time Songs
-- fixed: Itunes-Genres are not displayed
-- removed: Spotify-Regional because Website turned off
+		<news>[B][COLOR orangered]Version 2.1.5  (17.11.2019)[/COLOR][/B] by realvito[CR]
+- fixed: Billboard - Hot 100 and Billboard 200 are not opened and error is displayed
+- fixed: Itunes-Videos are empty
+- removed: Billboard ARCHIVE because the Musiclists don't exists anymore
 		</news>
 	</extension>
 </addon>
@@ -3980,7 +3979,7 @@ oder online unter https://goo.gl/GtK41L nachlesen.
     </extension>
 </addon>
 
-<addon id="plugin.video.atv_at" name="ATV.at - Mediathek" version="3.0.3" provider-name="realvito">
+<addon id="plugin.video.atv_at" name="ATV.at - Mediathek" version="3.0.4" provider-name="realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="script.module.requests" version="2.12.4"/>
@@ -4007,9 +4006,8 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 3.0.3  (16.02.2019)[/COLOR][/B] by realvito[CR]
-- fixed: Startordner = Serien werden NICHT gelistet (Mediathek-URL verändert)
-- fixed: Serien- und Episodenbilder werden NICHT angezeigt (URL der Bilder verändert)
+		<news>[B][COLOR orangered]Version 3.0.4  (17.11.2019)[/COLOR][/B] by realvito[CR]
+- fixed: Bei Einstellung = alle Episoden einer Staffel in einem Ordner anzeigen - werden nur max. 56 Episoden gelistet
 		</news>
 	</extension>
 </addon>
