@@ -3979,7 +3979,7 @@ oder online unter https://goo.gl/GtK41L nachlesen.
     </extension>
 </addon>
 
-<addon id="plugin.video.atv_at" name="ATV.at - Mediathek" version="3.0.4" provider-name="realvito">
+<addon id="plugin.video.atv_at" name="ATV.at - Mediathek" version="3.0.5" provider-name="realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="script.module.requests" version="2.12.4"/>
@@ -4006,8 +4006,9 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 3.0.4  (17.11.2019)[/COLOR][/B] by realvito[CR]
+		<news>[B][COLOR orangered]Version 3.0.4+3.0.5  (17.11.2019)[/COLOR][/B] by realvito[CR]
 - fixed: Bei Einstellung = alle Episoden einer Staffel in einem Ordner anzeigen - werden nur max. 56 Episoden gelistet
+- fixed: Übersetzungsfehler für Cacheeinstellung in Sprachfile
 		</news>
 	</extension>
 </addon>
