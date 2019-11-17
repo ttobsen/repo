@@ -1,15 +1,14 @@
 ﻿# Kodi Media Center language file
 # Addon Name: ATV.at - Mediathek
 # Addon id: plugin.video.atv_at
-# Addon version: 3.0.0
 # Addon Provider: realvito
 msgid ""
 msgstr ""
 "Project-Id-Version: KODI-Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
 "POT-Creation-Date: 2018-07-22 14:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Last-Translator: realvito\n"
 "Language-Team: LANGUAGE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -152,11 +151,11 @@ msgid "[COLOR red]NO *VIDEOLINK* COULD BE DETERMINED ![/COLOR]"
 msgstr ""
 
 msgctxt "#30527"
-msgid "ATV.at : [COLOR lime]Start Stream ...[/COLOR]"
+msgid "ATV.at : [COLOR FF008B00]Start Stream ...[/COLOR]"
 msgstr ""
 
 msgctxt "#30528"
-msgid "* [COLOR lime]{0:s}[/COLOR] *"
+msgid "* [COLOR blue]{0:s}[/COLOR] *"
 msgstr ""
 
 # empty strings from id 30529 to 30600
@@ -167,9 +166,13 @@ msgid "ATV.at - Mediathek"
 msgstr ""
 
 msgctxt "#30602"
-msgid "ATV Settings"
+msgid "--- Cache delete ---   [COLOR deepskyblue](autom. Updateintervall >> {0:s} Hours <<)[/COLOR]"
 msgstr ""
 
 msgctxt "#30603"
+msgid "ATV Settings"
+msgstr ""
+
+msgctxt "#30604"
 msgid "[COLOR lime]Next Page  >>>[/COLOR]"
 msgstr ""

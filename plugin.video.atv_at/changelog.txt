@@ -19,3 +19,6 @@
 [B]Version 3.0.3  (16.02.2019)[/B] by realvito[CR]
 - fixed: Startordner = Serien werden NICHT gelistet (Mediathek-URL verändert)
 - fixed: Serien- und Episodenbilder werden NICHT angezeigt (URL der Bilder verändert)
+
+[B]Version 3.0.4  (17.11.2019)[/B] by realvito[CR]
+- fixed: Bei Einstellung = alle Episoden einer Staffel in einem Ordner anzeigen - werden nur max. 56 Episoden gelistet

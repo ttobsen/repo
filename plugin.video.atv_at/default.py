@@ -13,10 +13,8 @@ PY3 = sys.version_info[0] == 3
 if PY2:
 	from urllib import quote, unquote, quote_plus, unquote_plus, urlencode  # Python 2.X
 	from HTMLParser import HTMLParser  # Python 2.X
-	try:
-		import StorageServer
-	except ImportError:
-		from resources.lib import storageserverdummy as StorageServer
+	try: import StorageServer
+	except: from resources.lib import storageserverdummy as StorageServer
 elif PY3:
 	from urllib.parse import quote, unquote, quote_plus, unquote_plus, urlencode  # Python 3+
 	from html.parser import HTMLParser  # Python 3+
@@ -25,6 +23,7 @@ import xbmcvfs
 import shutil
 import socket
 import time
+import random
 import requests
 try:
 	from requests.packages.urllib3.exceptions import InsecureRequestWarning
@@ -40,17 +39,16 @@ addonPath = xbmc.translatePath(addon.getAddonInfo('path')).encode('utf-8').decod
 dataPath = xbmc.translatePath(addon.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
 defaultFanart = os.path.join(addonPath, 'fanart.jpg')
 icon = os.path.join(addonPath, 'icon.png')
-spPIC = os.path.join(addonPath, 'resources', 'media', '').encode('utf-8').decode('utf-8')
-preferredStreamType = addon.getSetting("streamSelection")
-preferPlayTechnique = addon.getSetting("play_technique")
-showCompleteEPISODES = addon.getSetting("show.all_episodes") == 'true'
-showStreamMESSAGE = addon.getSetting("show.stream_message") == 'true'
+artpic = os.path.join(addonPath, 'resources', 'media', '').encode('utf-8').decode('utf-8')
+preferredStreamType = addon.getSetting('streamSelection')
+preferPlayTechnique = addon.getSetting('play_technique')
+showCompleteEPISODES = addon.getSetting('show.all_episodes') == 'true'
+showStreamMESSAGE = addon.getSetting('show.stream_message') == 'true'
 if PY2:
-	cachePERIOD = int(addon.getSetting("cacheTime"))*24
+	cachePERIOD = int(addon.getSetting('cacherhythm'))
 	cache = StorageServer.StorageServer(addon.getAddonInfo('id'), cachePERIOD) # (Your plugin name, Cache time in hours)
 baseURL = "https://www.atv.at"
 startURL = "https://www.atv.at/"
-
 
 __HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0','Accept-Encoding': 'gzip, deflate'}
 headerFIELDS = "User-Agent=Mozilla%2F5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F67.0.3396.62%20Safari%2F537.36"
@@ -59,8 +57,10 @@ xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
 
 
 def py2_enc(s, encoding='utf-8'):
-	if PY2 and isinstance(s, unicode):
-		s = s.encode(encoding)
+	if PY2:
+		if not isinstance(s, basestring):
+			s = str(s)
+		s = s.encode(encoding) if isinstance(s, unicode) else s
 	return s
 
 def py2_uni(s, encoding='utf-8'):
@@ -79,9 +79,7 @@ def cleanTEXT(s, encoding='utf-8'):
 	return parser.unescape(s)
 
 def translation(id):
-	LANGUAGE = addon.getLocalizedString(id)
-	LANGUAGE = py2_enc(LANGUAGE)
-	return LANGUAGE
+	return py2_enc(addon.getLocalizedString(id))
 
 def failing(content):
 	log(content, xbmc.LOGERROR)
@@ -90,38 +88,39 @@ def debug(content):
 	log(content, xbmc.LOGDEBUG)
 
 def log(msg, level=xbmc.LOGNOTICE):
-	msg = py2_enc(msg)
-	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+msg, level)
+	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+py2_enc(msg), level)
 
 def makeREQUEST(url):
 	if PY2:
-		INQUIRE = cache.cacheFunction(getUrl, url, "GET", False, False, __HEADERS)
+		INQUIRE = cache.cacheFunction(getUrl, url, 'GET', False, False, __HEADERS)
 	elif PY3:
-		INQUIRE = getUrl(url, "GET", False, False, __HEADERS)
+		INQUIRE = getUrl(url, 'GET', False, False, __HEADERS)
 	return INQUIRE
 
 def getUrl(url, method, allow_redirects=False, verify=False, headers="", data="", timeout=40):
 	response = requests.Session()
-	if method=="GET":
+	if method == 'GET':
 		content = response.get(url, allow_redirects=allow_redirects, verify=verify, headers=headers, data=data, timeout=timeout).text
-	elif method=="POST":
+	elif method == 'POST':
 		content = response.post(url, data=data, allow_redirects=allow_redirects, verify=verify).text
 	return content
 
 def clearCache():
+	debug("(clearCache) -------------------------------------------------- START = clearCache --------------------------------------------------")
 	if PY2:
-		debug("Clear Cache")
-		cache.delete("%")
-		xbmc.sleep(2000)
+		debug("(clearCache) ========== Lösche jetzt den Addon-Cache ==========")
+		cache.delete('%')
+		xbmc.sleep(1000)
 		xbmcgui.Dialog().ok(addon.getAddonInfo('id'), translation(30501))
 	elif PY3:
-		Python_Version = str(sys.version).split(')')[0].strip()+")"
-		xbmcgui.Dialog().ok(addon.getAddonInfo('id'), (translation(30502).format(Python_Version)))
-		pass
+		Python_Version = str(sys.version).split(')')[0].strip()+')'
+		failing("(clearCache) ACHTUNG : ... Die installierte PYTHONVERSION : *** "+str(Python_Version)+" *** ist nicht kompatibel !!!\n##### Das Löschen des Cache wird ABGEBROCHEN und Die Cachefunktion wird DEAKTIVIERT !!! #####")
+		xbmcgui.Dialog().ok(addon.getAddonInfo('id'), translation(30502).format(Python_Version))
 
 def index():
-	addDir(translation(30601), baseURL+"/mediathek/", "listSeries", icon)
-	addDir(translation(30602), "", "aSettings", icon)
+	addDir(translation(30601), baseURL+"/mediathek/", 'listSeries', icon)
+	if PY2: addDir(translation(30602).format(str(cachePERIOD)), "", 'clearCache', icon)
+	addDir(translation(30603), "", 'aSettings', icon)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def USER_from_austria():
@@ -145,7 +144,7 @@ def listSeries(url):
 				if (pic1.startswith('https://static.atv.cdn.tvnext.tv/dynamic/get_asset_resized.php') or pic1.startswith('https://atv.at/dynamic/get_asset_resized.php') or pic1.startswith('https://www.atv.at/dynamic/get_asset_resized.php')) and 'path=format_pages%252F' in pic1:
 					thumb = baseURL+"/static/assets/cms/format_pages/teaser_image_file"+pic2.split('&amp;percent')[0].replace('%252F', '/')
 				else:
-					thumb = spPIC+"empty.jpg"
+					thumb = artpic+"empty.jpg"
 				title = re.compile('<h3 class="program_title">([^<]+?)</h3>', re.DOTALL).findall(cluster)[0]
 				title = cleanTEXT(title)
 				debug("(listSeries) ##### Url2 : "+url2+" ##### Titel : "+title+" #####")
@@ -155,30 +154,26 @@ def listSeries(url):
 				failing("(listSeries) Error-in-Series : "+str(cluster))
 				if pos1 > 1 and count == 0:
 					count += 1
-					xbmcgui.Dialog().notification((translation(30521).format('DISPLAY')), translation(30522), icon, 8000)
+					xbmcgui.Dialog().notification(translation(30521).format('DISPLAY'), translation(30522), icon, 8000)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
-def listCluster(url):
+def listCluster(url, photo):
 	if url[:4] != "http":
 		url = baseURL+url
 	html = makeREQUEST(url)
-	if not listSeasons(html):
+	if not listSeasons(html, photo):
 		listVideos(html)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
-def listSeasons(html):
+def listSeasons(html, photo):
 	index_seasons = html.find('<select class="select jsb_ jsb_Select" data-jsb=')
 	if index_seasons != -1:
-		try:
-			pic = re.compile(r'<meta property="og:image" content="https?://(?:static.atv.cdn.tvnext.tv|www.atv.at|atv.at)/static/assets/cms/format_pages/teaser_image_file/(.*?)" />', re.DOTALL).findall(html)[0]
-			thumb = baseURL+"/static/assets/cms/format_pages/teaser_image_file/"+pic.split('?cb=')[0]
-		except: thumb = spPIC+"empty.jpg"
 		seasons_block = html[index_seasons:html.find('</select>', index_seasons)]
 		seasons = re.findall('<option.*?value="(.*?)">(.*?)</option>', seasons_block, re.DOTALL)
 		for url2, title in seasons:
 			title = cleanTEXT(title)
 			debug("(listSeasons) ##### Url2 : "+url2+" ##### Titel : "+title+" #####")
-			addDir(title, url2, "listEpisodes", thumb)
+			addDir(title, url2, "listEpisodes", photo)
 		return True
 	return False
 
@@ -218,14 +213,14 @@ def listVideos(html):
 	debug("(listVideos[1]) idNumber : "+str(idNumber))
 	pageNumber = int(1)
 	if not "#####" in idNumber:
-		while pageNumber < int(8):
+		while pageNumber < int(13):
 			urlVideos_1 = baseURL+"/uri/fepe/"+idNumber+"/?page="+str(pageNumber)
 			content = makeREQUEST(urlVideos_1)
 			debug("(listVideos[1]) ##### urlVideos_1 : "+urlVideos_1+" #####")
 			if '<div class="more jsb_ jsb_MoreTeasersButton" data-jsb="' in content:
 				pageNumber += int(1)
 			else:
-				pageNumber += int(7)
+				pageNumber += int(12)
 			videos_1 = re.findall('<li class="teaser">(.*?)</li>', content, re.DOTALL)
 			for video in videos_1:
 				if '<div class="video_indicator">' in video:
@@ -267,7 +262,7 @@ def listVideos(html):
 						failing("(listVideos[1]) Error-in-Video-1 : "+str(video))
 						if pos1 > 1 and count == 0:
 							count += 1
-							xbmcgui.Dialog().notification((translation(30521).format('DISPLAY')), translation(30522), icon, 8000)
+							xbmcgui.Dialog().notification(translation(30521).format('DISPLAY'), translation(30522), icon, 8000)
 	if videos_2 !="":
 		for video in videos_2:
 			if '<div class="video_indicator">' in video:
@@ -313,7 +308,7 @@ def listVideos(html):
 					failing("(listVideos[2]) Error-in-Video-2 : "+str(video))
 					if pos2 > 1 and count == 0:
 						count += 1
-						xbmcgui.Dialog().notification((translation(30521).format('DISPLAY')), translation(30522), icon, 8000)
+						xbmcgui.Dialog().notification(translation(30521).format('DISPLAY'), translation(30522), icon, 8000)
 	# now look for more videos button
 	if "#####" in idNumber:
 		index_more_videos = html.find('<div class="more jsb_ jsb_MoreTeasersButton" data-jsb="')
@@ -323,7 +318,7 @@ def listVideos(html):
 				url_more_videos = url_more_videos[4:]
 			url_more_videos = unquote_plus(url_more_videos)
 			debug("(listVideos[3]) ##### url_more_videos : "+url_more_videos+" #####")
-			addDir(translation(30603), url_more_videos, "listEpisodes", spPIC+"nextpage.png")
+			addDir(translation(30604), url_more_videos, "listEpisodes", artpic+"nextpage.png")
 
 def playVideo(url, photo):
 	videoIsolated_M3U8 = set()
@@ -347,7 +342,7 @@ def playVideo(url, photo):
 	count2 = 0
 	pos2 = 0
 	lastCODE = ('_2.mp4', '_3.mp4', '_4.mp4', '_5.mp4', '_6.mp4', '_7.mp4', '_8.mp4', '_9.mp4')
-	html = getUrl(url, "GET", False, False, __HEADERS)
+	html = getUrl(url, 'GET', False, False, __HEADERS)
 	try: 
 		desc = re.compile('<div class="js_expandable">.+?<p[^>]*>(.*?)</p>', re.DOTALL).findall(html)[0]
 		plot = re.sub('\<.*?\>', '', desc)
@@ -472,7 +467,7 @@ def playVideo(url, photo):
 			combined_videoURL = ""
 			pos_LISTE = 0
 			if preferPlayTechnique == "1" and showStreamMESSAGE:
-				xbmcgui.Dialog().notification(translation(30527), (translation(30528).format(title)), icon, 5000)
+				xbmcgui.Dialog().notification(translation(30527), translation(30528).format(title), icon, 5000)
 				xbmc.sleep(500)
 			for single_videoURL, tvshowtitle, title, NRS_title, season, episode, plot, photo, thumb, duration in ASSEMBLY:
 				pos_LISTE += 1
@@ -481,13 +476,13 @@ def playVideo(url, photo):
 					stacked_videoURL = 'stack://'+combined_videoURL[:-3]
 					listitem = xbmcgui.ListItem(path=stacked_videoURL)
 					listitem.setInfo(type="Video", infoLabels={'TVShowTitle': tvshowtitle, 'Title': title, 'Season': season, 'Episode': episode, 'Plot': plot, 'Duration': duration, 'Studio': 'ATV.at', 'Genre': 'Unterhaltung', 'mediatype': 'episode'})
-					listitem.setArt({'thumb': photo, 'fanart': photo})
+					listitem.setArt({'thumb': photo, 'poster': photo, 'fanart': photo})
 					listitem.setMimeType("mime/x-type")
 				if preferPlayTechnique == "2":
 					NRS_title = '[COLOR chartreuse]'+NRS_title+'[/COLOR]' # Die Hofwochen - Folge 5 1/7
 					listitem = xbmcgui.ListItem(title)
 					listitem.setInfo(type="Video", infoLabels={'TVShowTitle': tvshowtitle, 'Title': NRS_title, 'Season': season, 'Episode': episode, 'Plot': plot, 'Duration': duration, 'Studio': 'ATV.at', 'Genre': 'Unterhaltung', 'mediatype': 'episode'})
-					listitem.setArt({'thumb': thumb, 'fanart': thumb}) # Episode-Bild = wechselnd für jeden Videopart
+					listitem.setArt({'thumb': thumb, 'poster': thumb, 'fanart': thumb}) # Episode-Bild = wechselnd für jeden Videopart
 					xbmc.sleep(50)
 					PL.add(url=single_videoURL, listitem=listitem, index=pos_LISTE)
 			if preferPlayTechnique == "0":
@@ -510,37 +505,50 @@ def playVideo(url, photo):
 def parameters_string_to_dict(parameters):
 	paramDict = {}
 	if parameters:
-		paramPairs = parameters[1:].split("&")
+		paramPairs = parameters[1:].split('&')
 		for paramsPair in paramPairs:
 			paramSplits = paramsPair.split('=')
 			if (len(paramSplits)) == 2:
 				paramDict[paramSplits[0]] = paramSplits[1]
 	return paramDict
 
-def addLink(name, url, mode, image, plot=None, seriesname=None, season=None, episode=None, duration=None, genre=None):
-	u = sys.argv[0]+"?url="+quote_plus(url)+"&image="+quote_plus(image)+"&mode="+str(mode)
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=image)
-	liz.setInfo(type="Video", infoLabels={'TVShowTitle': seriesname, 'Title': name, 'Season': season, 'Episode': episode, 'Plot': plot, 'Duration': duration, 'Studio': 'ATV.at', 'Genre': 'Unterhaltung', 'mediatype': 'episode'})
-	liz.setArt({'poster': image})
-	if image != icon:
+def addLink(name, url, mode, image, plot=None, seriesname=None, season=None, episode=None, duration=None, genre=None, year=None, begins=None):
+	u = sys.argv[0]+'?url='+quote_plus(url)+'&image='+quote_plus(image)+'&mode='+str(mode)
+	liz = xbmcgui.ListItem(name)
+	ilabels = {}
+	ilabels['Season'] = season
+	ilabels['Episode'] = episode
+	ilabels['Tvshowtitle'] = seriesname
+	ilabels['Title'] = name
+	ilabels['Tagline'] = None
+	ilabels['Plot'] = plot
+	ilabels['Duration'] = duration
+	if begins != None:
+		ilabels['Date'] = begins
+	ilabels['Year'] = year
+	ilabels['Genre'] = 'Unterhaltung'
+	ilabels['Director'] = None
+	ilabels['Writer'] = None
+	ilabels['Studio'] = 'ATV.at'
+	ilabels['Mpaa'] = None
+	ilabels['Mediatype'] = 'episode'
+	liz.setInfo(type='Video', infoLabels=ilabels)
+	liz.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
+	if image != icon and not artpic in image:
 		liz.setArt({'fanart': image})
-	else:
-		liz.setArt({'fanart': defaultFanart})
 	liz.addStreamInfo('Video', {'Duration': duration})
 	if preferPlayTechnique == "0" or preferPlayTechnique == "2":
 		liz.setProperty('IsPlayable', 'true')
 		liz.setContentLookup(False)
-	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=False)
+	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
 
 def addDir(name, url, mode, image, plot=None):
-	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=image)
-	liz.setInfo(type="Video", infoLabels={'Title': name, 'Plot': plot})
-	liz.setArt({'poster': image})
-	if image != icon:
+	u = sys.argv[0]+'?url='+quote_plus(url)+'&image='+quote_plus(image)+'&mode='+str(mode)
+	liz = xbmcgui.ListItem(name)
+	liz.setInfo(type='Video', infoLabels={'Title': name, 'Plot': plot})
+	liz.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
+	if image != icon and not artpic in image:
 		liz.setArt({'fanart': image})
-	else:
-		liz.setArt({'fanart': defaultFanart})
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
 
 params = parameters_string_to_dict(sys.argv[2])
@@ -548,7 +556,6 @@ name = unquote_plus(params.get('name', ''))
 url = unquote_plus(params.get('url', ''))
 mode = unquote_plus(params.get('mode', ''))
 image = unquote_plus(params.get('image', ''))
-referer = unquote_plus(params.get('referer', ''))
 
 if mode == 'aSettings':
 	addon.openSettings()
@@ -557,7 +564,7 @@ elif mode == 'clearCache':
 elif mode == 'listSeries':
 	listSeries(url)
 elif mode == 'listCluster':
-	listCluster(url)
+	listCluster(url, image)
 elif mode == 'listEpisodes':
 	listEpisodes(url)
 elif mode == 'playVideo':
