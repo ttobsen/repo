@@ -67,7 +67,7 @@ msgid "     Show *[COLOR yellow] Start Stream ... [/COLOR]* in STANDARD 2 mode"
 msgstr ""
 
 msgctxt "#30117"
-msgid "     Cache storage  (in days)"
+msgid "     Cache storage  (in hours)"
 msgstr ""
 
 msgctxt "#30118"

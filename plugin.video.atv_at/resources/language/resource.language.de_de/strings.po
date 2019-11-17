@@ -67,8 +67,8 @@ msgid "     Show *[COLOR yellow] Start Stream ... [/COLOR]* in STANDARD 2 mode"
 msgstr "     Im STANDARD 2 - Modus *[COLOR yellow] Starte Stream ... [/COLOR]* anzeigen"
 
 msgctxt "#30117"
-msgid "     Cache storage  (in days)"
-msgstr "     Cache-Speicherung  (in Tagen)"
+msgid "     Cache storage  (in hours)"
+msgstr "     Cache-Speicherung  (in Stunden)"
 
 msgctxt "#30118"
 msgid "     [COLOR orangered]<<< >>> Cache DELETE = CLICK HERE <<< >>>[/COLOR]"
