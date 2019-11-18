@@ -4,6 +4,7 @@ import time
 import datetime
 import gui
 import xbmcgui,xbmcplugin,sys
+import urllib
 
 RAN_API_BASE = 'https://middleware.7tv.de'
 
@@ -88,22 +89,22 @@ def list_videos(resource, reliveOnly):
 
 
 def get_number_livestreams():
-	print("get_number_livestreams")
-	try:
-		json_url = RAN_API_BASE + '/ran-mega/mobile/v1/livestreams.json'
-		response = requests.get(json_url, headers={'Accept-Encoding': 'gzip'})
-		videos = response.json()['contents']
-		timestamp_now = time.time()
-		number_livestreams = 0
-		for video in videos:
-			stream_date_end = video['streamdate_end']
-			if stream_date_end >= timestamp_now:
-				stream_date_start = video['streamdate_start']
-				if stream_date_start <= timestamp_now:
-					number_livestreams += 1
-		return number_livestreams
-	except:
-		return 0
+    print("get_number_livestreams")
+    try:
+        json_url = RAN_API_BASE + '/ran-mega/mobile/v1/livestreams.json'
+        response = requests.get(json_url, headers={'Accept-Encoding': 'gzip'})
+        videos = response.json()['contents']
+        timestamp_now = time.time()
+        number_livestreams = 0
+        for video in videos:
+            stream_date_end = video['streamdate_end']
+            if stream_date_end >= timestamp_now:
+                stream_date_start = video['streamdate_start']
+                if stream_date_start <= timestamp_now:
+                    number_livestreams += 1
+        return number_livestreams
+    except:
+        return 0
 
 
 def _get_videos(video_id, access_token, client_name, client_location, salt, source_id=None):
@@ -153,18 +154,33 @@ def get_video_url(resource, height):
         newurl="https://vas-live-mdp.glomex.com/live/1.0/getprotocols?access_token="+access_token+"&client_location="+location+"&client_token="+client_token+"&property_name="+url 
         print(newurl)        
         response = requests.get(newurl, headers={'Accept-Encoding': 'gzip','user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'})
-        print(response.json())
+        res_json = response.json()
+        print(res_json)
         
-        servertoken=response.json()["server_token"]
+        servertoken=res_json["server_token"]
 
-        protokol="dash"        
-        client_token=salt[:2] + sha1(''.join([url,salt,access_token,servertoken,location+protokol])).hexdigest()          
-        url2="https://vas-live-mdp.glomex.com/live/1.0/geturls?access_token="+access_token+"&client_location="+location+"&client_token="+client_token+"&property_name=" +url+"&protocols=" + protokol+"&server_token=" + servertoken
+        protokol = 'dash'
+        if 'widevine' in res_json.get('protocols').get('dash').get('drm'):
+            protokol_drm = 'widevine'
+            protokol_param = '{0}:{1}'.format(protokol, protokol_drm)
+        else:
+            protokol_drm = 'clear'
+            protokol_param = protokol
+        client_token=salt[:2] + sha1(''.join([url,salt,access_token,servertoken,location+protokol_param])).hexdigest()
+        url2 = 'https://vas-live-mdp.glomex.com/live/1.0/geturls?{0}'.format(urllib.urlencode({
+            'access_token':  access_token,
+            'client_location':  location,
+            'property_name':  url,
+            'protocols': protokol_param,
+            'server_token': servertoken,
+            'client_token': client_token,
+            'secure_delivery': 'true'
+        }))
         response = requests.get(url2, headers={'Accept-Encoding': 'gzip','user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'})
         jsondata=response.json()    
         print(jsondata)        
         print("###############################")        
-        urld=jsondata["urls"][protokol]["clear"]["url"]                
+        urld=jsondata["urls"][protokol][protokol_drm]["url"]                
         addon_handle = int(sys.argv[1])
         listitem = xbmcgui.ListItem(path=urld+"|"+userAgent)         
         listitem.setProperty("inputstream.adaptive.license_type", "com.widevine.alpha")
