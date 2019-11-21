@@ -3071,7 +3071,7 @@ Zattoo Live TV, Aufnahmen und EPG
   	</extension>
 </addon>
 
-<addon id="plugin.video.ran_de" name="ran" version="2.3.3" provider-name="PUR3, L0RE, Linkinsoldier">
+<addon id="plugin.video.ran_de" name="ran" version="2.3.4" provider-name="PUR3, L0RE, Linkinsoldier">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
