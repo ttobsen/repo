@@ -1,3 +1,6 @@
+2.3.4
+- fixed displaying icons/thumbs for kodi matrix
+
 2.3.3
 - fixed live streams that caused an error (status code 403)
 

@@ -13,8 +13,9 @@ def make_info_view_possible():
 
 
 def add_folder(title, thumb, url_params, description, context_menu_items=None):
-    item = xbmcgui.ListItem(title, thumbnailImage=thumb)
+    item = xbmcgui.ListItem(title)
     item.setInfo('video', {'plot': description})
+    item.setArt({'thumb': thumb})
     if context_menu_items is not None:
         item.addContextMenuItems(context_menu_items)
     make_info_view_possible()
@@ -59,8 +60,9 @@ def add_video(title,
     :param subtitle_list: ['url to srt']
     :return: boolean for successful completion
     """
-    item = xbmcgui.ListItem(title, iconImage=icon, thumbnailImage=thumb)
+    item = xbmcgui.ListItem(title)
     item.setInfo(type='video', infoLabels=video_info_labels)
+    item.setArt({'icon': icon, 'thumb': thumb})
     item.setProperty('IsPlayable', str(is_playable).lower())
     item.setProperty('fanart_image', fanart)
     if duration_in_seconds is not None:
@@ -87,7 +89,8 @@ def play(url):
 def player_play(title, thumb, stream_url):
     title = urllib.unquote_plus(title)
     thumb = urllib.unquote_plus(thumb)
-    item = xbmcgui.ListItem(title, thumbnailImage=thumb)
+    item = xbmcgui.ListItem(title)
+    item.setArt({'thumb': thumb})
     xbmc.Player().play(stream_url, item)
 
 
