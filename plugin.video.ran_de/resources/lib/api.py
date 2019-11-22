@@ -1,17 +1,23 @@
 # -*- coding: utf-8 -*-
-import requests
 import time
 import datetime
-import gui
-import xbmcgui,xbmcplugin,sys
-import urllib
+import xbmc, xbmcgui, xbmcplugin, sys
+from . import requests
+from . import gui
+
+try:
+    import urllib.parse as urllib
+except:
+    import urllib
 
 RAN_API_BASE = 'https://middleware.7tv.de'
+USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36'
+
 
 def get_playlist_url(m3u8_url, height=720):
     import re
     try:
-        print("get_playlist_url "+m3u8_url)
+        xbmc.log("get_playlist_url {0}".format(m3u8_url))
         response = requests.get(m3u8_url)
         m3u8 = response.read()
         stream_url_prefix = m3u8_url[:m3u8_url.rfind('/') + 1]
@@ -35,7 +41,7 @@ def get_playlist_url(m3u8_url, height=720):
 def list_videos(resource, reliveOnly):
     try:
         json_url = RAN_API_BASE + resource
-        print ("###########"+json_url)
+        xbmc.log("###########{0}".format(json_url))
         response = requests.get(json_url, headers={'Accept-Encoding': 'gzip'})
         videos = response.json()['contents']
     except:
@@ -55,7 +61,7 @@ def list_videos(resource, reliveOnly):
                 if stream_date_start <= timestamp_now:
                     duration_in_seconds = stream_date_end - timestamp_now
                     playable = True
-                    print("YYY: "+video["resource"])
+                    print("YYY: " + video["resource"])
                     title = '[B][COLOR red]%s[/COLOR][/B]' % video['teaser']['title']
                     year = datetime.datetime.now().year
                 else:
@@ -89,7 +95,7 @@ def list_videos(resource, reliveOnly):
 
 
 def get_number_livestreams():
-    print("get_number_livestreams")
+    xbmc.log("get_number_livestreams")
     try:
         json_url = RAN_API_BASE + '/ran-mega/mobile/v1/livestreams.json'
         response = requests.get(json_url, headers={'Accept-Encoding': 'gzip'})
@@ -109,15 +115,15 @@ def get_number_livestreams():
 
 def _get_videos(video_id, access_token, client_name, client_location, salt, source_id=None):
     from hashlib import sha1
-    print("-XYZ----")
-    ## Step 1
+    xbmc.log("-XYZ----")
+    # # Step 1
     if source_id is None:
         json_url = 'http://vas.sim-technik.de/vas/live/v2/videos/%s?' \
                    'access_token=%s&client_location=%s&client_name=%s' \
                    % (video_id, access_token, client_location, client_name)
         response = requests.get(json_url, headers={'Accept-Encoding': 'gzip'})
         source_id = response.json()['sources'][0]['id']
-    ## Step 2
+    # # Step 2
     client_id_1 = salt[:2] + sha1(
         ''.join([str(video_id), salt, access_token, client_location, salt, client_name]).encode('utf-8')).hexdigest()
     json_url = 'http://vas.sim-technik.de/vas/live/v2/videos/%s/sources?' \
@@ -125,7 +131,7 @@ def _get_videos(video_id, access_token, client_name, client_location, salt, sour
                % (video_id, access_token, client_location, client_name, client_id_1)
     response = requests.get(json_url, headers={'Accept-Encoding': 'gzip'})
     server_id = response.json()['server_id']
-    ## Step 3
+    # # Step 3
     client_id_2 = salt[:2] + sha1(
         ''.join([salt, str(video_id), access_token, server_id, client_location, str(source_id), salt,
                  client_name]).encode('utf-8')).hexdigest()
@@ -133,31 +139,29 @@ def _get_videos(video_id, access_token, client_name, client_location, salt, sour
                'access_token=%s&client_location=%s&client_name=%s&' \
                'client_id=%s&server_id=%s&source_ids=%s' \
                % (video_id, access_token, client_location, client_name, client_id_2, server_id, source_id)
-    response = requests.get(json_url, headers={'Accept-Encoding': 'gzip'})        
+    response = requests.get(json_url, headers={'Accept-Encoding': 'gzip'})
     videos = response.json()['sources']
     return sorted(videos, key=lambda k: k.get('bitrate'))
 
 
 def get_video_url(resource, height):
     from hashlib import sha1
-    json_url = RAN_API_BASE + resource    
+    json_url = RAN_API_BASE + resource
     response = requests.get(json_url, headers={'Accept-Encoding': 'gzip'})
     json_data = response.json()
     if json_data['type'] == 'livestream':
         url = json_data['stream_url']
         salt = "01iegahthei8yok0Eopai6jah5Qui0qu"
-        userAgent = 'User-Agent=Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'
-        #https://vas-live-mdp.glomex.com/live/1.0/getprotocols?access_token=ran-app&client_location=http%3A%2F%2Fapp.ran.de%2Fran-ri-event03&client_token=01687d1ae1a5e3022c022b74756dfe7d0082e041c1&property_name=ran-ri-event03
-        access_token="ran-app"
-        location="http://app.ran.de/"+url
-        client_token=salt[:2] + sha1(''.join([url,salt,access_token,location])).hexdigest()
-        newurl="https://vas-live-mdp.glomex.com/live/1.0/getprotocols?access_token="+access_token+"&client_location="+location+"&client_token="+client_token+"&property_name="+url 
-        print(newurl)        
-        response = requests.get(newurl, headers={'Accept-Encoding': 'gzip','user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'})
+        access_token = "ran-app"
+        location = "http://app.ran.de/{0}".format(url)
+        client_token = '{0}{1}'.format(salt[:2], sha1('{0}{1}{2}{3}'.format(url, salt, access_token, location).encode("utf-8")).hexdigest())
+        newurl = "https://vas-live-mdp.glomex.com/live/1.0/getprotocols?access_token=" + access_token + "&client_location=" + location + "&client_token=" + client_token + "&property_name=" + url
+        xbmc.log(newurl)
+        response = requests.get(newurl, headers={'Accept-Encoding': 'gzip', 'user-agent': USER_AGENT})
         res_json = response.json()
-        print(res_json)
-        
-        servertoken=res_json["server_token"]
+        xbmc.log('{0}'.format(res_json))
+
+        servertoken = res_json["server_token"]
 
         protokol = 'dash'
         if 'widevine' in res_json.get('protocols').get('dash').get('drm'):
@@ -166,7 +170,7 @@ def get_video_url(resource, height):
         else:
             protokol_drm = 'clear'
             protokol_param = protokol
-        client_token=salt[:2] + sha1(''.join([url,salt,access_token,servertoken,location+protokol_param])).hexdigest()
+        client_token = salt[:2] + sha1('{0}{1}{2}{3}{4}{5}'.format(url, salt, access_token, servertoken, location, protokol_param).encode("utf-8")).hexdigest()
         url2 = 'https://vas-live-mdp.glomex.com/live/1.0/geturls?{0}'.format(urllib.urlencode({
             'access_token':  access_token,
             'client_location':  location,
@@ -176,13 +180,13 @@ def get_video_url(resource, height):
             'client_token': client_token,
             'secure_delivery': 'true'
         }))
-        response = requests.get(url2, headers={'Accept-Encoding': 'gzip','user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'})
-        jsondata=response.json()    
-        print(jsondata)        
-        print("###############################")        
-        urld=jsondata["urls"][protokol][protokol_drm]["url"]                
+        response = requests.get(url2, headers={'Accept-Encoding': 'gzip', 'user-agent': USER_AGENT})
+        jsondata = response.json()
+        xbmc.log('{0}'.format(jsondata))
+        xbmc.log("###############################")
+        urld = jsondata["urls"][protokol][protokol_drm]["url"]
         addon_handle = int(sys.argv[1])
-        listitem = xbmcgui.ListItem(path=urld+"|"+userAgent)         
+        listitem = xbmcgui.ListItem(path=urld + "|" + USER_AGENT)
         listitem.setProperty("inputstream.adaptive.license_type", "com.widevine.alpha")
         listitem.setProperty("inputstream.adaptive.manifest_type", "mpd")
         listitem.setProperty('inputstreamaddon', "inputstream.adaptive")

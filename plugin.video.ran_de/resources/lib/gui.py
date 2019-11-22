@@ -1,8 +1,12 @@
 import sys
-import urllib
 import xbmc
 import xbmcgui
 import xbmcplugin
+
+try:
+    import urllib.parse as urllib
+except:
+    import urllib
 
 HOST_AND_PATH = sys.argv[0]
 ADDON_HANDLE = int(sys.argv[1])

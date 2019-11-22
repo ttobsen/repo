@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
-import api
-import gui
-import urllib
 import sys
+from . import api
+from . import gui
+
+try:
+    import urllib.parse as urllib
+except:
+    import urllib
 
 
 def play(**kwargs):
@@ -10,8 +14,8 @@ def play(**kwargs):
     addon = xbmcaddon.Addon(id='plugin.video.ran_de')
     height = (234, 270, 396, 480, 540, 720)[int(addon.getSetting('video.quality'))]
     resource = urllib.unquote_plus(kwargs['resource'])
-    video=api.get_video_url(resource, height)
-    if not video=="":
+    video = api.get_video_url(resource, height)
+    if not video == "":
      gui.play(video)
 
 
@@ -22,7 +26,7 @@ def videos(**kwargs):
 
 
 def index():
-    import thumbnails
+    from . import thumbnails
     live_caption = api.get_number_livestreams()
     if live_caption:
         live_caption = '[B]Live (%s)[/B]' % live_caption
@@ -45,4 +49,4 @@ def index():
 
 d = dict(p.split('=') for p in sys.argv[2][1:].split('&') if len(p.split('=')) == 2)
 f = d.pop('f', 'index')
-exec '%s(**d)' % f
+exec('{0}(**d)'.format(f))
