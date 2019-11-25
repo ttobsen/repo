@@ -117,7 +117,7 @@
   </extension>
 </addon>
 
-<addon id="script.module.cryptopy" name="CryptoPy" version="1.2.6" provider-name="cryptopy.sourceforge.net">
+<addon id="script.module.cryptopy" name="CryptoPy" version="1.2.7" provider-name="cryptopy.sourceforge.net">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
