@@ -2,12 +2,13 @@
 
 import os.path
 from sys import argv
+from io import open as io_open
+from datetime import datetime, timedelta
 from xbmc import translatePath, executeJSONRPC, executebuiltin, getCondVisibility, getInfoLabel, getSkinDir, log, sleep as xbmc_sleep, LOGERROR, LOGDEBUG, LOGNOTICE
 from xbmcplugin import setContent, endOfDirectory, addDirectoryItems, setPluginCategory
 from xbmcvfs import mkdirs, exists, rmdir, listdir, delete
 from xbmcaddon import Addon
 from xbmcgui import Dialog, NOTIFICATION_ERROR
-from json import loads, dumps
 from . import compat as compat
 from .const import CONST
 
@@ -15,6 +16,12 @@ if compat.PY2:
 	from urlparse import parse_qs
 elif compat.PY3:
 	from urllib.parse import parse_qs
+
+try:
+	from simplejson import loads, dumps
+except ImportError:
+	from json import loads, dumps
+
 
 addon = Addon()
 
@@ -29,10 +36,14 @@ def get_file_path(directory, filename):
 
 	return translatePath(os.path.join(xbmc_directory, filename)).encode('utf-8').decode('utf-8')
 
+def get_resource_filepath(filename, subdir):
+
+	return translatePath(os.path.join(addon.getAddonInfo('path'), 'resources', subdir, filename)).encode('utf-8').decode('utf-8')
+
 
 def get_media_filepath(filename):
 
-	return translatePath(os.path.join(addon.getAddonInfo('path'), 'resources', 'media', filename)).encode('utf-8').decode('utf-8')
+	return get_resource_filepath(filename, 'media')
 
 
 def remove_dir(directory):
@@ -79,6 +90,9 @@ def get_int_setting(setting_id):
 	else:
 		return None
 
+def get_text_setting(setting_id):
+
+	return str(get_setting(setting_id))
 
 def get_addon_version():
 
@@ -221,23 +235,28 @@ def get_addon_params(pluginquery):
            for k, v in parse_qs(pluginquery[1:]).items() )
 
 
+def get_file_contents(file_path):
+
+	data = None
+
+	if os.path.exists(file_path):
+		with io_open(file=file_path, mode='r', encoding='utf-8') as data_infile:
+			 data = data_infile.read()
+	return data
+
+
 def get_data(filename, dir_type='DATA_DIR'):
 
 	data_file_path = get_file_path(CONST[dir_type], filename)
-	data = None
-
-	if os.path.exists(data_file_path):
-		with open(data_file_path, 'r') as data_infile:
-			 data = data_infile.read()
-	return data
+	return get_file_contents(data_file_path)
 
 
 def set_data(filename, data, dir_type='DATA_DIR'):
 
 	data_file_path = get_file_path(CONST[dir_type], filename)
 
-	with open (data_file_path, 'w') as data_outfile:
-		data_outfile.write(data)
+	with io_open(file=data_file_path, mode='w', encoding='utf-8') as data_outfile:
+		data_outfile.write(compat._unicode(data))
 
 
 def get_json_data(filename, dir_type='DATA_DIR'):
@@ -257,3 +276,17 @@ def get_json_data(filename, dir_type='DATA_DIR'):
 def set_json_data (filename, data, dir_type='DATA_DIR'):
 
 	set_data(filename, dumps(data), dir_type)
+
+
+def timestamp_to_datetime(timestamp, is_utc=False):
+
+	try:
+		if is_utc is True:
+			return datetime.utcfromtimestamp(0) + timedelta(seconds=int(timestamp))
+		else:
+			return datetime.fromtimestamp(0) + timedelta(seconds=int(timestamp))
+	except Exception as e:
+		log_notice('Could not convert timestamp ' + str(timestamp) + ' to datetime - Exception: ' + str(e))
+		pass
+
+	return False

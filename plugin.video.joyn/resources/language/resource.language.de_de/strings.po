@@ -27,7 +27,11 @@ msgctxt "#30001"
 msgid "View"
 msgstr "Ansicht"
 
-#empty strings from id 30002 to 30100
+msgctxt "#30002"
+msgid "Connection"
+msgstr "Verbindung"
+
+#empty strings from id 30003 to 30100
 # SETTINGS-BUTTONS
 
 msgctxt "#30101"
@@ -146,7 +150,31 @@ msgctxt "#30129"
 msgid "Show episodes immediately if only one season is available"
 msgstr "Epsioden direkt anzeigen, wenn nur eine Staffel verfügbar"
 
-#empty strings from id 30130 to 30229
+msgctxt "#30130"
+msgid "Force PlayReady DRM (Android only)"
+msgstr "Playready als DRM erzwingen (nur für Android)"
+
+msgctxt "#30131"
+msgid "Don't verfiy SSL certificates"
+msgstr "SSL-Zertifkate nicht überprüfen"
+
+msgctxt "#30132"
+msgid "Use HTTPS Proxy"
+msgstr "HTTPS-Proxy benutzen"
+
+msgctxt "#30133"
+msgid "Host"
+msgstr "Host"
+
+msgctxt "#30134"
+msgid "Port"
+msgstr "Port"
+
+msgctxt "#30135"
+msgid "Joyn platform"
+msgstr "Joyn Platform"
+
+#empty strings from id 30136 to 30229
 # SETTINGS-TITLES
 
 #empty strings from id 30230 to 30350
@@ -371,3 +399,16 @@ msgstr "Weiterschauen: {:s}"
 msgctxt "#30666"
 msgid "Recommendation: {:s}"
 msgstr "Empfehlung: {:s}"
+
+msgctxt "#30667"
+msgid "Movie"
+msgstr "Film"
+
+msgctxt "#30668"
+msgid "Series"
+msgstr "Serie"
+
+msgctxt "#30669"
+msgid "{:s}[CR][LIGHT][I]{:s}[/I][/LIGHT]"
+msgstr "{:s}[CR][LIGHT][I]{:s}[/I][/LIGHT]"
+
