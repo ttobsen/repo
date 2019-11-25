@@ -10,8 +10,6 @@ from xbmcplugin import SORT_METHOD_UNSORTED, SORT_METHOD_LABEL, SORT_METHOD_DATE
 from xbmcaddon import Addon
 from datetime import datetime
 from time import time
-import dateutil.parser
-from json import dumps, loads
 from inputstreamhelper import Helper
 from .const import CONST
 from . import compat as compat
@@ -20,11 +18,26 @@ from . import xbmc_helper as xbmc_helper
 from . import request_helper as request_helper
 from .lib_joyn import lib_joyn as lib_joyn
 
-
 if compat.PY2:
 	from urllib import urlencode, quote
 elif compat.PY3:
 	from urllib.parse import urlencode, quote
+
+try:
+	from simplejson import loads, dumps
+except ImportError:
+	from json import loads, dumps
+
+if xbmc_helper.get_bool_setting('dont_verify_ssl_certificates') is True:
+
+	import ssl
+
+	try:
+		_create_unverified_https_context = ssl._create_unverified_context
+	except AttributeError:
+		pass
+	else:
+		ssl._create_default_https_context = _create_unverified_https_context
 
 
 def get_lastseen():
@@ -361,7 +374,7 @@ def show_favorites(title):
 			break_loop = False
 			if 'ChannelLane' in landingpage.keys():
 				for block_id, headline in landingpage['ChannelLane'].items():
-					channels = libjoyn.get_graphql_response('SINGLEBLOCK', {'blockId': block_id})
+					channels = libjoyn.get_graphql_response('SINGLEBLOCK', {'blockId': block_id}, True)
 					for channel in channels['block']['assets']:
 						if str(channel['id']) == str(favorite_item['channel_id']):
 							found = True
@@ -411,6 +424,8 @@ def index():
 		xbmc_helper.dialog_id('MSG_WIDEVINE_NOT_FOUND')
 		exit(0)
 
+	request_helper.purge_etags_cache(ttl=CONST['ETAGS_TTL'])
+
 	list_items = show_lastseen(xbmc_helper.get_int_setting('max_lastseen'))
 	max_recommendations = xbmc_helper.get_int_setting('max_recommendations')
 
@@ -458,7 +473,7 @@ def index():
 		list_items.append(get_dir_entry(metadata={'infoLabels': {
 						'title':  xbmc_helper.translation('TV_GUIDE'),
 						'plot': xbmc_helper.translation('TV_GUIDE_PLOT'),
-						}, 'art': {}}, mode='epg',stream_type='LIVE'))
+						}, 'art': {}}, mode='epg',stream_type='LIVE', is_folder=False))
 
 	addSortMethod(pluginhandle, SORT_METHOD_UNSORTED)
 	xbmc_helper.set_folder(list_items, pluginurl, pluginhandle, pluginquery, 'INDEX')
@@ -470,7 +485,7 @@ def channels(stream_type, title):
 	if stream_type == 'VOD':
 		if 'ChannelLane' in landingpage.keys():
 			for block_id, headline in landingpage['ChannelLane'].items():
-				channels = libjoyn.get_graphql_response('SINGLEBLOCK', {'blockId': block_id})
+				channels = libjoyn.get_graphql_response('SINGLEBLOCK', {'blockId': block_id}, True)
 				for channel in channels['block']['assets']:
 					list_items.append(get_dir_entry(mode='tvshows',
 						stream_type=stream_type,
@@ -484,10 +499,6 @@ def channels(stream_type, title):
 		epg = libjoyn.get_epg()
 		for brand_epg in epg['brands']:
 			if brand_epg['livestream'] is not None:
-				client_data={
-					'videoId': None,
-					'channelId': brand_epg['livestream']['id']
-				}
 				if 'epg' in brand_epg['livestream'].keys() and len(brand_epg['livestream']['epg']) > 0:
 					metadata = libjoyn.get_epg_metadata(brand_epg['livestream'])
 
@@ -502,7 +513,7 @@ def channels(stream_type, title):
 						is_folder=False,
 						metadata=metadata,
 						mode='play_video',
-						client_data=libjoyn.get_livetv_clientdata(brand_epg['livestream']['id']),
+						client_data=dumps(libjoyn.get_client_data(brand_epg['livestream']['id'], 'LIVE')),
 						video_id=brand_epg['livestream']['id'],
 						stream_type='LIVE'))
 
@@ -513,27 +524,41 @@ def tvshows(channel_id, channel_path,  title):
 
 	list_items = []
 
-	tvshows = libjoyn.get_graphql_response('CHANNEL', {'path': channel_path})
+	tvshows = libjoyn.get_graphql_response('CHANNEL', {'path': channel_path}, True)
 	if tvshows is not None and tvshows.get('page', None) is not None and tvshows.get('page').get('assets', None) is not None:
 		for tvshow in tvshows['page']['assets']:
 
-			tvshow_metadata=libjoyn.get_metadata(tvshow,'TVSHOW')
-			tvshow_metadata['infoLabels'].update({'mediatype': 'tvshow'})
+			if tvshow['__typename'] == 'Movie' and 'video' in tvshow.keys() and 'id' in tvshow['video'] :
 
-			if tvshow['__typename'] == 'Series':
-				list_items.append(get_dir_entry
-					(mode='season',
-					tv_show_id=tvshow['id'],
-					metadata=tvshow_metadata,
-					override_fanart=default_fanart
-				))
-			elif tvshow['__typename'] == 'Compilation':
+				movie_metadata =libjoyn.get_metadata(tvshow,'EPISODE', 'MOVIE')
+				movie_metadata['infoLabels'].update({'mediatype': 'movie'})
+
 				list_items.append(get_dir_entry(
-					mode='compilation_items',
-					compilation_id=tvshow['id'],
-					metadata=tvshow_metadata,
-					override_fanart=default_fanart
+					is_folder=False,
+					mode='play_video',
+					metadata=movie_metadata,
+					video_id=tvshow['video']['id'],
+					client_data=dumps(libjoyn.get_client_data(tvshow['video']['id'], 'VOD', tvshow)),
+					override_fanart=default_fanart,
 				))
+			else:
+				tvshow_metadata=libjoyn.get_metadata(tvshow,'TVSHOW', 'SERIES')
+				tvshow_metadata['infoLabels'].update({'mediatype': 'tvshow'})
+
+				if tvshow['__typename'] == 'Series':
+					list_items.append(get_dir_entry
+						(mode='season',
+						tv_show_id=tvshow['id'],
+						metadata=tvshow_metadata,
+						override_fanart=default_fanart
+					))
+				elif tvshow['__typename'] == 'Compilation':
+					list_items.append(get_dir_entry(
+						mode='compilation_items',
+						compilation_id=tvshow['id'],
+						metadata=tvshow_metadata,
+						override_fanart=default_fanart
+					))
 
 	if len(list_items) == 0:
 		return xbmc_helper.notification(
@@ -608,17 +633,7 @@ def season_episodes(season_id, title):
 		for episode in episodes['season']['episodes']:
 			episode_metadata =  libjoyn.get_metadata(episode,'EPISODE')
 
-			client_data = {
-					'startTime': 0,
-					'videoId': episode['id'],
-					'genre': [],
-			}
-
-			if 'video' in episode.keys() and 'duration' in episode['video']:
-				client_data.update({'duration': (episode['video']['duration']*1000)})
-
-			if 'series' in episode.keys() and 'id' in episode['series']:
-				client_data.update({'tvShowId': episode['series']['id']})
+			if 'series' in episode.keys() and 'id' in episode['series'].keys():
 				if override_fanart == default_fanart:
 					tv_show_meta = libjoyn.get_metadata(episode['series'],'TVSHOW')
 					if 'fanart' in tv_show_meta['art']:
@@ -631,7 +646,7 @@ def season_episodes(season_id, title):
 				mode='play_video',
 				metadata=episode_metadata,
 				video_id=episode['id'],
-				client_data=dumps(client_data),
+				client_data=dumps(libjoyn.get_client_data(episode['id'], 'VOD', episode)),
 				override_fanart=override_fanart,
 				season_id=season_id
 				)
@@ -664,18 +679,7 @@ def get_compilation_items(compilation_id, title):
 		for compilation_item in compilation_items['compilation']['compilationItems']:
 
 			compilation_item_metadata = libjoyn.get_metadata(compilation_item,'EPISODE')
-			client_data = {
-					'startTime': 0,
-					'videoId': compilation_item['id'],
-					'genre': [],
-			}
-
-			if 'video' in compilation_item.keys() and 'duration' in compilation_item['video']:
-				client_data.update({'duration': (compilation_item['video']['duration']*1000)})
-
 			if 'compilation' in compilation_item.keys():
-				if 'id' in compilation_item['compilation']:
-					client_data.update({'tvShowId': compilation_item['compilation']['id']})
 				if override_fanart == default_fanart:
 					compilation_metadata = libjoyn.get_metadata(compilation_item['compilation'],'TVSHOW')
 					if 'fanart' in compilation_metadata['art']:
@@ -688,7 +692,7 @@ def get_compilation_items(compilation_id, title):
 				mode='play_video',
 				metadata=compilation_item_metadata,
 				video_id=compilation_item['id'],
-				client_data=dumps(client_data),
+				client_data=dumps(libjoyn.get_client_data(compilation_item['id'], 'VOD', compilation_item)),
 				override_fanart=override_fanart,
 				compilation_id=compilation_id
 				)
@@ -714,7 +718,7 @@ def search(stream_type, title):
 	search_term = Dialog().input('Suche', type=INPUT_ALPHANUM)
 
 	if len(search_term) > 0:
-		search_response = libjoyn.get_graphql_response('SEARCH', {'text': search_term})
+		search_response = libjoyn.get_graphql_response('SEARCH', {'text': search_term}, True)
 		list_items = []
 		if 'search' in search_response.keys() and 'results' in search_response['search'] and len(search_response['search']['results']) > 0:
 			for search_result in search_response['search']['results']:
@@ -766,7 +770,7 @@ def categories(stream_type, title):
 def category(block_id, title):
 
 	list_items = []
-	category = libjoyn.get_graphql_response('SINGLEBLOCK', {'blockId': block_id})
+	category = libjoyn.get_graphql_response('SINGLEBLOCK', {'blockId': block_id}, True)
 
 	if category is not None and category.get('block', None) is not None and category.get('block').get('assets', None) is not None:
 		for category_item in category['block']['assets']:
@@ -811,10 +815,25 @@ def play_video(video_id, client_data, stream_type, season_id=None, compilation_i
 
 	if (video_data['streamingFormat'] == 'dash'):
 		if libjoyn.set_mpd_props(list_item, video_data['videoUrl'], stream_type) is not False:
-			if 'drm' in video_data.keys() and video_data['drm'] == 'widevine' and 'licenseUrl' in video_data.keys():
-				list_item.setProperty(CONST['INPUTSTREAM_ADDON'] + '.license_type', 'com.widevine.alpha')
-				list_item.setProperty(CONST['INPUTSTREAM_ADDON'] + '.license_key', video_data['licenseUrl'] + '|' +
-					request_helper.get_header_string({'User-Agent': libjoyn.config['USER_AGENT'], 'Content-Type': 'application/octet-stream'}) + '|R{SSM}|')
+			if 'drm' in video_data.keys() and 'licenseUrl' in video_data.keys():
+				list_item.setMimeType('application/dash+xml')
+				if video_data['drm'] == 'widevine':
+					list_item.setProperty(CONST['INPUTSTREAM_ADDON'] + '.license_type', 'com.widevine.alpha')
+					list_item.setProperty(CONST['INPUTSTREAM_ADDON'] + '.license_key', video_data['licenseUrl'] + '|' +
+						request_helper.get_header_string({'User-Agent': libjoyn.config['USER_AGENT'], 'Content-Type': 'application/octet-stream'}) + '|R{SSM}|')
+					xbmc_helper.log_notice('Using Widevine as DRM')
+				elif video_data['drm'] == 'playready':
+					list_item.setProperty(CONST['INPUTSTREAM_ADDON'] + '.license_type', 'com.microsoft.playready')
+					list_item.setProperty(CONST['INPUTSTREAM_ADDON'] + '.license_key', video_data['licenseUrl'])
+					xbmc_helper.log_notice('Using PlayReady as DRM')
+
+				else:
+					xbmc_helper.notification(
+						xbmc_helper.translation('ERROR').format('Unsupported DRM'),
+						xbmc_helper.translation('MSG_ERROR_NO_VIDEOSTEAM')
+					)
+					succeeded = False
+
 				list_item.setProperty(CONST['INPUTSTREAM_ADDON'] + '.stream_headers',  request_helper.get_header_string({'User-Agent': libjoyn.config['USER_AGENT']}))
 				if xbmc_helper.get_bool_setting('checkdrmcert') is True and 'certificateUrl' in video_data.keys():
 					list_item.setProperty(CONST['INPUTSTREAM_ADDON'] + '.server_certificate',
@@ -958,9 +977,11 @@ if 'mode' in param_keys:
 					play_video(video_id=params['video_id'], client_data=params['client_data'], stream_type=stream_type, season_id=params['season_id'])
 				elif 'compilation_id' in param_keys:
 					play_video(video_id=params['video_id'], client_data=params['client_data'], stream_type=stream_type, compilation_id=params['compilation_id'])
+				else:
+					play_video(video_id=params['video_id'], client_data=params['client_data'], stream_type=stream_type)
 			if stream_type == 'LIVE':
 				play_video(video_id=params['video_id'],
-						client_data=params.get('client_data', libjoyn.get_livetv_clientdata(params['video_id'])),
+						client_data=params.get('client_data', dumps(libjoyn.get_client_data(params['video_id'], stream_type))),
 						stream_type=stream_type)
 
 		elif mode == 'compilation_items' and 'compilation_id' in param_keys:
@@ -991,7 +1012,9 @@ if 'mode' in param_keys:
 			drop_favorites(favorite_item=loads(params['favorite_item']),fav_type=params['fav_type'])
 
 		elif mode == 'epg':
+			executebuiltin('ActivateWindow(busydialognocancel)')
 			executebuiltin('RunScript(script.module.uepg,' + get_uepg_params() + ')')
+			executebuiltin('Dialog.Close(busydialognocancel)')
 
 		else:
 			index()
