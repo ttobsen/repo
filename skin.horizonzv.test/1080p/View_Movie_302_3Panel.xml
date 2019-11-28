@@ -398,7 +398,8 @@
                     <top>480</top>
                     <width>525</width>
                     <height>375</height>
-                    <font>ubuntu-r16b</font>
+					<include condition="!Skin.HasSetting(BigPlotText)">PlotText16Var</include>
+					<include condition="Skin.HasSetting(BigPlotText)">PlotTextBigVar</include>
                     <shadowcolor>black</shadowcolor>
                     <label>$VAR[InfoWallTextboxVar]</label>
                     <include>openclosevisible</include>

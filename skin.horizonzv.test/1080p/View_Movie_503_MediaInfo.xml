@@ -556,7 +556,8 @@
                         <top>0</top>
                         <width>795</width>
                         <height>532</height>
-                        <font>ubuntu-r16b</font>
+						<include condition="!Skin.HasSetting(BigPlotText)">PlotText16Var</include>
+						<include condition="Skin.HasSetting(BigPlotText)">PlotTextBigVar</include>
                         <textcolor>black</textcolor>
                         <shadowcolor>grey1</shadowcolor>
                         <label>$INFO[Container.ShowPlot]</label>

@@ -1,4 +1,8 @@
-﻿v 1.18.0.39
+﻿v 1.18.0.40
+- Bugfix Plot (Schriftgröße)
+- Keyboardschriftart geändert
+
+v 1.18.0.39
 - Fanartdiashow für Musik, Filme, Serien im Hauptmenü eingebaut (Einstellungen - Skin - Design/Performance - Fanartdiashow). Fanart muss aktiviert sein
 
 v 1.18.0.38
