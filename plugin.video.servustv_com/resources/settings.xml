@@ -1,6 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-   <setting id="siteVersion" type="enum" label="30104" values="DE|AT" default="0"/>
-   <setting id="useThumbAsFanart" type="bool" label="30101" default="true"/>
-   <setting id="forceView" type="bool" label="30102" default="true"/>
-   <setting id="viewID" type="number" label="30103" enable="eq(-1,true)" default="51"/>
+	<category label="30000">
+		<setting label="30230" type="lsep"/>
+		<setting label="30110" type="bool" id="inputstream" default="false"/>
+		<setting label="30350" type="text" option="readable" visible="eq(-1,true)"/>
+		<setting type="sep"/>
+		<setting label="30231" type="lsep"/>
+		<setting label="30111" type="enum" id="country" values="DE|AT" default="0" option="int"/>
+		<setting type="sep"/>
+		<setting label="30232" type="lsep"/>
+		<setting label="30112" type="bool" id="useThumbAsFanart" default="true"/>
+		<setting type="sep"/>
+		<setting label="30233" type="lsep"/>
+		<setting label="30113" type="bool" id="show_settings" default="true"/>
+	</category>
 </settings>
