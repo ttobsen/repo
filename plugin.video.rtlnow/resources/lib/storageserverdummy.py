@@ -1,15 +1,19 @@
-'''
-     StorageServer override.
+﻿"""
+     StorageServer override
      Version: 1.0
-'''
 
+    Copyright (C) 2010-2011 Tobias Ussing And Henrik Mosgaard Jensen
+    Copyright (C) 2019 anxdpanic
+"""
 
 class StorageServer:
     def __init__(self, table, timeout=24):
-        return None
+        pass
 
     def cacheFunction(self, funct=False, *args):
-        return funct(*args)
+        if funct:
+            return funct(*args)
+        return []
 
     def set(self, name, data):
         return ""

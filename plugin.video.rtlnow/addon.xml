@@ -1,36 +1,36 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.rtlnow" name="TV Now" version="0.6.11" provider-name="L0RE">
- <requires>
-        <import addon="xbmc.python" version="2.1.0"/>   
-        <import addon="script.common.plugin.cache" version="2.5.5"/> # Add this    
-          <import addon="inputstream.adaptive" version="2.2.21"/>
-         <import addon="script.module.inputstreamhelper" version="0.3.4"/>
-
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Test Plugin von L0RE</summary>
-    <summary lang="de">Test Plugin von L0RE</summary>
-    <description lang="en">Test Plugin von L0RE</description>
-    <description lang="de">Test Plugin von L0RE</description>
-    <website>https://www.tvnow.de/</website>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-    <news>0.6.11
-- Added Check Widevine option to the addon settings. The user can now enable or disable the Widevine installation check.    
-0.6.10
-- Update from https://widevine.rtl.de to https://widevine.tvnow.de    
-- Added is Widevine installed check 
-0.4.24
-- Update Logo
-0.4.23
--Update von frong73 um anbindung in PVR zu ermöglichen</news>
-    <assets>
-        <screenshot>resources/rtlnow1.png</screenshot>
-        <screenshot>resources/rtlnow2.png</screenshot>
-	<icon>icon.png</icon>
-    </assets>
-  </extension>
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<addon id="plugin.video.rtlnow" name="TVNOW - DE" version="2.0.1" provider-name="L0RE">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="script.common.plugin.cache" version="2.5.5" optional="true"/>
+		<import addon="inputstream.adaptive" version="2.0.10"/>
+		<import addon="script.module.inputstreamhelper" version="0.4.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de_DE">Mediathek von TVNOW</summary>
+		<summary lang="en_GB">Mediathek of TVNOW</summary>
+		<description lang="de_DE">Bei TVNOW Serien, Shows und Filme online streamen.  Schau dir komplette Serien an, fiebere bei deinen liebsten Daily-Soaps mit oder staune bei spannenden Dokumentationen – alles wann und wo du willst auf Abruf.[CR]Viele Inhalte aus dem TV Programm siehst du bei TVNOW sogar schon vor TV-Aussstrahlung !</description>
+		<description lang="en_GB">Stream TVNOW series, shows and movies online. Watch complete series, enjoy your favorite daily soap operas or marvel at exciting documentaries - all when and where you want on demand.[CR]Many content from the TV program you see on TVNOW even before TV broadcast !</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/57646-Release-TVNow-RTL-Watchbox-Vox-NTV-NOWUS-RTL2-Nitro/</forum>
+		<website>https://www.tvnow.de/</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.rtlnow</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 2.0.1  (01.12.2019)[/COLOR][/B] by realvito[CR]
+- optimized: Script komplett überarbeitet und wieder funktionsfähig gemacht, unnötige Passagen entfernt (läuft über die alte API v3) ...
+- added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19+) :-)
+*** für die volle Funktionsfähigkeit unter KODI-Matrix ist das Addon - script.common.plugin.cache - mindestens in der Version 2.6.0 erforderlich ***
+		</news>
+	</extension>
 </addon>
