@@ -41,6 +41,7 @@ baseURL = "https://www.arte.tv/"
 apiURL = "https://api-cdn.arte.tv/api/emac/v3/"+COUNTRY+"/web/"
 OPA_token = "AOwImM4EGZ2gjYjRGZzEzYxMTNxMWOjJDO4gDO3UWN3UmN5IjNzAzMlRmMwEWM2I2NhFWN1kjYkJjZ1cjY1czN reraeB"
 EMAC_token = "wYxYGNiBjNwQjZzIjMhRDOllDMwEjM2MDN3MjY4U2M1ATYkVWOkZTM5QzM4YzN2ITM0E2MxgDO1EjN5kjZmZWM reraeB"
+headerOPA = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0'), ('Authorization', OPA_token[::-1])]
 headerEMAC = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0'), ('Authorization', EMAC_token[::-1])]
 
 xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_UNSORTED)
@@ -60,7 +61,7 @@ if xbmcvfs.exists(cookie):
 
 starting = {
     'highlights': apiURL+'data/MANUAL_TEASERS/?code=playlists_HOME&limit=50',
-    'magazines': apiURL+'data/VIDEO_LISTING/?videoType=MAGAZINES&limit=50',
+    'magazines': apiURL+'data/MANUAL_TEASERS/?code=magazines_HOME&limit=50',
     'byDate': apiURL+'pages/TV_GUIDE/?day=',
     'duration': apiURL+'data/VIDEO_LISTING/?videoType=',
     'viewed': apiURL+'data/VIDEO_LISTING/?videoType=MOST_VIEWED',
@@ -70,8 +71,10 @@ starting = {
 }
 
 def py2_enc(s, encoding='utf-8'):
-	if PY2 and isinstance(s, unicode):
-		s = s.encode(encoding)
+	if PY2:
+		if not isinstance(s, basestring):
+			s = str(s)
+		s = s.encode(encoding) if isinstance(s, unicode) else s
 	return s
 
 def py3_dec(d, encoding='utf-8'):
@@ -80,9 +83,7 @@ def py3_dec(d, encoding='utf-8'):
 	return d
 
 def translation(id):
-	LANGUAGE = addon.getLocalizedString(id)
-	LANGUAGE = py2_enc(LANGUAGE)
-	return LANGUAGE
+	return py2_enc(addon.getLocalizedString(id))
 
 def failing(content):
 	log(content, xbmc.LOGERROR)
@@ -91,8 +92,7 @@ def debug(content):
 	log(content, xbmc.LOGDEBUG)
 
 def log(msg, level=xbmc.LOGNOTICE):
-	msg = py2_enc(msg)
-	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+msg, level)
+	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+py2_enc(msg), level)
 
 def getUrl(url, header=None, agent='Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0'):
 	global cj
@@ -117,7 +117,7 @@ def getUrl(url, header=None, agent='Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0
 def index():
 	if COUNTRY=="de":
 		addDir("Besondere Highlights", starting['highlights'], "listMagazines", icon)
-		addDir("Themen", baseURL+COUNTRY+"/", "listThemes", icon)
+		addDir("Themen", 'https://api.arte.tv/api/opa/v3/', "listThemes", icon)
 		addDir("Sendungen A-Z", starting['magazines'], "listMagazines", icon)
 		addDir("Programm sortiert nach Datum", "", "listSelection", icon)
 		addDir("Videos sortiert nach Laufzeit", starting['duration'], "listRunTime", icon)
@@ -129,7 +129,7 @@ def index():
 		addDir("ARTE Einstellungen", "", "aSettings", icon)
 	elif COUNTRY=="fr":
 		addDir("Faits saillants spéciaux", starting['highlights'], "listMagazines", icon)
-		addDir("Sujets", baseURL+COUNTRY+"/", "listThemes", icon)
+		addDir("Sujets", 'https://api.arte.tv/api/opa/v3/', "listThemes", icon)
 		addDir("Émissions A-Z", starting['magazines'], "listMagazines", icon)
 		addDir("Programme trié par date", "", "listSelection", icon)
 		addDir("Vidéos triées par durée", starting['duration'], "listRunTime", icon)
@@ -142,67 +142,52 @@ def index():
 
 def listThemes(url):
 	debug("(listThemes) ------------------------------------------------ START = listThemes -----------------------------------------------")
-	UN_Supported = ['360', 'Accue', 'Direct', 'Digitale', 'Edition', 'Guide', 'Home', 'Live', 'Magazin', 'productions', 'Programm', 'VOD/DVD']
-	content = getUrl(url)
-	content = re.compile(' window.__INITIAL_STATE__ = (.+?)window.__CLASS_IDS__ =', re.DOTALL).findall(content)[0].strip()[:-1]
+	result = getUrl(url+'categories?language='+COUNTRY+'&limit=50', header=headerOPA)
 	debug("++++++++++++++++++++++++")
-	debug("(listThemes) CONTENT : "+str(content))
+	debug("(listThemes) RESULT : {0}".format(str(result)))
 	debug("++++++++++++++++++++++++")
-	DATA = json.loads(content)
+	DATA = json.loads(result)
 	for themeITEM in DATA['categories']:
 		Cat = str(themeITEM['code'])
-		title = py2_enc(themeITEM['label'])
-		newURL = themeITEM['url']
+		title = py2_enc(themeITEM['label']).strip()
 		tagline = ""
 		if 'description' in themeITEM and themeITEM['description']:
-			tagline = py2_enc(themeITEM['description'])
-		if not any(x in title for x in UN_Supported):
-			debug("(listThemes) filtered ### NAME = {0} || URL = {1} ###".format(title, newURL))
-			addDir(title, newURL, "listSubThemes", icon, tagline)
+			tagline = py2_enc(themeITEM['description']).strip()
+		if title.lower() != 'andere':
+			sublist = json.dumps(themeITEM['subcategories'])
+			debug("(listThemes) ### NAME = {0} || CATEGORY = {1} ###".format(title, Cat))
+			addDir(title, sublist, "listSubThemes", icon, tagline, query=Cat)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
-def listSubThemes(Xurl):
+def listSubThemes(Xurl, nomCat):
 	debug("(listSubThemes) ------------------------------------------------ START = listSubThemes -----------------------------------------------")
-	COMBI = []
-	content = getUrl(Xurl)
-	content = re.compile(' window.__INITIAL_STATE__ = (.+?)window.__CLASS_IDS__ =', re.DOTALL).findall(content)[0].strip()[:-1]
+	subcategories = json.loads(Xurl)
 	debug("++++++++++++++++++++++++")
-	debug("(listSubThemes) CONTENT : "+str(content))
+	debug("(listSubThemes) CONTENT : {0}".format(str(subcategories)))
 	debug("++++++++++++++++++++++++")
-	DATA = json.loads(content)
-	FOUND = 0
-	for d in DATA['categories']:
-		for subITEM in d['subcategories']:
-			nomCat = str(d['code'])
-			subCat = str(subITEM['code'])
-			title = py2_enc(subITEM['label'])
-			debug("(listSubThemes) ready ### CAT = {0} || subCAT = {1} || NAME = {2} ###".format(nomCat, subCat, title))
-			newURL = subITEM['url']
-			tagline = ""
-			if 'description' in subITEM and subITEM['description']:
-				tagline = py2_enc(subITEM['description'])
-			if Xurl in newURL:
-				debug("(listSubThemes) ready ### Name = {0} || Url = {1} ###".format(title, newURL))
-				FOUND = 1
-				COMBI.append([title, nomCat, subCat, newURL, tagline])
-	if COMBI:
-		for title, nomCat, subCat, newURL, tagline in COMBI: # https://api-cdn.arte.tv/api/emac/v3/de/web/data/MOST_RECENT_SUBCATEGORY?subCategoryCode=AJO&page=2&limit=10
-			if nomCat == "ARS" and FOUND == 1:
-				FOUND += 1
-				addDir("* Alle Genres *", "Nothing", "videos_Themes", icon, query="VIDEO_LISTING/?category="+nomCat+"@videoType=MOST_RECENT")
-			addDir(title, "Nothing", "videos_Themes", icon, tagline, query="MOST_RECENT_SUBCATEGORY/?subCategoryCode="+subCat)
+	if nomCat == "ARS":
+		addDir("* Alle Genres *", "Nothing", "videos_Themes", icon, query="VIDEO_LISTING/?category="+nomCat+"@videoType=MOST_RECENT")
+	for subITEM in subcategories:
+		subCat = str(subITEM['code'])
+		title = py2_enc(subITEM['label']).strip()
+		tagline = ""
+		if 'description' in subITEM and subITEM['description']:
+			tagline = py2_enc(subITEM['description']).strip()
+		debug("(listSubThemes) ### CAT = {0} || subCAT = {1} || NAME = {2} ###".format(nomCat, subCat, title))
+		# https://api-cdn.arte.tv/api/emac/v3/de/web/data/MOST_RECENT_SUBCATEGORY?subCategoryCode=AJO&page=2&limit=10
+		addDir(title, "Nothing", "videos_Themes", icon, tagline, query="MOST_RECENT_SUBCATEGORY/?subCategoryCode="+subCat)
 	xbmcplugin.endOfDirectory(pluginhandle) 
 
 def listMagazines(url):
 	debug("(listMagazines) ------------------------------------------------ START = listMagazines -----------------------------------------------")
 	result = getUrl(url, header=headerEMAC)
 	debug("++++++++++++++++++++++++")
-	debug("(listMagazines) RESULT : "+str(result))
+	debug("(listMagazines) RESULT : {0}".format(str(result)))
 	debug("++++++++++++++++++++++++")
 	DATA = json.loads(result)
 	for magITEM in DATA['data']:
 		idd = str(magITEM['programId'])
-		title = py2_enc(magITEM['title'])
+		title = py2_enc(magITEM['title']).strip()
 		plot = str(get_desc(magITEM))
 		max_res = max(magITEM['images']['landscape']['resolutions'], key=lambda item: item['w'])
 		thumb = max_res['url']
@@ -211,17 +196,17 @@ def listMagazines(url):
 		debug("(listMagazines) ready ### NAME = {0} || IDD = {1} ###".format(title, idd))
 	xbmcplugin.endOfDirectory(pluginhandle)
 
-def listCollections(Xurl, query=""):
+def listCollections(Xurl, query, photo):
 	COMBI = []
 	content = getUrl(apiURL+query, header=headerEMAC)
 	debug("++++++++++++++++++++++++")
-	debug("(listCollections) CONTENT : "+str(content))
+	debug("(listCollections) CONTENT : {0}".format(str(content)))
 	debug("++++++++++++++++++++++++")
 	DATA = json.loads(content)
 	FOUND = 0
-	FILTER = filter(lambda item: item['data'] and item['title'] != None and (item['code']['name'] == 'collection_videos' or item['code']['name'] == 'collection_subcollection'), DATA['zones'])
+	FILTER = filter(lambda item: item['data'] and item['title'] != None and (item['code']['name'].lower() == 'collection_videos' or item['code']['name'].lower() == 'collection_subcollection'), DATA['zones'])
 	for zone in FILTER:
-		title = py2_enc(zone['title'])
+		title = py2_enc(zone['title']).strip()
 		collection = zone['code']['name'].upper()
 		idd = str(zone['code']['id'])
 		text = "/?collectionId="+idd
@@ -235,17 +220,17 @@ def listCollections(Xurl, query=""):
 		debug("(listCollections) ----- Nothing FOUND - goto = videos_Themes -----")
 	else:
 		for title, collection, text in COMBI:
-			addDir(title, "Nothing", "videos_Themes", icon, query=collection+text)
+			addDir(title, "Nothing", "videos_Themes", photo, query=collection+text)
 	xbmcplugin.endOfDirectory(pluginhandle) 
 
-def videos_Themes(url, page="1", query=""):
+def videos_Themes(url, query, page="1"):
 	debug("(videos_Themes) ------------------------------------------------ START = videos_Themes -----------------------------------------------")
-	debug("(videos_Themes) URL : "+url)
+	debug("(videos_Themes) ### URL : {0} || QUERY : {1} ###".format(url, query))
 	FOUND = 0
 	if int(page) == 1 and query != "":
-		url = apiURL+"data/"+query.replace('@', '&')
-	js_URL = url+"&page="+page+"&limit=50"
-	debug("(videos_Themes) complete JSON-URL : "+js_URL)
+		url = apiURL+'data/'+query.replace('@', '&')
+	js_URL = url+'&page='+page+'&limit=50'
+	debug("(videos_Themes) complete JSON-URL : {0}".format(js_URL))
 	result = getUrl(js_URL, header=headerEMAC)
 	DATA = json.loads(result)
 	for movie in DATA['data']:
@@ -275,8 +260,8 @@ def listSelection():
 
 def videos_Datum(tag):
 	debug("(videos_Datum) ------------------------------------------------ START = videos_Datum -----------------------------------------------")
-	url = starting['byDate']+tag # URL-Tag = https://www.arte.tv/guide/api/api/pages/de/TV_GUIDE/?day=2018-08-14
-	debug("(videos_Datum) URL : "+url)
+	url = starting['byDate']+tag # URL-Tag = https://api-cdn.arte.tv/api/emac/v3/de/web/pages/TV_GUIDE/?day=2019-12-08
+	debug("(videos_Datum) URL : {0}".format(url))
 	result = getUrl(url, header=headerEMAC)
 	DATA = json.loads(result)
 	for movie in DATA['zones'][-1]['data']:
@@ -302,21 +287,21 @@ def listRunTime(url):
 def SearchArte():
 	debug("(SearchArte) ------------------------------------------------ START = SearchArte -----------------------------------------------")
 	word = xbmcgui.Dialog().input("Search ARTE ...", type=xbmcgui.INPUT_ALPHANUM)
-	word = quote_plus(word, safe='') # SEARCH = https://www.arte.tv/guide/api/api/zones/de/listing_SEARCH?page=1&limit=20&query=filme
+	word = quote_plus(word, safe='') # SEARCH = https://api-cdn.arte.tv/api/emac/v3/de/web/data/SEARCH_LISTING/?query=b%C3%A4ren&page=1&limit=50
 	if word == "": return
 	videos_AbisZ(starting['search'], query='query='+word)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
-def videos_AbisZ(url, page="1", query=""):
+def videos_AbisZ(url, query, page="1"):
 	debug("(videos_AbisZ) ------------------------------------------------ START = videos_AbisZ -----------------------------------------------")
-	debug("(videos_AbisZ) URL : "+url+" || QUERY : "+query)
+	debug("(videos_AbisZ) ### URL : {0} || QUERY : {1} ###".format(url, query))
 	FOUND = 0
-	if query != "": # DURATION = https://api-cdn.arte.tv/api/emac/v3/de/web/data/VIDEO_LISTING/?videoType=LONGER_DURATION&page=2&limit=20 || SEARCH = https://api-cdn.arte.tv/api/emac/v3/de/web/data/SEARCH_LISTING/?query=europe&page=2&limit=20
-		js_URL = url+query.replace("@", "&").replace(" ", "+")+"&page="+page+"&limit=50"
-	else: # STANDARD =  https://api-cdn.arte.tv/api/emac/v3/de/web/data/VIDEO_LISTING/?videoType=MOST_VIEWED&page=1&limit=20
-		js_URL = url+"&page="+page+"&limit=50"
-	debug("(videos_AbisZ) complete JSON-URL : "+js_URL)
-	result = getUrl(js_URL, header=headerEMAC)
+	if int(page) == 1 and (query != "" or '_LISTING' in url):
+		url = url+query.replace('@', '&').replace(' ', '+')+'&page='+page+'&limit=50'
+	# DURATION = https://api-cdn.arte.tv/api/emac/v3/de/web/data/VIDEO_LISTING/?videoType=LONGER_DURATION&page=2&limit=20 || SEARCH = https://api-cdn.arte.tv/api/emac/v3/de/web/data/SEARCH_LISTING/?query=europe&page=2&limit=20
+	# STANDARD =  https://api-cdn.arte.tv/api/emac/v3/de/web/data/VIDEO_LISTING/?videoType=MOST_VIEWED&page=1&limit=20
+	debug("(videos_AbisZ) complete JSON-URL : {0}".format(url))
+	result = getUrl(url, header=headerEMAC)
 	DATA = json.loads(result)
 	for movie in DATA['data']:
 		duration = movie['duration']
@@ -325,10 +310,10 @@ def videos_AbisZ(url, page="1", query=""):
 			listVideo(movie, "", nosub='(videos_AbisZ)')
 	try: # NEXTPAGE = https://api-cdn.arte.tv/api/emac/v3/de/web/data/VIDEO_LISTING?videoType=LAST_CHANCE&page=2&limit=20
 		nextpage = DATA["nextPage"]
-		debug("(videos_Themes) This is NextPage : "+nextpage)
+		debug("(videos_AbisZ) This is NextPage : {0}".format(nextpage))
 		if nextpage[:4] == "http":
 			debug("(videos_AbisZ) Now show NextPage ...")
-			addDir("[COLOR lime]Nächste Seite  >>>[/COLOR]", url, "videos_AbisZ", icon, page=int(page)+1, query=query)
+			addDir("[COLOR lime]Nächste Seite  >>>[/COLOR]", nextpage, "videos_AbisZ", icon, page=int(page)+1, query=query)
 	except: pass
 	xbmcplugin.endOfDirectory(pluginhandle)
 
@@ -342,7 +327,7 @@ def playvideo(url):
 		if url[:4] == "http": idd = re.compile('/videos/(.+?)/', re.DOTALL).findall(url)[0]
 		else: idd = url
 		debug("----->")
-		debug("(playvideo) IDD : "+str(idd))
+		debug("(playvideo) ### IDD : {0} ###".format(str(idd)))
 		if COUNTRY=="de":
 			SHORTCUTS = ['DE', 'OmU', 'OV', 'VO'] # "DE" = Original deutsch | "OmU" = Original mit deutschen Untertiteln | "OV" = Stumm oder Originalversion
 		elif COUNTRY=="fr":
@@ -352,7 +337,7 @@ def playvideo(url):
 		stream_offer = stream['VSR']
 		for element in stream_offer:
 			if int(stream['VSR'][element]['versionProg']) == 1 and stream['VSR'][element]['mediaType'].lower() == "mp4":
-				debug("(playvideo) Stream-Element : "+str(stream['VSR'][element]))
+				debug("(playvideo) ### Stream-Element : {0} ###".format(str(stream['VSR'][element])))
 				for found in SHORTCUTS:
 					if stream['VSR'][element]['versionShortLibelle'] == found and stream['VSR'][element]['height'] == prefQUALITY:
 						DATA['media'].append({'streamURL': stream['VSR'][element]['url']})
@@ -360,8 +345,8 @@ def playvideo(url):
 				if not finalURL:
 					if stream['VSR'][element]['height'] == prefQUALITY:
 						finalURL = stream['VSR'][element]['url']
-		debug("(playvideo) Quality-Setting : "+str(prefQUALITY))
-		log("(playvideo) StreamURL : "+str(finalURL))
+		debug("(playvideo) ### Quality-Setting : {0} ###".format(str(prefQUALITY)))
+		log("(playvideo) StreamURL : {0}".format(str(finalURL)))
 		debug("<-----")
 		if finalURL: 
 			listitem = xbmcgui.ListItem(path=finalURL)
@@ -395,9 +380,9 @@ def utc_to_local(dt):
 	else: return dt - timedelta(seconds=time.timezone)
 
 def get_desc(info):
-	if 'fullDescription' in info and info['fullDescription'] is not None: return py2_enc(info['fullDescription'])
-	elif 'description' in info and info['description'] is not None: return py2_enc(info['description'])
-	elif 'shortDescription' in info and info['shortDescription'] is not None: return py2_enc(info['shortDescription'])
+	if 'fullDescription' in info and info['fullDescription'] is not None: return py2_enc(info['fullDescription']).strip()
+	elif 'description' in info and info['description'] is not None: return py2_enc(info['description']).strip()
+	elif 'shortDescription' in info and info['shortDescription'] is not None: return py2_enc(info['shortDescription']).strip()
 	return ""
 
 def get_ListItem(info, nosub):
@@ -409,31 +394,30 @@ def get_ListItem(info, nosub):
 	endTIMES = None
 	Note_1 = ""
 	Note_2 = ""
-	title = py2_enc(info['title'])
+	title = py2_enc(info['title']).strip()
 	if 'subtitle' in info and info['subtitle']:
-		subtitle = py2_enc(info['subtitle'])
-		title += " - "+subtitle
+		title += " - {0}".format(py2_enc(info['subtitle']).strip())
 	if 'teaserText' in info and info['teaserText']:
-		tagline = py2_enc(info['teaserText'])
+		tagline = py2_enc(info['teaserText']).strip()
 	max_res = max(info['images']['landscape']['resolutions'], key=lambda item: item['w'])
 	thumb = max_res['url']
 	duration = info['duration']
 	if 'broadcastDates' in info and info['broadcastDates'][0] != None:
-		airedtime = datetime(*(time.strptime(info['broadcastDates'][0], '%Y-%m-%dT%H:%M:%SZ')[0:6])) # 2019-06-13T13:30:00Z
+		airedtime = datetime(*(time.strptime(info['broadcastDates'][0], '%Y{0}%m{0}%dT%H{1}%M{1}%SZ'.format('-', ':'))[0:6])) # 2019-06-13T13:30:00Z
 		LOCALTIME = utc_to_local(airedtime)
-		title = "[COLOR orangered]"+LOCALTIME.strftime('%H:%M')+"[/COLOR]  "+title
+		title = "[COLOR orangered]{0}[/COLOR]  {1}".format(LOCALTIME.strftime('%H:%M'), title)
 	if 'availability' in info and info['availability'] != None:
 		if 'start' in info['availability'] and info['availability']['start'] != None:
-			startDates = datetime(*(time.strptime(info['availability']['start'], '%Y-%m-%dT%H:%M:%SZ')[0:6])) # 2019-06-13T13:30:00Z
+			startDates = datetime(*(time.strptime(info['availability']['start'][:19], '%Y{0}%m{0}%dT%H{1}%M{1}%S'.format('-', ':'))[0:6])) # 2019-06-13T13:30:00Z
 			LOCALstart = utc_to_local(startDates)
-			startTIMES = LOCALstart.strftime('%d.%m.%y • %H:%M')
-			begins =  LOCALstart.strftime('%d.%m.%Y')
+			startTIMES = LOCALstart.strftime('%d{0}%m{0}%y {1} %H{2}%M').format('.', '•', ':')
+			begins =  LOCALstart.strftime('%d{0}%m{0}%Y').format('.')
 		if 'end' in info['availability'] and info['availability']['end'] != None:
-			endDates = datetime(*(time.strptime(info['availability']['end'], '%Y-%m-%dT%H:%M:%SZ')[0:6])) # 2020-05-30T21:59:00Z
+			endDates = datetime(*(time.strptime(info['availability']['end'][:19], '%Y{0}%m{0}%dT%H{1}%M{1}%S'.format('-', ':'))[0:6])) # 2020-05-30T21:59:00Z
 			LOCALend = utc_to_local(endDates)
-			endTIMES = LOCALend.strftime('%d.%m.%y • %H:%M')
-	if startTIMES: Note_1 = "Vom [COLOR chartreuse]"+str(startTIMES)+"[/COLOR] "
-	if endTIMES: Note_2 = "bis [COLOR orangered]"+str(endTIMES)+"[/COLOR][CR][CR]"
+			endTIMES =  LOCALend.strftime('%d{0}%m{0}%y {1} %H{2}%M').format('.', '•', ':')
+	if startTIMES: Note_1 = "Vom [COLOR chartreuse]{0}[/COLOR] ".format(str(startTIMES))
+	if endTIMES: Note_2 = "bis [COLOR orangered]{0}[/COLOR][CR][CR]".format(str(endTIMES))
 	if begins: xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_DATE)
 	if duration: xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_DURATION)
 	liz = xbmcgui.ListItem(title)
@@ -482,7 +466,7 @@ def parameters_string_to_dict(parameters):
 	return paramDict
 
 def addDir(name, url, mode, image, tagline=None, plot=None, page=1, query=""):   
-	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)+"&query="+str(query)
+	u = sys.argv[0]+'?url='+quote_plus(url)+'&mode='+str(mode)+'&query='+str(query)+'&page='+str(page)+'&image='+quote_plus(image)
 	liz = xbmcgui.ListItem(name)
 	liz.setInfo(type='Video', infoLabels={'Title': name, 'Plot': plot, 'Tagline': tagline})
 	liz.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
@@ -501,13 +485,13 @@ query = unquote_plus(params.get('query', ''))
 if mode == 'listThemes':
 	listThemes(url)
 elif mode == 'listSubThemes':
-	listSubThemes(url)
+	listSubThemes(url, query)
 elif mode == 'listMagazines':
 	listMagazines(url)
 elif mode == 'listCollections':
-	listCollections(url, query)
+	listCollections(url, query, image)
 elif mode == 'videos_Themes':
-	videos_Themes(url, page, query)
+	videos_Themes(url, query, page)
 elif mode == 'listSelection':
 	listSelection()
 elif mode == 'videos_Datum':
@@ -517,7 +501,7 @@ elif mode == 'listRunTime':
 elif mode == 'SearchArte':
 	SearchArte()
 elif mode == 'videos_AbisZ':
-	videos_AbisZ(url, page, query)
+	videos_AbisZ(url, query, page)
 elif mode == 'playvideo':
 	playvideo(url)
 elif mode == 'playLive':

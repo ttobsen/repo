@@ -35,3 +35,8 @@
 
 [B]Version 0.5.9  (30.09.2019)[/B] by realvito[CR]
 - fixed: LibreELEC - Fehler beim öffnen der Rubrik = Programm sortiert nach Datum (Error: unsupported locale setting)
+
+[B]Version 0.6.0  (01.12.2019)[/B] by realvito[CR]
+- fixed: Rubrik = Themen kein Inhalt und Fehler wird angezeigt (läuft jetzt auch über die API)
+- fixed: Suche mit Umlauten im Suchbegriff erzeugt Fehler
+- fixed: UnicodeEncodeError für 'time.strftime' und Sondersymbole unter Python-3 (KODI-Matrix)
