@@ -456,8 +456,8 @@
                             <top>180</top>
                             <width>1170</width>
                             <height>378</height>
-                            <include condition="Skin.HasSetting(BigPlotText)">PlotTextBigVar</include>
-                            <font>ubuntu-r18</font>
+							<include condition="!Skin.HasSetting(BigPlotText)">PlotText16Var</include>
+							<include condition="Skin.HasSetting(BigPlotText)">PlotTextBigVar</include>
                             <shadowcolor>black</shadowcolor>
                             <label>$INFO[ListItem.Plot]</label>
                             <visible>!String.IsEmpty(ListItem.Plot)+!ListItem.IsCollection</visible>
@@ -480,8 +480,8 @@
 								<include>openclosevisible</include>
                                 <width>570</width>
                                 <height>350</height>
+								<include condition="!Skin.HasSetting(BigPlotText)">PlotText16Var</include>
 								<include condition="Skin.HasSetting(BigPlotText)">PlotTextBigVar</include>
-								<font>ubuntu-r18</font>
 								<shadowcolor>black</shadowcolor>
 								<label>$INFO[ListItem.Plot]</label>
 								<visible>ListItem.IsCollection</visible>

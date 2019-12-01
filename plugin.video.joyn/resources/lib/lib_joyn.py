@@ -1,23 +1,30 @@
 # -*- coding: utf-8 -*-
 
 from base64 import b64decode
-from json import loads, dumps
 from re import search, findall
 from os import environ
 from hashlib import sha1, sha256
 from math import floor
 from sys import exit
-from datetime import datetime, timedelta
+from datetime import datetime
 from time import time
-from copy import deepcopy
+from copy import copy
 from codecs import encode
+from io import open as io_open
 from uuid import uuid4
+from xbmc import getCondVisibility
+from random import choice
 from .const import CONST
 from . import compat as compat
 from . import request_helper as request_helper
 from . import cache as cache
 from . import xbmc_helper as xbmc_helper
 from .mpd_parser import mpd_parser as mpd_parser
+
+try:
+	from simplejson import loads, dumps
+except ImportError:
+	from json import loads, dumps
 
 if compat.PY2:
 	from urllib import urlencode
@@ -137,8 +144,8 @@ class lib_joyn(object):
 				sha_1.update(mpdparser.mpd_url)
 
 				mpd_filepath = xbmc_helper.get_file_path(CONST['TEMP_DIR'],  sha_1.hexdigest() + '.mpd')
-				with open (mpd_filepath, 'w') as mpd_filepath_out:
-					mpd_filepath_out.write(mpdparser.mpd_contents)
+				with io_open(file=mpd_filepath, mode='w', encoding='utf-8') as mpd_filepath_out:
+					mpd_filepath_out.write(compat._unicode(mpdparser.mpd_contents))
 
 				xbmc_helper.log_debug('Local MPD filepath is: ' + mpd_filepath)
 				list_item.setPath(mpd_filepath)
@@ -167,6 +174,7 @@ class lib_joyn(object):
 	def get_video_data(self, video_id, client_data, stream_type, season_id=None, compilation_id=None):
 
 		video_url = self.config['PSF_CONFIG']['default'][stream_type.lower()]['playoutBaseUrl']
+		xbmc_helper.log_debug("GOT CLIENT DATA: "  + dumps(client_data))
 
 		if stream_type == 'VOD':
 			video_url += 'playout/video/' + client_data['videoId']
@@ -187,7 +195,17 @@ class lib_joyn(object):
 
 		video_url += '?' + urlencode(video_url_params)
 
-		video_data = request_helper.get_json_response(url=video_url, config=self.config, headers=[('Content-Type', 'application/x-www-form-urlencoded charset=utf-8')], post_data='false')
+		video_data = request_helper.get_json_response(url=video_url, config=self.config, headers=[('Content-Type', 'application/x-www-form-urlencoded charset=utf-8')], \
+			post_data='false', no_cache=True)
+
+		if xbmc_helper.get_bool_setting('force_playready') and self.config['IS_ANDROID'] is True \
+				and 'drm' in video_data.keys() and 'licenseUrl' in video_data.keys():
+
+			if stream_type == 'VOD' and video_data['licenseUrl'].find('/widevine/v1') is not -1:
+				video_data.update({'licenseUrl': video_data['licenseUrl'].replace('/widevine/v1', '/playready/v1')})
+				video_data.update({'drm': 'playready'})
+			elif stream_type == 'LIVE':
+				video_data.update({'drm': 'playready'})
 
 		if season_id is not None:
 			video_data.update({'season_id': season_id})
@@ -234,7 +252,7 @@ class lib_joyn(object):
 			landingpage = cached_landingpage['data']
 		else:
 			landingpage = {}
-			raw_landingpage = self.get_graphql_response('LANDINGPAGE', {'path': '/'})
+			raw_landingpage = self.get_graphql_response('LANDINGPAGE', {'path': '/'}, True)
 			if 'page' in raw_landingpage.keys() and 'blocks' in raw_landingpage['page'].keys():
 				for block in raw_landingpage['page']['blocks']:
 					if block['isPersonalized'] is False:
@@ -326,7 +344,7 @@ class lib_joyn(object):
 					xbmc_helper.log_error('Not all required variables set for operation: ' + operation)
 					exit(0)
 
-		post_data = {
+		params = {
 			'query'	: 'query ' + CONST['GRAPHQL'][operation]['OPERATION'] + ' ' + CONST['GRAPHQL'][operation]['QUERY'],
 			'extensions': {
 					'persistedQuery': {
@@ -338,20 +356,21 @@ class lib_joyn(object):
 		}
 
 		if len(variables.keys()) != 0:
-			post_data.update({'variables': variables})
+			params.update({'variables': dumps(variables)})
 
-		post_data['extensions']['persistedQuery'].update({'sha256Hash': sha256(post_data['query'].encode('utf-8')).hexdigest()})
+		params['extensions']['persistedQuery'].update({'sha256Hash': sha256(params['query'].encode('utf-8')).hexdigest()})
+		params.update({'extensions': dumps(params['extensions'])})
 
-		headers = self.config['GRAPHQL_HEADERS']
+		headers = copy(self.config['GRAPHQL_HEADERS'])
 
 		if needs_auth is True:
 
 			auth_token = self.get_auth_token()
-			joyn_user_id = self.get_auth_token()
+			joyn_user_id = self.get_joyn_userid()
 
 			if auth_token is not None and joyn_user_id is not None:
-				headers.append(('Authorization', 'Bearer ' + self.get_auth_token()))
-				headers.append(('Joyn-User-Id', self.get_joyn_userid()))
+				headers.append(('Authorization', 'Bearer ' + auth_token))
+				headers.append(('Joyn-User-Id', joyn_user_id))
 			else:
 				xbmc_helper.log_error("Failed to get auth_token or joyn_user_id")
 				return {}
@@ -359,24 +378,24 @@ class lib_joyn(object):
 		api_response = {}
 
 		try:
-			api_response = request_helper.post_json(
-				CONST['GRAPHQL']['API_URL'],
-				self.config,
-				post_data,
-				headers,
+			api_response = request_helper.get_json_response(
+				url=CONST['GRAPHQL']['API_URL'],
+				config=self.config,
+				params=params,
+				headers=headers,
 			)
 
 
 		except Exception as e:
-			xbmc_helper.log_error('Could not complte graphql request: ' + str(e) + 'post_data: ' + dumps(post_data))
+			xbmc_helper.log_error('Could not complete graphql request: ' + str(e) + 'params: ' + dumps(params))
 
 		if 'errors' in api_response.keys():
-			xbmc_helper.log_error('GraphQL query returned errors: ' + dumps(api_response['errors']) + 'post_data: ' + dumps(post_data))
+			xbmc_helper.log_error('GraphQL query returned errors: ' + dumps(api_response['errors']) + 'params: ' + dumps(params))
 
 		if 'data' in api_response.keys() and api_response['data'] is not None:
 			return api_response['data']
 		else:
-			xbmc_helper.log_error('GraphQL query returned no data - response: ' + dumps(api_response) + 'post_data: '  + dumps(post_data))
+			xbmc_helper.log_error('GraphQL query returned no data - response: ' + dumps(api_response) + 'params: '  + dumps(params))
 
 		xbmc_helper.notification(
 				xbmc_helper.translation('ERROR').format('GraphQL'),
@@ -446,15 +465,7 @@ class lib_joyn(object):
 		return auth_token_data.get('access_token', None)
 
 	@staticmethod
-	def get_livetv_clientdata(livestream_id):
-		return dumps({
-			'videoId' 	: None,
-			'channelId'	: livestream_id,
-		})
-
-
-	@staticmethod
-	def get_metadata(data, query_type):
+	def get_metadata(data, query_type, title_type_id=None):
 
 		metadata = {
 			'art': {},
@@ -467,6 +478,10 @@ class lib_joyn(object):
 					metadata['infoLabels'].update({text_mapping_key: HTMLParser().unescape(data[text_key])})
 				else:
 					metadata['infoLabels'].update({text_mapping_key: ''})
+
+		if title_type_id is not None and 'title' in metadata['infoLabels'].keys():
+			metadata['infoLabels'].update({'title' :  compat._unicode((xbmc_helper.translation('TITLE_LABEL'))).format(metadata['infoLabels']['title'], \
+				xbmc_helper.translation(title_type_id))})
 
 		if 'ART' in CONST['GRAPHQL']['METADATA'][query_type].keys():
 			for art_key, art_def in CONST['GRAPHQL']['METADATA'][query_type]['ART'].items():
@@ -495,10 +510,12 @@ class lib_joyn(object):
 		if query_type == 'EPISODE':
 
 			if 'endsAt' in data.keys() and data['endsAt'] is not None and data['endsAt'] < 9999999999:
-				metadata['infoLabels'].update({
-					'plot': compat._unicode(xbmc_helper.translation('VIDEO_AVAILABLE'))
-							.format( datetime.utcfromtimestamp(data['endsAt'])) + metadata['infoLabels'].get('plot', '')
-				})
+				endsAt = xbmc_helper.timestamp_to_datetime(data['endsAt'], True)
+				if endsAt is not False:
+					metadata['infoLabels'].update({
+						'plot': compat._unicode(xbmc_helper.translation('VIDEO_AVAILABLE'))
+								.format(endsAt) + metadata['infoLabels'].get('plot', '')
+					})
 
 			if 'number' in data.keys() and data['number'] is not None:
 				metadata['infoLabels'].update({
@@ -521,13 +538,14 @@ class lib_joyn(object):
 
 
 		if 'airdate' in data.keys() and data['airdate'] is not None:
-
-			broadcast_date = datetime.utcfromtimestamp(data['airdate']).strftime('%Y-%m-%d')
-			metadata['infoLabels'].update({
-				'premiered': broadcast_date,
-				'date': broadcast_date,
-				'aired': broadcast_date,
-			})
+			broadcast_datetime = xbmc_helper.timestamp_to_datetime(data['airdate'], True)
+			if broadcast_datetime is not False:
+				broadcast_date =broadcast_datetime.strftime('%Y-%m-%d')
+				metadata['infoLabels'].update({
+					'premiered': broadcast_date,
+					'date': broadcast_date,
+					'aired': broadcast_date,
+				})
 
 		if 'video' in data.keys() and data['video'] is not None \
 			and 'duration' in data['video'].keys() and data['video']['duration'] is not None:
@@ -559,10 +577,9 @@ class lib_joyn(object):
 		epg_metadata['infoLabels'].update({'title': compat._unicode(xbmc_helper.translation('LIVETV_TITLE')).format(brand_title, '')})
 
 		for idx, epg_entry in enumerate(brand_livestream_epg['epg']):
-			end_time = datetime.fromtimestamp(epg_entry['endDate'])
-			start_time = datetime.fromtimestamp(epg_entry['startDate'])
+			end_time = xbmc_helper.timestamp_to_datetime(epg_entry['endDate'])
 
-			if end_time > dt_now:
+			if end_time is not False and end_time > dt_now:
 				epg_metadata = lib_joyn.get_metadata(epg_entry, 'EPG')
 				epg_metadata['infoLabels'].update({
 						'title': compat._unicode(xbmc_helper.translation('LIVETV_TITLE')).format(brand_title, epg_entry['title'])
@@ -604,16 +621,21 @@ class lib_joyn(object):
 		if confg_cache_res['data'] is not None:
 			cached_config =  confg_cache_res['data']
 
-		if confg_cache_res['is_expired'] is False and  'ADDON_VERSION' in cached_config.keys() and cached_config['ADDON_VERSION'] == addon_version:
+		if (confg_cache_res['is_expired'] is False or expire_config_mins == 0) and cached_config is not None and  'ADDON_VERSION' in cached_config.keys() \
+			and cached_config['ADDON_VERSION'] == addon_version:
 			recreate_config = False
 			config = cached_config
+
+		if cached_config is None or 'ADDON_VERSION' not in cached_config.keys() or ('ADDON_VERSION' in cached_config.keys() and cached_config['ADDON_VERSION'] != addon_version):
+			xbmc_helper.remove_dir(CONST['CACHE_DIR'])
+			xbmc_helper.log_debug('cleared cache')
 
 		if recreate_config == True:
 
 			xbmc_helper.log_debug('get_config(): create config')
 
 			config = {
-				'CONFIG'		: {'SevenTV_player_config_url': None},
+				'CONFIG'		: {'PLAYERCONFIG_URL': None, 'API_GW_API_KEY': None},
 				'PSF_CONFIG' 		: {},
 				'PLAYER_CONFIG'		: {},
 				'PSF_VARS'		: {},
@@ -622,20 +644,38 @@ class lib_joyn(object):
 				'IS_ARM'		: False,
 				'ADDON_VERSION'		: addon_version,
 				'country'		: None,
+				'http_headers'		: [],
 			}
 
 			os_uname = compat._uname_list()
+
 			#android
-			if os_uname[0] == 'Linux' and 'KODI_ANDROID_LIBS' in environ:
-				config['USER_AGENT'] = 'Mozilla/5.0 (Linux Android 8.1.0 Nexus 6P Build/OPM6.171019.030.B1) AppleWebKit/537.36 (KHTML, like Gecko) '\
-								'Chrome/68.0.3440.91 Mobile Safari/537.36'
+			if getCondVisibility('System.Platform.Android'):
+				from subprocess import check_output
+				try:
+					os_version = check_output(
+						['/system/bin/getprop', 'ro.build.version.release']).strip(' \t\n\r')
+					model = model = check_output(
+						['/system/bin/getprop', 'ro.product.model']).strip(' \t\n\r')
+					build_id = check_output(
+						['/system/bin/getprop', 'ro.build.id']).strip(' \t\n\r')
+
+					config['USER_AGENT'] ='Mozilla/5.0 (Linux; Android {}; {} Build/{})'.format(os_version, model, build_id)
+
+				except OSError:
+					config['USER_AGENT'] = 'Mozilla/5.0 (Linux; Android 8.1.0; Nexus 6P Build/OPM6.171019.030.B1)'
+					pass
+				config['USER_AGENT'] += ' AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.73 Mobile Safari/537.36'
 				config['IS_ANDROID'] = True
+
 			# linux on arm uses widevine from chromeos
 			elif os_uname[0] == 'Linux' and os_uname[4].lower().find('arm') is not -1:
 				config['USER_AGENT'] = 'Mozilla/5.0 (X11 CrOS '+  os_uname[4] + ' 4537.56.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.38 Safari/537.36'
 				config['IS_ARM'] = True
 			elif os_uname[0] == 'Linux':
 				config['USER_AGENT'] = 'Mozilla/5.0 (X11 Linux ' + os_uname[4] + ') AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36'
+			elif os_uname[0] == 'Darwin':
+				config['USER_AGENT'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/600.7.12 (KHTML, like Gecko) Version/8.0.7 Safari/600.7.12'
 			else:
 				config['USER_AGENT'] = 'Mozilla/5.0 (Windows NT 10.0 Win64 x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'
 
@@ -649,8 +689,18 @@ class lib_joyn(object):
 
 			county_setting = xbmc_helper.get_setting('country')
 			xbmc_helper.log_debug("COUNTRY SETTING: " + county_setting)
+			ip_api_response = request_helper.get_json_response(url=CONST['IP_API_URL'].format(xbmc_helper.translation('LANG_CODE')), config=config, silent=True)
+
+			if type(ip_api_response) != type(dict()) or 'countryCode' not in ip_api_response.keys():
+
+				ip_api_response = {
+							'status'	: 'success',
+							'country'	: 'Deutschland',
+							'countryCode'	: 'DE',
+					}
+			config.update({'actual_country': ip_api_response.get('countryCode', 'Unknown')})
+
 			if county_setting is '' or county_setting is '0':
-				ip_api_response = request_helper.get_json_response(url=CONST['IP_API_URL'].format(xbmc_helper.translation('LANG_CODE')), config=config, silent=True)
 				xbmc_helper.log_debug('IP API Response is: ' + dumps(ip_api_response))
 				if ip_api_response is not None and ip_api_response != '' and 'countryCode' in ip_api_response.keys():
 					if ip_api_response['countryCode'] in CONST['COUNTRIES'].keys():
@@ -670,61 +720,37 @@ class lib_joyn(object):
 			if config['country'] is None:
 				xbmc_helper.dialog_settings(xbmc_helper.translation('MSG_COUNTRY_NOT_DETECTED'))
 				exit(0)
+
+			if config['country'] != config['actual_country']:
+
+				try:
+					from ipaddress import IPv4Network
+				except ImportError:
+					from external.ipaddress import IPv4Network
+
+				config['http_headers'].append(('x-forwarded-for',
+					str(choice(list(IPv4Network(compat._unicode(choice(CONST['NETBLOCKS'][config.get('country', 'DE')]))).hosts())))))
+
 			main_js_src = None
 			graphql_headers = []
 			for match in findall('<script type="text/javascript" src="(.*?)"></script>', html_content):
 				if match.find('/main') is not -1:
 					main_js_src = CONST['BASE_URL'] + match
 					main_js =  request_helper.get_url(main_js_src, config)
+					break
 
-					uri_start_match = CONST['GRAPHQL']['API_URL']
-					uri_start = main_js.find(uri_start_match)
+			if main_js_src is None:
+				xbmc_helper.log_debug('Using local main.js')
+				main_js = xbmc_helper.get_file_contents(xbmc_helper.get_resource_filepath('main.js', 'external'))
 
-					for key in config['CONFIG']:
-						find_str = key + ':"'
-						start = main_js.find(find_str)
-						length = main_js[start:].find('",')
-						config['CONFIG'][key] = main_js[(start+len(find_str)):(start+length)]
+			uri_start_match = CONST['GRAPHQL']['API_URL']
+			uri_start = main_js.find(uri_start_match)
 
-					if uri_start is not -1:
-						headers_conf_start = main_js[uri_start:].find('headers:') + uri_start
-						if headers_conf_start is not -1:
-							headers_start_match = '{'
-							headers_end_match = '}'
-							headers_start = main_js[headers_conf_start:].find(headers_start_match) + headers_conf_start
-							xbmc_helper.log_debug("HEADERS START " + str(headers_conf_start) + " --> " + str(headers_start))
-							if headers_start >= headers_conf_start:
-								headers_length = main_js[headers_start:].find(headers_end_match)
-								headers = main_js[(headers_start+len(headers_start_match)):(headers_start+headers_length)]
-								headers = headers.replace('"', '').split(',')
-
-								for header in headers:
-									header_parts = header.split(':')
-									if len(header_parts) == 2:
-										graphql_headers.append((header_parts[0], header_parts[1]))
-
-			for required_header in CONST['GRAPHQL']['REQUIRED_HEADERS']:
-				found = False
-				for graphql_header in graphql_headers:
-					xbmc_helper.log_debug("REQUIRED HEADER: " + required_header.lower() +  " GRAPHQL HEADER: " + graphql_header[0].lower())
-					if graphql_header[0].lower() == required_header.lower():
-						found = True
-						break
-
-				if found == False:
-					xbmc_helper.notification(
-						xbmc_helper.translation('ERROR').format('GraphQL Headers'),
-						xbmc_helper.translation('MSG_CONFIG_VALUES_INCOMPLETE').format(required_header)
-					)
-					xbmc_helper.log_error('Could not extract all required  GraphQL header from js: '\
-						 + required_header + ' JS source: ' + str(main_js_src) + 'extracted: ' + dumps(graphql_headers))
-					exit(0)
-
-			for index, value in enumerate(graphql_headers):
-				if value[0].lower() in CONST['GRAPHQL']['REPLACE_HEADERS'].keys():
-					graphql_headers[index] = (value[0], CONST['GRAPHQL']['REPLACE_HEADERS'][value[0].lower()])
-
-			config['GRAPHQL_HEADERS'] = graphql_headers
+			for key in config['CONFIG']:
+				find_str = key + ':"'
+				start = main_js.find(find_str)
+				length = main_js[start:].find('",')
+				config['CONFIG'][key] = main_js[(start+len(find_str)):(start+length)]
 
 			for essential_config_item_key, essential_config_item in config['CONFIG'].items():
 				if essential_config_item is None or essential_config_item is '':
@@ -735,7 +761,12 @@ class lib_joyn(object):
 					xbmc_helper.log_error('Could not extract configuration value from js: KEY: ' + essential_config_item_key + ' JS source: ' + str(main_js_src))
 					exit(0)
 
-			config['PLAYER_CONFIG'] = request_helper.get_json_response(url=config['CONFIG']['SevenTV_player_config_url'], config=config)
+			config['GRAPHQL_HEADERS'] = [
+				('x-api-key', config['CONFIG']['API_GW_API_KEY']),
+				('joyn-platform', xbmc_helper.get_text_setting('joyn_platform'))
+			]
+
+			config['PLAYER_CONFIG'] = request_helper.get_json_response(url=config['CONFIG']['PLAYERCONFIG_URL'], config=config)
 			if config['PLAYER_CONFIG'] is None:
 				xbmc_helper.notification(
 						xbmc_helper.translation('ERROR').format('Player Config'),
@@ -763,7 +794,19 @@ class lib_joyn(object):
 				psf_vars[i] = psf_vars[i][1:-1]
 			config['PSF_VARS'] = psf_vars
 
-			if len(config['PSF_VARS']) >= CONST['PSF_VAR_DEFS']['SECRET']['INDEX']:
+			if cached_config is not None and cached_config.get('SECRET_INDEX', None) is not None and len(config['PSF_VARS']) >= cached_config['SECRET_INDEX']:
+				xbmc_helper.log_debug("Trying to reuse psf secret index from cached config: " + str(cached_config['SECRET_INDEX']))
+				decrypted_psf_client_config = lib_joyn.decrypt_psf_client_config(config['PSF_VARS'][cached_config['SECRET_INDEX']],
+					config['PLAYER_CONFIG']['toolkit']['psf'])
+				if decrypted_psf_client_config is not None:
+					config['PSF_CLIENT_CONFIG'] = decrypted_psf_client_config
+					config['SECRET'] = config['PSF_VARS'][cached_config['SECRET_INDEX']]
+					config['SECRET_INDEX'] = cached_config['SECRET_INDEX']
+					xbmc_helper.log_debug('Reusing psf secret index from cached config succeeded')
+				else:
+					xbmc_helper.log_debug('Reusing psf secret index from cached config failed')
+
+			if config.get('PSF_CLIENT_CONFIG', None) is None and len(config['PSF_VARS']) >= CONST['PSF_VAR_DEFS']['SECRET']['INDEX']:
 				decrypted_psf_client_config = lib_joyn.decrypt_psf_client_config(config['PSF_VARS'][CONST['PSF_VAR_DEFS']['SECRET']['INDEX']],
 					config['PLAYER_CONFIG']['toolkit']['psf'])
 				if decrypted_psf_client_config is not None:
@@ -788,6 +831,7 @@ class lib_joyn(object):
 						if decrypted_psf_client_config is not None:
 							config['PSF_CLIENT_CONFIG'] = decrypted_psf_client_config
 							config['SECRET'] = config['PSF_VARS'][index_secret]
+							config['SECRET_INDEX'] = index_secret
 							xbmc_helper.log_debug('PSF client config decryption succeded with new index: ' + str(index_secret))
 							break
 
@@ -811,12 +855,46 @@ class lib_joyn(object):
 						+ dumps(config['PSF_VARS']) + 'PLAYER CONFIG: ' + dumps(config['PLAYER_CONFIG']))
 					exit(0)
 
-			xbmc_helper.remove_dir(CONST['CACHE_DIR'])
-			xbmc_helper.log_debug('cleared cache')
-
 			cache.set_json('CONFIG', config)
 
 		return config
+
+	@staticmethod
+	def get_client_data(asset_id, stream_type, asset_data={}):
+
+		client_data = {
+			'genre': [],
+			'startTime': 0,
+			'videoId': None,
+		}
+
+		if stream_type == 'VOD':
+			client_data.update({'videoId': asset_id})
+		elif stream_type == 'LIVE':
+			client_data.update({'channelId': asset_id})
+
+		if 'video' in asset_data.keys() and 'duration' in asset_data['video'].keys():
+			client_data.update({'duration': (asset_data['video']['duration'] * 1000)})
+
+		if 'genres' in asset_data.keys():
+			for genre in asset_data['genres']:
+				if 'name' in genre.keys():
+					client_data['genre'].append(genre['name'])
+
+		if 'series' in asset_data.keys() and 'id' in asset_data['series'].keys():
+			client_data.update({'tvShowId': asset_data['series']['id']})
+
+		if 'compilation' in asset_data.keys() and 'id' in asset_data['compilation'].keys():
+			client_data.update({'tvShowId': asset_data['compilation']['id']})
+
+		if 'tracking' in asset_data.keys():
+			if 'agofCode' in asset_data['tracking'].keys():
+				client_data.update({'agofCode': asset_data['tracking']['agofCode']})
+			if 'brand' in asset_data['tracking'].keys():
+				client_data.update({'brand': asset_data['tracking']['brand']})
+
+		return client_data
+
 
 	@staticmethod
 	def decrypt_psf_client_config(secret, encrypted_psf_config):

@@ -34,7 +34,10 @@ CONST = {
 					'CONFIG'	: { 'key' : 'config', 'expires' : 3600 },
 					'EPG'		: { 'key' : 'epg', 'expires': 36000 },
 					'LANDINGPAGE'	: { 'key' : 'landingpage', 'expires' : 600},
+					'ETAGS'		: { 'key' : 'etags', 'expires': None},
 				  },
+
+	'ETAGS_TTL'		: 1209600, #14 days
 
 	'LASTSEEN_ITEM_COUNT'	: 20,
 	'UPEG_REFRESH_INTERVAL'	: 7200,
@@ -94,6 +97,9 @@ CONST = {
 					'MSG_NO_CONTENT'		: 30664,
 					'CONTINUE_WATCHING'		: 30665,
 					'RECOMMENDATION'		: 30666,
+					'MOVIE'				: 30667,
+					'SERIES'			: 30668,
+					'TITLE_LABEL'			: 30669,
 
 				},
 
@@ -214,9 +220,6 @@ CONST = {
 
 			'REQUIRED_HEADERS'	: ['x-api-key', 'joyn-platform'],
 
-			'REPLACE_HEADERS'	: {
-							'joyn-platform'	: 'android',
-						},
 
 			'STATIC_VARIABLES'	: {
 							'first':	1000,
@@ -432,5 +435,8 @@ CONST = {
 	},
 
 	'CATEGORY_LANES'			: ['StandardLane', 'FeaturedLane'],
+	'NETBLOCKS'				: {
+							'DE' : ['5.10.48.0/21', '5.1.128.0/17', '62.220.0.0/19', '84.19.192.0/20', '84.44.128.0/17'],
+						},
 
 }

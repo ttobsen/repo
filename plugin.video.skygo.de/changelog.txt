@@ -1,3 +1,15 @@
+1.13.11
+- Fehler beim Leeren des Caches behoben
+1.13.10
+- Fehler mit dem Asset-Caching behoben
+1.13.9
+- Refactoring
+- Weitere Encoding-/Decoding-Fehler behoben
+1.13.8
+- Encoding-/Decoding-Fehler behoben
+1.13.7
+- Caching-Fehler behoben, wenn keine Daten von der API abgerufen werden konnten
+- Kompabilität zu Python 3
 1.13.6
 - Live Planer: Alte Kategorien ausgeblendet
 - Android: Einstellung zum Erzwingen von Widevine

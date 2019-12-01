@@ -506,7 +506,8 @@
                         <height>198</height>
                         <align>right</align>
                         <info>ListItem.Plot</info>
-                        <font>ubuntu-r16b</font>
+						<include condition="!Skin.HasSetting(BigPlotText)">PlotText16Var</include>
+						<include condition="Skin.HasSetting(BigPlotText)">PlotTextBigVar</include>
                     </control>
                 </control>
             </control>
@@ -606,7 +607,8 @@
                     <height>198</height>
                     <align>right</align>
                     <info>ListItem.Plot</info>
-                    <font>ubuntu-r16b</font>
+					<include condition="!Skin.HasSetting(BigPlotText)">PlotText16Var</include>
+					<include condition="Skin.HasSetting(BigPlotText)">PlotTextBigVar</include>
                 </control>
             </control>
         </focusedlayout>

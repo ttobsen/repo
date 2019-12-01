@@ -15,8 +15,8 @@ def play(**kwargs):
     height = (234, 270, 396, 480, 540, 720)[int(addon.getSetting('video.quality'))]
     resource = urllib.unquote_plus(kwargs['resource'])
     video = api.get_video_url(resource, height)
-    if not video == "":
-     gui.play(video)
+    if video:
+        gui.play(video)
 
 
 def videos(**kwargs):

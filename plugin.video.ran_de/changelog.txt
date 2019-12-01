@@ -1,3 +1,6 @@
+2.3.6
+- fixed live streams which need a license key
+
 2.3.5
 - Python 3 compability
 

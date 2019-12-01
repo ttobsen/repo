@@ -2879,7 +2879,7 @@
         <!-- <texturenofocus border="3">buttons/KeyboardKeyNF.png</texturenofocus> -->
         <texturenofocus/>
         <texturefocus border="5">buttons/KeyboardKey.png</texturefocus>
-		<font>ubuntu-r21b</font>
+		<font>ubuntu-r21</font>
         <align>center</align>
         <aligny>center</aligny>
         <focusedcolor>black</focusedcolor>

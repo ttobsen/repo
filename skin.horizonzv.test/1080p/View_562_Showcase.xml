@@ -556,7 +556,8 @@
 						<top>3</top>
 						<width>560</width>
 						<height>327</height>
-						<font>ubuntu-r16b</font>
+						<include condition="!Skin.HasSetting(BigPlotText)">PlotText16Var</include>
+						<include condition="Skin.HasSetting(BigPlotText)">PlotTextBigVar</include>
 						<label>$INFO[ListItem.Plot]</label>
 						<visible>!String.IsEmpty(Control.GetLabel(1202))+Skin.HasSetting(EnableExtendedArt)</visible>
 						<include>openclosevisible</include>
@@ -566,7 +567,8 @@
 						<top>3</top>
 						<width>1200</width>
 						<height>327</height>
-						<font>ubuntu-r16b</font>
+						<include condition="!Skin.HasSetting(BigPlotText)">PlotText16Var</include>
+						<include condition="Skin.HasSetting(BigPlotText)">PlotTextBigVar</include>
 						<label>$INFO[ListItem.Plot]</label>
 						<visible>!String.IsEmpty(ListItem.Plot)</visible>
 						<visible>String.IsEmpty(Control.GetLabel(1202))|!Skin.HasSetting(EnableExtendedArt)</visible>
