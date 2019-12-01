@@ -657,9 +657,9 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.L0RE.arte" name="ARTE.TV" version="0.5.9" provider-name="L0RE">
+<addon id="plugin.video.L0RE.arte" name="ARTE.TV" version="0.6.0" provider-name="L0RE">
 	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="xbmc.python" version="2.25.0"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
@@ -667,8 +667,8 @@
 	<extension point="xbmc.addon.metadata">
 		<summary lang="de_DE">Videoportal von ARTE (DE/FR)</summary>
 		<summary lang="en_GB">Videoportal of ARTE (DE/FR)</summary>
-		<description lang="de_DE">Mediathek und Livestream - Schwerpunkte sind Kultur, Europa und die Vermittlung von Informationen aus vorzugsweise ungewöhnlichen Perspektiven.[CR]Die Programme des europäischen Kultursenders online auf "arte.tv"</description>
-		<description lang="en_GB">Media library and Livestream - focus is Culture, Europe and the transmission of information from preferably unusual Perspectives.[CR]The programs of the European cultural channel online on "arte.tv".</description>
+		<description lang="de_DE">Mediathek und Livestream - Schwerpunkte sind Kultur, Europa und die Vermittlung von Informationen aus vorzugsweise ungewöhnlichen Perspektiven.[CR]Reportagen, Serien, Filme, Dokus, Magazine - Die Programme von ARTE online auf arte.tv.</description>
+		<description lang="en_GB">Media library and Livestream - focus is Culture, Europe and the transmission of information from preferably unusual Perspectives.[CR]Reports, Series, Movies, Documentaries, Magazines - The programs of ARTE online on arte.tv.</description>
 		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
 		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
 		<language></language>
@@ -682,8 +682,10 @@
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 0.5.9  (30.09.2019)[/COLOR][/B] by realvito[CR]
-- fixed: LibreELEC - Fehler beim öffnen der Rubrik = Programm sortiert nach Datum (Error: unsupported locale setting)
+		<news>[B][COLOR orangered]Version 0.6.0  (01.12.2019)[/COLOR][/B] by realvito[CR]
+- fixed: Rubrik = Themen kein Inhalt und Fehler wird angezeigt (läuft jetzt auch über die API)
+- fixed: Suche mit Umlauten im Suchbegriff erzeugt Fehler
+- fixed: UnicodeEncodeError für 'time.strftime' und Sondersymbole unter Python-3 (KODI-Matrix)
 		</news>
 	</extension>
 </addon>
@@ -1410,40 +1412,40 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
 	</extension>
 </addon>
 
-<addon id="plugin.video.rtlnow" name="TV Now" version="0.6.11" provider-name="L0RE">
- <requires>
-        <import addon="xbmc.python" version="2.1.0"/>   
-        <import addon="script.common.plugin.cache" version="2.5.5"/> # Add this    
-          <import addon="inputstream.adaptive" version="2.2.21"/>
-         <import addon="script.module.inputstreamhelper" version="0.3.4"/>
-
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Test Plugin von L0RE</summary>
-    <summary lang="de">Test Plugin von L0RE</summary>
-    <description lang="en">Test Plugin von L0RE</description>
-    <description lang="de">Test Plugin von L0RE</description>
-    <website>https://www.tvnow.de/</website>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-    <news>0.6.11
-- Added Check Widevine option to the addon settings. The user can now enable or disable the Widevine installation check.    
-0.6.10
-- Update from https://widevine.rtl.de to https://widevine.tvnow.de    
-- Added is Widevine installed check 
-0.4.24
-- Update Logo
-0.4.23
--Update von frong73 um anbindung in PVR zu ermöglichen</news>
-    <assets>
-        <screenshot>resources/rtlnow1.png</screenshot>
-        <screenshot>resources/rtlnow2.png</screenshot>
-	<icon>icon.png</icon>
-    </assets>
-  </extension>
+<addon id="plugin.video.rtlnow" name="TVNOW - DE" version="2.0.1" provider-name="L0RE">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="script.common.plugin.cache" version="2.5.5" optional="true"/>
+		<import addon="inputstream.adaptive" version="2.0.10"/>
+		<import addon="script.module.inputstreamhelper" version="0.4.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de_DE">Mediathek von TVNOW</summary>
+		<summary lang="en_GB">Mediathek of TVNOW</summary>
+		<description lang="de_DE">Bei TVNOW Serien, Shows und Filme online streamen.  Schau dir komplette Serien an, fiebere bei deinen liebsten Daily-Soaps mit oder staune bei spannenden Dokumentationen – alles wann und wo du willst auf Abruf.[CR]Viele Inhalte aus dem TV Programm siehst du bei TVNOW sogar schon vor TV-Aussstrahlung !</description>
+		<description lang="en_GB">Stream TVNOW series, shows and movies online. Watch complete series, enjoy your favorite daily soap operas or marvel at exciting documentaries - all when and where you want on demand.[CR]Many content from the TV program you see on TVNOW even before TV broadcast !</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/57646-Release-TVNow-RTL-Watchbox-Vox-NTV-NOWUS-RTL2-Nitro/</forum>
+		<website>https://www.tvnow.de/</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.rtlnow</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 2.0.1  (01.12.2019)[/COLOR][/B] by realvito[CR]
+- optimized: Script komplett überarbeitet und wieder funktionsfähig gemacht, unnötige Passagen entfernt (läuft über die alte API v3) ...
+- added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19+) :-)
+*** für die volle Funktionsfähigkeit unter KODI-Matrix ist das Addon - script.common.plugin.cache - mindestens in der Version 2.6.0 erforderlich ***
+		</news>
+	</extension>
 </addon>
 
 <addon id="plugin.audio.soundcloud" name="SoundCloud" version="2.0.6" provider-name="bromix">
@@ -3065,27 +3067,39 @@ Zattoo Live TV, Aufnahmen und EPG
     </extension>
 </addon>
 
-<addon id="plugin.video.servustv_com" name="ServusTV.com" version="2.1.1" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="script.module.pyamf" version="0.6.1"/>
-		<import addon="script.module.simple.downloader" version="0.9.5"/> # Add this
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="en">Watch videos from the ServusTV media library</summary>
-        <language>de</language>
-        <description lang="en">Watch videos from the ServusTV media library</description>
-        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <source>https://github.com/AddonScriptorDE/plugin.video.servustv_com</source>
-        <forum>http://forum.xbmc.org/showthread.php?tid=</forum>
-        <email>AddonScriptorDE at yahoo dot de</email>
-        <website>http://www.servustv.com</website>
-    </extension>
+<addon id="plugin.video.servustv_com" name="ServusTV.com" version="2.2.0" provider-name="L0RE">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de_DE">ServusTV Mediathek</summary>
+		<summary lang="en_GB">ServusTV Mediathek</summary>
+		<description lang="de_DE">ServusTV ist ein österreichischer Privatfernsehsender.[CR]Von Unterhaltung und Kultur bis Dokus und Sport - ServusTV richtet sich an ein weltoffenes und vielseitig interessiertes Publikum im deutschsprachigen Fernsehraum.</description>
+		<description lang="en_GB">ServusTV is an Austrian private television station.[CR]From entertainment and culture to documentaries and sports - ServusTV is aimed at a cosmopolitan and versatile audience in the German-speaking TV area.</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+		<website>https://www.servustv.com</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.servustv_com</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 2.2.0  (01.12.2019)[/COLOR][/B] by realvito[CR]
+- optimized: Filterverfahren für leere Ordner verbessert und Meldung eingebaut
+- optimized: Doppelte Sendungen werden herausgefiltert
+- fixed: LiveTV funktioniert nicht mehr
+- changed: Sprach-Files from "strings.xml" to "strings.po"
+- added: Addon kompatibel mit PYTHON vers.3 gemacht (für KODI-19+) :-)
+		</news>
+	</extension>
 </addon>
 
 <addon id="plugin.audio.prime_music" name="Amazon Prime Music" version="0.10.6" provider-name="piet">
