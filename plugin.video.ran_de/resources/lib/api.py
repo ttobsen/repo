@@ -214,6 +214,7 @@ def get_video_url(resource, height):
             listitem.setProperty('inputstream.adaptive.license_key', '{0}?token={1}|{2}|R{3}|'.format(drm_lic, drm_token, USER_AGENT, '{SSM}'))
             xbmc.log('lic_key = {0}?token={1}|{2}|R{3}|'.format(drm_lic, drm_token, USER_AGENT, '{SSM}'))
 
+        xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, listitem)
         return None
     else:
         video_id = json_data['video_id']
