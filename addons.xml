@@ -1820,13 +1820,13 @@ NOTE: Streams are available in SD only
 	</extension>
 </addon>
 
-<addon id="plugin.video.joyn" name="Joyn" version="2.0.8" provider-name="knaerzche">
+<addon id="plugin.video.joyn" name="Joyn" version="2.2.0" provider-name="knaerzche">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="inputstream.adaptive" version="2.2.21"/>
 		<import addon="script.module.inputstreamhelper" version="0.3.5"/>
 		<import addon="script.module.uepg" version="1.0.5"/>
-		<import addon="script.module.simplejson" version="3.3.0" optional="true" />
+		<import addon="script.module.simplejson" version="3.3.0" optional="true"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
@@ -1852,18 +1852,12 @@ NOTE: Streams are available in SD only
 			<screenshot>resources/media/screenshot03.jpg</screenshot>
 		</assets>
 		<news>
-v2.0.5
-[new] add support from PlayReady DRM
-[new] add preliminary for foreign countries
-[new] add proxy settings
-[new] add slection for joyn platform
-[fixed] dates in far future on 32-bit platforms
-[new] add support for movies
-v2.0.6
-[new] implement simple caching system
-[new] favor simplejson for json processing
-v2.0.8
-[fix] workarround ip-api.com error
+v2.2.0
+[new] implement sign-in
+[new} implement joyn bookmarks
+[new] implement 'Plus+'
+[new] implement MPAA-Pin setting
+
 		</news>
 	</extension>
 </addon>
