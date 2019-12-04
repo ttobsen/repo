@@ -21,6 +21,10 @@ import time
 import json
 from bs4 import BeautifulSoup
 try:
+    from urllib import quote_plus
+except ImportError:
+    from urllib.parse import quote_plus
+try:
     from urllib2 import urlopen, Request, URLError
 except ImportError:
     from urllib.request import urlopen, Request
@@ -171,75 +175,33 @@ def searchAnime(args):
     # get website
     html = api.getPage(args, "https://www.wakanim.tv/" + args._country + "/v2/catalogue/search", {"search": d})
 
-    # parse html
-    soup = BeautifulSoup(html, "html.parser")
-    ul = soup.find("ul", {"class": "catalog_list"})
-    if not ul:
-        view.add_item(args, {"title": args._addon.getLocalizedString(30041)})
-        view.endofdirectory(args)
-        return
+    # get JWT token
+    regex = r"var token = '(.*?)';"
+    matches = re.search(regex, html)
+    token = matches.group(1)
+
+    # get search results
+    req = urlopen("https://apiwaka.azure-api.net/search/v2/?search=" + quote_plus(d) + "&token=" + quote_plus(token))
+    search = json.loads(req.read())
 
     # for every list entry
-    for li in ul.find_all("li"):
-        # get values
-        plot  = li.find("p", {"class": "tooltip_text"})
-        stars = li.find("div", {"class": "stars"})
-        star  = stars.find_all("span", {"class": "-no"})
-        thumb = li.img["src"].replace(" ", "%20")
-        if thumb[:4] != "http":
-            thumb = "https:" + thumb
-
+    for item in search["value"]:
         # add to view
         view.add_item(args,
-                      {"url":    li.a["href"],
-                       "title":  li.find("div", {"class": "slider_item_description"}).span.strong.string.strip(),
-                       "mode":   "list_season",
-                       "thumb":  thumb,
-                       "fanart": thumb,
-                       "rating": str(10 - len(star) * 2),
-                       "plot":   plot.contents[3].string.strip(),
-                       "year":   li.time.string.strip()},
+                      {"url":           "/" + args._country + "/v2/catalogue/show/" + item["IdShowItem"],
+                       "title":         item["Name"],
+                       "tvshowtitle":   item["Name"],
+                       "originaltitle": item["OriginalName"],
+                       "mode":          "list_season",
+                       "thumb":         item["Image"],
+                       "fanart":        item["Image"],
+                       "rating":        item["RatingNote"],
+                       "plot":          item["Synopsis"],
+                       "plotoutline":   item["SmallSummary"],
+                       "premiered":     item["StartDate"],
+                       "credits":       item["Copyright"],
+                       "year":          item["YearStartBroadcasting"]},
                       isFolder=True, mediatype="video")
-
-    view.endofdirectory(args)
-
-
-def myWatchlist(args):
-    """Show all episodes on watchlist
-    """
-    # get website
-    html = api.getPage(args, "https://www.wakanim.tv/" + args._country + "/v2/watchlist")
-    if not html:
-        view.add_item(args, {"title": args._addon.getLocalizedString(30041)})
-        view.endofdirectory(args)
-        return
-
-    # parse html
-    soup = BeautifulSoup(html, "html.parser")
-    section = soup.find("section")
-    if not section:
-        view.add_item(args, {"title": args._addon.getLocalizedString(30041)})
-        view.endofdirectory(args)
-        return
-
-    # for every list entry
-    for div in section.find_all("div", {"class": "slider_item"}):
-        # get values
-        progress = int(div.find("div", {"class": "ProgressBar"}).get("data-progress"))
-        thumb = div.img["src"].replace(" ", "%20")
-        if thumb[:4] != "http":
-            thumb = "https:" + thumb
-
-        # add to view
-        view.add_item(args,
-                      {"url":       div.find("div", {"class": "slider_item_inner"}).a["href"],
-                       "title":     div.img["alt"],
-                       "mode":      "videoplay",
-                       "thumb":     thumb.replace(" ", "%20"),
-                       "fanart":    thumb.replace(" ", "%20"),
-                       "playcount": "1" if progress > 90 else "0",
-                       "progress":  str(progress)},
-                      isFolder=False, mediatype="video")
 
     view.endofdirectory(args)
 
@@ -282,52 +244,31 @@ def myDownloads(args):
     view.endofdirectory(args)
 
 
-def myCollection(args):
-    """View collection
-    """
-    # get website
-    html = api.getPage(args, "https://www.wakanim.tv/" + args._country + "/v2/collection")
-    if not html:
-        view.add_item(args, {"title": args._addon.getLocalizedString(30041)})
-        view.endofdirectory(args)
-        return
-
-    # parse html
-    soup = BeautifulSoup(html, "html.parser")
-    container = soup.find("div", {"class": "big-item-list"})
-    if not container:
-        view.add_item(args, {"title": args._addon.getLocalizedString(30041)})
-        view.endofdirectory(args)
-        return
-
-    # for every list entry
-    for div in container.find_all("div", {"class": "big-item-list_item"}):
-        # get values
-        thumb = div.img["src"].replace(" ", "%20")
-        if thumb[:4] != "http":
-            thumb = "https:" + thumb
-
-        # add to view
-        view.add_item(args,
-                      {"url":    div.a["href"].replace("collection/detail", "catalogue/show"),
-                       "title":  div.find("h3", {"class": "big-item_title"}).string.strip(),
-                       "mode":   "list_season",
-                       "thumb":  thumb,
-                       "fanart": thumb},
-                      isFolder=True, mediatype="video")
-
-    view.endofdirectory(args)
-
-
 def listSeason(args):
     """Show all seasons/arcs of an anime
     """
+    # get showid
+    regex = r"\/show\/([0-9]*)"
+    matches = re.search(regex, args.url)
+    showid = matches.group(1)
+
     # get website
-    html = api.getPage(args, "https://www.wakanim.tv" + args.url)
+    html = api.getPage(args, "https://www.wakanim.tv/" + args._country + "/v2/catalogue/show/" + showid)
     if not html:
         view.add_item(args, {"title": args._addon.getLocalizedString(30041)})
         view.endofdirectory(args)
         return
+
+    # check if redirected
+    matches = re.search(regex, html)
+    if not matches.group(1) == showid:
+        # get website
+        showid = matches.group(1)
+        html = api.getPage(args, "https://www.wakanim.tv/" + args._country + "/v2/catalogue/show/" + showid)
+        if not html:
+            view.add_item(args, {"title": args._addon.getLocalizedString(30041)})
+            view.endofdirectory(args)
+            return
 
     # parse html
     soup = BeautifulSoup(html, "html.parser")
@@ -337,13 +278,15 @@ def listSeason(args):
     year = date[2].string.strip()
     date = year + "-" + date[1].string.strip() + "-" + date[0].string.strip()
     originaltitle = soup.find_all("span", {"class": "border-list_text"})[2].string.strip()
-    plot = soup.find_all("span", {"class": "border-list_text"})[0].string.strip()
-    credit = soup.find_all("span", {"class": "border-list_text"})[5].string.strip()
-    trailer = soup.find("div", {"class": "TrailerEp-iframeWrapperRatio"})
     try:
+        plot = soup.find_all("span", {"class": "border-list_text"})[0].string.strip()
+    except AttributeError:
+        plot = str(soup.find_all("span", {"class": "border-list_text"})[0])
+    credit = soup.find_all("span", {"class": "border-list_text"})[6].string.strip()
+    trailer = soup.find("a", {"class": "trailer"})
+    if trailer:
         # get YouTube trailer
-        trailer = trailer.iframe["src"]
-        trailer = "plugin://plugin.video.youtube/play/?video_id=" + re.search(r"(?:\.be/|/embed)/?([^&=%:/\?]{11})", trailer).group(1)
+        trailer = "plugin://plugin.video.youtube/play/?video_id=" + re.search(r"(?:\.be/|/embed)/?([^&=%:/\?]{11})", trailer["href"]).group(1)
         view.add_item(args,
                       {"url":    trailer,
                        "mode":   "trailer",
@@ -351,7 +294,7 @@ def listSeason(args):
                        "fanart": args.fanart.replace(" ", "%20"),
                        "title":  args._addon.getLocalizedString(30024)},
                       isFolder=False, mediatype="video")
-    except AttributeError:
+    else:
         trailer = ""
 
     # get season infos
@@ -532,7 +475,7 @@ def startplayback(args):
                             "PlayTime":        player.getTime(),
                             "Duration":        player.getTotalTime(),
                             "TotalPlayedTime": 4,
-                            "FromSVOD":        "true"}
+                            "FromSVOD":        "false"}
 
                     # send data
                     try:
