@@ -8,9 +8,12 @@ from .const import CONST
 from . import xbmc_helper as xbmc_helper
 from . import compat as compat
 
-try:
-	from simplejson import loads, dumps
-except ImportError:
+if compat.PY2:
+	try:
+		from simplejson import loads, dumps
+	except ImportError:
+		from json import loads, dumps
+elif compat.PY3:
 	from json import loads, dumps
 
 
@@ -25,8 +28,8 @@ def _get(cache_key, file_name, override_expire_secs=None):
 		expire_datetime = datetime.now() - timedelta(seconds=CONST['CACHE'][cache_key]['expires'])
 
 	cache_data = {
-		'data': None,
-		'is_expired': True,
+	        'data': None,
+	        'is_expired': True,
 	}
 
 	if path.exists(cache_path):
@@ -60,6 +63,11 @@ def _remove(cache_key, file_name):
 		remove(cache_path)
 		return True
 	return False
+
+
+def remove_json(cache_key):
+	_remove(cache_key, CONST['CACHE'][cache_key]['key'] + '.json')
+
 
 def get_json(cache_key, override_expire_secs=None):
 
