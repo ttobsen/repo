@@ -4258,13 +4258,14 @@ oder online unter https://goo.gl/GtK41L nachlesen.
     </extension>
 </addon>
 
-<addon id="plugin.video.magenta-sport" version="1.2.8" name="Magenta Sport" provider-name="Maven">
+<addon id="plugin.video.magenta-sport" version="1.2.9" name="Magenta Sport" provider-name="Maven">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.pydes" version="2.0.1"/>
         <import addon="script.module.beautifulsoup4" version="4.3.2"/>
         <import addon="script.module.requests" version="2.12.4"/>
         <import addon="script.module.inputstreamhelper" version="0.3.3"/>
+        <import addon="script.module.kodi-six" version="0.1.0"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="addon.py">
         <provides>video</provides>
