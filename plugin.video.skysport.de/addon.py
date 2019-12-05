@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
+from kodi_six.utils import py2_encode
 import os
 import re
 import sys
@@ -28,7 +29,7 @@ USER_AGENT = 'User-Agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/5
 addon = xbmcaddon.Addon()
 addon_base_url = 'plugin://{0}'.format(addon.getAddonInfo('id'))
 addon_handle = int(sys.argv[1])
-cache = StorageServer.StorageServer('{0}.videoid'.format(addon.getAddonInfo('name')), 24 * 30)
+cache = StorageServer.StorageServer(py2_encode('{0}.videoid').format(addon.getAddonInfo('name')), 24 * 30)
 sky_sport_news_icon = '{0}/resources/skysport_news.jpg'.format(xbmc.translatePath(addon.getAddonInfo('path')))
 nav_json = json.load(open(xbmc.translatePath('{0}/resources/navigation.json'.format(addon.getAddonInfo('path')))))
 
@@ -145,7 +146,7 @@ def getVideoIdFromCache(path):
 
 
 def getVideoId(path):
-    video_id = None
+    video_id = {'id': None}
 
     url = urljoin(HOST, path)
     html = requests.get(url).text
@@ -153,24 +154,26 @@ def getVideoId(path):
 
     div = soup.find('div', {'class': 'sdc-article-video'})
     if div is not None:
-        video_id = div.get('data-sdc-video-id')
+        video_id.update({'id': div.get('data-sdc-video-id')})
 
-    if video_id is None:
+    if len(video_id) == 0:
         scripts = soup.findAll('script')
         for script in scripts:
             script = script.text
             match = re.search('data-sdc-video-id="([^"]*)"', script)
             if match is not None:
-                video_id = match.group(1)
+                video_id.update({'id': match.group(1)})
 
     return video_id
 
 
 def playVoD(path):
-    video_id = getVideoIdFromCache(path)
+    video_id = getVideoIdFromCache(path).get('id')
     if video_id is not None:
         li = getVideoListItem(video_id)
-        xbmcplugin.setResolvedUrl(addon_handle, True, li)
+    else:
+        li = xbmcgui.ListItem()
+    xbmcplugin.setResolvedUrl(addon_handle, True, li)
 
 
 def playLive():
@@ -211,6 +214,11 @@ def getHLSUrl(url, maxbandwith, maxresolution):
     return url
 
 
+def clearCache():
+    cache.delete('%')
+    xbmcgui.Dialog().notification('Sky Sport Mediathek', 'Leeren des Caches erfolgreich', xbmcgui.NOTIFICATION_INFO, 5000, True)
+
+
 if __name__ == '__main__':
     params = dict(parse_qsl(sys.argv[2][1:]))
     if 'action' in params:
@@ -227,5 +235,7 @@ if __name__ == '__main__':
             showVideos(params.get('path'), params.get('show_videos'))
         elif params.get('action') == 'playVoD':
             playVoD(params.get('path'))
+        elif params.get('action') == 'clearCache':
+            clearCache()
     else:
         rootDir()
