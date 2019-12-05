@@ -1,42 +1,45 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
 import os
 import re
 import sys
-import urlparse
-import urllib
-from HTMLParser import HTMLParser
 import xbmc, xbmcplugin, xbmcaddon, xbmcgui
-from bs4 import BeautifulSoup
 import requests
 import json
+from bs4 import BeautifulSoup
 
 try:
     import StorageServer
 except:
     import storageserverdummy as StorageServer
 
+try:
+    from urllib.parse import urlencode, urljoin, parse_qsl
+except:
+    from urllib import urlencode
+    from urlparse import urljoin, parse_qsl
+
 HOST = 'http://sport.sky.de'
-VIDEO_URL_HSL = 'https://player.ooyala.com/player/all/{video_id}.m3u8'
+VIDEO_URL_HSL = 'https://player.ooyala.com/player/all/{0}.m3u8'
 LIVE_URL_HSL = 'https://eventhlshttps-i.akamaihd.net/hls/live/263645/ssn-hd-https/index.m3u8'
 USER_AGENT = 'User-Agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36'
 
 addon = xbmcaddon.Addon()
-addon_base_url = 'plugin://' + addon.getAddonInfo('id')
+addon_base_url = 'plugin://{0}'.format(addon.getAddonInfo('id'))
 addon_handle = int(sys.argv[1])
-cache = StorageServer.StorageServer(addon.getAddonInfo('name') + '.videoid', 24 * 30)
-sky_sport_news_icon = xbmc.translatePath(addon.getAddonInfo('path') + '/resources/skysport_news.jpg').decode('utf-8')
-nav_json = json.load(open(xbmc.translatePath(addon.getAddonInfo('path') + '/resources/navigation.json')))
+cache = StorageServer.StorageServer('{0}.videoid'.format(addon.getAddonInfo('name')), 24 * 30)
+sky_sport_news_icon = '{0}/resources/skysport_news.jpg'.format(xbmc.translatePath(addon.getAddonInfo('path')))
+nav_json = json.load(open(xbmc.translatePath('{0}/resources/navigation.json'.format(addon.getAddonInfo('path')))))
 
 
 def rootDir():
     url = build_url({'action': 'playLive'})
-    addVideo("Sky Sport News HD", url, sky_sport_news_icon)
+    addVideo('Sky Sport News HD', url, sky_sport_news_icon)
 
     url = build_url({'action': 'listHome'})
     addDir('Home', url)
-    
+
     for item in nav_json:
         action = item.get('action', 'showVideos')
         if action == 'showVideos':
@@ -63,7 +66,7 @@ def addVideo(label, url, icon, isFolder=False):
 
 
 def build_url(query):
-    return addon_base_url + '?' + urllib.urlencode(query)
+    return '{0}?{1}'.format(addon_base_url, urlencode(query))
 
 
 def listHome():
@@ -84,7 +87,7 @@ def listHome():
 
 def listSubnavi(path, hasitems, items_to_add=None):
     if hasitems == 'false':
-        url = urlparse.urljoin(HOST, path)
+        url = urljoin(HOST, path)
         html = requests.get(url).text
         soup = BeautifulSoup(html, 'html.parser')
 
@@ -93,7 +96,7 @@ def listSubnavi(path, hasitems, items_to_add=None):
                 continue
 
             label = item.span.string
-            url = build_url({'action': 'showVideos', 'path': item.get('href') + '-videos', 'show_videos': 'false'})
+            url = build_url({'action': 'showVideos', 'path': '{0}-videos'.format(item.get('href')), 'show_videos': 'false'})
             addDir(label, url)
     else:
         items = None
@@ -114,7 +117,7 @@ def listSubnavi(path, hasitems, items_to_add=None):
 
 
 def showVideos(path, show_videos):
-    url = urlparse.urljoin(HOST, path)
+    url = urljoin(HOST, path)
     html = requests.get(url).text
     soup = BeautifulSoup(html, 'html.parser')
 
@@ -127,7 +130,7 @@ def showVideos(path, show_videos):
             if label is not None and label != '':
                 addDir(label, url)
     else:
-        for item in soup.find_all('div', class_=re.compile("^sdc-site-tiles__item sdc-site-tile sdc-site-tile--has-link")):
+        for item in soup.find_all('div', class_=re.compile('^sdc-site-tiles__item sdc-site-tile sdc-site-tile--has-link')):
             link = item.find('a', {'class': 'sdc-site-tile__headline-link'})
             label = link.span.string
             url = build_url({'action': 'playVoD', 'path': link.get('href')})
@@ -144,7 +147,7 @@ def getVideoIdFromCache(path):
 def getVideoId(path):
     video_id = None
 
-    url = urlparse.urljoin(HOST, path)
+    url = urljoin(HOST, path)
     html = requests.get(url).text
     soup = BeautifulSoup(html, 'html.parser')
 
@@ -178,28 +181,25 @@ def playLive():
 def getVideoListItem(video_id):
     li = xbmcgui.ListItem()
 
-    adaptive_addon = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddonDetails", "params": {"addonid": "inputstream.adaptive", "properties": ["enabled", "version"]}}')
-    adaptive_addon = json.loads(adaptive_addon)
-
     maxbandwith = int(addon.getSetting('maxbandwith'))
     maxresolution = int(addon.getSetting('maxresolution').replace('p', ''))
 
     if video_id is None:
         url = getHLSUrl(LIVE_URL_HSL, maxbandwith, maxresolution)
     else:
-        url = getHLSUrl(VIDEO_URL_HSL.format(video_id=video_id), maxbandwith, maxresolution)
+        url = getHLSUrl(VIDEO_URL_HSL.format(video_id), maxbandwith, maxresolution)
 
-    li.setPath(url + "|" + USER_AGENT)
+    li.setPath('{0}|{1}'.format(url, USER_AGENT))
 
     return li
 
 
 def getHLSUrl(url, maxbandwith, maxresolution):
     response = requests.get(url)
-    xbmc.log("response.status_code = " + str(response.status_code))
+    xbmc.log('response.status_code = {0}'.format(response.status_code))
     if response.status_code == 200:
-        xbmc.log("response.text = " + response.text)
-        matches = re.findall("BANDWIDTH=(\d*).*RESOLUTION=\d*x(\d*).*\s*(.*)", response.text)
+        xbmc.log('response.text = {0}'.format(response.text))
+        matches = re.findall('BANDWIDTH=(\d*).*RESOLUTION=\d*x(\d*).*\s*(.*)', response.text)
         if matches:
             resolutions = [360, 480, 720, 1080, 0]
             for m_bandwidth, m_resolution, m_url in matches:
@@ -212,10 +212,10 @@ def getHLSUrl(url, maxbandwith, maxresolution):
 
 
 if __name__ == '__main__':
-    params = dict(urlparse.parse_qsl(sys.argv[2][1:]))
+    params = dict(parse_qsl(sys.argv[2][1:]))
     if 'action' in params:
 
-        xbmc.log("params = " + str(params))
+        xbmc.log('params = {0}'.format(params))
 
         if params.get('action') == 'playLive':
             playLive()

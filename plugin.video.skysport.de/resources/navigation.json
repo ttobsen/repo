@@ -4,7 +4,7 @@
 		"path": "formel1/videos"
 	},
 	{
-		"label": "Fußball",
+		"label": "Fu\u00dfball",
 		"path": "fussball",
 		"action": "listSubnavi",
 		"children": [
