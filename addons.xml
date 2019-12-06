@@ -3544,11 +3544,12 @@ Zattoo Live TV, Aufnahmen und EPG
 	</extension>
 </addon>
 
-<addon id="plugin.video.prosiebensat1" name="ProSiebenSat.1" version="1.1.2" provider-name="Maven">
+<addon id="plugin.video.prosiebensat1" name="ProSiebenSat.1" version="1.2.0" provider-name="Maven">
 	<requires>
 		<import addon="xbmc.python" version="2.26.0"/>
 		<import addon="script.module.requests" version="2.22.0" />
 		<import addon="script.module.inputstreamhelper" version="0.3.4"/>
+		<import addon="script.module.kodi-six" version="0.1.0"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
@@ -3571,7 +3572,6 @@ Zattoo Live TV, Aufnahmen und EPG
 			<icon>resources/icon.png</icon>
 			<fanart>resources/fanart.png</fanart>
 		</assets>
-		<news>1.1.2[CR]- Episodenanzeige von 'The Voice of Germany' behoben</news>
 	</extension>
 </addon>
 
