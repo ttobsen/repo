@@ -1821,7 +1821,7 @@ NOTE: Streams are available in SD only
 	</extension>
 </addon>
 
-<addon id="plugin.video.joyn" name="Joyn" version="2.2.0" provider-name="knaerzche">
+<addon id="plugin.video.joyn" name="Joyn" version="2.2.1" provider-name="knaerzche">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="inputstream.adaptive" version="2.2.21"/>
@@ -1853,6 +1853,8 @@ NOTE: Streams are available in SD only
 			<screenshot>resources/media/screenshot03.jpg</screenshot>
 		</assets>
 		<news>
+v2.2.1
+[fix] re-set container-focus after 'refresh'
 v2.2.0
 [new] implement sign-in
 [new} implement joyn bookmarks
