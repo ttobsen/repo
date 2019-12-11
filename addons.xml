@@ -776,7 +776,7 @@ To support the backport the addon will now always create the merged_epg.xml.gz
 	</extension>
 </addon>
 
-<addon id="plugin.video.ardundzdf" name="ARDundZDF" version="2.2.7" provider-name="rols1 (rols1@gmx.de)">
+<addon id="plugin.video.ardundzdf" name="ARDundZDF" version="2.3.0" provider-name="rols1 (rols1@gmx.de)">
   <requires>
    <import addon="xbmc.python" version="2.25.0"/>
    <import addon="script.module.kodi-six" />
