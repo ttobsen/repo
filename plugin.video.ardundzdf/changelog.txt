@@ -7,6 +7,45 @@ CHANGE HISTORY 	Kodi-Addon-ARDundZDF -  (vormals Plugin für den Plexmediaserver
 			https://forums.plex.tv/t/rel-ardundzdf/309751
 			https://forums.plex.tv/discussion/213947/rel-plex-plugin-ardmediathek2016	
 
+
+13.12.2019	2.3.3	Modul childs - Icons, weitere Anpassungen im Haupt-PRG:
+			Github-Repo PluginPictures: Aktualisierung KIKA- und tivi-Icons.
+			Main_KIKA, Main_TIVI, Kikaninchen_Menu, Tivi_AZ: Nutzung der Icons
+			aus Github-Repo PluginPictures.  
+			Weitere Anpassungen Home-Button: ZDF_Sendungen, ZDFRubrikSingle,
+			ZDF_getVideoSources, ZDFotherSources.
+			SingleBeitragKika: Downloads ermöglicht	
+
+not on Github	2.3.2	ZDFtivi (Modul childs): Nutzung von ZDF-Funktionen im Haupt-PRG:
+			ZDFStart: Anpassung BASE-Pfad und Home-Button zur Laufzeit (ZDF_BASE, 
+			BASE_TIVI), zusätzl. Param. path für ZDFStart, Überspringen nicht
+			auswertbarer Cluster (Direkt zu ..., weiterschauen).
+			Weitere Anpassungen Home-Button: ZDF_Sendungen, ZDFRubrikSingle,
+			ZDF_getVideoSources, ZDFotherSources. 
+			Zusatz "im ZDF" für Button "zusätzliche Suche starten" in ZDF_Sendungen,
+			ZDF_getVideoSources, ZDF_Search.
+			ZDFRubrikSingle: Anpassung Abgleich clustertitle für ZDFtivi.		
+
+11.12.2019	2.3.1	Haupt-PRG: Import des Updater-Moduls wieder an den Addon-Start verlagert
+			(das Nachladen aus der router-Funktion schlägt fehl).
+
+not on Github	2.3.0	neues Modul childs (Kinderprogramme): Anpassung Settings + Haupt-PRG,
+			Portierung der meisten python-Funktionen von Plex-Plugin-KIKA_und_tivi. 
+			Aus Platzgründen Verzicht auf die meisten Icons.
+			
+not on Github	2.2.9	ZDF - Anpassungen an Änderungen auf www.zdf.de:
+			ZDF_get_content: Fix Blockmerkmal für Highlights(class="artdirect -> 
+			class="stage-image), Hinweis bei nicht verfügbarem Video (HTML-Ausschluß,
+			Bsp. www.zdf.de/filme/filme-sonstige/wie-im-himmel-102.html) 
+			ZDFRubrikSingle: Fix Ermittlung Videodauer, Fix Blank im Trenner bei
+			loader-Beiträgen ('": "' -> '":"').
+			ZDFRubriken: Abgleich Cluster-Titel wird mittels spez. clus_title
+			übersprungen (Auswertung schlägt sonst fehl).		
+
+not on Github	2.2.8	router (Haupt-PRG): Laden einzelner Addon-Module umgestellt auf Laden zur 
+			Laufzeit (via importlib) statt komplett zum Addonstart.
+			Neues Icon für Kinderprogramme: child.png (Quelle: https://de.freepik.com/).
+				
 08.12.2019	2.2.7	ARDStartRubrik (Modul ARD Neu): Erkennung von Mehrfach-Beiträgen in
 			Highlights, Konvertierung "/shows/"-Pfade in grouping-Pfade (API).  
 			repl_json_chars (Modul util): () ersetzt durch >.<

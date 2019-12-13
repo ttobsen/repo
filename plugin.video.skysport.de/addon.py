@@ -156,7 +156,7 @@ def getVideoId(path):
     if div is not None:
         video_id.update({'id': div.get('data-sdc-video-id')})
 
-    if len(video_id) == 0:
+    if video_id.get('id') is None:
         scripts = soup.findAll('script')
         for script in scripts:
             script = script.text
