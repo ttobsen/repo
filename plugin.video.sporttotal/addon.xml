@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<addon id="plugin.video.sporttotal" name="Sport-Total TV" version="1.0.3" provider-name="L0RE">
+<addon id="plugin.video.sporttotal" name="Sport-Total TV" version="1.0.4" provider-name="L0RE">
 	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="xbmc.python" version="2.25.0"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
@@ -24,9 +24,11 @@
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.0.3  (29.06.2019)[/COLOR][/B] by realvito[CR]
-- fixed: Komplette Neuauflage des Addons nach Veränderung der Webseite
-- optimized: Eine Cache-Speicherung des Inhalts wird nicht mehr benötigt (entfernt)
+		<news>[B][COLOR orangered]Version 1.0.4  (13.12.2019)[/COLOR][/B] by realvito[CR]
+- added: Mehr Sportrubriken in der Übersicht
+- added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19+) :-)
+- optimized: Aufgerufene Seiten an Webversion angepasst
+- optimized: Streamqualität gesteigert, durch weniger Filter
 		</news>
 	</extension>
 </addon>

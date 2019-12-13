@@ -24,6 +24,12 @@
 - fixed: In der Rubrik = Ligen werden die verfügbaren Sportarten als kryptischer Text ausgegeben und Links NICHT richtig weitergereicht
 - fixed: Videos werden NICHT abgespielt (Link verändert)
 
-[B]Version 1.0.3  (29.06.2019)[/B] by realvito[CR]
+[B]Version 1.0.3  (24.06.2019)[/B] by realvito[CR]
 - fixed: Komplette Neuauflage des Addons nach Veränderung der Webseite
 - optimized: Eine Cache-Speicherung des Inhalts wird nicht mehr benötigt (entfernt)
+
+[B]Version 1.0.4  (13.12.2019)[/B] by realvito[CR]
+- added: Mehr Sportrubriken in der Übersicht
+- added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19+) :-)
+- optimized: Aufgerufene Seiten an Webversion angepasst
+- optimized: Streamqualität gesteigert, durch weniger Filter

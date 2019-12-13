@@ -64,8 +64,8 @@ msgstr "     * [COLOR yellow]Bei Abspielproblemen (Tonaussetzer,Artefakte...) is
 # WARNING/INFORMATION-MESSAGES-OK
 
 msgctxt "#30501"
-msgid "[COLOR orangered]ATTENTION : ... the required Addon *[/COLOR][COLOR yellow] inputstream.adaptive [/COLOR][COLOR orangered]* is NOT installed !!![/COLOR][CR]Please install KODI-Krypton (version 17 or higher), These contain the required Addon in setup !!!"
-msgstr "[COLOR orangered]ACHTUNG : ... das benötigte Addon *[/COLOR][COLOR yellow] inputstream.adaptive [/COLOR][COLOR orangered]* ist NICHT installiert !!![/COLOR][CR]Bitte KODI-Krypton (Version 17 oder höher) installieren, Diese enthalten das erforderliche Addon im Setup !!!"
+msgid "[COLOR orangered]ATTENTION : ... the required addon *[/COLOR][COLOR yellow]{0:s}[/COLOR][COLOR orangered]* is NOT installed !!![/COLOR]"
+msgstr "[COLOR orangered]ACHTUNG : ... das benötigte Addon *[/COLOR][COLOR yellow]{0:s}[/COLOR][COLOR orangered]* ist NICHT installiert !!![/COLOR]"
 
 #empty strings from id 30502 to 30520
 # WARNING/INFORMATION-MESSAGES-NOTIFICATION
