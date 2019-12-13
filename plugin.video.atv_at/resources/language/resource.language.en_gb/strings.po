@@ -108,22 +108,14 @@ msgctxt "#30351"
 msgid "     * [COLOR chartreuse]Before that, please select preferred Video-file format[/COLOR] *"
 msgstr ""
 
-msgctxt "#30352"
-msgid "     * [COLOR yellow]!!! Cache-Function ONLY with PhytonVersion < 3 activ !!![/COLOR] *"
-msgstr ""
-
-# empty strings from id 30353 to 30500
+# empty strings from id 30352 to 30500
 # WARNING/INFORMATION-MESSAGES-OK
 
 msgctxt "#30501"
 msgid "[COLOR orangered]ATTENTION: ... DELETE Addon-Cache !!![/COLOR][CR]The complete Cache of [COLOR green]* ATV.at - Mediathek *[/COLOR] has been deleted successfully !!!"
 msgstr ""
 
-msgctxt "#30502"
-msgid "[COLOR orangered]ATTENTION : ... The installed PYTHON VERSION : ***[/COLOR] {0:s} [COLOR orangered]*** is not compatible !!![/COLOR][CR]Clearing the Cache will be ABORTED [COLOR green]and the Cache will be DISABLED[/COLOR] !!!"
-msgstr ""
-
-# empty strings from id 30503 to 30520
+# empty strings from id 30502 to 30520
 # WARNING/INFORMATION-MESSAGES-NOTIFICATION
 
 msgctxt "#30521"

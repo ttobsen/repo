@@ -18,9 +18,7 @@
 	<category label="30001">
 		<setting label="30234" type="lsep"/>
 		<setting label="30117" type="slider" id="cacherhythm" range="6,6,72" default="12" option="int"/>
-		<setting label="30352" type="text" option="readable"/>
 		<setting type="sep"/>
 		<setting label="30118" type="action" action="RunPlugin(plugin://plugin.video.atv_at/?mode=clearCache)" visible="true"/>
-		<setting type="sep"/>
 	</category>
 </settings>

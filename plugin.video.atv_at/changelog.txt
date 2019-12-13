@@ -16,10 +16,14 @@
 [B]Version 3.0.2  (02.11.2018)[/B] Original by PUR3 / Revised by realvito[CR]
 - fixed: Alle Videos werden NICHT abgespielt (Webseite verändert)
 
-[B]Version 3.0.3  (16.02.2019)[/B] by realvito[CR]
+[B]Version 3.0.3  (16.02.2019)[/B] übernommen von realvito[CR]
 - fixed: Startordner = Serien werden NICHT gelistet (Mediathek-URL verändert)
 - fixed: Serien- und Episodenbilder werden NICHT angezeigt (URL der Bilder verändert)
 
-[B]Version 3.0.4+3.0.5  (17.11.2019)[/B] by realvito[CR]
+[B]Version 3.0.4+3.0.5  (17.11.2019)[/B]
 - fixed: Bei Einstellung = alle Episoden einer Staffel in einem Ordner anzeigen - werden nur max. 56 Episoden gelistet
 - fixed: Übersetzungsfehler für Cacheeinstellung in Sprachfile
+
+[B]Version 3.0.6  (13.12.2019)[/B]
+- fixed: Geoblocking Fehler durch Veränderung der URL
+- added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19+) :-)

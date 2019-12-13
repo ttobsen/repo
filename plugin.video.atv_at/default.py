@@ -13,11 +13,11 @@ PY3 = sys.version_info[0] == 3
 if PY2:
 	from urllib import quote, unquote, quote_plus, unquote_plus, urlencode  # Python 2.X
 	from HTMLParser import HTMLParser  # Python 2.X
-	try: import StorageServer
-	except: from resources.lib import storageserverdummy as StorageServer
 elif PY3:
 	from urllib.parse import quote, unquote, quote_plus, unquote_plus, urlencode  # Python 3+
 	from html.parser import HTMLParser  # Python 3+
+try: import StorageServer
+except: from resources.lib import storageserverdummy as StorageServer
 import json
 import xbmcvfs
 import shutil
@@ -44,9 +44,8 @@ preferredStreamType = addon.getSetting('streamSelection')
 preferPlayTechnique = addon.getSetting('play_technique')
 showCompleteEPISODES = addon.getSetting('show.all_episodes') == 'true'
 showStreamMESSAGE = addon.getSetting('show.stream_message') == 'true'
-if PY2:
-	cachePERIOD = int(addon.getSetting('cacherhythm'))
-	cache = StorageServer.StorageServer(addon.getAddonInfo('id'), cachePERIOD) # (Your plugin name, Cache time in hours)
+cachePERIOD = int(addon.getSetting('cacherhythm'))
+cache = StorageServer.StorageServer(addon.getAddonInfo('id'), cachePERIOD) # (Your plugin name, Cache time in hours)
 baseURL = "https://www.atv.at"
 startURL = "https://www.atv.at/"
 
@@ -91,11 +90,7 @@ def log(msg, level=xbmc.LOGNOTICE):
 	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+py2_enc(msg), level)
 
 def makeREQUEST(url):
-	if PY2:
-		INQUIRE = cache.cacheFunction(getUrl, url, 'GET', False, False, __HEADERS)
-	elif PY3:
-		INQUIRE = getUrl(url, 'GET', False, False, __HEADERS)
-	return INQUIRE
+	return cache.cacheFunction(getUrl, url, 'GET', False, False, __HEADERS)
 
 def getUrl(url, method, allow_redirects=False, verify=False, headers="", data="", timeout=40):
 	response = requests.Session()
@@ -107,25 +102,20 @@ def getUrl(url, method, allow_redirects=False, verify=False, headers="", data=""
 
 def clearCache():
 	debug("(clearCache) -------------------------------------------------- START = clearCache --------------------------------------------------")
-	if PY2:
-		debug("(clearCache) ========== Lösche jetzt den Addon-Cache ==========")
-		cache.delete('%')
-		xbmc.sleep(1000)
-		xbmcgui.Dialog().ok(addon.getAddonInfo('id'), translation(30501))
-	elif PY3:
-		Python_Version = str(sys.version).split(')')[0].strip()+')'
-		failing("(clearCache) ACHTUNG : ... Die installierte PYTHONVERSION : *** "+str(Python_Version)+" *** ist nicht kompatibel !!!\n##### Das Löschen des Cache wird ABGEBROCHEN und Die Cachefunktion wird DEAKTIVIERT !!! #####")
-		xbmcgui.Dialog().ok(addon.getAddonInfo('id'), translation(30502).format(Python_Version))
+	debug("(clearCache) ========== Lösche jetzt den Addon-Cache ==========")
+	cache.delete('%')
+	xbmc.sleep(1000)
+	xbmcgui.Dialog().ok(addon.getAddonInfo('id'), translation(30501))
 
 def index():
 	addDir(translation(30601), baseURL+"/mediathek/", 'listSeries', icon)
-	if PY2: addDir(translation(30602).format(str(cachePERIOD)), "", 'clearCache', icon)
+	addDir(translation(30602).format(str(cachePERIOD)), "", 'clearCache', icon)
 	addDir(translation(30603), "", 'aSettings', icon)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def USER_from_austria():
 	try:
-		return 'window.is_not_geo_ip_blocked = true' in requests.get('https://videos.atv.cdn.tvnext.tv/blocked/detect.js', headers=__HEADERS, verify=True, timeout=30).text
+		return 'window.is_not_geo_ip_blocked = true' in requests.get('https://blocked-multiscreen.atv.cdn.tvnext.tv/detect.js', headers=__HEADERS, verify=True, timeout=30).text
 	except:
 		return False
 
