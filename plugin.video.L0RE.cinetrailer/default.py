@@ -1,16 +1,22 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
-import urllib
-import urllib2
+
+from __future__ import unicode_literals
+from kodi_six.utils import py2_encode
 import socket
 import sys
 import os
 import re
 import xbmcplugin
 import xbmcaddon,xbmc
-import xbmcgui,json,cookielib
+import xbmcgui, json
 import requests,xbmcvfs
 
+try:
+    from urllib.parse import quote_plus, unquote_plus
+    from http import cookiejar as cookielib
+except:
+    from urllib import quote_plus, unquote_plus
+    import cookielib
 
 addon = xbmcaddon.Addon()
 socket.setdefaulttimeout(30)
@@ -19,17 +25,15 @@ addonID = addon.getAddonInfo('id')
 translation = addon.getLocalizedString
 
 cj = cookielib.LWPCookieJar();
-language = str(addon.getSetting("language"))
-
+language = addon.getSetting("language")
 
 try:
    import StorageServer
 except:
    import storageserverdummy as StorageServer
 
-cachezeit=addon.getSetting("cachetime")   
-cache = StorageServer.StorageServer("plugin.video.L0RE.cinetrailer", cachezeit) # (Your plugin name, Cache time in hours
-
+cachezeit = addon.getSetting("cachetime")
+cache = StorageServer.StorageServer(py2_encode("plugin.video.L0RE.cinetrailer"), cachezeit)
 
 
 def debug(content):
@@ -57,7 +61,7 @@ def parameters_string_to_dict(parameters):
 
 
 def addLink(name, url, mode, iconimage, duration="", desc="", genre='',text=""):
-    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name"+urllib.quote_plus(name)+"&text="+urllib.quote_plus(text)+"&bild="+iconimage
+    u = '{0}?url={1}&mode={2}&name{3}&text={4}&bild={5}'.format(sys.argv[0], quote_plus(url), mode, quote_plus(py2_encode(name)), quote_plus(text), iconimage)
     ok = True
     liz = xbmcgui.ListItem(name)
     liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
@@ -69,14 +73,14 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre='',text=""):
     return ok
 
 def addDir(name, url, mode, iconimage, desc="",text="",page="",addtype=0,stunden=""):
-    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&text="+str(text)+"&page="+str(page)+"&name"+str(name)
+    u = '{0}?url={1}&mode={2}&text={3}&page={4}&name{5}'.format(sys.argv[0], quote_plus(url), mode, text, page, name)
     ok = True
     liz = xbmcgui.ListItem(name)
     if addtype==1:
       commands = []  
       updatestd=addon.getSetting("updatestd")
       debug("UPDATETIME :"+str(updatestd))
-      link = "plugin://plugin.video.L0RE.cinetrailer/?mode=tolibrary&url=%s&name=%s&stunden=%s"%(urllib.quote_plus(url),name,str(updatestd))
+      link = "plugin://plugin.video.L0RE.cinetrailer/?mode=tolibrary&url=%s&name=%s&stunden=%s" % (quote_plus(url), name, str(updatestd))
       #debug("LINK :"+link)
       commands.append(( "Add to library", 'XBMC.RunPlugin('+ link +')'))
       liz.addContextMenuItems( commands )
@@ -86,11 +90,11 @@ def addDir(name, url, mode, iconimage, desc="",text="",page="",addtype=0,stunden
     return ok
 
 params = parameters_string_to_dict(sys.argv[2])
-mode = urllib.unquote_plus(params.get('mode', ''))
-url = urllib.unquote_plus(params.get('url', ''))
-page = urllib.unquote_plus(params.get('page', ''))
-name = urllib.unquote_plus(params.get('name', ''))
-stunden = urllib.unquote_plus(params.get('stunden', ''))
+mode = unquote_plus(params.get('mode', ''))
+url = unquote_plus(params.get('url', ''))
+page = unquote_plus(params.get('page', ''))
+name = unquote_plus(params.get('name', ''))
+stunden = unquote_plus(params.get('stunden', ''))
 
 
 def index():  
@@ -205,10 +209,10 @@ def tolibrary(url,name,stunden):
       dialog = xbmcgui.Dialog()
       dialog.notification("Error", "Pfad setzen in den Settings", xbmcgui.NOTIFICATION_ERROR)
       return        
-    urlx=urllib.quote_plus(url)
-    name=urllib.quote_plus(name)
+    urlx = quote_plus(url)
+    name = quote_plus(name)
     urln="plugin://plugin.video.L0RE.cinetrailer?mode=generatefiles&url="+urlx+"&name="+name
-    urln=urllib.quote_plus(urln)
+    urln = quote_plus(urln)
     debug("tolibrary urln : "+urln)
     xbmc.executebuiltin('XBMC.RunPlugin(plugin://service.L0RE.cron/?mode=adddata&name=%s&stunden=%s&url=%s)'%(name,stunden,urln))
     #xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
