@@ -1,4 +1,4 @@
-0.4.0
+﻿0.4.0
 - Python 3 compability
 0.3.2
 - fixed displaying thumbs/icons

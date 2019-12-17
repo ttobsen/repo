@@ -1,4 +1,4 @@
-# Kodi Media Center language file
+﻿# Kodi Media Center language file
 # Addon Name: Cinetrailer
 # Addon id: plugin.video.L0RE.cinetrailer
 # Addon Provider: L0RE

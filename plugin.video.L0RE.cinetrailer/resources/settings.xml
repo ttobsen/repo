@@ -1,14 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-  <category label="Settings">
-    <setting label="Cache Time" type="slider" id="cachetime" default="24" range="0,1,100" option="int" /> 
-    <setting id="quality" type="select" label="Quality" values="xxlarge|xlarge|HD 720p|HD 480p" default="xxlarge"/>
-    <setting id="language" type="select" label="Language" values="uk|it|de|fr|es" default="de"/>
-  </category>
-  <category label="Media Library">
-        <setting label="Madia Path" type="folder" id="mediapath" default=""/>        
-        <setting label="Update der Libary in Stunden" type="slider" id="updatestd" default="24" range="1,100" option="int"/>
-        <setting label="Wieviele Seiten" type="slider" id="pages_anz" default="1" range="1,5" option="int"/>
-        <setting label="Achtung!Update Zeit wirkt sich nur auf neu hinzugefügte Elemente aus," type="text" id="dummy1" default="" enable="false"/>
-        <setting label="um alte zu löschen muss in Cron der Eintrag gelöscht und neu hinzugefügt werden" type="text" id="dummy2" enable="false" default=""/>
-   </category>
+	<category label="Settings">
+		<setting label="Cache Time" type="slider" id="cachetime" default="24" range="0,1,100" option="int" /> 
+		<setting id="quality" type="select" label="Quality" values="xxlarge|xlarge|HD 720p|HD 480p" default="xxlarge"/>
+		<setting id="language" type="select" label="Language" values="uk|it|de|fr|es" default="de"/>
+	</category>
+	<category label="Media Library">
+		<setting label="Madia Path" type="folder" id="mediapath" default=""/>        
+		<setting label="Update der Libary in Stunden" type="slider" id="updatestd" default="24" range="1,100" option="int"/>
+		<setting label="Wieviele Seiten" type="slider" id="pages_anz" default="1" range="1,5" option="int"/>
+		<setting label="Achtung!Update Zeit wirkt sich nur auf neu hinzugefügte Elemente aus," type="text" id="dummy1" default="" enable="false"/>
+		<setting label="um alte zu löschen muss in Cron der Eintrag gelöscht und neu hinzugefügt werden" type="text" id="dummy2" enable="false" default=""/>
+	</category>
 </settings>

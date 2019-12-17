@@ -98,26 +98,26 @@ stunden = unquote_plus(params.get('stunden', ''))
 
 
 def index():  
-  addDir("Neueste Trailer","https://res.cinetrailer.tv/api/v1/"+language+"/movies/newest?pageSize=20&isDebug=false","newlist","",page=1,addtype=1)
-  addDir("Demnächst im Kino","https://res.cinetrailer.tv/api/v1/"+language+"/movies/comingsoon?pageSize=20&isDebug=false","newlist","",page=1,addtype=1)
-  addDir("Home Video","https://res.cinetrailer.tv/api/v1/"+language+"/movies/homevideo?pageSize=20&isDebug=false","newlist","",page=1,addtype=1)
-  addDir("Im Kino","https://res.cinetrailer.tv/api/v1/"+language+"/movies/incinemas?orderBy=&pageSize=20&isDebug=false","newlist","",page=1,addtype=1)
-  addDir("Genres","","genres","")
-  addDir("Settings", "", 'Settings', "")
-  xbmcplugin.endOfDirectory(pluginhandle)   
+    addDir("Neueste Trailer","https://res.cinetrailer.tv/api/v1/"+language+"/movies/newest?pageSize=20&isDebug=false","newlist","",page=1,addtype=1)
+    addDir("Demnächst im Kino","https://res.cinetrailer.tv/api/v1/"+language+"/movies/comingsoon?pageSize=20&isDebug=false","newlist","",page=1,addtype=1)
+    addDir("Home Video","https://res.cinetrailer.tv/api/v1/"+language+"/movies/homevideo?pageSize=20&isDebug=false","newlist","",page=1,addtype=1)
+    addDir("Im Kino","https://res.cinetrailer.tv/api/v1/"+language+"/movies/incinemas?orderBy=&pageSize=20&isDebug=false","newlist","",page=1,addtype=1)
+    addDir("Genres","","genres","")
+    addDir("Settings", "", 'Settings', "")
+    xbmcplugin.endOfDirectory(pluginhandle)   
 
 
 def getUrl(url,method,allow_redirects=False,verify=False,cookies="",headers="",data=""):
-   if method=="GET":
-     content = requests.get(url,allow_redirects=allow_redirects,verify=verify,cookies=cookies,headers=headers,data=data).text.encode('utf-8')
-   if method=="POST":
-     content = requests.post(url,data=data, allow_redirects=allow_redirects,verify=verify,cookies=cookies).text.encode('utf-8')
-   return content
+    if method=="GET":
+        content = requests.get(url,allow_redirects=allow_redirects,verify=verify,cookies=cookies,headers=headers,data=data).text.encode('utf-8')
+    if method=="POST":
+        content = requests.post(url,data=data, allow_redirects=allow_redirects,verify=verify,cookies=cookies).text.encode('utf-8')
+    return content
    
 def genres():
-  url="https://res.cinetrailer.tv/api/v1/"+language+"/categories"
-  token=getsession()
-  values = {
+    url="https://res.cinetrailer.tv/api/v1/"+language+"/categories"
+    token=getsession()
+    values = {
       'Model' : 'Huawei MLA-TL10',
       'AppVersion' : '3.3.15',
       'OsVersion': '4.4.4',
@@ -125,26 +125,27 @@ def genres():
       'Market': 'android',   
       'Authorization': 'Bearer '+token,
       #'TimeStamp': '2017-09-04 11:04:45'
-  }  
-  content = cache.cacheFunction(getUrl,url,"GET",False,False,cj,values)
-  struktur = json.loads(content)
-  for genre in struktur["categories"]:
-    idd=genre["id"]
-    title=genre["title"].encode('utf-8')
-    url="https://res.cinetrailer.tv/api/v1/"+language+"/movies/search?pageSize=20&desc=true&orderBy=date&categoryId="+str(idd)
-    addDir(title,url,"newlist","",page=1)
-  xbmcplugin.endOfDirectory(pluginhandle)     
+    }  
+    content = cache.cacheFunction(getUrl,url,"GET",False,False,cj,values)
+    struktur = json.loads(content)
+    for genre in struktur["categories"]:
+        idd=genre["id"]
+        title=genre["title"].encode('utf-8')
+        url="https://res.cinetrailer.tv/api/v1/"+language+"/movies/search?pageSize=20&desc=true&orderBy=date&categoryId="+str(idd)
+        addDir(title,url,"newlist","",page=1)
+    xbmcplugin.endOfDirectory(pluginhandle)     
   
 def getsession():
-  url="https://res.cinetrailer.tv/Token"
-  values = {
+    url="https://res.cinetrailer.tv/Token"
+    values = {
       'client_id' : 'cinetrailer_android',
       'client_secret' : 'pKQvtSL9FdpB3u38GMHtNMA3',
       'grant_type': 'client_credentials',
     } 
-  content = cache.cacheFunction(getUrl,url,"POST",False,False,cj,"",values)    
-  struktur = json.loads(content)
-  return struktur["access_token"]
+    content = cache.cacheFunction(getUrl,url,"POST",False,False,cj,"",values)    
+    struktur = json.loads(content)
+    return struktur["access_token"]
+
 def Play(url):
     token=getsession()
     values = {
@@ -157,10 +158,7 @@ def Play(url):
       #'TimeStamp': '2017-09-04 11:04:45'
     }  
     urln="https://res.cinetrailer.tv/api/v1/"+language+"/movie/"+url+"/trailers"  
-
-
     quality = str(addon.getSetting("quality"))
-
     content = cache.cacheFunction(getUrl,urln,"GET",False,False,cj,values)    
     struktur = json.loads(content)
     debug("PLAY")
@@ -168,8 +166,8 @@ def Play(url):
     debug(struktur)
     url=struktur["items"][0]["clips"][0]["url"]
     for video in struktur["items"][0]["clips"]:
-      if quality==video["quality"]:
-          url=video["url"]
+        if quality==video["quality"]:
+            url=video["url"]
     listitem = xbmcgui.ListItem(path=url)
     xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)  
     debug(struktur)
@@ -267,14 +265,14 @@ def generatefiles(url,fname):
 if mode == "":
     index()
 if mode == "newlist":
-     newlist(url,page)
+    newlist(url,page)
 if mode == "Play":
-     Play(url)
+    Play(url)
 if mode == "genres":
-     genres()
+    genres()
 if mode == 'Settings':
-          addon.openSettings()   
-if mode == 'tolibrary':                      
-           tolibrary(url,name,stunden)          
-if mode == 'generatefiles':         
-          generatefiles(url,name)            
+    addon.openSettings()   
+if mode == 'tolibrary':
+    tolibrary(url,name,stunden)
+if mode == 'generatefiles':
+    generatefiles(url,name)
