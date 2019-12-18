@@ -2,6 +2,7 @@
 <settings>
 	<category label="Settings">
 		<setting label="Cache Time" type="slider" id="cachetime" default="24" range="0,1,100" option="int" /> 
+		<setting id="clear_cache" type="action" label="Cache leeren" action="RunPlugin(plugin://plugin.video.L0RE.cinetrailer/?mode=clearCache)" />
 		<setting id="quality" type="select" label="Quality" values="xxlarge|xlarge|HD 720p|HD 480p" default="xxlarge"/>
 		<setting id="language" type="select" label="Language" values="uk|it|de|fr|es" default="de"/>
 	</category>
