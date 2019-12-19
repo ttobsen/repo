@@ -3938,7 +3938,7 @@ Zattoo Live TV, Aufnahmen und EPG
     </extension>
 </addon>
 
-<addon id="plugin.video.L0RE.cinetrailer" name="Cinetrailer" version="0.5.0" provider-name="L0RE">
+<addon id="plugin.video.L0RE.cinetrailer" name="Cinetrailer" version="0.6.0" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="script.module.requests" version="2.12.4"/>
@@ -3963,7 +3963,9 @@ Zattoo Live TV, Aufnahmen und EPG
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]0.5.0 (18.12.2019)[/COLOR][/B][CR]- Refactoring[CR]- Added movie information[CR]- Added cache clearing setting[CR]
+		<news>
+[B][COLOR orangered]0.6.0 (19.12.2019)[/COLOR][/B][CR]- Select trailer if there are more than 1[CR]
+[B][COLOR orangered]0.5.0 (18.12.2019)[/COLOR][/B][CR]- Refactoring[CR]- Added movie information[CR]- Added cache clearing setting[CR]
 [B][COLOR orangered]0.4.0 (17.12.2019)[/COLOR][/B][CR]- Python 3 compability</news>
 	</extension>
 </addon>
