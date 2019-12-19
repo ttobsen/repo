@@ -118,7 +118,7 @@ def index():
     addDir('Home Video', 'https://res.cinetrailer.tv/api/v1/{0}/movies/homevideo?pageSize=20&isDebug=false'.format(language), 'newlist', '', page=1, addtype=1)
     addDir('Im Kino', 'https://res.cinetrailer.tv/api/v1/{0}/movies/incinemas?orderBy=&pageSize=20&isDebug=false'.format(language), 'newlist', '', page=1, addtype=1)
     addDir('Genres', '', 'genres')
-    addDir('Settings', '', 'Settings')
+    addDir('Einstellungen', '', 'Settings')
     xbmcplugin.endOfDirectory(addonhandle)
 
 
@@ -182,13 +182,23 @@ def Play(url):
     debug('PLAY')
     debug('URLN: {0}'.format(urln))
     debug(struktur)
-    url = struktur['items'][0]['clips'][0]['url']
-    for video in struktur['items'][0]['clips']:
-        if quality == video['quality']:
-            url = video['url']
-    listitem = xbmcgui.ListItem(path=url)
-    xbmcplugin.setResolvedUrl(addonhandle, True, listitem)
-    debug(struktur)
+    trailer = None
+    if len(struktur['items']) > 1:
+        trailerlist = []
+        for item in struktur['items']:
+            trailerlist.append('{0} ({1})'.format(item.get('title'), item.get('clips')[0].get('duration').split(':', 1)[1]))
+        select = xbmcgui.Dialog().select('Trailer', trailerlist)
+        if select > -1:
+            trailer = struktur['items'][select]
+    else:
+        trailer = struktur['items'][0]
+    if trailer:
+        url = trailer['clips'][0]['url']
+        for video in trailer['clips']:
+            if quality == video['quality']:
+                url = video['url']
+        listitem = xbmcgui.ListItem(path=url)
+        xbmcplugin.setResolvedUrl(addonhandle, True, listitem)
 
 
 def newlist(url, page=1):
@@ -210,15 +220,28 @@ def newlist(url, page=1):
     debug(struktur)
     count = 0
     for trailer in struktur['items']:
+        if trailer.get('total_trailers') == 0:
+            continue
         id = trailer['id']
         image = trailer['poster_high']
         name = trailer['title']
-        plot = 'Premiere: {0}'.format(datetime.datetime.fromtimestamp(time.mktime(time.strptime(trailer.get('premiere_date'), '%Y-%m-%dT%H:%M:%SZ'))).strftime('%d.%m.%Y'))
-        genre = [genre.get('title') for genre in trailer.get('categories')]
-        cast = [actor.get('name') for actor in trailer.get('cast').get('actors')]
-        director = [director.get('name') for director in trailer.get('cast').get('directors')]
-        infoLabels = {'title': name, 'plot': plot, 'year': trailer.get('premiere_date'), 'duration': trailer.get('duration'), \
-                      'genre': genre, 'cast': cast, 'director': director, 'mediatype': 'movie'}
+        infoLabels = {'title': name, 'year': trailer.get('premiere_date'), 'duration': (int(trailer.get('duration')) * 60), 'mediatype': 'movie'}
+        plot = None
+        if trailer.get('premiere_date'):
+            sdate = trailer.get('premiere_date').split('T')[0].split('-')
+            plot = 'Premiere: {0}.{1}.{2}'.format(sdate[2], sdate[1], sdate[0])
+        infoLabels.update({'plot': \
+                           '{0}\nTrailer: {1}'.format(plot, trailer.get('total_trailers')) \
+                           if plot else 'Trailer: {0}'.format(trailer.get('total_trailers'))})
+        if trailer.get('categories'):
+            genre = [genre.get('title') for genre in trailer.get('categories')]
+            infoLabels.update({'genre': genre})
+        if trailer.get('cast', {}).get('actors'):
+            cast = [actor.get('name') for actor in trailer.get('cast').get('actors')]
+            infoLabels.update({'cast': cast})
+        if trailer.get('cast', {}).get('directors'):
+            director = [director.get('name') for director in trailer.get('cast').get('directors')]
+            infoLabels.update({'director': director})
         addLink(name, id, 'Play', infoLabels=infoLabels, art={'icon': image, 'thumb': image, 'poster': image})
         count += 1
     if int(struktur['page_count']) > int(page):

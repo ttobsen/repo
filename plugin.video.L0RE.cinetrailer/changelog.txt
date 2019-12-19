@@ -1,4 +1,6 @@
-﻿0.5.0
+﻿0.6.0
+- Select trailer if there are more than 1
+0.5.0
 - Refactoring
 - Added movie information
 - Added cache clearing setting
