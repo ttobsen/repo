@@ -198,21 +198,20 @@
         <control type="group">
             <!-- Set Information -->
             <visible>Control.IsVisible(721)+!Control.HasFocus(666)</visible>
+			<visible>ListItem.IsCollection</visible>
+			<include>openclosevisible</include>
             <control type="grouplist">
                 <left>30</left>
                 <top>435</top>
                 <width>1140</width>
                 <height>135</height>
                 <itemgap>8</itemgap>
-                <visible>ListItem.IsCollection</visible>
                 <include>openclosevisible</include>
                 <control type="group">
                     <animation effect="zoom" end="88" condition="true">Conditional</animation>
                     <left>30</left>
                     <top>90</top>
                     <include>MovieSetInformationCover</include>
-                    <visible>ListItem.IsCollection</visible>
-                    <include>openclosevisible</include>
                 </control>
             </control>
             <control type="label">
@@ -224,8 +223,6 @@
                 <textcolor>grey1</textcolor>
                 <font>impacted21</font>
                 <label>$LOCALIZE[20161]$INFO[Container(2000).NumItems,: [COLOR=white],[/COLOR]]</label>
-                <visible>ListItem.IsCollection</visible>
-                <include>openclosevisible</include>
             </control>
         </control>
         <control type="group">
@@ -330,7 +327,7 @@
 						<height>381</height>
 						<texture background="true" diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
 						<aspectratio>stretch</aspectratio>
-						<visible>!Container.Content(Episodes)|String.IsEmpty(ListItem.Art(tvshow.poster))</visible>
+						<visible>!Container.Content(Episodes)</visible>
 					</control>
 					<control type="image">
 						<description>case by resolution</description>
@@ -340,7 +337,7 @@
 						<height>381</height>
 						<texture background="true" diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$INFO[ListItem.Art(tvshow.poster)]</texture>
 						<aspectratio>stretch</aspectratio>
-						<visible>Container.Content(Episodes)+!String.IsEmpty(ListItem.FileExtension)</visible>
+						<visible>Container.Content(Episodes)</visible>
 					</control>
 					<control type="image">
 						<description>case by resolution</description>

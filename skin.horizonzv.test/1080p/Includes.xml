@@ -537,10 +537,10 @@
                 <randomize>true</randomize>
                 <aspectratio>keep</aspectratio>
                 <colordiffuse>$VAR[BackgroundDim]</colordiffuse>
-                <imagepath background="true">$INFO[Window(Visualisation).Property(ArtistSlideshow)]</imagepath>
-                <visible>System.HasAddon(script.artistslideshow)+!Window.IsVisible(Home)</visible>
-                <visible>Skin.HasSetting(fanart)</visible>
-                <visible>!String.Contains(Window(Visualisation).Property(ArtistSlideshow),black)+!String.Contains(Window(Visualisation).Property(ArtistSlideshow),transparent)</visible>
+                <imagepath background="true">$INFO[Window(Visualisation).Property(ArtistSlideshow.Image)]</imagepath>
+                <visible>System.HasAddon(script.artistslideshow)+Skin.HasSetting(fanart)</visible>
+                <visible>!String.IsEmpty(Window(Visualisation).Property(ArtistSlideshow.Image))+!Window.IsVisible(Home)</visible>
+                <!-- <visible>!String.Contains(Window(Visualisation).Property(ArtistSlideshow),black)+!String.Contains(Window(Visualisation).Property(ArtistSlideshow),transparent)</visible> -->
                 <visible>!Visualisation.Enabled+Window.IsVisible(visualisation)</visible>
             </control>
             <control type="image">
@@ -1223,7 +1223,7 @@
     </include>
     <include name="DiscartMovies">
         <visible>Skin.HasSetting(EnableExtendedArt)</visible>
-        <visible>!ListItem.IsParentFolder+!Container.Content(sets)+!ListItem.IsCollection</visible>
+        <visible>!ListItem.IsParentFolder+!ListItem.IsFolder</visible>
         <texture fallback="cdart/default_bluray.png">$INFO[ListItem.Art(discart)]</texture>
         <animation type="Visible" reversible="false">
             <effect type="fade" start="0" end="100" time="700" delay="200"/>
@@ -1233,7 +1233,7 @@
     </include>
     <include name="DiscartMovies_small">
         <visible>Skin.HasSetting(EnableExtendedArt)</visible>
-        <visible>!ListItem.IsParentFolder+!Container.Content(sets)</visible>
+        <visible>!ListItem.IsParentFolder+!ListItem.IsFolder</visible>
         <visible>!ListItem.IsCollection</visible>
         <texture fallback="cdart/default_bluray.png">$INFO[ListItem.Art(discart)]</texture>
         <animation type="Visible" reversible="false">

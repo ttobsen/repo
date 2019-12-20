@@ -299,6 +299,30 @@
 		<value condition="ListItem.IsFolder">DefaultFolder.png</value>
 		<value>$INFO[ListItem.Icon]</value>
     </variable>
+    <variable name="PosterThumbDebugLabel">
+        <value condition="ListItem.IsCollection+!String.IsEmpty(ListItem.Art(set))">ListItem.Art(set)</value>
+        <value condition="ListItem.IsCollection+!String.IsEmpty(ListItem.Art(set.poster))">ListItem.Art(set.poster)</value>
+		<value condition="[String.Contains(Container.ListItem.DBTYPE,episode)|Container.Content(episodes)]+!Window.IsVisible(home)">ListItem.Thumb</value>
+        <value condition="[String.Contains(Container.ListItem.DBTYPE,episode)|Container.Content(episodes)]+Window.IsVisible(home)">ListItem.Art(tvshow.poster)</value>
+        <value condition="String.Contains(Skin.String(studiologos.name),coloured)+Container.Content(studios)+!ListItem.IsParentFolder+!Window.IsVisible(music)">ListItem.Label,resource://resource.images.studios.coloured/,]$VAR[MovieMovieStudiosVar</value>
+        <value condition="String.Contains(Skin.String(studiologos.name),white)+Container.Content(studios)+!ListItem.IsParentFolder+!Window.IsVisible(music)">ListItem.Label,resource://resource.images.studios.white/,]$VAR[MovieMovieStudiosVar</value>
+        <value condition="String.Contains(Skin.String(moviegenreicons.name),coloured)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">ListItem.Label,resource://resource.images.moviegenreicons.coloured/,]$VAR[MovieMoviegenreiconsExtVar</value>
+        <value condition="String.Contains(Skin.String(moviegenreicons.name),filmstrip)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">ListItem.Label,resource://resource.images.moviegenreicons.filmstrip/,]$VAR[MovieMoviegenreiconsExtVar</value>
+        <value condition="String.Contains(Skin.String(moviegenreicons.name),grey)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">ListItem.Label,resource://resource.images.moviegenreicons.grey/,]$VAR[MovieMoviegenreiconsExtVar</value>
+        <value condition="String.Contains(Skin.String(moviegenreicons.name),poster)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">ListItem.Label,resource://resource.images.moviegenreicons.poster/,]$VAR[MovieMoviegenreiconsExtVar</value>
+        <value condition="String.Contains(Skin.String(moviegenreicons.name),transparent)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">ListItem.Label,resource://resource.images.moviegenreicons.transparent/,]$VAR[MovieMoviegenreiconsExtVar</value>
+        <value condition="String.Contains(Skin.String(moviegenreicons.name),white)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">ListItem.Label,resource://resource.images.moviegenreicons.white/,]$VAR[MovieMoviegenreiconsExtVar</value>
+        <value condition="String.Contains(Skin.String(moviegenreicons.name),flat)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">ListItem.Label,resource://resource.images.moviegenreicons.xzener-flat/,]$VAR[MovieMoviegenreiconsExtVar</value>
+        <value condition="String.Contains(Skin.String(moviegenreicons.name),reflected)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">ListItem.Label,resource://resource.images.moviegenreicons.xzener-reflection/,.png]$VAR[MovieMusicgenreiconsExtVar</value>
+        <value condition="String.Contains(Skin.String(musicgenreicons.name),grey)+Container.Content(genres)+!ListItem.IsParentFolder+Window.IsVisible(music)">ListItem.Label,resource://resource.images.musicgenreicons.grey/,.jpg]$VAR[MovieMusicgenreiconsExtVar</value>
+        <value condition="String.Contains(Skin.String(musicgenreicons.name),poster)+Container.Content(genres)+!ListItem.IsParentFolder+Window.IsVisible(music)">ListItem.Label,resource://resource.images.musicgenreicons.poster/,.jpg]$VAR[MovieMusicgenreiconsExtVar</value>
+        <value condition="String.Contains(Skin.String(musicgenreicons.name),text)+Container.Content(genres)+!ListItem.IsParentFolder+Window.IsVisible(music)">ListItem.Label,resource://resource.images.musicgenreicons.text/,.jpg]$VAR[MovieMusicgenreiconsExtVar</value>
+        <value condition="!String.IsEmpty(ListItem.Art(poster))">ListItem.Art(poster)</value>
+		<value condition="!String.IsEmpty(Listitem.EpgEventIcon)">ListItem.EpgEventIcon</value>
+        <value condition="!String.IsEmpty(ListItem.Icon)">ListItem.Icon</value>
+		<value condition="ListItem.IsFolder">DefaultFolder.png</value>
+		<value>ListItem.Icon</value>
+    </variable>
     <variable name="LibraryEditorLabel">
         <value condition="Container.Content(movies)">$LOCALIZE[42205]</value>
         <value condition="Container.Content(tvshows)">$LOCALIZE[42206]</value>
@@ -311,7 +335,7 @@
     </variable>
     <variable name="StreamFlag">
         <value condition="String.Contains(ListItem.Path,video.amazon)">watched/OverlayAmazon.png</value>
-        <value condition="String.Contains(ListItem.Path,video.netflix)">watched/OverlayStream.png</value>
+        <value condition="String.Contains(ListItem.Path,video.netflix)">watched/OverlayNetflix.png</value>
         <value condition="String.Contains(ListItem.FileExtension,strm)">watched/OverlayStream.png</value>
         <value condition="String.Contains(ListItem.FileExtension,disc)">watched/OverlayStub.png</value>
     </variable>
@@ -319,7 +343,7 @@
         <value condition="ListItem.IsStereoscopic">flagging/lists/3D.png</value>
         <value condition="ListItem.IsCollection">flagging/lists/set.png</value>
         <value condition="String.Contains(ListItem.Path,video.amazon)">flagging/lists/amazon.png</value>
-        <value condition="String.Contains(ListItem.Path,video.netflix)">flagging/lists/strm.png</value>
+        <value condition="String.Contains(ListItem.Path,video.netflix)">flagging/lists/netflix.png</value>
         <value condition="String.Contains(ListItem.FileExtension,strm)">flagging/lists/strm.png</value>
         <value condition="String.Contains(ListItem.FileExtension,disc)">flagging/lists/stub.png</value>
         <value>$INFO[ListItem.VideoResolution,flagging/lists/,.png]</value>

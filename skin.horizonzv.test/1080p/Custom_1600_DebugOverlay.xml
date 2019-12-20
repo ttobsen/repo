@@ -527,7 +527,7 @@
             <left>0</left>
             <top>198</top>
             <include>PathID</include>
-            <label>Posterthumb: $VAR[PosterThumb]</label>
+            <label>Posterthumb LABEL: $VAR[PosterThumbDebugLabel]</label>
             <visible>Skin.HasSetting(DebugInfo)</visible>
         </control>
         <control type="label">
