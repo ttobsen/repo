@@ -1,4 +1,9 @@
-﻿v 1.18.0.40
+﻿v 1.18.0.41
+- Bugfix DVD Rohling Anzeige bei Ordnern
+- Bugfix Artistslideshow - Addon benutzt neuen Code (Addon muss auf 3.0 aktualisiert werden)
+- Netflixlogo hinzugefügt
+
+v 1.18.0.40
 - Bugfix Plot (Schriftgröße)
 - Keyboardschriftart geändert
 
