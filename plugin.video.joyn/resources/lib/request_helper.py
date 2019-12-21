@@ -34,11 +34,14 @@ def get_url(url,
             post_data=None,
             fail_silent=False,
             no_cache=False,
-            return_json_errors=[]):
+            return_json_errors=[],
+            return_final_url=False):
 
 	response_content = ''
 	request_hash = sha512(
 	        (url + dumps(additional_headers) + dumps(additional_query_string) + dumps(post_data)).encode('utf-8')).hexdigest()
+
+	final_url = url
 
 	if xbmc_helper.get_bool_setting('debug_requests') is True:
 		xbmc_helper.log_debug(
@@ -97,6 +100,7 @@ def get_url(url,
 		else:
 			response_content = compat._decode(response.read())
 
+		final_url = response.geturl()
 		_etag = response.info().get('etag', None)
 		if no_cache is False and _etag is not None:
 			set_etags_data(request_hash, _etag, response_content)
@@ -151,6 +155,9 @@ def get_url(url,
 			xbmc_helper.notification(compat._format(xbmc_helper.translation('ERROR'), 'URL Access'),
 			                         compat._format(xbmc_helper.translation('MSG_NO_ACCESS_TO_URL'), str(url)))
 			exit(0)
+
+	if return_final_url:
+		return final_url, response_content
 
 	return response_content
 
