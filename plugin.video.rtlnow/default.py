@@ -701,6 +701,7 @@ def liveTV():
 		debug("(liveTV) ##### channelITEM : {0} #####".format(str(channelITEM)))
 		short = channelITEM['nowNextEpgMovies']['items'][0]
 		station = py2_enc(channelITEM['name']).upper()
+		idd = str(short['id'])
 		title = py2_enc(short['title']).strip()
 		subTitle = py2_enc(short['subTitle']).strip()
 		if subTitle != "": title = '{0} - {1}'.format(title, subTitle)
@@ -710,7 +711,7 @@ def liveTV():
 		END = endDT.strftime(' {0} %H{1}%M{2}').format('-', ':', ')')
 		normSD = short['manifest']['dash']
 		highHD = short['manifest']['dashhd']
-		image = cleanPhoto(short['image']).replace('640x360/', '960x0/')
+		image = 'https://aistvnow-a.akamaihd.net/tvnow/epg/'+idd+'/960x0/image.jpg'
 		plot = '[COLOR orangered]bis '+END.replace('-', '').replace(')', '').strip()+' Uhr[/COLOR]'
 		if 'total' in channelITEM['nowNextEpgMovies'] and str(channelITEM['nowNextEpgMovies']['total']) == '2':
 			shorten = channelITEM['nowNextEpgMovies']['items'][1]

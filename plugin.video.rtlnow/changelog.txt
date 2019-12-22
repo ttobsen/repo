@@ -7,3 +7,6 @@
 - optimized: Script komplett überarbeitet und wieder funktionsfähig gemacht, unnötige Passagen entfernt (läuft über die alte API v3) ...
 - added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19+) :-)
 *** für die volle Funktionsfähigkeit unter KODI-Matrix ist das Addon - script.common.plugin.cache - mindestens in der Version 2.6.0 erforderlich ***
+
+[B]Version 2.0.2  (22.12.2019)[/B] by realvito[CR]
+- fixed: In der Rubrik = LiveTV werden teilweise keine Bilder angezeigt
