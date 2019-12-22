@@ -24,42 +24,40 @@ import xbmcvfs
 import shutil
 import socket
 import time
-import base64
 from datetime import datetime, timedelta
 import io
 import gzip
 import ssl
+import base64
+
 
 global debuging
 pluginhandle = int(sys.argv[1])
 addon = xbmcaddon.Addon()
-#socket.setdefaulttimeout(40)
 addonPath = xbmc.translatePath(addon.getAddonInfo('path')).encode('utf-8').decode('utf-8')
 dataPath    = xbmc.translatePath(addon.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
 temp           = xbmc.translatePath(os.path.join(dataPath, 'temp', '')).encode('utf-8').decode('utf-8')
 defaultFanart = os.path.join(addonPath, 'fanart.jpg')
 icon = os.path.join(addonPath, 'icon.png')
-pic = os.path.join(addonPath, 'resources', 'media', '').encode('utf-8').decode('utf-8')
-NEXT_BEFORE_PAGE = addon.getSetting("NEXT_BEFORE") == 'true'
-enableDebug = addon.getSetting("enableDebug") == 'true'
-Zertifikat = addon.getSetting("inetCert")
-baseURL="http://www.filmstarts.de"
+artpic = os.path.join(addonPath, 'resources', 'media', '').encode('utf-8').decode('utf-8')
+NEXT_BEFORE_PAGE = addon.getSetting('NEXT_BEFORE') == 'true'
+Zertifikat = addon.getSetting('inetCert')
+DEB_LEVEL = (xbmc.LOGNOTICE if addon.getSetting('enableDebug') == 'true' else xbmc.LOGDEBUG)
+baseURL = 'http://www.filmstarts.de'
 
 xbmcplugin.setContent(pluginhandle, 'movies')
 
 xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_UNSORTED)
 xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
 
-if Zertifikat == "false":
-	try:
-		_create_unverified_https_context = ssl._create_unverified_context
-	except AttributeError:
-		pass
-	else:
-		ssl._create_default_https_context = _create_unverified_https_context
+if Zertifikat == 'false':
+	try: _create_unverified_https_context = ssl._create_unverified_context
+	except AttributeError: pass
+	else: ssl._create_default_https_context = _create_unverified_https_context
 
 if xbmcvfs.exists(temp) and os.path.isdir(temp):
 	shutil.rmtree(temp, ignore_errors=True)
+	xbmc.sleep(500)
 xbmcvfs.mkdirs(temp)
 cookie = os.path.join(temp, 'cookie.lwp')
 cj = LWPCookieJar()
@@ -67,9 +65,14 @@ cj = LWPCookieJar()
 if xbmcvfs.exists(cookie):
 	cj.load(cookie, ignore_discard=True, ignore_expires=True)
 
+if xbmcvfs.exists(cookie):
+	cj.load(cookie, ignore_discard=True, ignore_expires=True)
+
 def py2_enc(s, encoding='utf-8'):
-	if PY2 and isinstance(s, unicode):
-		s = s.encode(encoding)
+	if PY2:
+		if not isinstance(s, basestring):
+			s = str(s)
+		s = s.encode(encoding) if isinstance(s, unicode) else s
 	return s
 
 def py2_uni(s, encoding='utf-8'):
@@ -83,39 +86,24 @@ def py3_dec(d, encoding='utf-8'):
 	return d
 
 def translation(id):
-	LANGUAGE = addon.getLocalizedString(id)
-	LANGUAGE = py2_enc(LANGUAGE)
-	return LANGUAGE
+	return py2_enc(addon.getLocalizedString(id))
 
 def failing(content):
 	log(content, xbmc.LOGERROR)
 
 def debug_MS(content):
-	if enableDebug:
-		log(content, xbmc.LOGNOTICE)
-
-def debug(content):
-	log(content, xbmc.LOGDEBUG)
+	log(content, DEB_LEVEL)
 
 def log(msg, level=xbmc.LOGNOTICE):
-	msg = py2_enc(msg)
-	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+msg, level)
+	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+py2_enc(msg), level)
 
-def getUrl(url, header=None, referer=None):
+def getUrl(url, header=None, referer=None, agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36'):
 	global cj
-	#debug_MS("(getUrl) -------------------------------------------------- START = getUrl --------------------------------------------------")
-	#debug_MS("(getUrl) ##### URL={0} #####".format(url))
-	for cook in cj:
-		debug_MS("(getUrl) ##### COOKIE={0} #####".format(str(cook)))
 	opener = build_opener(HTTPCookieProcessor(cj))
+	opener.addheaders = [('User-Agent', agent), ('Accept-Encoding', 'gzip, deflate')]
 	try:
-		if header:
-			opener.addheaders = header
-		else:
-			opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36')]
-			opener.addheaders = [('Accept-Encoding', 'gzip, deflate')]
-		if referer:
-			opener.addheaders = [('Referer', referer)]
+		if header: opener.addheaders = header
+		if referer: opener.addheaders = [('Referer', referer)]
 		response = opener.open(url, timeout=30)
 		if response.info().get('Content-Encoding') == 'gzip':
 			content = py3_dec(gzip.GzipFile(fileobj=io.BytesIO(response.read())).read())
@@ -123,12 +111,8 @@ def getUrl(url, header=None, referer=None):
 			content = py3_dec(response.read())
 	except Exception as e:
 		failure = str(e)
-		if hasattr(e, 'code'):
-			failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
-			xbmcgui.Dialog().notification((translation(30521).format('URL')), "ERROR = [COLOR red]{0}[/COLOR]".format(failure), icon, 15000)
-		elif hasattr(e, 'reason'):
-			failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
-			xbmcgui.Dialog().notification((translation(30521).format('URL')), "ERROR = [COLOR red]{0}[/COLOR]".format(failure), icon, 15000)
+		failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
+		xbmcgui.Dialog().notification(translation(30521).format('URL'), "ERROR = [COLOR red]{0}[/COLOR]".format(failure), icon, 15000)
 		content = ""
 		return sys.exit(0)
 	opener.close()
@@ -141,70 +125,69 @@ def index():
 	addDir(translation(30602), "", 'kino', icon)
 	addDir(translation(30603), "", 'series', icon)
 	addDir(translation(30604), "", 'news', icon)
-	addDir(translation(30608), "", 'aSettings', pic+'settings.png')
+	addDir(translation(30608), "", 'aSettings', artpic+'settings.png')
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def trailer():
-	addDir(translation(30609), baseURL+"/trailer/beliebteste.html", 'listTrailer', icon)
-	addDir(translation(30610), baseURL+"/trailer/imkino/", 'listTrailer', icon)
-	addDir(translation(30611), baseURL+"/trailer/bald/", 'listTrailer', icon)
-	addDir(translation(30612), baseURL+"/trailer/neu/", 'listTrailer', icon)
-	addDir(translation(30613), baseURL+"/trailer/archiv/", 'filtertrailer', icon)
+	addDir(translation(30620), baseURL+"/trailer/beliebteste.html", 'listTrailer', icon)
+	addDir(translation(30621), baseURL+"/trailer/imkino/", 'listTrailer', icon)
+	addDir(translation(30622), baseURL+"/trailer/bald/", 'listTrailer', icon)
+	addDir(translation(30623), baseURL+"/trailer/neu/", 'listTrailer', icon)
+	addDir(translation(30624), baseURL+"/trailer/archiv/", 'filtertrailer', icon)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def kino():
-	addDir(translation(30614), baseURL+"/filme-imkino/vorpremiere/", 'listKino_small', icon)
-	addDir(translation(30615), baseURL+"/filme-imkino/kinostart/", 'listKino_big', icon, datum="N")
-	addDir(translation(30616), baseURL+"/filme-imkino/neu/", 'listKino_big', icon, datum="J")
-	addDir(translation(30617), baseURL+"/filme-imkino/besten-filme/user-wertung/", 'listKino_big', icon, datum="N")
-	#addDir(translation(30618), baseURL+"/filme-imkino/kinderfilme/", 'listKino_small', icon)
-	addDir(translation(30619), baseURL+"/filme-vorschau/de/", 'selectionWeek', icon)
-	addDir(translation(30620), baseURL+"/filme/besten/user-wertung/", 'filterkino', icon)
-	addDir(translation(30621), baseURL+"/filme/schlechtesten/user-wertung/", 'filterkino', icon)
-	addDir(translation(30622), baseURL+"/filme/kinderfilme/", 'filterkino', icon)
+	addDir(translation(30630), baseURL+"/filme-imkino/vorpremiere/", 'listKino_small', icon)
+	addDir(translation(30631), baseURL+"/filme-imkino/kinostart/", 'listKino_big', icon, datum="N")
+	addDir(translation(30632), baseURL+"/filme-imkino/neu/", 'listKino_big', icon, datum="J")
+	addDir(translation(30633), baseURL+"/filme-imkino/besten-filme/user-wertung/", 'listKino_big', icon, datum="N")
+	addDir(translation(30634), baseURL+"/filme-vorschau/de/", 'selectionWeek', icon)
+	addDir(translation(30635), baseURL+"/filme/besten/user-wertung/", 'filterkino', icon)
+	addDir(translation(30636), baseURL+"/filme/schlechtesten/user-wertung/", 'filterkino', icon)
+	addDir(translation(30637), baseURL+"/filme/kinderfilme/", 'filterkino', icon)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def series():
-	addDir(translation(30623), baseURL+"/serien/top/", 'listSeries_big', icon, datum="N")
-	addDir(translation(30624), baseURL+"/serien/beste/", 'filterserien', icon)
-	addDir(translation(30625), baseURL+"/serien/top/populaerste/", 'listSeries_small', icon)
-	addDir(translation(30626), baseURL+"/serien/kommende-staffeln/meisterwartete/", 'listSeries_small', icon)
-	addDir(translation(30627), baseURL+"/serien/kommende-staffeln/deutschland/", 'listSeries_small', icon)
-	addDir(translation(30628), baseURL+"/serien/kommende-staffeln/demnaechst/deutschland/", 'listSeries_small', icon)
-	addDir(translation(30629), baseURL+"/serien/neue/", 'listSeries_big', icon, datum="N")
-	addDir(translation(30630), baseURL+"/serien/videos/neueste/", 'listSpecial_Series_Trailer', icon)
-	addDir(translation(30631), baseURL+"/serien-archiv/", 'filterserien', icon)
+	addDir(translation(30650), baseURL+"/serien/top/", 'listSeries_big', icon, datum="N")
+	addDir(translation(30651), baseURL+"/serien/beste/", 'filterserien', icon)
+	addDir(translation(30652), baseURL+"/serien/top/populaerste/", 'listSeries_big', icon, datum="N")
+	addDir(translation(30653), baseURL+"/serien/kommende-staffeln/meisterwartete/", 'listSeries_big', icon, datum="N")
+	addDir(translation(30654), baseURL+"/serien/kommende-staffeln/", 'listSeries_big', icon, datum="N")
+	addDir(translation(30655), baseURL+"/serien/kommende-staffeln/demnaechst/", 'listSeries_big', icon, datum="N")
+	addDir(translation(30656), baseURL+"/serien/neue/", 'listSeries_big', icon, datum="N")
+	addDir(translation(30657), baseURL+"/trailer/serien/neueste/", 'listSpecial_Series_Trailer', icon)
+	addDir(translation(30658), baseURL+"/serien-archiv/", 'filterserien', icon)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def news():
-	addDir(translation(30632), baseURL+"/videos/shows/funf-sterne/", 'listNews', icon)
-	addDir(translation(30633), baseURL+"/videos/shows/filmstarts-fehlerteufel/", 'listNews', icon)
-	addDir(translation(30634), baseURL+"/trailer/interviews/", 'listNews', icon)
-	addDir(translation(30635), baseURL+"/videos/shows/meine-lieblings-filmszene/", 'listNews', icon)
+	addDir(translation(30670), baseURL+"/videos/shows/funf-sterne/", 'listNews', icon)
+	addDir(translation(30671), baseURL+"/videos/shows/filmstarts-fehlerteufel/", 'listNews', icon)
+	addDir(translation(30672), baseURL+"/trailer/interviews/", 'listNews', icon)
+	addDir(translation(30673), baseURL+"/videos/shows/meine-lieblings-filmszene/", 'listNews', icon)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def filtertrailer(url):
 	debug_MS("(filtertrailer) -------------------------------------------------- START = filtertrailer --------------------------------------------------")
 	debug_MS("(filtertrailer) ##### URL={0} #####".format(url))
 	if not "genre-" in url:
-		addDir(translation(30661), url, 'selectionCategories', icon, type="filtertrailer", CAT_text="Alle Genres")
+		addDir(translation(30801), url, 'selectionCategories', icon, type="filtertrailer", CAT_text="Nach Genre")
 	if not "sprache-" in url:
-		addDir(translation(30662), url, 'selectionCategories', icon, type="filtertrailer", CAT_text="Alle Sprachen")
+		addDir(translation(30802), url, 'selectionCategories', icon, type="filtertrailer", CAT_text="Nach Sprache")
 	if not "format-" in url:
-		addDir(translation(30663), url, 'selectionCategories', icon, type="filtertrailer", CAT_text="Alle Formate")
-	addDir(translation(30670), url, 'listSpecial_Series_Trailer', icon)
+		addDir(translation(30803), url, 'selectionCategories', icon, type="filtertrailer", CAT_text="Nach Typ")
+	addDir(translation(30810), url, 'listSpecial_Series_Trailer', icon)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def filterkino(url):
 	debug_MS("(filterkino) -------------------------------------------------- START = filterkino --------------------------------------------------")
 	debug_MS("(filterkino) ##### URL={0} #####".format(url))
 	if not "genre-" in url:
-		addDir(translation(30661), url, 'selectionCategories', icon, type="filterkino", CAT_text="Alle Genres")
+		addDir(translation(30801), url, 'selectionCategories', icon, type="filterkino", CAT_text="Alle Genres")
 	if not "jahrzehnt" in url:
-		addDir(translation(30664), url, 'selectionCategories', icon, type="filterkino", CAT_text="Alle Jahre")
+		addDir(translation(30804), url, 'selectionCategories', icon, type="filterkino", CAT_text="Alle Jahre")
 	if not "produktionsland-" in url:
-		addDir(translation(30665), url, 'selectionCategories', icon, type="filterkino", CAT_text="Alle Länder")
-	addDir(translation(30670), url, 'listKino_small', icon)
+		addDir(translation(30805), url, 'selectionCategories', icon, type="filterkino", CAT_text="Alle Länder")
+	addDir(translation(30810), url, 'listKino_small', icon)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def filterserien(url):
@@ -213,26 +196,26 @@ def filterserien(url):
 	if not "genre-" in url:
 		if "serien-archiv" in url: CAT_text = "Nach Genre"
 		else: CAT_text="Alle Genres"
-		addDir(translation(30661), url, 'selectionCategories', icon, type="filterserien", CAT_text=CAT_text)
+		addDir(translation(30801), url, 'selectionCategories', icon, type="filterserien", CAT_text=CAT_text)
 	if not "jahrzehnt" in url:
 		if "serien-archiv" in url: CAT_text = "Nach Produktionsjahr"
 		else: CAT_text="Alle Jahre"
-		addDir(translation(30664), url, 'selectionCategories', icon, type="filterserien", CAT_text=CAT_text)
+		addDir(translation(30804), url, 'selectionCategories', icon, type="filterserien", CAT_text=CAT_text)
 	if not "produktionsland-" in url:
 		if "serien-archiv" in url: CAT_text = "Nach Land"
 		else: CAT_text="Alle Länder"
-		addDir(translation(30665), url, 'selectionCategories', icon, type="filterserien", CAT_text=CAT_text)
+		addDir(translation(30805), url, 'selectionCategories', icon, type="filterserien", CAT_text=CAT_text)
 	if "serien-archiv" in url:
-		addDir(translation(30670), url, 'listSeries_big', icon, datum="N")
+		addDir(translation(30810), url, 'listSeries_big', icon, datum="N")
 	else:
-		addDir(translation(30670), url, 'listSeries_small', icon)
+		addDir(translation(30810), url, 'listSeries_small', icon)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def selectionCategories(url, type="", CAT_text=""):
 	debug_MS("(selectionCategories) -------------------------------------------------- START = selectionCategories --------------------------------------------------")
 	debug_MS("(selectionCategories) ##### URL={0} ##### TYPE={1} ##### TEXT={2} #####".format(url, type, CAT_text))
 	content = getUrl(url)
-	if "serien-archiv" in url:
+	if "archiv/" in url:
 		result = content[content.find('data-name="'+CAT_text+'"')+1:]
 		result = result[:result.find('</ul>')]
 		part = result.split('class="filter-entity-item"')
@@ -242,38 +225,28 @@ def selectionCategories(url, type="", CAT_text=""):
 		part = result.split('</li><li')
 	for i in range(1,len(part),1):  
 		element=part[i]
-		element = element.replace("<strong>", "").replace("</strong>", "")
+		element = element.replace('<strong>', '').replace('</strong>', '')
 		try:
-			if "serien-archiv" in url:
-				try: number = re.compile('<span class=["\']light["\']>\(([^<]+?)\)</span>', re.DOTALL).findall(element)[0].strip() 
-				except: number = ""
+			try: number = re.compile(r'<span class=["\'](?:light|lighten)["\']>\(([^<]+?)\)</span>', re.DOTALL).findall(element)[0].strip() 
+			except: number = ""
+			if 'href=' in element:
+				matchUN = re.compile(r'href=["\']([^"]+)["\'](?: title=.+?["\']>|>)([^<]+?)</a>', re.DOTALL).findall(element)
+				link = matchUN[0][0]
+				name = matchUN[0][1].strip()
+			else:
 				try:
-					matchUN = re.compile('href=["\']([^"]+)["\'] title=.+?["\']>([^<]+?)</a>', re.DOTALL).findall(element)
-					link = matchUN[0][0]
+					matchUN = re.compile(r'<span class=["\']ACr([^"]+) item-content["\'] title=.+?["\']>([^<]+?)</span>', re.DOTALL).findall(element)
+					oldURL = matchUN[0][0].replace('ACr', '')
+					link = base64.b64decode(oldURL).decode('utf-8', 'ignore')
 					name = matchUN[0][1].strip()
 				except:
-					matchUN = re.compile('class=["\']([^ "]+) item-content["\'] title=.+?["\']>([^<]+?)</span>', re.DOTALL).findall(element)
-					oldURL = matchUN[0][0]
-					link = oldURL.replace("ACr", "")
-					link = base64.b64decode(link).decode("utf-8", "ignore")
-					name = matchUN[0][1].strip()
-				if number != "": name += "   ("+str(number)+")"
-				addDir(name, baseURL+link, type, icon)
-			else:
-				try: number = re.compile('<span class=["\']lighten["\']>\(([^<]+?)\)</span>', re.DOTALL).findall(element)[0].strip() 
-				except: number = ""
-				try:
-					matchUN = re.compile('<span class=["\']acLnk ([^"]+)">([^<]+?)</span>', re.DOTALL).findall(element)  
+					matchUN = re.compile(r'<span class=["\']acLnk ([^"]+)["\']>([^<]+?)</span>', re.DOTALL).findall(element)  
 					link = decodeURL(matchUN[0][0])
 					name = matchUN[0][1].strip()
-				except:
-					matchUN = re.compile('<a href=["\']([^"]+)["\']>([^<]+)</a>', re.DOTALL).findall(element)   
-					link = matchUN[0][0]
-					name = matchUN[0][1].strip()
-				if number != "": name += "   ("+str(number)+")"
-				addDir(name, baseURL+link, type, icon)
-			debug_MS("(selectionCategories) Name : "+name)
-			debug_MS("(selectionCategories) Link : "+baseURL+link)
+			if number != "": name += "   ("+str(number)+")"
+			addDir(name, baseURL+link, type, icon)
+			debug_MS("(selectionCategories) Name : {0}".format(name))
+			debug_MS("(selectionCategories) Link : {0}".format(baseURL+link))
 		except:
 			failing("..... exception .....")
 			failing("(selectionCategories) Fehler-Eintrag : {0} #####".format(str(element)))
@@ -282,26 +255,22 @@ def selectionCategories(url, type="", CAT_text=""):
 def selectionWeek(url):
 	debug_MS("(selectionWeek) -------------------------------------------------- START = selectionWeek --------------------------------------------------")
 	debug_MS("(selectionWeek) ##### URL={0} #####".format(url))
-	content=getUrl(url)
+	content = getUrl(url)
 	result = content[content.find('<div class="pagination pagination-select">')+1:]
 	result = result[:result.find('<span class="txt">Nächste</span><i class="icon icon-right icon-arrow-right-a">')]
-	part = result.split('eventCategory":"release_calendar_page"')
-	for i in range(1,len(part),1):
-		element=part[i]
-		try:
-			datum = re.compile('eventLabel["\']:["\'](.+?)["\'],', re.DOTALL).findall(element)[0]
-			title = re.compile('value=["\']ACr.*?=["\']([^<]+)</option>', re.DOTALL).findall(element)[0].replace('>', '')
-			if "selected" in title:
-				title = title.replace('selected', '')
-				name = "[I][COLOR lime]"+cleanTitle(title)+translation(30636)+"[/COLOR][/I]"
-			else:
-				name = cleanTitle(title)
-			debug_MS("(selectionWeek) Name : "+name)
-			debug_MS("(selectionWeek) Datum : "+datum)
-			addDir(name, baseURL+"/filme-vorschau/de/week-", 'listKino_big', icon, datum=datum)
-		except:
-			failing("..... exception .....")
-			failing("(selectionWeek) Fehler-Eintrag : {0} #####".format(str(element)))
+	matchUN = re.compile(r'<option value=["\']ACr([^"]+)["\']([^<]+)</option>', re.DOTALL).findall(result)
+	for oldURL, title in matchUN:
+		oldURL = oldURL.replace('ACr', '')
+		link = base64.b64decode(oldURL).decode('utf-8', 'ignore')
+		datum = str(link.replace('filme-vorschau/de/week-', '').replace('/', ''))
+		title = title.replace('>', '')
+		if "selected" in title:
+			title = title.replace('selected', '')
+			name = "[I][COLOR lime]"+cleanTitle(title)+translation(30831)+"[/COLOR][/I]"
+		else: name = cleanTitle(title)
+		debug_MS("(selectionWeek) Name : {0}".format(name))
+		debug_MS("(selectionWeek) Datum : {0}".format(datum))
+		addDir(name, baseURL+"/filme-vorschau/de/week-", 'listKino_big', icon, datum=datum)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def listTrailer(url, page=1):
@@ -309,8 +278,7 @@ def listTrailer(url, page=1):
 	page = int(page)
 	if page > 1:
 		PGurl = url+"?page="+str(page)
-	else:
-		PGurl = url
+	else: PGurl = url
 	debug_MS("(listTrailer) ##### URL={0} ##### PAGE={1} #####".format(PGurl, str(page)))
 	content = getUrl(PGurl)
 	selection = re.findall('<div class="card video-card-trailer(.+?)<span class="thumbnail-count">', content, re.DOTALL)
@@ -322,83 +290,84 @@ def listTrailer(url, page=1):
 			link = matchUN[0][0]
 			title = matchUN[0][1]
 			name = cleanTitle(title)
-			debug_MS("(listTrailer) Name : "+name)
-			debug_MS("(listTrailer) Link : "+baseURL+link)
-			debug_MS("(listTrailer) Icon : "+photo)
+			debug_MS("(listTrailer) Name : {0}".format(name))
+			debug_MS("(listTrailer) Link : {0}".format(baseURL+link))
+			debug_MS("(listTrailer) Icon : {0}".format(photo))
 			addLink(name, baseURL+link, 'playVideo', photo, extraURL=url)
 		except:
 			failing("..... exception .....")
 			failing("(listTrailer) Fehler-Eintrag : {0} #####".format(str(chtml)))
 	try:
 		nextP = re.compile(r'class=["\']((?:ACr[^<]+</span></div></nav>    </section>|button button-md item["\'] href=[^<]+</a></div></nav>    </section>))', re.DOTALL).findall(content)[0]
-		addDir(translation(30685), url, 'listTrailer', pic+"nextpage.png", page=page+1)
+		debug_MS("(listTrailer) Now show NextPage ...")
+		addDir(translation(30832), url, 'listTrailer', artpic+"nextpage.png", page=page+1)
 	except: pass
 	xbmcplugin.endOfDirectory(pluginhandle)
 
-def listSpecial_Series_Trailer(url, page=1):
-	debug_MS("(listTrailer) -------------------------------------------------- START = listSpecial_Series_Trailer --------------------------------------------------")
+def listSpecial_Series_Trailer(url, page=1, position=0):
+	debug_MS("(listSpecial_Series_Trailer) -------------------------------------------------- START = listSpecial_Series_Trailer --------------------------------------------------")
 	page = int(page)
+	NEPVurl = url
 	if page > 1:
 		PGurl = url+"?page="+str(page)
-	else:
-		PGurl = url
+	else: PGurl = url
 	debug_MS("(listSpecial_Series_Trailer) ##### URL={0} ##### PAGE={1} #####".format(PGurl, str(page)))
 	content = getUrl(PGurl)
-	if "/serien" in PGurl:
-		result = content[content.find('<div class="tabs_main">')+1:]
-		result = result[:result.find('<i class="icon-arrow-left">')]
-		part = result.split('<article data-block')
-	else:
-		if 'fr">Nächste<i class="icon-arrow-right">' in content:
-			result = content[:content.find('<i class="icon-arrow-left">')]
-		else:
-			result = content[:content.find("<div id='ad-rectangle1-outer'>")]
-		part = result.split('<article class="media-meta')
-	for i in range(1,len(part),1): 
-		element = part[i]
-		element = element.replace("<strong>", "").replace("</strong>", "")
-		if "<a href=" in element:
+	if int(position) == 0:
+		try:
+			position = re.compile('<a class=["\']button button-md item["\'] href=.+?page=[0-9]+["\']>([0-9]+)</a></div></nav>', re.DOTALL).findall(content)[0]
+			debug_MS("(listSpecial_Series_Trailer) *FOUND-1* Pages-Maximum : {0}".format(str(position)))
+		except:
 			try:
-				try:
-					image = re.compile(r'src=["\'](https?://.+?(?:[0-9]+\.png|[a-z]+\.png|[0-9]+\.jpg|[a-z]+\.jpg|[0-9]+\.gif|[a-z]+\.gif))["\'\?]', re.DOTALL|re.IGNORECASE).findall(element)[0]
-				except:
-					image = re.compile(r'["\']src["\']:["\'](https?://.+?(?:[0-9]+\.png|[a-z]+\.png|[0-9]+\.jpg|[a-z]+\.jpg|[0-9]+\.gif|[a-z]+\.gif))["\'\?]', re.DOTALL|re.IGNORECASE).findall(element)[0]
-				photo = enlargeIMG(image)
-				try:
-					RuTi = re.compile('class=["\']icon icon-timer["\']>(.+?)</time>', re.DOTALL).findall(element)[0].replace("</i>", "").strip()
-					if ":" in RuTi:
-						running = re.compile('([0-9]+):([0-9]+)', re.DOTALL).findall(RuTi)
-						duration = int(running[0][0])*60+int(running[0][1])
-					elif not ":" in RuTi:
-						duration = int(RuTi)
-				except: duration =""
-				matchUN = re.compile('<a href=["\']([^"]+?)["\']>([^<]+)</a>', re.DOTALL).findall(element)
-				link = matchUN[0][0]
-				name = matchUN[0][1]
-				name = cleanTitle(name)
-				debug_MS("(listSpecial_Series_Trailer) Name : "+name)
-				debug_MS("(listSpecial_Series_Trailer) Link : "+baseURL+link)
-				debug_MS("(listSpecial_Series_Trailer) Icon : "+photo)
-				if link !="" and not "En savoir plus" in name:
-					addLink(name, baseURL+link, 'playVideo', photo, duration=duration, extraURL=url)
+				position = re.compile('<span class=["\']ACr.+?button-md item["\']>([0-9]+)</span></div></nav>', re.DOTALL).findall(content)[0]
+				debug_MS("(listSpecial_Series_Trailer) *FOUND-2* Pages-Maximum : {0}".format(str(position)))
+			except: pass
+	result = content[content.find('<main id="content-layout" class="content-layout cf">')+1:]
+	result = result[:result.find('<div class="rc-content">')]
+	part = result.split('<figure class="thumbnail ">')
+	for i in range(1,len(part),1):
+		element = part[i]
+		element = element.replace('<strong>', '').replace('</strong>', '')
+		try:
+			try:
+				image = re.compile(r'src=["\'](https?://.+?(?:[0-9]+\.png|[a-z]+\.png|[0-9]+\.jpg|[a-z]+\.jpg|[0-9]+\.gif|[a-z]+\.gif))["\'\?]', re.DOTALL|re.IGNORECASE).findall(element)[0]
 			except:
-				failing("..... exception .....")
-				failing("(listSpecial_Series_Trailer) Fehler-Eintrag : {0} #####".format(str(element)))
-	if 'fr">Nächste<i class="icon-arrow-right">' in content:
-		addDir(translation(30685), url, 'listSpecial_Series_Trailer', pic+"nextpage.png", page=page+1)
+				image = re.compile(r'["\']src["\']:["\'](https?://.+?(?:[0-9]+\.png|[a-z]+\.png|[0-9]+\.jpg|[a-z]+\.jpg|[0-9]+\.gif|[a-z]+\.gif))["\'\?]', re.DOTALL|re.IGNORECASE).findall(element)[0]
+			photo = enlargeIMG(image)
+			try:
+				RuTi = re.compile('class=["\']thumbnail-count["\']>(.+?)</span>', re.DOTALL).findall(element)[0].strip()
+				if ":" in RuTi:
+					running = re.compile('([0-9]+):([0-9]+)', re.DOTALL).findall(RuTi)
+					duration = int(running[0][0])*60+int(running[0][1])
+				elif not ":" in RuTi:
+					duration = int(RuTi)
+			except: duration =""
+			matchUN = re.compile(r'class=["\']meta-title-link["\'] href=["\']([^"]+?)["\']([^<]+)</a>', re.DOTALL).findall(element)
+			link = matchUN[0][0]
+			name = matchUN[0][1].replace(' >', '').replace('>', '')
+			name = cleanTitle(name)
+			debug_MS("(listSpecial_Series_Trailer) Name : {0}".format(name))
+			debug_MS("(listSpecial_Series_Trailer) Link : {0}".format(baseURL+link))
+			debug_MS("(listSpecial_Series_Trailer) Icon : {0}".format(photo))
+			if link !="" and not "En savoir plus" in name:
+				addLink(name, baseURL+link, 'playVideo', photo, duration=duration, extraURL=url)
+		except:
+			failing("..... exception .....")
+			failing("(listSpecial_Series_Trailer) Fehler-Eintrag : {0} #####".format(str(element)))
+	if int(position) > page:
+		debug_MS("(listSpecial_Series_Trailer) Now show NextPage ...")
+		addDir(translation(30832), NEPVurl, 'listSpecial_Series_Trailer', artpic+"nextpage.png", page=page+1, position=position)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def listKino_big(url, page=1, datum="N", position=0):
-	debug_MS("(listKino_small) -------------------------------------------------- START = listKino_big --------------------------------------------------")
+	debug_MS("(listKino_big) -------------------------------------------------- START = listKino_big --------------------------------------------------")
 	page = int(page)
 	FOUND = False
 	NEPVurl = url
 	if page > 1:
 		PGurl = url+"?page="+str(page)
-	else:
-		PGurl = url
+	else: PGurl = url
 	if datum !="" and datum !="J" and datum !="N":
-		url = url+datum+"/"
 		PGurl = PGurl+datum+"/"
 	debug_MS("(listKino_big) ##### URL={0} ##### PAGE={1} #####".format(PGurl, str(page)))
 	content = getUrl(PGurl)
@@ -411,45 +380,46 @@ def listKino_big(url, page=1, datum="N", position=0):
 				position = re.compile('<span class=["\']ACr.+?button-md item["\']>([0-9]+)</span></div></nav>', re.DOTALL).findall(content)[0]
 				debug_MS("(listKino_big) *FOUND-2* Pages-Maximum : {0}".format(str(position)))
 			except: pass
-	result = content[content.find('class="card card-entity card-entity-list cf"')+1:]
+	result = content[content.find('<main id="content-layout" class="content-layout cf">')+1:]
 	result = result[:result.find('<div class="rc-content">')]
 	part = result.split('<figure class="thumbnail ">')
 	for i in range(1,len(part),1):
 		element=part[i]
 		try:
-			matchUN = re.compile('class=["\']([^ "]+) thumbnail-container thumbnail-link["\'] title=["\'](.+?)["\']>', re.DOTALL).findall(element)
-			oldURL = matchUN[0][0].replace("ACr", "")
-			newURL = base64.b64decode(oldURL).decode("utf-8", "ignore")
+			matchUN = re.compile('class=["\']ACr([^ "]+) thumbnail-container thumbnail-link["\'] title=["\'](.+?)["\']>', re.DOTALL).findall(element)
+			oldURL = matchUN[0][0].replace('ACr', '')
+			newURL = base64.b64decode(oldURL).decode('utf-8', 'ignore')
 			title = matchUN[0][1]
 			name = cleanTitle(title)
 			image = re.compile(r'src=["\'](https?://.+?(?:[0-9]+\.png|[a-z]+\.png|[0-9]+\.jpg|[a-z]+\.jpg|[0-9]+\.gif|[a-z]+\.gif))["\'\?]', re.DOTALL|re.IGNORECASE).findall(element)[0]
 			photo = enlargeIMG(image)
-			if "serien-archiv" in PGurl:
+			if "/serien" in PGurl:
 				try: movieDATE = re.compile('<div class=["\']meta-body-item meta-body-info["\']>([^<]+?)<span class=["\']spacer["\']>/</span>', re.DOTALL).findall(element)[0]
 				except: movieDATE =""
 			else:
 				try: movieDATE = re.compile('<span class=["\']date["\']>.*?([a-zA-Z]+ [0-9]+)</span>', re.DOTALL).findall(element)[0]
 				except: movieDATE =""
-			if movieDATE != "" and "serien-archiv" in PGurl:
+			if movieDATE != "" and "/serien" in PGurl:
 				name = name+"   ("+str(movieDATE.replace('\n', '').replace(' - ', '~').replace('läuft seit', 'ab').strip())+")"
 			elif movieDATE != "" and "besten-filme/user-wertung" in PGurl:
 				newDATE = cleanMonth(movieDATE.lower())
 				name = name+"   ("+str(newDATE)+")"
 			try: # Grab - Genres
-				result_1 = re.compile('<span class=["\']spacer["\']>/</span>.*?<span class=["\']spacer["\']>/</span>(.+?)</div>', re.DOTALL).findall(element)[0]
+				result_1 = re.compile('<span class=["\']spacer["\']>/</span>(.+?)</div>', re.DOTALL).findall(element)[-1]
 				matchG = re.compile('<span class=["\']ACr.*?["\']>(.+?)</span>', re.DOTALL).findall(result_1)
 				genres = []
 				for gNames in matchG:
-					genres.append(gNames.strip())
+					gNames = cleanTitle(gNames)
+					genres.append(gNames)
 				gGenre =", ".join(genres)
 			except: gGenre =""
 			try: # Grab - Directors
-				result_2 = element[element.find('class="meta-body-item meta-body-direction light">')+1:]
-				result_2 = result_2[:result_2.find('</div>')]
-				matchD = re.compile('class=["\'].*?["\']>([^<]+?)</', re.DOTALL).findall(result_2)
+				result_2 = re.compile('<div class=["\']meta-body-item meta-body-direction light["\']>(.+?)</div>', re.DOTALL).findall(element)[-1]
+				matchD = re.compile('<span class=["\']ACr.*?["\']>(.+?)</span>', re.DOTALL).findall(result_2)
 				directors = []
 				for dNames in matchD:
-					directors.append(dNames.strip())
+					dNames = cleanTitle(dNames)
+					directors.append(dNames)
 				dDirector =", ".join(directors)
 			except: dDirector =""
 			try: # Grab - Plot
@@ -465,18 +435,18 @@ def listKino_big(url, page=1, datum="N", position=0):
 					result_3 = element[element.find('Pressekritiken')+1:]
 					rRating = re.compile('class=["\']stareval-note["\']>([^<]+?)</span></div>', re.DOTALL).findall(result_3)[0].strip().replace(',', '.')
 				except: rRating =""
-			video = re.compile('<div class="buttons-holder["\']>(.+?)</div>', re.DOTALL).findall(element)
-			debug_MS("(listKino_big) Name : "+name)
-			debug_MS("(listKino_big) Link : "+baseURL+newURL)
-			debug_MS("(listKino_big) Icon : "+photo)
-			debug_MS("(listKino_big) Regie : "+dDirector)
-			debug_MS("(listKino_big) Genre : "+gGenre)
+			video = re.compile('<div class=["\']buttons-holder["\']>(.+?)</div>', re.DOTALL).findall(element)
+			debug_MS("(listKino_big) Name : {0}".format(name))
+			debug_MS("(listKino_big) Link : {0}".format(baseURL+newURL))
+			debug_MS("(listKino_big) Icon : {0}".format(photo))
+			debug_MS("(listKino_big) Regie : {0}".format(dDirector))
+			debug_MS("(listKino_big) Genre : {0}".format(gGenre))
 			if video and ("Trailer" in video[0] or "Teaser" in video[0]) and not 'button btn-disabled' in element:
 				FOUND = True
 				addLink(name, baseURL+newURL, 'playVideo', photo, plot, gGenre, dDirector, rRating, extraURL=url)
 			else:
 				FOUND = True
-				addDir(name+translation(30701), "", 'listKino_big', photo, plot, gGenre, dDirector, rRating)
+				addDir(name+translation(30835), "", 'listKino_big', photo, plot, gGenre, dDirector, rRating)
 		except:
 			failing("..... exception .....")
 			failing("(listKino_big) Fehler-Eintrag : {0} #####".format(str(element)))
@@ -484,20 +454,26 @@ def listKino_big(url, page=1, datum="N", position=0):
 		return xbmcgui.Dialog().notification(translation(30523), translation(30524), icon, 8000)
 	if NEXT_BEFORE_PAGE and datum !="" and datum !="J" and datum !="N":
 		try:
-			Start = datetime.strptime(datum, "%Y-%m-%d")
-		except TypeError:
-			Start = datetime(*(time.strptime(datum, "%Y-%m-%d")[0:6]))
-		Nextweek = Start + timedelta(days=7)
-		Beforweek = Start - timedelta(days=7)
-		nx = Nextweek.strftime("%Y-%m-%d")
-		bx = Beforweek.strftime("%Y-%m-%d")
-		next = Nextweek.strftime("%d.%m.%Y")
-		before = Beforweek.strftime("%d.%m.%Y")
-		addDir((translation(30691).format(str(next))), NEPVurl, 'listKino_big', icon, datum=nx)
-		addDir((translation(30692).format(str(before))), NEPVurl, 'listKino_big', icon, datum=bx)
-		addDir(translation(30693), "", 'listKino_big', pic+"attention.png")
+			LEFT = re.compile(r'<span class=["\']ACr([^ "]+) button button-md button-primary-full button-left["\']>.*?span class=["\']txt["\']>Vorherige</span>', re.DOTALL).findall(result)[0]
+			OLD_L = LEFT.replace('ACr', '')
+			LINK_L = base64.b64decode(OLD_L).decode('utf-8', 'ignore')
+			BeforeDAY = str(LINK_L.replace('filme-vorschau/de/week-', '').replace('/', ''))
+			before = datetime(*(time.strptime(BeforeDAY, '%Y-%m-%d')[0:6]))
+			bxORG = before.strftime('%Y-%m-%d')
+			bxNEW = before.strftime('%d.%m.%Y')
+			RIGHT = re.compile(r'<span class=["\']ACr([^ "]+) button button-md button-primary-full button-right["\']>.*?span class=["\']txt["\']>Nächste</span>', re.DOTALL).findall(result)[0]
+			OLD_R = RIGHT.replace('ACr', '')
+			LINK_R = base64.b64decode(OLD_R).decode('utf-8', 'ignore')
+			NextDAY = str(LINK_R.replace('filme-vorschau/de/week-', '').replace('/', ''))
+			next = datetime(*(time.strptime(NextDAY, '%Y-%m-%d')[0:6]))
+			nxORG = next.strftime('%Y-%m-%d')
+			nxNEW = next.strftime('%d.%m.%Y')
+			addDir(translation(30833).format(str(nxNEW)), NEPVurl, 'listKino_big', icon, datum=nxORG)
+			addDir(translation(30834).format(str(bxNEW)), NEPVurl, 'listKino_big', icon, datum=bxORG)
+		except: pass
 	if int(position) > page and datum =="N":
-		addDir(translation(30685), NEPVurl, 'listKino_big', pic+"nextpage.png", page=page+1, datum=datum, position=position)
+		debug_MS("(listKino_big) Now show NextPage ...")
+		addDir(translation(30832), NEPVurl, 'listKino_big', artpic+"nextpage.png", page=page+1, datum=datum, position=position)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def listKino_small(url, page=1):
@@ -506,8 +482,7 @@ def listKino_small(url, page=1):
 	FOUND = False
 	if page > 1:
 		PGurl = url+"?page="+str(page)
-	else:
-		PGurl = url
+	else: PGurl = url
 	debug_MS("(listKino_small) ##### URL={0} ##### PAGE={1} #####".format(PGurl, str(page)))
 	content = getUrl(PGurl)
 	part = content.split('<div class="data_box">')
@@ -532,21 +507,21 @@ def listKino_small(url, page=1):
 			if newDATE != "" and not "unbekannt" in newDATE.lower():
 				name = name+"   ("+newDATE.replace('\n', '').replace('.', '-').strip()[0:10]+")"
 			try: # Grab - Directors
-				result_1 = element[element.find('<span class="film_info lighten fl">Von </span>')+1:]
-				result_1 = result_1[:result_1.find('</div>')]
+				result_1 = re.compile('<span class=["\']film_info lighten fl["\']>Von </span>(.+?)</div>', re.DOTALL).findall(element)[-1]
 				matchD = re.compile(r'(?:<span title=|<a title=)["\'](.+?)["\'] (?:class=|href=)', re.DOTALL).findall(result_1)
 				directors = []
 				for dNames in matchD:
-					directors.append(dNames.strip())
+					dNames = cleanTitle(dNames)
+					directors.append(dNames)
 				dDirector =", ".join(directors)
 			except: dDirector =""
 			try: # Grab - Genres
-				result_2 = element[element.find('<span class="film_info lighten fl">Genre</span>')+1:]
-				result_2 = result_2[:result_2.find('</div>')]
+				result_2 = re.compile('<span class=["\']film_info lighten fl["\']>Genre</span>(.+?)</div>', re.DOTALL).findall(element)[-1]
 				matchG = re.compile('<span itemprop=["\']genre["\']>([^<]+?)</span>', re.DOTALL).findall(result_2)
 				genres = []
 				for gNames in matchG:
-					genres.append(gNames.strip())
+					gNames = cleanTitle(gNames)
+					genres.append(gNames)
 				gGenre =", ".join(genres)
 			except: gGenre =""
 			try: # Grab - Plot
@@ -564,24 +539,25 @@ def listKino_small(url, page=1):
 					result_3 = result_3[:result_3.find('User-Wertung')]
 					rRating = re.compile('<span class=["\']note["\']>([^<]+?)</span></span>', re.DOTALL).findall(result_3)[0].strip().replace(',', '.')
 				except: rRating=""
-			debug_MS("(listKino_small) Name : "+name)
-			debug_MS("(listKino_small) Link : "+baseURL+newURL)
-			debug_MS("(listKino_small) Icon : "+photo)
-			debug_MS("(listKino_small) Regie : "+dDirector)
-			debug_MS("(listKino_small) Genre : "+gGenre)
+			debug_MS("(listKino_small) Name : {0}".format(name))
+			debug_MS("(listKino_small) Link : {0}".format(baseURL+newURL))
+			debug_MS("(listKino_small) Icon : {0}".format(photo))
+			debug_MS("(listKino_small) Regie : {0}".format(dDirector))
+			debug_MS("(listKino_small) Genre : {0}".format(gGenre))
 			if newURL !="" and not 'button btn-disabled' in element:
 				FOUND = True
 				addLink(name, baseURL+newURL, 'playVideo', photo, plot, gGenre, dDirector, rRating, extraURL=url)
 			else:
 				FOUND = True
-				addDir(name+translation(30701), "", 'listKino_small', photo, plot, gGenre, dDirector, rRating)
+				addDir(name+translation(30835), "", 'listKino_small', photo, plot, gGenre, dDirector, rRating)
 		except:
 			failing("..... exception .....")
 			failing("(listKino_small) Fehler-Eintrag : {0} #####".format(str(element)))
 	if not FOUND:
 		return xbmcgui.Dialog().notification(translation(30523), translation(30524), icon, 8000)
-	if 'fr">Nächste<i class="icon-arrow-right">' in content:  
-		addDir(translation(30685), url, 'listKino_small', pic+"nextpage.png", page=page+1)
+	if 'fr">Nächste<i class="icon-arrow-right">' in content:
+		debug_MS("(listKino_small) Now show NextPage ...")
+		addDir(translation(30832), url, 'listKino_small', artpic+"nextpage.png", page=page+1)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def listSeries_small(url, page=1):
@@ -590,8 +566,7 @@ def listSeries_small(url, page=1):
 	FOUND = False
 	if page > 1:
 		PGurl = url+"?page="+str(page)
-	else:
-		PGurl = url
+	else: PGurl = url
 	debug_MS("(listSeries_small) ##### URL={0} ##### PAGE={1} #####".format(PGurl, str(page)))
 	content = getUrl(PGurl)
 	part = content.split('<div class="data_box">')
@@ -617,21 +592,21 @@ def listSeries_small(url, page=1):
 			if newDATE != "" and not "unbekannt" in newDATE:
 				name = name+'   ('+newDATE.replace('\n', '').replace(' ', '').replace('-', '~').strip()+')'
 			try: # Grab - Directors
-				result_1 = element[element.find('<span class="lighten">mit</span>')+1:]
-				result_1 = result_1[:result_1.find('</tr>')]
+				result_1 = re.compile('<span class=["\']lighten["\']>mit</span>(.+?)</tr>', re.DOTALL).findall(element)[-1]
 				matchD = re.compile(r'(?:<span title=|<a title=)["\'](.+?)["\'] (?:class=|href=)', re.DOTALL).findall(result_1)
 				directors = []
 				for dNames in matchD:
-					directors.append(dNames.strip())
+					dNames = cleanTitle(dNames)
+					directors.append(dNames)
 				dDirector =", ".join(directors)
 			except: dDirector =""
 			try: # Grab - Genres
-				result_2 = element[element.find('<span class="lighten">Genre')+1:]
-				result_2 = result_2[:result_2.find('</tr>')]
+				result_2 = re.compile('<span class=["\']lighten["\']>Genre(.+?)</tr>', re.DOTALL).findall(element)[-1]
 				matchG = re.compile('<span itemprop=["\']genre["\']>([^<]+?)</span>', re.DOTALL).findall(result_2)
 				genres = []
 				for gNames in matchG:
-					genres.append(gNames.strip())
+					gNames = cleanTitle(gNames)
+					genres.append(gNames)
 				gGenre =", ".join(genres)
 			except: gGenre =""
 			try: # Grab - Plot
@@ -642,24 +617,25 @@ def listSeries_small(url, page=1):
 			try: # Grab - Rating
 				rRating = re.compile('<span class=["\']note["\']><span class=["\']acLnk.*?["\']>([^<]+?)</span></span>', re.DOTALL).findall(element)[0].strip().replace(',', '.')
 			except: rRating=""
-			debug_MS("(listSeries_small) Name : "+name)
-			debug_MS("(listSeries_small) Link : "+baseURL+newURL)
-			debug_MS("(listSeries_small) Icon : "+photo)
-			debug_MS("(listSeries_small) Regie : "+dDirector)
-			debug_MS("(listSeries_small) Genre : "+gGenre)
+			debug_MS("(listSeries_small) Name : {0}".format(name))
+			debug_MS("(listSeries_small) Link : {0}".format(baseURL+newURL))
+			debug_MS("(listSeries_small) Icon : {0}".format(photo))
+			debug_MS("(listSeries_small) Regie : {0}".format(dDirector))
+			debug_MS("(listSeries_small) Genre : {0}".format(gGenre))
 			if newURL !="" and not 'button btn-disabled' in element:
 				FOUND = True
 				addLink(name, baseURL+newURL, 'playVideo', photo, plot, gGenre, dDirector, rRating, extraURL=url)
 			else:
 				FOUND = True
-				addDir(name+translation(30701), "", 'listSeries_small', photo, plot, gGenre, dDirector, rRating)
+				addDir(name+translation(30835), "", 'listSeries_small', photo, plot, gGenre, dDirector, rRating)
 		except:
 			failing("..... exception .....")
 			failing("(listSeries_small) Fehler-Eintrag : {0} #####".format(str(element)))
 	if not FOUND:
 		return xbmcgui.Dialog().notification(translation(30523), translation(30524), icon, 8000)
-	if 'fr">Nächste<i class="icon-arrow-right">' in content:  
-		addDir(translation(30685), url, 'listSeries_small', pic+"nextpage.png", page=page+1)
+	if 'fr">Nächste<i class="icon-arrow-right">' in content:
+		debug_MS("(listSeries_small) Now show NextPage ...")
+		addDir(translation(30832), url, 'listSeries_small', artpic+"nextpage.png", page=page+1)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def listNews(url, page=1):
@@ -667,8 +643,7 @@ def listNews(url, page=1):
 	page = int(page)
 	if page > 1:
 		PGurl = url+"?page="+str(page)
-	else:
-		PGurl = url
+	else: PGurl = url
 	debug_MS("(listNews) ##### URL={0} ##### PAGE={1} #####".format(PGurl, str(page)))
 	content = getUrl(PGurl)
 	result = content[content.find('<div class="colcontent">')+1:]
@@ -686,7 +661,7 @@ def listNews(url, page=1):
 			except:
 				matchUN = re.compile('href=["\'](.+?)["\']>(.+?)</a>', re.DOTALL).findall(element)
 				link = matchUN[0][0]
-				title = matchUN[0][1].replace("\n", "")
+				title = matchUN[0][1].replace('\n', '')
 				title = re.sub(r'\<.*?\>', '', title)
 			name = cleanTitle(title)
 			try: # Grab - Plot
@@ -694,16 +669,17 @@ def listNews(url, page=1):
 				plot = re.sub(r'\<.*?\>', '', desc)
 				plot = cleanTitle(plot)
 			except: plot =""
-			debug_MS("(listNews) Name : "+name)
-			debug_MS("(listNews) Link : "+baseURL+link)
-			debug_MS("(listNews) Icon : "+photo)
+			debug_MS("(listNews) Name : {0}".format(name))
+			debug_MS("(listNews) Link : {0}".format(baseURL+link))
+			debug_MS("(listNews) Icon : {0}".format(photo))
 			addLink(name, baseURL+link, 'playVideo', photo, plot, extraURL=url)
 		except:
 			failing("..... exception .....")
 			failing("(listNews) Fehler-Eintrag : {0} #####".format(str(element)))
 	try:
 		nextP = re.compile('(<li class="navnextbtn">[^<]+<span class="acLnk)', re.DOTALL).findall(content)[0]
-		addDir(translation(30685), url, 'listNews', pic+"nextpage.png", page=page+1)
+		debug_MS("(listNews) Now show NextPage ...")
+		addDir(translation(30832), url, 'listNews', artpic+"nextpage.png", page=page+1)
 	except: pass
 	xbmcplugin.endOfDirectory(pluginhandle)
 
@@ -748,57 +724,45 @@ def playVideo(url, extraURL=""):
 		xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 	else:
 		failing("(playVideo) ##### Abspielen des Streams NICHT möglich #####\n   ##### URL : {0} #####".format(url))
-		return xbmcgui.Dialog().notification((translation(30521).format("URL")), translation(30522), icon, 8000)
+		return xbmcgui.Dialog().notification(translation(30521).format('URL'), translation(30522), icon, 8000)
 
-def cleanTitle(title):
-	title = py2_enc(title)
-	title = title.replace('&lt;', '<').replace('&gt;', '>').replace('&amp;', '&').replace('&Amp;', '&').replace('&nbsp;', ' ').replace("&quot;", "\"").replace("&Quot;", "\"").replace('&reg;', '').replace('&szlig;', 'ß').replace('&mdash;', '-').replace('&ndash;', '-').replace('–', '-').replace('&sup2;', '²')
-	title = title.replace('&#x00c4', 'Ä').replace('&#x00e4', 'ä').replace('&#x00d6', 'Ö').replace('&#x00f6', 'ö').replace('&#x00dc', 'Ü').replace('&#x00fc', 'ü').replace('&#x00df', 'ß')
-	title = title.replace('&Auml;', 'Ä').replace('Ä', 'Ä').replace('&auml;', 'ä').replace('ä', 'ä').replace('&Euml;', 'Ë').replace('&euml;', 'ë').replace('&Iuml;', 'Ï').replace('&iuml;', 'ï').replace('&Ouml;', 'Ö').replace('Ö', 'Ö').replace('&ouml;', 'ö').replace('ö', 'ö').replace('&Uuml;', 'Ü').replace('Ü', 'Ü').replace('&uuml;', 'ü').replace('ü', 'ü').replace('&yuml;', 'ÿ')
-	title = title.replace('&agrave;', 'à').replace('&Agrave;', 'À').replace('&aacute;', 'á').replace('&Aacute;', 'Á').replace('&egrave;', 'è').replace('&Egrave;', 'È').replace('&eacute;', 'é').replace('&Eacute;', 'É').replace('&igrave;', 'ì').replace('&Igrave;', 'Ì').replace('&iacute;', 'í').replace('&Iacute;', 'Í')
-	title = title.replace('&ograve;', 'ò').replace('&Ograve;', 'Ò').replace('&oacute;', 'ó').replace('&Oacute;', 'ó').replace('&ugrave;', 'ù').replace('&Ugrave;', 'Ù').replace('&uacute;', 'ú').replace('&Uacute;', 'Ú').replace('&yacute;', 'ý').replace('&Yacute;', 'Ý')
-	title = title.replace('&atilde;', 'ã').replace('&Atilde;', 'Ã').replace('&ntilde;', 'ñ').replace('&Ntilde;', 'Ñ').replace('&otilde;', 'õ').replace('&Otilde;', 'Õ').replace('&Scaron;', 'Š').replace('&scaron;', 'š')
-	title = title.replace('&acirc;', 'â').replace('&Acirc;', 'Â').replace('&ccedil;', 'ç').replace('&Ccedil;', 'Ç').replace('&ecirc;', 'ê').replace('&Ecirc;', 'Ê').replace('&icirc;', 'î').replace('&Icirc;', 'Î').replace('&ocirc;', 'ô').replace('&Ocirc;', 'Ô').replace('&ucirc;', 'û').replace('&Ucirc;', 'Û')
-	title = title.replace('&alpha;', 'a').replace('&Alpha;', 'A').replace('&aring;', 'å').replace('&Aring;', 'Å').replace('&aelig;', 'æ').replace('&AElig;', 'Æ').replace('&epsilon;', 'e').replace('&Epsilon;', 'Ε').replace('&eth;', 'ð').replace('&ETH;', 'Ð').replace('&gamma;', 'g').replace('&Gamma;', 'G')
-	title = title.replace('&oslash;', 'ø').replace('&Oslash;', 'Ø').replace('&theta;', 'θ').replace('&thorn;', 'þ').replace('&THORN;', 'Þ')
-	title = title.replace("\\'", "'").replace('&iexcl;', '¡').replace('&iquest;', '¿').replace('&rsquo;', '’').replace('&lsquo;', '‘').replace('&sbquo;', '’').replace('&rdquo;', '”').replace('&ldquo;', '“').replace('&bdquo;', '”').replace('&rsaquo;', '›').replace('lsaquo;', '‹').replace('&raquo;', '»').replace('&laquo;', '«')
-	title = title.replace("&x27;", "'").replace("&#34;", "”").replace("&#39;", "'").replace("&#039;", "'").replace('&#196;', 'Ä').replace('&#214;', 'Ö').replace('&#220;', 'Ü').replace('&#228;', 'ä').replace('&#246;', 'ö').replace('&#252;', 'ü').replace('&#223;', 'ß').replace('&#160;', ' ')
-	title = title.replace('&#192;', 'À').replace('&#193;', 'Á').replace('&#194;', 'Â').replace('&#195;', 'Ã').replace('&#197;', 'Å').replace('&#199;', 'Ç').replace('&#200;', 'È').replace('&#201;', 'É').replace('&#202;', 'Ê')
-	title = title.replace('&#203;', 'Ë').replace('&#204;', 'Ì').replace('&#205;', 'Í').replace('&#206;', 'Î').replace('&#207;', 'Ï').replace('&#209;', 'Ñ').replace('&#210;', 'Ò').replace('&#211;', 'Ó').replace('&#212;', 'Ô')
-	title = title.replace('&#213;', 'Õ').replace('&#215;', '×').replace('&#216;', 'Ø').replace('&#217;', 'Ù').replace('&#218;', 'Ú').replace('&#219;', 'Û').replace('&#221;', 'Ý').replace('&#222;', 'Þ').replace('&#224;', 'à')
-	title = title.replace('&#225;', 'á').replace('&#226;', 'â').replace('&#227;', 'ã').replace('&#229;', 'å').replace('&#231;', 'ç').replace('&#232;', 'è').replace('&#233;', 'é').replace('&#234;', 'ê').replace('&#235;', 'ë')
-	title = title.replace('&#236;', 'ì').replace('&#237;', 'í').replace('&#238;', 'î').replace('&#239;', 'ï').replace('&#240;', 'ð').replace('&#241;', 'ñ').replace('&#242;', 'ò').replace('&#243;', 'ó').replace('&#244;', 'ô')
-	title = title.replace('&#245;', 'õ').replace('&#247;', '÷').replace('&#248;', 'ø').replace('&#249;', 'ù').replace('&#250;', 'ú').replace('&#251;', 'û').replace('&#253;', 'ý').replace('&#254;', 'þ').replace('&#255;', 'ÿ').replace('&#287;', 'ğ')
-	title = title.replace('&#304;', 'İ').replace('&#305;', 'ı').replace('&#350;', 'Ş').replace('&#351;', 'ş').replace('&#352;', 'Š').replace('&#353;', 'š').replace('&#376;', 'Ÿ').replace('&#402;', 'ƒ')
-	title = title.replace('&#8211;', '–').replace('&#8212;', '—').replace('&#8226;', '•').replace('&#8230;', '…').replace('&#8240;', '‰').replace('&#8364;', '€').replace('&#8482;', '™').replace('&#169;', '©').replace('&#174;', '®').replace('&#183;', '·')
-	title = title.strip()
-	return title
+def cleanTitle(text):
+	text = py2_enc(text)
+	for n in (('&lt;', '<'), ('&gt;', '>'), ('&amp;', '&'), ('&Amp;', '&'), ('&nbsp;', ' '), ("&quot;", "\""), ("&Quot;", "\""), ('&reg;', ''), ('&szlig;', 'ß'), ('&mdash;', '-'), ('&ndash;', '-'), ('–', '-'), ('&sup2;', '²')
+		, ('&#x00c4', 'Ä'), ('&#x00e4', 'ä'), ('&#x00d6', 'Ö'), ('&#x00f6', 'ö'), ('&#x00dc', 'Ü'), ('&#x00fc', 'ü'), ('&#x00df', 'ß')
+		, ('&Auml;', 'Ä'), ('Ä', 'Ä'), ('&auml;', 'ä'), ('ä', 'ä'), ('&Euml;', 'Ë'), ('&euml;', 'ë'), ('&Iuml;', 'Ï'), ('&iuml;', 'ï'), ('&Ouml;', 'Ö'), ('Ö', 'Ö'), ('&ouml;', 'ö'), ('ö', 'ö'), ('&Uuml;', 'Ü'), ('Ü', 'Ü'), ('&uuml;', 'ü'), ('ü', 'ü'), ('&yuml;', 'ÿ')
+		, ('&agrave;', 'à'), ('&Agrave;', 'À'), ('&aacute;', 'á'), ('&Aacute;', 'Á'), ('&egrave;', 'è'), ('&Egrave;', 'È'), ('&eacute;', 'é'), ('&Eacute;', 'É'), ('&igrave;', 'ì'), ('&Igrave;', 'Ì'), ('&iacute;', 'í'), ('&Iacute;', 'Í')
+		, ('&ograve;', 'ò'), ('&Ograve;', 'Ò'), ('&oacute;', 'ó'), ('&Oacute;', 'ó'), ('&ugrave;', 'ù'), ('&Ugrave;', 'Ù'), ('&uacute;', 'ú'), ('&Uacute;', 'Ú'), ('&yacute;', 'ý'), ('&Yacute;', 'Ý')
+		, ('&atilde;', 'ã'), ('&Atilde;', 'Ã'), ('&ntilde;', 'ñ'), ('&Ntilde;', 'Ñ'), ('&otilde;', 'õ'), ('&Otilde;', 'Õ'), ('&Scaron;', 'Š'), ('&scaron;', 'š')
+		, ('&acirc;', 'â'), ('&Acirc;', 'Â'), ('&ccedil;', 'ç'), ('&Ccedil;', 'Ç'), ('&ecirc;', 'ê'), ('&Ecirc;', 'Ê'), ('&icirc;', 'î'), ('&Icirc;', 'Î'), ('&ocirc;', 'ô'), ('&Ocirc;', 'Ô'), ('&ucirc;', 'û'), ('&Ucirc;', 'Û')
+		, ('&alpha;', 'a'), ('&Alpha;', 'A'), ('&aring;', 'å'), ('&Aring;', 'Å'), ('&aelig;', 'æ'), ('&AElig;', 'Æ'), ('&epsilon;', 'e'), ('&Epsilon;', 'Ε'), ('&eth;', 'ð'), ('&ETH;', 'Ð'), ('&gamma;', 'g'), ('&Gamma;', 'G')
+		, ('&oslash;', 'ø'), ('&Oslash;', 'Ø'), ('&theta;', 'θ'), ('&thorn;', 'þ'), ('&THORN;', 'Þ')
+		, ("\\'", "'"), ('&iexcl;', '¡'), ('&iquest;', '¿'), ('&rsquo;', '’'), ('&lsquo;', '‘'), ('&sbquo;', '’'), ('&rdquo;', '”'), ('&ldquo;', '“'), ('&bdquo;', '”'), ('&rsaquo;', '›'), ('lsaquo;', '‹'), ('&raquo;', '»'), ('&laquo;', '«')
+		, ("&#x27;", "'"), ('&#34;', '"'), ('&#39;', '\''), ('&#039;', '\''), ('&#196;', 'Ä'), ('&#214;', 'Ö'), ('&#220;', 'Ü'), ('&#228;', 'ä'), ('&#246;', 'ö'), ('&#252;', 'ü'), ('&#223;', 'ß'), ('&#160;', ' ')
+		, ('&#192;', 'À'), ('&#193;', 'Á'), ('&#194;', 'Â'), ('&#195;', 'Ã'), ('&#197;', 'Å'), ('&#199;', 'Ç'), ('&#200;', 'È'), ('&#201;', 'É'), ('&#202;', 'Ê')
+		, ('&#203;', 'Ë'), ('&#204;', 'Ì'), ('&#205;', 'Í'), ('&#206;', 'Î'), ('&#207;', 'Ï'), ('&#209;', 'Ñ'), ('&#210;', 'Ò'), ('&#211;', 'Ó'), ('&#212;', 'Ô')
+		, ('&#213;', 'Õ'), ('&#215;', '×'), ('&#216;', 'Ø'), ('&#217;', 'Ù'), ('&#218;', 'Ú'), ('&#219;', 'Û'), ('&#221;', 'Ý'), ('&#222;', 'Þ'), ('&#224;', 'à')
+		, ('&#225;', 'á'), ('&#226;', 'â'), ('&#227;', 'ã'), ('&#229;', 'å'), ('&#231;', 'ç'), ('&#232;', 'è'), ('&#233;', 'é'), ('&#234;', 'ê'), ('&#235;', 'ë')
+		, ('&#236;', 'ì'), ('&#237;', 'í'), ('&#238;', 'î'), ('&#239;', 'ï'), ('&#240;', 'ð'), ('&#241;', 'ñ'), ('&#242;', 'ò'), ('&#243;', 'ó'), ('&#244;', 'ô')
+		, ('&#245;', 'õ'), ('&#247;', '÷'), ('&#248;', 'ø'), ('&#249;', 'ù'), ('&#250;', 'ú'), ('&#251;', 'û'), ('&#253;', 'ý'), ('&#254;', 'þ'), ('&#255;', 'ÿ'), ('&#287;', 'ğ')
+		, ('&#304;', 'İ'), ('&#305;', 'ı'), ('&#350;', 'Ş'), ('&#351;', 'ş'), ('&#352;', 'Š'), ('&#353;', 'š'), ('&#376;', 'Ÿ'), ('&#402;', 'ƒ')
+		, ('&#8211;', '–'), ('&#8212;', '—'), ('&#8226;', '•'), ('&#8230;', '…'), ('&#8240;', '‰'), ('&#8364;', '€'), ('&#8482;', '™'), ('&#169;', '©'), ('&#174;', '®'), ('&#183;', '·')):
+		text = text.replace(*n)
+	return text.strip()
 
 def cleanMonth(month):
-	month = month.replace("januar ", "01-").replace("februar ", "02-").replace("märz ", "03-").replace("april ", "04-").replace("mai ", "05-").replace("juni ", "06-")
-	month = month.replace("juli ", "07-").replace("august ", "08-").replace("september ", "09-").replace("oktober ", "10-").replace("november ", "11-").replace("dezember ", "12-")
-	month = month.strip()
-	return month
+	for m in (('januar ', '01-'), ('februar ', '02-'), ('märz ', '03-'), ('april ', '04-'), ('mai ', '05-'), ('juni ', '06-'), ('juli ', '07-'), ('august ', '08-'), ('september ', '09-'), ('oktober ', '10-'), ('november ', '11-'), ('dezember ', '12-')):
+		month = month.replace(*m)
+	return month.strip()
 
 def enlargeIMG(cover):
 	debug_MS("(enlargeIMG) -------------------------------------------------- START = enlargeIMG --------------------------------------------------")
 	debug_MS("(enlargeIMG) 1.Original-COVER : {0}".format(cover))
-	try:
-		if "commons/" in cover:
-			cover = cover.split('.net/')[0]+".net/commons/"+cover.split('commons/')[1]
-		elif "medias" in cover:
-			cover = cover.split('.net/')[0]+".net/medias"+cover.split('medias')[1]
-		elif "pictures" in cover:
-			cover = cover.split('.net/')[0]+".net/pictures"+cover.split('pictures')[1]
-		elif "seriesposter" in cover:
-			cover = cover.split('.net/')[0]+".net/seriesposter"+cover.split('seriesposter')[1]
-		elif "videothumbnails" in cover:
-			cover = cover.split('.net/')[0]+".net/videothumbnails"+cover.split('videothumbnails')[1]
-	except:
-		try:
-			imgLink = re.compile('(/[a-z]+_[0-9]+_[0-9]+)/', re.DOTALL).findall(cover)[0]
-			cover = cover.replace(imgLink, "")
-		except: pass
+	imgCode = ['commons/', 'medias', 'pictures', 'seriesposter', 'videothumbnails']
+	for XL in imgCode:
+		if XL in cover:
+			try: cover = cover.split('.net/')[0]+'.net/'+XL+cover.split(XL)[1]
+			except: pass
 	debug_MS("(enlargeIMG) 2.Converted-COVER : {0}".format(cover))
 	return cover
 
@@ -819,25 +783,40 @@ def decodeURL(url):
 def parameters_string_to_dict(parameters):
 	paramDict = {}
 	if parameters:
-		paramPairs = parameters[1:].split("&")
+		paramPairs = parameters[1:].split('&')
 		for paramsPair in paramPairs:
 			paramSplits = paramsPair.split('=')
 			if (len(paramSplits)) == 2:
 				paramDict[paramSplits[0]] = paramSplits[1]
 	return paramDict
 
-def addDir(name, url, mode, iconimage, plot=None, genre=None, director=None, rating=None, page=1, type="", CAT_text="", datum="", position=0):  
-	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)+"&type="+type+"&CAT_text="+str(CAT_text)+"&datum="+str(datum)+"&position="+str(position)
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot, "Genre": genre, "Director": director, "Rating": rating})
-	liz.setArt({'banner': iconimage, 'poster': iconimage, 'fanart': defaultFanart})
+def addDir(name, url, mode, image, plot=None, genre=None, director=None, rating=None, page=1, type="", CAT_text="", datum="", position=0):  
+	u = sys.argv[0]+'?url='+quote_plus(url)+'&mode='+str(mode)+'&page='+str(page)+'&type='+str(type)+'&CAT_text='+str(CAT_text)+'&datum='+str(datum)+'&position='+str(position)
+	liz = xbmcgui.ListItem(name)
+	liz.setInfo(type='Video', infoLabels={'Title': name, 'Plot': plot, 'Genre': genre, 'Director': director, 'Rating': rating})
+	liz.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
 
-def addLink(name, url, mode, iconimage, plot=None, genre=None, director=None, rating=None, duration=None, extraURL=""):
-	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)+"&extraURL="+quote_plus(extraURL)
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot, "Genre": genre, "Director": director, "Rating": rating, "Duration": duration, "mediatype": "video"})
-	liz.setArt({'banner': iconimage, 'poster': iconimage, 'fanart': defaultFanart})
+def addLink(name, url, mode, image, plot=None, genre=None, director=None, rating=None, duration=None, extraURL=""):
+	u = sys.argv[0]+'?url='+quote_plus(url)+'&mode='+str(mode)+'&extraURL='+quote_plus(extraURL)
+	liz = xbmcgui.ListItem(name)
+	ilabels = {}
+	ilabels['Season'] = None
+	ilabels['Episode'] = None
+	ilabels['Tvshowtitle'] = None
+	ilabels['Title'] = name
+	ilabels['Tagline'] = None
+	ilabels['Plot'] = plot
+	ilabels['Duration'] = duration
+	ilabels['Year'] = None
+	ilabels['Genre'] = genre
+	ilabels['Director'] = director
+	ilabels['Writer'] = None
+	ilabels['Rating'] = rating
+	ilabels['Mpaa'] = None
+	ilabels['Mediatype'] = 'video'
+	liz.setInfo(type='Video', infoLabels=ilabels)
+	liz.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
 	liz.addStreamInfo('Video', {'Duration': duration})
 	liz.setProperty('IsPlayable', 'true')
 	liz.setContentLookup(False)
@@ -847,7 +826,7 @@ params = parameters_string_to_dict(sys.argv[2])
 name = unquote_plus(params.get('name', ''))
 url = unquote_plus(params.get('url', ''))
 mode = unquote_plus(params.get('mode', ''))
-iconimage = unquote_plus(params.get('iconimage', ''))
+image = unquote_plus(params.get('image', ''))
 page = unquote_plus(params.get('page', ''))
 type = unquote_plus(params.get('type', ''))
 CAT_text = unquote_plus(params.get('CAT_text', ''))
@@ -879,7 +858,7 @@ elif mode == 'selectionWeek':
 elif mode == 'listTrailer':
 	listTrailer(url, page)
 elif mode == 'listSpecial_Series_Trailer':
-	listSpecial_Series_Trailer(url, page)
+	listSpecial_Series_Trailer(url, page, position)
 elif mode == 'listKino_big':
 	listKino_big(url, page, datum, position)
 elif mode == 'listSeries_big':
