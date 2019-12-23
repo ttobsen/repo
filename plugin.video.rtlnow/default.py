@@ -1,4 +1,5 @@
-﻿# -*- coding: utf-8 -*-
+﻿#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import sys
 import os
@@ -132,7 +133,7 @@ if addon.getSetting('checkwidevine') == 'true':
 	is_helper = Helper('mpd', drm='widevine')
 	if not is_helper.check_inputstream():
 		failing("(check_inputstream) ERROR - ERROR - ERROR :\n##### !!! Widevine ist NICHT installiert !!! #####")
-		xbmcgui.Dialog().notification(translation(30521).format('Widevine'), translation(30525), icon, 12000)
+		xbmcgui.Dialog().notification(translation(30521).format('Widevine'), translation(30527), icon, 12000)
 
 if addon.getSetting('cert') == 'false':
 	pos = 0
@@ -163,7 +164,7 @@ def getUrl(url, header=None, referer=None, agent='Mozilla/5.0 (Windows NT 10.0; 
 	except Exception as e:
 		failure = str(e)
 		failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
-		xbmcgui.Dialog().notification(translation(30521).format('URL'), "ERROR = [COLOR red]{0}[/COLOR]".format(failure), icon, 15000)
+		#xbmcgui.Dialog().notification(translation(30521).format('URL'), "ERROR = [COLOR red]{0}[/COLOR]".format(failure), icon, 15000)
 		content = ""
 		return sys.exit(0)
 	opener.close()
@@ -275,9 +276,12 @@ def listSeasons(Xidd, Xbild):
 	COMBI_1 = []
 	#http://api.tvnow.de/v3/formats/seo?fields=*,.*,formatTabs.*,formatTabs.headline&name=chicago-fire
 	url_1 = "http://api.tvnow.de/v3/formats/"+str(Xidd)+"?fields="+quote_plus("*,.*,formatTabs.*,formatTabs.headline,annualNavigation.*")
-	content = makeREQUEST(url_1)
-	DATA = json.loads(content, object_pairs_hook=OrderedDict)
-	seriesname = py2_enc(DATA['title']).strip()
+	try:
+		content = makeREQUEST(url_1)
+		debug("(listSeasons) ##### CONTENT : {0} #####".format(str(content)))
+		DATA = json.loads(content, object_pairs_hook=OrderedDict)
+		seriesname = py2_enc(DATA['title']).strip()
+	except: return xbmcgui.Dialog().notification(translation(30522).format(str(Xidd)), translation(30523), icon, 12000)
 	newIDD = str(DATA['id'])
 	Xbild = cleanPhoto(Xbild)
 	if DATA['annualNavigation']['total'] == 1:
@@ -452,7 +456,7 @@ def getToken():
 	try: DOC = re.findall(r'<script src="(main\-[A-z0-9]+\.[A-z0-9]+\.js)"', rq1, re.S)[-1]
 	except:
 		failing("(getToken) ##### persToken-FIRST : Gesuchtes Token-Dokument NICHT gefunden !!! #####")
-		return xbmcgui.Dialog().notification('ERROR - Token_01 - ERROR', translation(30527), icon, 12000)
+		return xbmcgui.Dialog().notification('ERROR - Token_01 - ERROR', translation(30528), icon, 12000)
 	rq2 = getUrl(nomURL+DOC)
 	NUM = re.search(r'sessionStorage.getItem.*?getDefaultUserdata=function\(\){return{token:"([A-z0-9.]+)"', rq2)
 	if NUM:
@@ -694,7 +698,7 @@ def liveTV():
 	STATUS,TOKEN = LOGIN()
 	if freeonly=='true' and STATUS < 3:
 		failing("(liveTV) ##### Sie haben KEINE Berechtigung : Für LIVE-TV ist ein Premium-Account Voraussetzung !!! #####")
-		return xbmcgui.Dialog().notification('KEINE Berechtigung', translation(30530), icon, 8000)
+		return xbmcgui.Dialog().notification('KEINE Berechtigung', translation(30532), icon, 8000)
 	content = getUrl("https://api.tvnow.de/v3/epgs/movies/nownext?fields=*,nowNextEpgTeasers.*,nowNextEpgMovies.*") 
 	DATA = json.loads(content, object_pairs_hook=OrderedDict)
 	for channelITEM in DATA['items']:
@@ -786,7 +790,7 @@ def play_CODE(IDD):
 		if KODI_18 and DRM == 'True':
 			if token == '0':
 				failing("(play_CODE) ##### persToken : Der erforderliche Token wurde NICHT gefunden !!! #####")
-				xbmcgui.Dialog().notification('ERROR - Token_02 - ERROR', translation(30527), icon, 12000)
+				xbmcgui.Dialog().notification('ERROR - Token_02 - ERROR', translation(30528), icon, 12000)
 			else:
 				licstring = 'https://widevine.tvnow.de/index/proxy|'+userAgent+'&x-auth-token='+token+'&content-type=text/html|R{SSM}|'
 				listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
@@ -802,10 +806,10 @@ def play_CODE(IDD):
 			return xbmcgui.Dialog().ok(addon.getAddonInfo('id'), translation(30504))
 		elif pay == 'False' and KODI_18 and token.startswith('C3'):
 			failing("(play_CODE) ##### Sie haben KEINE Berechtigung : Für dieses Video ist ein Premium-Account Voraussetzung !!! #####")
-			return xbmcgui.Dialog().notification('KEINE Berechtigung', translation(30528), icon, 8000)
+			return xbmcgui.Dialog().notification('KEINE Berechtigung', translation(30530), icon, 8000)
 		else:
 			failing("(play_CODE) ##### Die angeforderte Video-Url wurde leider NICHT gefunden !!! #####")
-			return xbmcgui.Dialog().notification('KEIN Video gefunden', translation(30529), icon, 8000)
+			return xbmcgui.Dialog().notification('KEIN Video gefunden', translation(30531), icon, 8000)
 
 def playDash(xnormSD, xhighHD, xlink, xdrm):
 	debug("(playDash) -------------------------------------------------- START = playDash --------------------------------------------------")
@@ -840,7 +844,7 @@ def playDash(xnormSD, xhighHD, xlink, xdrm):
 		return xbmcgui.Dialog().ok(addon.getAddonInfo('id'), translation(30504))
 	else:
 		failing("(playDash) ##### Der übertragene *Dash-Abspiel-Link* ist leider FEHLERHAFT !!! #####")
-		return xbmcgui.Dialog().notification(translation(30521).format('DASH - URL'), translation(30526), icon, 8000)
+		return xbmcgui.Dialog().notification(translation(30521).format('DASH - URL'), translation(30529), icon, 8000)
 
 def listShowsFavs():
 	debug("(listShowsFavs) -------------------------------------------------- START = listShowsFavs --------------------------------------------------")
@@ -872,7 +876,7 @@ def favs(param):
 			with open(channelFavsFile, 'a') as textobj:
 				textobj.write(SERIES_entry+'END###\n')
 		xbmc.sleep(500)
-		xbmcgui.Dialog().notification(translation(30531), translation(30532).format(name), icon, 8000)
+		xbmcgui.Dialog().notification(translation(30533), translation(30534).format(name), icon, 8000)
 	elif mode == 'DEL':
 		with open(channelFavsFile, 'r') as output:
 			lines = output.readlines()
@@ -882,7 +886,7 @@ def favs(param):
 					input.write(line)
 		xbmc.executebuiltin('Container.Refresh')
 		xbmc.sleep(1000)
-		xbmcgui.Dialog().notification(translation(30531), translation(30533).format(name), icon, 8000)
+		xbmcgui.Dialog().notification(translation(30533), translation(30535).format(name), icon, 8000)
 
 def tolibrary(param):
 	debug("(tolibrary) -------------------------------------------------- START = tolibrary --------------------------------------------------")
@@ -900,7 +904,7 @@ def tolibrary(param):
 		debug("(tolibrary) ### newURL : {0} ###".format(str(newURL)))
 		debug("(tolibrary) ### SOURCE : {0} ###".format(str(source)))
 		xbmc.executebuiltin('RunPlugin(plugin://service.L0RE.cron/?mode=adddata&name={0}&stunden={1}&url={2}&source={3})'.format(name.replace('&', '%26'), stunden, newURL, source))
-		xbmcgui.Dialog().notification(translation(30534), translation(30535).format(name,str(stunden)), icon, 12000)
+		xbmcgui.Dialog().notification(translation(30536), translation(30537).format(name,str(stunden)), icon, 12000)
 
 def generatefiles(idd, show):
 	debug("(generatefiles) -------------------------------------------------- START = generatefiles --------------------------------------------------")
@@ -911,10 +915,19 @@ def generatefiles(idd, show):
 	pos = 0
 	url_1 = "http://api.tvnow.de/v3/formats/"+str(idd)+"?fields="+quote_plus("*,.*,formatTabs.*,formatTabs.headline,annualNavigation.*")
 	debug("(generatefiles) ##### URL-01 : {0} #####".format(str(url_1)))
-	content_1 = getUrl(url_1)
-	FIRST = json.loads(content_1, object_pairs_hook=OrderedDict)
+	ppath = py2_uni(mediaPath)+py2_uni(fixPathSymbols(show))
+	debug("(generatefiles) ### PPATH = {0} ###".format(str(ppath)))
+	if os.path.isdir(ppath):
+		shutil.rmtree(ppath, ignore_errors=True)
+		xbmc.sleep(500)
+	os.mkdir(ppath)
+	try:
+		content_1 = getUrl(url_1)
+		FIRST = json.loads(content_1, object_pairs_hook=OrderedDict)
+		TVS_name = py2_enc(FIRST['title']).strip()
+	except:
+		return
 	SERIES_IDD = str(FIRST['id'])
-	TVS_name = py2_enc(FIRST['title']).strip()
 	TVS_studio = ""
 	if 'station' in FIRST and FIRST['station'] != "" and FIRST['station'] != None: TVS_studio = FIRST['station'].upper()
 	TVS_image = ""
@@ -931,13 +944,6 @@ def generatefiles(idd, show):
 	TVS_airdate = ""
 	if 'onlineDate' in FIRST and FIRST['onlineDate'] != "" and FIRST['onlineDate'] != None:
 		TVS_airdate = FIRST['onlineDate'][:10]
-	ppath = py2_uni(mediaPath)+py2_uni(fixPathSymbols(show))
-	debug("(generatefiles) ### SERIE = {0} || ÜBERTRAGEN = {1} ###".format(str(TVS_name), str(show)))
-	debug("(generatefiles) ### PPATH = {0} ###".format(str(ppath)))
-	if os.path.isdir(ppath):
-		shutil.rmtree(ppath, ignore_errors=True)
-		xbmc.sleep(500)
-	os.mkdir(ppath)
 	pageNUMBER = 1
 	position = 1
 	total = 1

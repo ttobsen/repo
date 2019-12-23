@@ -203,62 +203,70 @@ msgid "TVNOW - DE : [COLOR red]!!! {0:s} - ERROR !!![/COLOR]"
 msgstr "TVNOW - DE : [COLOR red]!!! {0:s} - ERROR !!![/COLOR]"
 
 msgctxt "#30522"
+msgid "TVNOW - DE : [COLOR red]!!! ID - [/COLOR][COLOR blue]{0:s}[/COLOR][COLOR red] - ERROR !!![/COLOR]"
+msgstr "TVNOW - DE : [COLOR red]!!! ID - [/COLOR][COLOR blue]{0:s}[/COLOR][COLOR red] - ERROR !!![/COLOR]"
+
+msgctxt "#30523"
+msgid "ERROR = [COLOR red]This Series is no longer in the Mediathek of TVNOW ![/COLOR]"
+msgstr "ERROR = [COLOR red]Diese Serie gibt es NICHT mehr in der Mediathek von TVNOW ![/COLOR]"
+
+msgctxt "#30524"
 msgid "[COLOR red]Unfortunately there are NO {0:s} :[/COLOR]"
 msgstr "[COLOR red]Leider gibt es KEINE {0:s} :[/COLOR]"
 
-msgctxt "#30523"
+msgctxt "#30525"
 msgid "[COLOR red]An error has occured, please check *LOG* ![/COLOR]"
 msgstr "[COLOR red]Es ist ein Fehler aufgetreten, bitte *LOG* einsehen ![/COLOR]"
 
-msgctxt "#30524"
+msgctxt "#30526"
 msgid "* [COLOR blue]In the Category: {0:s}[/COLOR] * at TVNOW"
 msgstr "* [COLOR blue]In der Rubrik: {0:s}[/COLOR] * bei TVNOW"
 
-msgctxt "#30525"
+msgctxt "#30527"
 msgid "ERROR = [COLOR red]Without Widevine, DRM content can not be played back ![/COLOR]"
 msgstr "ERROR = [COLOR red]Ohne Widevine können keine DRM-Inhalte wiedergegeben werden ![/COLOR]"
 
-msgctxt "#30526"
-msgid "ERROR = [COLOR red]The transmitted *Dash-play-link* is BAD ![/COLOR]"
-msgstr "ERROR = [COLOR red]Der übertragene *Dash-Abspiel-Link* ist FEHLERHAFT ![/COLOR]"
-
-msgctxt "#30527"
+msgctxt "#30528"
 msgid "[COLOR orangered]Some functions of this Addon require a TOKEN ![/COLOR]"
 msgstr "[COLOR orangered]Für einige Funktionen dieses Addons wird ein TOKEN benötigt ![/COLOR]"
 
-msgctxt "#30528"
+msgctxt "#30529"
+msgid "ERROR = [COLOR red]The transmitted *Dash-play-link* is BAD ![/COLOR]"
+msgstr "ERROR = [COLOR red]Der übertragene *Dash-Abspiel-Link* ist FEHLERHAFT ![/COLOR]"
+
+msgctxt "#30530"
 msgid "[COLOR orangered]ATTENTION : ... This video is only playable with *premium-access* !!![/COLOR]"
 msgstr "[COLOR orangered]ACHTUNG : ... Dieses Video ist nur mit *Premium-Zugang* abspielbar !!![/COLOR]"
 
-msgctxt "#30529"
+msgctxt "#30531"
 msgid "[COLOR red]Unfortunately NO suitable Video-Url found ![/COLOR]"
 msgstr "[COLOR red]Leider KEINE passende Video-Url gefunden ![/COLOR]"
 
-msgctxt "#30530"
+msgctxt "#30532"
 msgid "[COLOR orangered]ATTENTION : ... This area requires *premium-access* !!![/COLOR]"
 msgstr "[COLOR orangered]ACHTUNG : ... Für diesen Bereich ist ein *Premium-Zugang* erforderlich !!![/COLOR]"
 
-msgctxt "#30531"
+msgctxt "#30533"
 msgid "My TVNOW-Favourites :"
 msgstr "Meine TVNOW-Favoriten :"
 
-msgctxt "#30532"
+msgctxt "#30534"
 msgid "* [COLOR blue]{0:s}[/COLOR] *[COLOR FF008B00] successfully added !!![/COLOR]"
 msgstr "* [COLOR blue]{0:s}[/COLOR] *[COLOR FF008B00] erfolgreich hinzugefügt !!![/COLOR]"
 
-msgctxt "#30533"
+msgctxt "#30535"
 msgid "* [COLOR blue]{0:s}[/COLOR] *[COLOR red] has been deleted !!![/COLOR]"
 msgstr "* [COLOR blue]{0:s}[/COLOR] *[COLOR red] wurde gelöscht !!![/COLOR]"
 
-msgctxt "#30534"
+msgctxt "#30536"
 msgid "[COLOR FF008B00]Added to TVNOW-Medialibrary :[/COLOR]"
 msgstr "[COLOR FF008B00]Zur TVNOW-Medienbibliothek hinzugefügt :[/COLOR]"
 
-msgctxt "#30535"
+msgctxt "#30537"
 msgid "* Show: [COLOR blue]{0:s}[/COLOR] | Update every: [COLOR blue]{1:s} Hrs.[/COLOR] *"
 msgstr "* Serie: [COLOR blue]{0:s}[/COLOR] | Update alle: [COLOR blue]{1:s} Std.[/COLOR] *"
 
-# empty strings from id 30536 to 30600
+# empty strings from id 30538 to 30600
 # PLUGIN-MAIN and SIDEMENU
 
 msgctxt "#30601"
