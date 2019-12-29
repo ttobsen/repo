@@ -4382,9 +4382,9 @@ Zattoo Live TV, Aufnahmen und EPG
 	</extension>
 </addon>
 
-<addon id="plugin.video.joyn" name="Joyn" version="2.3.0" provider-name="knaerzche">
+<addon id="plugin.video.joyn" name="Joyn" version="2.3.1" provider-name="knaerzche">
 	<requires>
-		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="xbmc.python" version="2.26.0"/>
 		<import addon="inputstream.adaptive" version="2.2.21"/>
 		<import addon="script.module.inputstreamhelper" version="0.3.5"/>
 		<import addon="script.module.uepg" version="1.0.5"/>
@@ -4396,6 +4396,7 @@ Zattoo Live TV, Aufnahmen und EPG
 	</extension>
 	<extension point="xbmc.service" library="service.py" start="login"/>
 	<extension point="xbmc.addon.metadata">
+		<reuselanguageinvoker>true</reuselanguageinvoker>
 		<summary lang="en_GB">Joyn Video On Demand  and Live TV</summary>
 		<summary lang="de_DE">Joyn Video On Demand and Live TV</summary>
 		<description lang="en_GB">Watch VOD content und Live TV provided by Joyn</description>
@@ -4418,6 +4419,18 @@ Zattoo Live TV, Aufnahmen und EPG
 			<screenshot>resources/media/screenshot03.jpg</screenshot>
 		</assets>
 		<news>
+v2.3.1
+improve addon overall addon performance by reusing languageinvoker/splitting into submodules/logging on demand only
+create singleton-instances on per addon-handle basis
+cache epg/landing-page in libjoyn-instance
+fix playback on OSX
+create fake-uuid for allwinner android sdk level 24 (importing uuid module crashes kodi)
+implement own get_node() and make it more unique (espacially on android)
+fix set sort as per settings on matrix
+use window.setProperty for asset_id instead of 'hiding' in it imdb-infolabel
+make sure only playback for this addon is tracked in service.py
+fix relogin issue, when decrypting username/password fails
+fix language files
 v2.3.0
 add api-based resume postions
 partly fixed live stream audio sync issue
