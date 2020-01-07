@@ -114,10 +114,10 @@ stunden = unquote_plus(params.get('stunden', ''))
 
 def index():
     addDir('Neueste Trailer', 'https://res.cinetrailer.tv/api/v1/{0}/movies/newest?pageSize=20&isDebug=false'.format(language), 'newlist', '', page=1, addtype=1)
-    addDir('Demnächst im Kino', 'https://res.cinetrailer.tv/api/v1/{0}/movies/comingsoon?pageSize=20&isDebug=false'.format(language), 'newlist', '', page=1, addtype=1)
+    addDir('Jetzt im Kino', 'https://res.cinetrailer.tv/api/v1/{0}/movies/incinemas?orderBy=&pageSize=20&isDebug=false'.format(language), 'newlist', '', page=1, addtype=1)
+    addDir('Vorschau', 'https://res.cinetrailer.tv/api/v1/{0}/movies/comingsoon?pageSize=20&isDebug=false'.format(language), 'newlist', '', page=1, addtype=1)
     addDir('Home Video', 'https://res.cinetrailer.tv/api/v1/{0}/movies/homevideo?pageSize=20&isDebug=false'.format(language), 'newlist', '', page=1, addtype=1)
-    addDir('Im Kino', 'https://res.cinetrailer.tv/api/v1/{0}/movies/incinemas?orderBy=&pageSize=20&isDebug=false'.format(language), 'newlist', '', page=1, addtype=1)
-    addDir('Genres', '', 'genres')
+    addDir('Genre-Suche', '', 'genres')
     addDir('Einstellungen', '', 'Settings')
     xbmcplugin.endOfDirectory(addonhandle)
 
@@ -225,17 +225,18 @@ def newlist(url, page=1):
         id = trailer['id']
         image = trailer['poster_high']
         name = trailer['title']
-        infoLabels = {'title': name, 'year': trailer.get('premiere_date'), 'duration': (int(trailer.get('duration')) * 60), 'mediatype': 'movie'}
+        infoLabels = {'title': name, 'year': trailer.get('premiere_date'), 'mediatype': 'movie'}
+        if trailer.get('duration'):
+            infoLabels.update({'duration': int(trailer.get('duration')) * 60})
         plot = None
-        if trailer.get('premiere_date'):
-            sdate = trailer.get('premiere_date').split('T')[0].split('-')
-            plot = 'Premiere: {0}.{1}.{2}'.format(sdate[2], sdate[1], sdate[0])
-        infoLabels.update({'plot': \
-                           '{0}\nTrailer: {1}'.format(plot, trailer.get('total_trailers')) \
-                           if plot else 'Trailer: {0}'.format(trailer.get('total_trailers'))})
         if trailer.get('categories'):
             genre = [genre.get('title') for genre in trailer.get('categories')]
             infoLabels.update({'genre': genre})
+            plot = '{0}\n'.format(' / '.join(genre))
+        if trailer.get('premiere_date'):
+            sdate = trailer.get('premiere_date').split('T')[0].split('-')
+            plot = '{0}Starttermin: {1}.{2}.{3}\n'.format(plot if plot else '', sdate[2], sdate[1], sdate[0])
+        infoLabels.update({'plot': '{0}Trailer: {1}'.format(plot if plot else '', trailer.get('total_trailers'))})
         if trailer.get('cast', {}).get('actors'):
             cast = [actor.get('name') for actor in trailer.get('cast').get('actors')]
             infoLabels.update({'cast': cast})
@@ -246,7 +247,8 @@ def newlist(url, page=1):
         count += 1
     if int(struktur['page_count']) > int(page):
         debug('## NEXT ##')
-        addDir('Next', url, 'newlist', page=(int(page) + 1))
+        page = (int(page) + 1)
+        addDir('--= Weiter zu Seite {0} =--'.format(page), url, 'newlist', page=page)
     xbmcplugin.endOfDirectory(addonhandle)
 
 
