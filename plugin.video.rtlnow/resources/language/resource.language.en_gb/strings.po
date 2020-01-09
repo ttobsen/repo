@@ -63,30 +63,34 @@ msgid "     Show broadcastdate in title of the program"
 msgstr ""
 
 msgctxt "#30115"
-msgid "     Show Addon-Settings in the overview"
-msgstr ""
-
-msgctxt "#30116"
 msgid "     Turn on web certificate validation"
 msgstr ""
 
-msgctxt "#30117"
+msgctxt "#30116"
 msgid "     Check widevine -Status and -Installation regularly"
 msgstr ""
 
+msgctxt "#30117"
+msgid "     Show Addon-Settings in the overview"
+msgstr ""
+
 msgctxt "#30118"
-msgid "     Activate TVNOW-Media-Library"
+msgid "     Detailed Addon-Debug (otherwise only Minimal-Log)"
 msgstr ""
 
 msgctxt "#30119"
-msgid "     TVNOW-Media-Folder (for .strm- and .nfo- Files)"
+msgid "     Activate TVNOW-Media-Library"
 msgstr ""
 
 msgctxt "#30120"
+msgid "     TVNOW-Media-Folder (for .strm- and .nfo- Files)"
+msgstr ""
+
+msgctxt "#30121"
 msgid "     Update of the TVNOW-Library (in Hours)"
 msgstr ""
 
-# empty strings from id 30121 to 30229
+# empty strings from id 30122 to 30229
 # SETTINGS-TITLES
 
 msgctxt "#30230"
@@ -106,26 +110,30 @@ msgid "[B][COLOR ff0099ff]TITLE[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30234"
-msgid "[B][COLOR ff0099ff]SETTINGS[/COLOR][/B]"
-msgstr ""
-
-msgctxt "#30235"
 msgid "[B][COLOR ff0099ff]CERTIFICATE[/COLOR][/B]"
 msgstr ""
 
-msgctxt "#30236"
+msgctxt "#30235"
 msgid "[B][COLOR ff0099ff]WIDEVINE[/COLOR][/B]"
 msgstr ""
 
+msgctxt "#30236"
+msgid "[B][COLOR ff0099ff]SETTINGS[/COLOR][/B]"
+msgstr ""
+
 msgctxt "#30237"
-msgid "[B][COLOR ff0099ff]MEDIA[/COLOR][/B]"
+msgid "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30238"
+msgid "[B][COLOR ff0099ff]MEDIA[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30239"
 msgid "[B][COLOR ff0099ff]INFO[/COLOR][/B]"
 msgstr ""
 
-# empty strings from id 30239 to 30350
+# empty strings from id 30240 to 30350
 # SETTINGS-DESCRIPTIONS
 
 msgctxt "#30351"

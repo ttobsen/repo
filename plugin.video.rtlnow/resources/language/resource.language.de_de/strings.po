@@ -63,30 +63,34 @@ msgid "     Show broadcastdate in title of the program"
 msgstr "     Ausstrahlungsdatum im Titel der Sendung anzeigen"
 
 msgctxt "#30115"
-msgid "     Show Addon-Settings in the overview"
-msgstr "     Addon-Einstellungen in der Übersicht anzeigen"
-
-msgctxt "#30116"
 msgid "     Turn on web certificate validation"
 msgstr "     Web-Zertifikatsprüfung einschalten"
 
-msgctxt "#30117"
+msgctxt "#30116"
 msgid "     Check widevine -Status and -Installation regularly"
 msgstr "     Widevine -Status und -Installation regelmäßig prüfen"
 
+msgctxt "#30117"
+msgid "     Show Addon-Settings in the overview"
+msgstr "     Addon-Einstellungen in der Übersicht anzeigen"
+
 msgctxt "#30118"
+msgid "     Detailed Addon-Debug (otherwise only Minimal-Log)"
+msgstr "     Addon-Debug mit Details (sonst nur Minimal-Log)"
+
+msgctxt "#30119"
 msgid "     Activate TVNOW-Media-Library"
 msgstr "     TVNOW-Medien-Bibliothek aktivieren"
 
-msgctxt "#30119"
+msgctxt "#30120"
 msgid "     TVNOW-Media-Folder (for .strm- and .nfo- Files)"
 msgstr "     TVNOW-Media-Ordner (für .strm- und .nfo- Dateien)"
 
-msgctxt "#30120"
+msgctxt "#30121"
 msgid "     Update of the TVNOW-Library (in Hours)"
 msgstr "     Update der TVNOW-Bibliothek (in Stunden)"
 
-# empty strings from id 30121 to 30229
+# empty strings from id 30122 to 30229
 # SETTINGS-TITLES
 
 msgctxt "#30230"
@@ -106,26 +110,30 @@ msgid "[B][COLOR ff0099ff]TITLE[/COLOR][/B]"
 msgstr "[B][COLOR ff0099ff]TITEL[/COLOR][/B]"
 
 msgctxt "#30234"
-msgid "[B][COLOR ff0099ff]SETTINGS[/COLOR][/B]"
-msgstr "[B][COLOR ff0099ff]EINSTELLUNGEN[/COLOR][/B]"
-
-msgctxt "#30235"
 msgid "[B][COLOR ff0099ff]CERTIFICATE[/COLOR][/B]"
 msgstr "[B][COLOR ff0099ff]ZERTIFIKAT[/COLOR][/B]"
 
-msgctxt "#30236"
+msgctxt "#30235"
 msgid "[B][COLOR ff0099ff]WIDEVINE[/COLOR][/B]"
 msgstr "[B][COLOR ff0099ff]WIDEVINE[/COLOR][/B]"
 
+msgctxt "#30236"
+msgid "[B][COLOR ff0099ff]SETTINGS[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]EINSTELLUNGEN[/COLOR][/B]"
+
 msgctxt "#30237"
+msgid "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
+
+msgctxt "#30238"
 msgid "[B][COLOR ff0099ff]MEDIA[/COLOR][/B]"
 msgstr "[B][COLOR ff0099ff]MEDIEN[/COLOR][/B]"
 
-msgctxt "#30238"
+msgctxt "#30239"
 msgid "[B][COLOR ff0099ff]INFO[/COLOR][/B]"
 msgstr "[B][COLOR ff0099ff]INFO[/COLOR][/B]"
 
-# empty strings from id 30239 to 30350
+# empty strings from id 30240 to 30350
 # SETTINGS-DESCRIPTIONS
 
 msgctxt "#30351"
