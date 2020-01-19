@@ -2346,21 +2346,39 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 	</extension>
 </addon>
 
-<addon id="plugin.video.jim_panse_gamer" name="JimPanseGamer" version="2.0.3" provider-name="">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="plugin.video.youtube" version="1.0.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="en">JimPanseGamer</summary>
-        <language></language>
-        <description lang="en">JimPanseGamer</description>
-    <platform>all</platform>
-    </extension>
+<addon id="plugin.video.jim_panse_gamer" name="JimPanseGamer" version="2.0.4" provider-name="zero">
+	<requires>
+		<import addon="xbmc.python" version="2.14.0"/>
+		<import addon="plugin.video.youtube" version="6.3.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">JimPanseGamer</summary>
+		<summary lang="en">JimPanseGamer</summary>
+		<description lang="de">[COLOR red]- Addon-Support eingestellt ![CR]- Direktzugriff über Youtube-Addon realisierbar.[/COLOR]</description>
+		<description lang="en">[COLOR red]- Addon-Support discontinued ![CR]- Direct access via YouTube addon possible.[/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum></forum>
+		<website></website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.jim_panse_gamer</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<broken>
+- Addon-Support eingestellt ![CR]- Direktzugriff über Youtube-Addon realisierbar.
+		</broken>
+		<news>[B][COLOR orangered]Version 2.0.4 (19.01.2020)[/COLOR][/B] by realvito[CR]
+- Addon-Support eingestellt ![CR]- Direktzugriff über Youtube-Addon realisierbar.
+		</news>
+	</extension>
 </addon>
 
 <addon id="plugin.video.L0RE.fcstpauli" name="FC Stpauli Mediathek" version="0.1" provider-name="L0RE">
