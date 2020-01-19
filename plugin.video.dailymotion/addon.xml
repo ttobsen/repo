@@ -1,22 +1,36 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.dailymotion" name="DailyMotion" version="0.2.5" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
-        <import addon="script.module.requests" version="2.9.1"/>
-        <import addon="script.module.youtube.dl" version="14.810.0"/>        
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-  <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="en">Movies, TV, Music, User-Clips, 3D and Livestreams</summary>
-        <language></language>
-        <description lang="en">Movies, TV, Music, User-Clips, 3D and Livestreams</description>
-        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
-        <website>http://www.dailymotion.com</website>
-        <source>https://github.com/AddonScriptorDE/plugin.video.dailymotion_com</source>
-        <forum>http://forum.xbmc.org/showthread.php?tid=142626</forum>
-        <email>AddonScriptorDE at yahoo dot de</email>
-  </extension>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<addon id="plugin.video.dailymotion" name="DailyMotion" version="0.2.6" provider-name="L0RE">
+	<requires>
+		<import addon="xbmc.python" version="2.14.0"/>
+		<import addon="script.module.requests" version="2.9.1"/>
+		<import addon="script.module.youtube.dl" version="14.810.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Filme, TV, Musik, User-Clips, und Livestreams</summary>
+		<summary lang="en">Movies, TV, Music, User-Clips, and Livestreams</summary>
+		<description lang="de">[COLOR red]- Es existiert eine aktuellere Version.[CR]- Siehe: https://github.com/Gujal00/plugin.video.dailymotion_com [CR]- Updates hier eingestellt ![/COLOR]</description>
+		<description lang="en">[COLOR red]- A more recent version exists.[CR]- See: https://github.com/Gujal00/plugin.video.dailymotion_com [CR]- Updates here discontinued ![/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://forum.kodi.tv/showthread.php?tid=142626</forum>
+		<website>https://www.dailymotion.com</website>
+		<email></email>
+		<source>https://github.com/Gujal00/plugin.video.dailymotion_com</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<broken>
+- Es existiert eine aktuellere Version.[CR]- Siehe: https://github.com/Gujal00/plugin.video.dailymotion_com [CR]- Updates hier eingestellt !
+		</broken>
+		<news>[B][COLOR orangered]Version 0.2.6 (18.01.2020)[/COLOR][/B] by realvito[CR]
+- Es existiert eine aktuellere Version.[CR]- Siehe: https://github.com/Gujal00/plugin.video.dailymotion_com [CR]- Updates hier eingestellt !
+		</news>
+	</extension>
 </addon>

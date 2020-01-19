@@ -1,2 +1,9 @@
 ﻿0.1.8
 - Release
+
+...
+
+0.2.6 (18.01.2020)
+- Es existiert eine aktuellere Version.
+- Siehe: https://github.com/Gujal00/plugin.video.dailymotion_com 
+- Updates hier eingestellt !
