@@ -10,3 +10,7 @@
 
 [B]Version 0.2.1  (21.10.2018)[/B] by realvito
 - fixed: Videos können nicht abgespielt werden (verursacht durch Änderung der Webseitencodierung)
+
+[B]Version 0.2.2  (19.01.2020)[/B] by realvito
+- last OLDVERSION with Path = plugin.video.L0RE.3plus
+- Please use the New Version (1.0.1) with Path = plugin.video.3plus_ch
