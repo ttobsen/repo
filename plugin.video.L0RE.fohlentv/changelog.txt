@@ -1,1 +1,4 @@
-﻿0.1- Initial Source
+﻿
+Version 0.7.2  (19.01.2020)
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.
+- Updates für dieses Addon vorerst eingestellt !
