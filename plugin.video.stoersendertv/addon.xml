@@ -1,18 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.video.stoersendertv" name="stoersendertv" version="2.0.4" provider-name="don">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="plugin.video.youtube" version="3.0.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-    	<website>http://www.stoersender.tv</website>
-        <platform>all</platform>
-        <summary lang="en">Dieter Hildebrandt Stoersender.TV</summary>
-        <language>de</language>
-        <description lang="en">stoersender.tv ist freies Internet-Stör-Sehen, finanziert von der Crowd auf Startnext.de der weltweit ersten gemeinnützigen Crowdfunding-Plattform für unabhängige Projekte - z.B. für freien Journalismus.</description>
-    <platform>all</platform>
-    </extension>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<addon id="plugin.video.stoersendertv" name="stoersendertv" version="2.0.5" provider-name="don">
+	<requires>
+		<import addon="xbmc.python" version="2.14.0"/>
+		<import addon="plugin.video.youtube" version="6.3.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Dieter Hildebrandt Stoersender.TV</summary>
+		<summary lang="en">Dieter Hildebrandt Stoersender.TV</summary>
+		<description lang="de">[COLOR red]- Addon-Support eingestellt ![CR]- Direktzugriff über Youtube-Addon realisierbar.[/COLOR]</description>
+		<description lang="en">[COLOR red]- Addon-Support discontinued ![CR]- Direct access via YouTube addon possible.[/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum></forum>
+		<website>http://www.stoersender.tv</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.stoersendertv</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<broken>
+- Addon-Support eingestellt ![CR]- Direktzugriff über Youtube-Addon realisierbar.
+		</broken>
+		<news>[B][COLOR orangered]Version 2.0.5 (18.01.2020)[/COLOR][/B] by realvito[CR]
+- Addon-Support eingestellt ![CR]- Direktzugriff über Youtube-Addon realisierbar.
+		</news>
+	</extension>
 </addon>
