@@ -1150,19 +1150,22 @@ To support the backport the addon will now always create the merged_epg.xml.gz
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattoo_com" name="Zattoo Live TV" version="1.1.2" provider-name="PUR3">
+<addon id="plugin.video.zattoo_com" name="Zattoo Live TV" version="1.2.0" provider-name="PUR3">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.kodi-six" version="0.1.0"/>
+        <import addon="script.module.pyxbmct" version="1.2.0"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
     </extension>
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
-        <summary lang="de">Über 75 TV-Sender als Livestreams auf dem Gerät deiner Wahl ansehen.</summary>
-        <description lang="de">Fußball, Serien, Filme, Dokus und Reportagen laufen mit Zattoo im Livestream. Alles was du brauchst, ist eine Internetverbindung und schon läuft das Fernsehprogramm mit mehr als 75-TV-Sendern kostenlos auf dem Gerät deiner Wahl.</description>
+        <summary lang="de_DE">Über 75 TV-Sender als Livestreams auf dem Gerät deiner Wahl ansehen.</summary>
+        <description lang="de_DE">Fußball, Serien, Filme, Dokus und Reportagen laufen mit Zattoo im Livestream. Alles was du brauchst, ist eine Internetverbindung und schon läuft das Fernsehprogramm mit mehr als 75-TV-Sendern kostenlos auf dem Gerät deiner Wahl.</description>
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
         <website>http://www.zattoo.com</website>
+        <news>1.2.0[CR]- Python 3 compability</news>
     </extension>
 </addon>
 
