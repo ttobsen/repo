@@ -1,16 +1,23 @@
 # -*- coding: utf-8 -*-
-import urllib2
+from __future__ import unicode_literals
 import sys
 import xbmcplugin
 import xbmcgui
-from resources.lib.api import get_json_data
 import json
 import time
+
+from .api import get_json_data
+
+try:
+    from urllib.error import URLError, HTTPError
+except:
+    from urllib2 import URLError, HTTPError
 
 URI = sys.argv[0]
 ADDON_HANDLE = int(sys.argv[1])
 
-def round_seconds(seconds_to_round, round_to_nearest_seconds = 300):
+
+def round_seconds(seconds_to_round, round_to_nearest_seconds=300):
     if seconds_to_round <= 60:
         return 60
     if seconds_to_round < 500:
@@ -23,36 +30,37 @@ def round_seconds(seconds_to_round, round_to_nearest_seconds = 300):
         seconds_to_round = seconds_to_round + (round_to_nearest_seconds - important_range)
     return seconds_to_round
 
-def list_channels(session, pg_hash, USE_FANARTS = False):
+
+def list_channels(session, pg_hash, USE_FANARTS=False):
     if not pg_hash or not session:
-        from resources.lib.api import login
+        from .api import login
         login()
         import xbmcaddon
-        addon = xbmcaddon.Addon(id = 'plugin.video.zattoo_com')
+        addon = xbmcaddon.Addon(id='plugin.video.zattoo_com')
         pg_hash = addon.getSetting('pg_hash')
         session = addon.getSetting('session')
     try:
         json_data = json.loads(get_json_data('https://zattoo.com/zapi/v2/cached/channels/%s?details=True' % pg_hash, session))
-    except urllib2.HTTPError:
-        from resources.lib.api import login
+    except HTTPError:
+        from .api import login
         login()
         import xbmcaddon
-        addon = xbmcaddon.Addon(id = 'plugin.video.zattoo_com')
+        addon = xbmcaddon.Addon(id='plugin.video.zattoo_com')
         pg_hash = addon.getSetting('pg_hash')
         session = addon.getSetting('session')
         json_data = json.loads(get_json_data('https://zattoo.com/zapi/v2/cached/channels/%s?details=True' % pg_hash, session))
-    except urllib2.URLError:
-        from resources.lib.functions import warning
+    except URLError:
+        from .functions import warning
         warning('Keine Netzwerkverbindung!')
         return
     except:
-        from resources.lib.functions import warning
+        from .functions import warning
         warning('TV Daten konnten nicht geladen werden!')
         return
-    
-    channel_groups = json_data['channel_groups']#[:3]
+
+    channel_groups = json_data['channel_groups']  # [:3]
     current_timestamp = int(time.time())
-    
+
     for group in channel_groups:
         for channel in group['channels']:
             for quality in channel['qualities']:
@@ -67,7 +75,8 @@ def list_channels(session, pg_hash, USE_FANARTS = False):
                             title = '%s: %s' % (title, subtitle)
                     except:
                         title = ''
-                    item = xbmcgui.ListItem('[B][COLOR blue]%s[/COLOR][/B] %s' % (channel_name, title), thumbnailImage=thumb)
+                    item = xbmcgui.ListItem('[B][COLOR blue]%s[/COLOR][/B] %s' % (channel_name, title))
+                    item.setArt({'thumb': thumb})
                     try:
                         duration_in_seconds = round_seconds(channel['now']['e'] - current_timestamp)
                     except:

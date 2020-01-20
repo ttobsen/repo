@@ -1,18 +1,26 @@
 # -*- coding: utf-8 -*-
-import urllib2
-import urlparse
+from __future__ import unicode_literals
 import json
 
+try:
+    from urllib.parse import urljoin
+    from urllib.request import urlopen
+except:
+    from urllib2 import urlopen
+    from urlparse import urljoin
+
+
 def get_playlist_url(cid, SESSION):
-    from resources.lib.api import get_json_data
+    from .api import get_json_data
     json_data = get_json_data('https://zattoo.com/zapi/watch', SESSION, {'stream_type':'hls', 'cid':cid})
     return json.loads(json_data)['stream']['url']
-    
+
+
 def get_stream_url(cid, SESSION, MAX_BITRATE):
     playlist_url = get_playlist_url(cid, SESSION)
-    m3u8_data = urllib2.urlopen(playlist_url).read()
+    m3u8_data = urlopen(playlist_url).read().decode('utf-8')
     url_parts = [line for line in m3u8_data.split('\n') if '.m3u8' in line]
-    prefix_url = urlparse.urljoin(playlist_url, '/')
+    prefix_url = urljoin(playlist_url, '/')
     if MAX_BITRATE == '3000000':
         suffix_url = url_parts[0]
     elif MAX_BITRATE == '1500000':

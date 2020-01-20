@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 import sys
 import json
-from resources.lib.api import get_json_data
-import resources.lib.pyxbmct as pyxbmct
+
+from .api import get_json_data
+import pyxbmct.addonwindow as pyxbmct
 
 URI = sys.argv[0]
 ADDON_HANDLE = int(sys.argv[1])
@@ -12,17 +14,17 @@ def list_epg_item(pid, SESSION, pg_hash):
     url = 'https://zattoo.com/zapi/v2/cached/program/power_details/%s?program_ids=%s&complete=True' % (pg_hash, pid)
     json_data = get_json_data(url, SESSION)
     program_info = json.loads(json_data)['programs'][0]
-    channel_name = program_info['channel_name'].encode('utf-8')
+    channel_name = program_info['channel_name']
     cid = program_info['cid']
-    countries = program_info['country'].replace('|', ', ').encode('utf-8')
-    genres = ', '.join(program_info['g']).encode('utf-8')
-    categories = ', '.join(program_info['c']).encode('utf-8')
-    directors = ', '.join([d for d in program_info['cr']['director']]).encode('utf-8')
-    actors = ', '.join([a for a in program_info['cr']['actor']]).encode('utf-8')
-    desc = program_info['d'].encode('utf-8')
-    subtitle = (program_info['et'] or '').encode('utf-8')
+    countries = program_info['country'].replace('|', ', ')
+    genres = ', '.join(program_info['g'])
+    categories = ', '.join(program_info['c'])
+    directors = ', '.join([d for d in program_info['cr']['director']])
+    actors = ', '.join([a for a in program_info['cr']['actor']])
+    desc = program_info['d']
+    subtitle = (program_info['et'] or '')
     thumb = program_info['i']
-    title = program_info['t'].encode('utf-8')
+    title = program_info['t']
     if subtitle:
         title = '%s: %s' % (title, subtitle)
     year = program_info['year']
