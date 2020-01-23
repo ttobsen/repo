@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
 import os
-import sys
 import requests
-
+import sys
 import xbmc
-import xbmcvfs
 import xbmcaddon
+import xbmcvfs
+
+from resources.lib.utils import py2_encode, py2_decode
 
 # add pycaption module to path
-addon_dir = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')).decode('utf-8')
+addon_dir = py2_decode(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')))
 module_dir = os.path.join(addon_dir, "resources", "lib", "pycaption")
 sys.path.insert(0, module_dir)
 
-# we need this fork: https://github.com/lucasheld/pycaption/tree/py27
+# we need this fork: https://github.com/lucasheld/pycaption/tree/py27-py3-compat
 from pycaption import SRTWriter, detect_format
 
 
@@ -29,6 +30,8 @@ def download_subtitle(url, destination):
     if xbmcvfs.exists(destination):
         xbmcvfs.delete(destination)
     f = xbmcvfs.File(destination, 'w')
-    f.write(srt.encode("utf-8"))
-    f.close()
+    try:
+        f.write(py2_encode(srt))
+    finally:
+        f.close()
     return True

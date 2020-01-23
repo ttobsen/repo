@@ -24,6 +24,7 @@ fi
 
 
 cd $REPO
+rm -rf .idea
 echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' >$REPO/addons.xml
 echo '<addons>' >> $REPO/addons.xml
 for name in `find . -maxdepth 1 -type d |grep -v \.git|grep -v addons|egrep -v "^\.$"|cut -d \/ -f 2 `; do 
