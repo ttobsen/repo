@@ -4742,7 +4742,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
   </extension>
 </addon>
 
-<addon id="plugin.video.dokumonster" name="dokumonster.de" version="0.1.4" provider-name="mdmdmdmdmd">
+<addon id="plugin.video.dokumonster" name="dokumonster.de" version="0.1.5" provider-name="mdmdmdmdmd">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="script.module.simplejson" version="2.0.10"/>
@@ -4750,7 +4750,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
 		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
 		<import addon="script.module.xbmcswift2" version="1.2.0"/>
 	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
+	<extension point="xbmc.python.pluginsource" library="addon.py">
 		<provides>video</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
