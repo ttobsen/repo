@@ -31,18 +31,11 @@ import YDStreamExtractor
 
 
 global debuging
-SEP = os.sep
 pluginhandle = int(sys.argv[1])
 addon = xbmcaddon.Addon()
 addonPath  = xbmc.translatePath(addon.getAddonInfo('path')).encode('utf-8').decode('utf-8')
 dataPath     = xbmc.translatePath(addon.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
 temp             = xbmc.translatePath(os.path.join(dataPath, 'temp', ''))
-masterOLD  = "kaltura.py"
-masterNEW = "kaltura.py"
-masterBACK = "(BACKUP)kaltura.py"
-sourceOLD = os.path.join('special:'+SEP+SEP+'home'+SEP+'addons'+SEP+'plugin.video.L0RE.weltderwunder'+SEP+'lib'+SEP, masterOLD)
-sourceNEW = os.path.join('special:'+SEP+SEP+'home'+SEP+'addons'+SEP+'script.module.youtube.dl'+SEP+'lib'+SEP+'youtube_dl'+SEP+'extractor'+SEP, masterNEW)
-sourceBACK = os.path.join('special:'+SEP+SEP+'home'+SEP+'addons'+SEP+'plugin.video.L0RE.weltderwunder'+SEP+'lib'+SEP, masterBACK)
 prefQUALITY = int(addon.getSetting('prefVideoQuality'))
 useThumbAsFanart = addon.getSetting('useThumbAsFanart') == "true"
 enableAdjustment = addon.getSetting('show_settings') == "true"
@@ -53,10 +46,6 @@ baseURL = "http://www.weltderwunder.de"
 
 xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_UNSORTED)
 xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_LABEL)
-
-if xbmcvfs.exists(sourceOLD) and xbmcvfs.exists(sourceNEW):
-	xbmcvfs.copy(sourceOLD, sourceNEW)
-	xbmcvfs.rename(sourceOLD, sourceBACK)
 
 if xbmcvfs.exists(temp) and os.path.isdir(temp):
 	shutil.rmtree(temp, ignore_errors=True)
@@ -69,8 +58,10 @@ if xbmcvfs.exists(cookie):
 	cj.load(cookie, ignore_discard=True, ignore_expires=True)
 
 def py2_enc(s, encoding='utf-8'):
-	if PY2 and isinstance(s, unicode):
-		s = s.encode(encoding)
+	if PY2:
+		if not isinstance(s, basestring):
+			s = str(s)
+		s = s.encode(encoding) if isinstance(s, unicode) else s
 	return s
 
 def py2_uni(s, encoding='utf-8'):
@@ -84,9 +75,7 @@ def py3_dec(d, encoding='utf-8'):
 	return d
 
 def translation(id):
-	LANGUAGE = addon.getLocalizedString(id)
-	LANGUAGE = py2_enc(LANGUAGE)
-	return LANGUAGE
+	return py2_enc(addon.getLocalizedString(id))
 
 def failing(content):
 	log(content, xbmc.LOGERROR)
@@ -95,18 +84,14 @@ def debug(content):
 	log(content, xbmc.LOGDEBUG)
 
 def log(msg, level=xbmc.LOGNOTICE):
-	msg = py2_enc(msg)
-	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+msg, level)
+	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+py2_enc(msg), level)
 
-def getUrl(url, header=None):
+def getUrl(url, header=None, agent='Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0'):
 	global cj
 	opener = build_opener(HTTPCookieProcessor(cj))
+	opener.addheaders = [('User-Agent', agent), ('Accept-Encoding', 'gzip, deflate')]
 	try:
-		if header:
-			opener.addheaders = header
-		else:
-			opener.addheaders =[('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0')]
-			opener.addheaders = [('Accept-Encoding', 'gzip, deflate')]
+		if header: opener.addheaders = header
 		response = opener.open(url, timeout=30)
 		if response.info().get('Content-Encoding') == 'gzip':
 			content = py3_dec(gzip.GzipFile(fileobj=io.BytesIO(response.read())).read())
@@ -114,10 +99,8 @@ def getUrl(url, header=None):
 			content = py3_dec(response.read())
 	except Exception as e:
 		failure = str(e)
-		if hasattr(e, 'code'):
-			failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
-		elif hasattr(e, 'reason'):
-			failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
+		failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
+		#xbmcgui.Dialog().notification(translation(30521).format('URL'), "ERROR = [COLOR red]{0}[/COLOR]".format(failure), icon, 15000)
 		content = ""
 		return sys.exit(0)
 	opener.close()
@@ -129,9 +112,9 @@ def index():
 	addDir(translation(30601), baseURL+'/sendungen', 'listShowsA_Z', icon)
 	addDir(translation(30602) , baseURL+'/videos', 'listThemes', icon)
 	addDir(translation(30603), "", 'Searching', icon)
+	addDir(translation(30604), baseURL+'/videos/live', 'play_LIVE', icon, folder=False)
 	if enableAdjustment:
-		addDir(translation(30604), "", 'aSettings', icon)
-	liveTV()
+		addDir(translation(30605), "", 'aSettings', icon)
 	xbmcplugin.endOfDirectory(pluginhandle) 
 
 def listThemes(url):
@@ -242,19 +225,23 @@ def playVideo(url):
 	stream_url = stream_url.split('|')[0]
 	xbmcplugin.setResolvedUrl(pluginhandle, True, xbmcgui.ListItem(path=stream_url))
 
-def playLive(url, name):
-	listitem = xbmcgui.ListItem(path=url, label=name)  
-	listitem.setMimeType('application/vnd.apple.mpegurl')
-	xbmc.Player().play(item=url, listitem=listitem)
-
-def liveTV():
-	debug("(liveTV) ------------------------------------------------ START = liveTV -----------------------------------------------")
-	items = []
-	items.append(['[COLOR lime]* Welt der Wunder - LIVE TV *[/COLOR]', 'http://live.vidoo.de/live/weltderwunder/chunklist.m3u8', icon])
-	for item in items:
-		listitem = xbmcgui.ListItem(path=item[1], label=item[0], iconImage=item[2], thumbnailImage=item[2])
-		listitem.setArt({'fanart': defaultFanart})
-		xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=sys.argv[0]+'?mode=playLive&url='+quote_plus(item[1])+'&name='+item[0], listitem=listitem)  
+def play_LIVE(url):
+	debug("(play_LIVE) ------------------------------------------------ START = play_LIVE -----------------------------------------------")
+	live_url = False
+	try:
+		content = getUrl(url)
+		stream = re.compile('<video id="live-video".*?<source src="([^"]+?)" type="application/x-mpeg', re.DOTALL).findall(content)[0]
+		code = urlopen(stream).getcode()
+		if str(code) == '200': live_url = stream
+	except: pass
+	if live_url:
+		debug("(play_LIVE) ### LIVEurl : {0} ###".format(live_url))
+		listitem = xbmcgui.ListItem(path=live_url, label=translation(30604))
+		listitem.setMimeType('application/vnd.apple.mpegurl')
+		xbmc.Player().play(item=live_url, listitem=listitem)
+	else:
+		failing("(liveTV) ##### Abspielen des Live-Streams NICHT möglich ##### URL : {0} #####\n   ########## KEINEN Live-Stream-Eintrag auf der Webseite von *weltderwunder.de* gefunden !!! ##########".format(url))
+		return xbmcgui.Dialog().notification(translation(30521).format('LIVE'), translation(30524), icon, 8000)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def cleanPhoto(string):
@@ -272,20 +259,18 @@ def parameters_string_to_dict(parameters):
 				paramDict[paramSplits[0]] = paramSplits[1]
 	return paramDict
 
-def addDir(name, url, mode, image, plot=None, page=1, originalSERIE=""):
+def addDir(name, url, mode, image, plot=None, page=1, originalSERIE="", folder=True):
 	u = sys.argv[0]+'?url='+quote_plus(url)+'&mode='+str(mode)+'&page='+str(page)+'&image='+str(image)+'&originalSERIE='+quote_plus(originalSERIE)
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=image)
+	liz = xbmcgui.ListItem(name)
 	liz.setInfo(type='Video', infoLabels={'Title': name, 'Plot': plot})
-	liz.setArt({'poster': image})
+	liz.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
 	if useThumbAsFanart and image != icon:
 		liz.setArt({'fanart': image})
-	else:
-		liz.setArt({'fanart': defaultFanart})
-	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
+	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=folder)
 
 def addLink(name, url, mode, image, plot=None, duration=None, seriesname=None, season=None, episode=None, genre=None, year=None, begins=None):
 	u = sys.argv[0]+'?url='+quote_plus(url)+'&mode='+str(mode)
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=image)
+	liz = xbmcgui.ListItem(name)
 	ilabels = {}
 	ilabels['Season'] = season
 	ilabels['Episode'] = episode
@@ -304,18 +289,15 @@ def addLink(name, url, mode, image, plot=None, duration=None, seriesname=None, s
 	ilabels['Mpaa'] = None
 	ilabels['Mediatype'] = 'episode'
 	liz.setInfo(type='Video', infoLabels=ilabels)
-	liz.setArt({'poster': image})
+	liz.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
 	if useThumbAsFanart and image != icon:
 		liz.setArt({'fanart': image})
-	else:
-		liz.setArt({'fanart': defaultFanart})
 	liz.addStreamInfo('Video', {'Duration': duration})
 	liz.setProperty('IsPlayable', 'true')
 	liz.setContentLookup(False)
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
 
 params = parameters_string_to_dict(sys.argv[2])
-name = unquote_plus(params.get('name', ''))
 url = unquote_plus(params.get('url', ''))
 mode = unquote_plus(params.get('mode', ''))
 image = unquote_plus(params.get('image', ''))
@@ -338,9 +320,7 @@ elif mode == 'Searching':
 	Searching()
 elif mode == 'playVideo':
 	playVideo(url)
-elif mode == 'playLive':
-	playLive(url, name)
-elif mode == 'liveTV':
-	liveTV()
+elif mode == 'play_LIVE':
+	play_LIVE(url)
 else:
 	index()
