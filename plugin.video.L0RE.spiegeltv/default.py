@@ -52,8 +52,10 @@ if xbmcvfs.exists(cookie):
 	cj.load(cookie, ignore_discard=True, ignore_expires=True)
 
 def py2_enc(s, encoding='utf-8'):
-	if PY2 and isinstance(s, unicode):
-		s = s.encode(encoding)
+	if PY2:
+		if not isinstance(s, basestring):
+			s = str(s)
+		s = s.encode(encoding) if isinstance(s, unicode) else s
 	return s
 
 def py2_uni(s, encoding='utf-8'):
@@ -67,9 +69,7 @@ def py3_dec(d, encoding='utf-8'):
 	return d
 
 def translation(id):
-	LANGUAGE = addon.getLocalizedString(id)
-	LANGUAGE = py2_enc(LANGUAGE)
-	return LANGUAGE
+	return py2_enc(addon.getLocalizedString(id))
 
 def failing(content):
 	log(content, xbmc.LOGERROR)
@@ -78,29 +78,22 @@ def debug(content):
 	log(content, xbmc.LOGDEBUG)
 
 def log(msg, level=xbmc.LOGNOTICE):
-	msg = py2_enc(msg)
-	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+msg, level)
+	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+py2_enc(msg), level)
 
-def getUrl(url, header=None):
+def getUrl(url, header=None, agent='Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0'):
 	global cj
 	opener = build_opener(HTTPCookieProcessor(cj))
+	opener.addheaders = [('User-Agent', agent), ('Accept-Encoding', 'gzip, deflate')]
 	try:
-		if header:
-			opener.addheaders = header
-		else:
-			opener.addheaders =[('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0')]
-			opener.addheaders = [('Accept-Encoding', 'gzip, deflate')]
-		response = opener.open(url, timeout=30)
+		if header: opener.addheaders = header
+		response = opener.open(url, timeout=40)
 		if response.info().get('Content-Encoding') == 'gzip':
 			content = py3_dec(gzip.GzipFile(fileobj=io.BytesIO(response.read())).read())
 		else:
 			content = py3_dec(response.read())
 	except Exception as e:
 		failure = str(e)
-		if hasattr(e, 'code'):
-			failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
-		elif hasattr(e, 'reason'):
-			failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
+		failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
 		content = ""
 		return sys.exit(0)
 	opener.close()
@@ -142,10 +135,11 @@ def listStudios(url):
 		link = baseURL+video['href']
 		image = video.find('img')['src']
 		title = video.find('img')['alt']
-		addDir(title, link, 'listVideos', image, sub='normal', serie=title)
+		addDir(title, link, 'listVideos', image, sub='normal', origSERIE=title)
 	xbmcplugin.endOfDirectory(pluginhandle)  
   
-def listVideos(url, sub, serie):
+def listVideos(url, sub, origSERIE):
+	ISOLATED = set()
 	content = getUrl(url)
 	htmlPage = BeautifulSoup(content, 'html.parser')
 	vid_block = htmlPage.find('div',attrs={'id':'rcblock'})
@@ -167,11 +161,14 @@ def listVideos(url, sub, serie):
 			matchD = video.find('div',attrs={'class':'autocut addinfo'}).get_text()
 		duration = re.compile('([0-9]+)', re.DOTALL).findall(matchD)[0]    
 		duration = int(duration)*60
-		addLink(title, link, 'playVideo', image, duration, plot, tagline, serie)
+		if link in ISOLATED:
+			continue
+		ISOLATED.add(link)
+		addLink(title, link, 'playVideo', image, duration, plot, tagline, origSERIE)
 	xbmcplugin.endOfDirectory(pluginhandle)  
 
 def playVideo(url):    
-	vid = YDStreamExtractor.getVideoInfo(url, quality=2) # quality is 0=SD, 1=720p, 2=1080p and is a maximum
+	vid = YDStreamExtractor.getVideoInfo(url, quality=3) # Quality is 0=SD, 1=720p, 2=1080p, 3=Highest Available
 	stream_url = vid.streamURL() # This is what Kodi (XBMC) will play
 	stream_url = stream_url.split('|')[0]
 	xbmcplugin.setResolvedUrl(pluginhandle, True, xbmcgui.ListItem(path=stream_url))
@@ -186,19 +183,19 @@ def parameters_string_to_dict(parameters):
 				paramDict[paramSplits[0]] = paramSplits[1]
 	return paramDict
 
-def addDir(name, url, mode, iconimage, plot=None, sub=None, serie=None):   
-	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)+"&sub="+str(sub)+"&serie="+str(serie)
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
-	liz.setInfo(type='Video', infoLabels={'TvShowtitle': serie, 'Title': name, 'Plot': plot})
-	liz.setArt({'poster': iconimage, 'fanart': defaultFanart})
+def addDir(name, url, mode, image, plot=None, sub=None, origSERIE=None):   
+	u = '{0}?url={1}&mode={2}&sub={3}&origSERIE={4}'.format(sys.argv[0], quote_plus(url), str(mode), str(sub), str(origSERIE))
+	liz = xbmcgui.ListItem(name)
+	liz.setInfo(type='Video', infoLabels={'Tvshowtitle': origSERIE, 'Title': name, 'Plot': plot})
+	liz.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
 	xbmcplugin.setContent(int(sys.argv[1]), 'movies')
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
 
-def addLink(name, url, mode, iconimage, duration=None, plot=None, tagline=None, serie=None):
-	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
-	liz.setInfo(type='Video', infoLabels={'TvShowtitle': serie, 'Title': name, 'Plot': plot, 'Duration': duration, 'Tagline': tagline, 'Studio': 'Spiegel.tv', 'mediatype': 'video'})
-	liz.setArt({'poster': iconimage, 'fanart': defaultFanart, 'landscape': iconimage})
+def addLink(name, url, mode, image, duration=None, plot=None, tagline=None, origSERIE=None):
+	u = '{0}?url={1}&mode={2}'.format(sys.argv[0], quote_plus(url), str(mode))
+	liz = xbmcgui.ListItem(name)
+	liz.setInfo(type='Video', infoLabels={'Tvshowtitle': origSERIE, 'Title': name, 'Plot': plot, 'Duration': duration, 'Tagline': tagline, 'Studio': 'Spiegel.tv', 'mediatype': 'video'})
+	liz.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
 	liz.addStreamInfo('Video', {'Duration': duration})
 	liz.setProperty('IsPlayable', 'true')
 	liz.setContentLookup(False)
@@ -208,15 +205,15 @@ def addLink(name, url, mode, iconimage, duration=None, plot=None, tagline=None, 
 params = parameters_string_to_dict(sys.argv[2])
 url = unquote_plus(params.get('url', ''))
 mode = unquote_plus(params.get('mode', ''))
-sub= unquote_plus(params.get('sub', ''))
-serie= unquote_plus(params.get('serie', ''))
+sub = unquote_plus(params.get('sub', ''))
+origSERIE = unquote_plus(params.get('origSERIE', ''))
 
 if mode == 'listThemes':
 	listThemes(url)  
 elif mode == 'listStudios':
 	listStudios(url)
 elif mode == 'listVideos':
-	listVideos(url, sub, serie)
+	listVideos(url, sub, origSERIE)
 elif mode == 'playVideo':
 	playVideo(url)
 else:
