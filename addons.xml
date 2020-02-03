@@ -387,9 +387,10 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
     </extension>
 </addon>
 
-<addon id="plugin.video.L0RE.arte" name="ARTE.TV" version="0.6.0" provider-name="L0RE">
+<addon id="plugin.video.L0RE.arte" name="ARTE.TV" version="0.7.0" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="plugin.video.tyl0re.arte" version="1.0.1"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
@@ -397,8 +398,8 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 	<extension point="xbmc.addon.metadata">
 		<summary lang="de_DE">Videoportal von ARTE (DE/FR)</summary>
 		<summary lang="en_GB">Videoportal of ARTE (DE/FR)</summary>
-		<description lang="de_DE">Mediathek und Livestream - Schwerpunkte sind Kultur, Europa und die Vermittlung von Informationen aus vorzugsweise ungewöhnlichen Perspektiven.[CR]Reportagen, Serien, Filme, Dokus, Magazine - Die Programme von ARTE online auf arte.tv.</description>
-		<description lang="en_GB">Media library and Livestream - focus is Culture, Europe and the transmission of information from preferably unusual Perspectives.[CR]Reports, Series, Movies, Documentaries, Magazines - The programs of ARTE online on arte.tv.</description>
+		<description lang="de_DE">[COLOR red]- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 1.0.1 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No. 0.7.0 DEINSTALLIEREN.[/COLOR]</description>
+		<description lang="en_GB">[COLOR red]- This Addon gets a new path in the KODI directory ![CR]- This restores the compatibility and the call by other addons.[CR][CR]- Please ACTIVATE the new Addon with the Version-No. 1.0.1.[CR]- After that UNINSTALL this Addon with the Version-No. 0.7.0.[/COLOR]</description>
 		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
 		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
 		<language></language>
@@ -412,10 +413,11 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 0.6.0  (01.12.2019)[/COLOR][/B] by realvito[CR]
-- fixed: Rubrik = Themen kein Inhalt und Fehler wird angezeigt (läuft jetzt auch über die API)
-- fixed: Suche mit Umlauten im Suchbegriff erzeugt Fehler
-- fixed: UnicodeEncodeError für 'time.strftime' und Sondersymbole unter Python-3 (KODI-Matrix)
+		<broken>
+- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 1.0.1 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No. 0.7.0 DEINSTALLIEREN.
+		</broken>
+		<news>[B][COLOR orangered]Version 0.7.0 (03.02.2020)[/COLOR][/B] by realvito[CR]
+- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 1.0.1 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No. 0.7.0 DEINSTALLIEREN.
 		</news>
 	</extension>
 </addon>
@@ -783,11 +785,12 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 	</extension>
 </addon>
 
-<addon id="plugin.video.L0RE.spiegeltv" name="SPIEGEL.TV" version="1.0.1" provider-name="L0RE">
+<addon id="plugin.video.L0RE.spiegeltv" name="SPIEGEL.TV" version="1.0.2" provider-name="L0RE">
 	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
 		<import addon="script.module.youtube.dl"/>
+		<import addon="plugin.video.tyl0re.spiegeltv" version="2.0.3"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
@@ -795,8 +798,8 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 	<extension point="xbmc.addon.metadata">
 		<summary lang="de_DE">Aktuelles auf Spiegel TV</summary>
 		<summary lang="en_GB">News on Spiegel TV</summary>
-		<description lang="de_DE">SPIEGEL TV zeichnet sich durch schnelles Reagieren auf aktuelle Ereignisse sowie sorgfältig recherchierte investigative Hintergrundgeschichten aus. Die Themen umfassen aktuelle deutsche und internationale Politik, Wirtschaft und Gesellschaft.[CR]Hier gibt es Reportagen und Dokus von SPIEGEL TV aus den Bereichen Politik, Wirtschaft, Gesellschaft, Kultur, Sport, Technik und Wissenschaft.</description>
-		<description lang="en_GB">SPIEGEL TV is characterized by fast reaction to current events as well as carefully researched background stories. The topics include current German and international politics, business and society.[CR]Here are reports and documentaries by SPIEGEL TV in the fields of politics, economics, society, culture, sports, technology and science.</description>
+		<description lang="de_DE">[COLOR red]- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.3 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No. 1.0.2 DEINSTALLIEREN.[/COLOR]</description>
+		<description lang="en_GB">[COLOR red]- This Addon gets a new path in the KODI directory ![CR]- This restores the compatibility and the call by other addons.[CR][CR]- Please ACTIVATE the new Addon with the Version-No. 2.0.3.[CR]- After that UNINSTALL this Addon with the Version-No. 1.0.2.[/COLOR]</description>
 		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
 		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
 		<language></language>
@@ -810,10 +813,11 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.0.1  (14.07.2019)[/COLOR][/B] by realvito[CR]
-- fixed: Rubrik = Sendungen Fehler beim öffnen des Ordners
-- fixed: Rubrik = Studios es wird KEIN Inhalt angezeigt
-- added: Rubrik = Popcorn, WEB-TV Playliste
+		<broken>
+- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.3 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No. 1.0.2 DEINSTALLIEREN.
+		</broken>
+		<news>[B][COLOR orangered]Version 1.02 (03.02.2020)[/COLOR][/B] by realvito[CR]
+- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.3 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No. 1.0.2 DEINSTALLIEREN.
 		</news>
 	</extension>
 </addon>
@@ -1291,26 +1295,41 @@ To support the backport the addon will now always create the merged_epg.xml.gz
     </extension>
 </addon>
 
-<addon id="plugin.video.fernsehkritik_tv" name="Massengeschmack (Light)" version="2.1.7" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.19.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="en">The satirical-crucial TV magazin</summary>
-        <summary lang="de">Das satirisch-kritische TV Magazin</summary>
-        <language>de</language>
-        <description lang="en">The satirical-crucial TV magazin</description>
-        <description lang="de">Das satirisch-kritische TV Magazin</description>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <source>https://github.com/AddonScriptorDE/plugin.video.fernsehkritik_tv</source>
-        <forum>http://forum.xbmc.org/showthread.php?tid=</forum>
-        <email>AddonScriptorDE at yahoo dot de</email>
-        <website>http://www.fernsehkritik.tv</website>
-    </extension>
+<addon id="plugin.video.fernsehkritik_tv" name="Massengeschmack [COLOR FF00EE00](light)[/COLOR]" version="2.2.0" provider-name="L0RE">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="script.module.requests" version="2.20.0"/>
+		<import addon="plugin.video.youtube" version="6.3.0"/>
+		<import addon="script.module.youtube.dl"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de_DE">Das satirisch-kritische TV Magazin</summary>
+		<summary lang="en_GB">The satirical-critical TV Magazin</summary>
+		<description lang="de_DE">Am 5. August 2013 startete Massengeschmack mit den Magazinen Fernsehkritik-TV, Pantoffelkino (als Pantoffel-TV) und Pressesch(l)au. Fernsehkritik-TV und die neuen Formate wurden mit Start von Massengeschmack in dem neu gemieteten Alsterfilm-Studio in Hamburg-Wandsbek produziert.</description>
+		<description lang="en_GB">On August 5, 2013 Massengeschmack started with the magazines Fernsehkritik-TV, Pantoffelkino (as Pantoffel-TV) and Pressesch(l)au. Fernsehkritik-TV and the new formats were produced with the start of Massengeschmack in the newly rented Alster film studio in Hamburg-Wandsbek.</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+		<website>https://massengeschmack.tv</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.fernsehkritik_tv</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 2.2.0  (03.02.2020)[/COLOR][/B] by realvito[CR]
+- fixed: Die Webseite wird nicht gelistet und Addon wirft Fehler aus
+- fixed: Plot und Laufzeit werden nicht gelistet
+- added: Viele Youtube-Playlisten der zugehörigen Webseite hinzugefügt
+- added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19+) :-)
+		</news>
+	</extension>
 </addon>
 
 <addon id="script.loungeripper" name="Lounge Ripper" version="0.1.26" provider-name="Birger Jesch">
@@ -2009,11 +2028,12 @@ To support the backport the addon will now always create the merged_epg.xml.gz
 	</extension>
 </addon>
 
-<addon id="plugin.video.L0RE.weltderwunder" name="Welt der Wunder" version="1.0.2" provider-name="L0RE">
+<addon id="plugin.video.L0RE.weltderwunder" name="Welt der Wunder" version="1.0.4" provider-name="L0RE">
 	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
 		<import addon="script.module.youtube.dl"/>
+		<import addon="plugin.video.tyl0re.weltderwunder" version="2.0.5"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
@@ -2021,8 +2041,8 @@ To support the backport the addon will now always create the merged_epg.xml.gz
 	<extension point="xbmc.addon.metadata">
 		<summary lang="de_DE">Videoportal von Welt der Wunder</summary>
 		<summary lang="en_GB">Videoportal of Welt der Wunder</summary>
-		<description lang="de_DE">Jeden Tag, rund um die Uhr und mit immer vielfältigeren Inhalten: Dokumentationen, Reportagen, Magazine und demnächst mit noch nie dagewesenen, neuen Formaten - so schlägt das Herz von Welt der Wunder TV !</description>
-		<description lang="en_GB">Every day, around the clock and with ever more diverse content: documentaries, reportages, magazines and soon with unprecedented new formats - that's what the heart of the World of Miracles TV !</description>
+		<description lang="de_DE">[COLOR red]- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.5 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No. 1.0.4 DEINSTALLIEREN.[/COLOR]</description>
+		<description lang="en_GB">[COLOR red]- This Addon gets a new path in the KODI directory ![CR]- This restores the compatibility and the call by other addons.[CR][CR]- Please ACTIVATE the new Addon with the Version-No. 2.0.5.[CR]- After that UNINSTALL this Addon with the Version-No. 1.0.4.[/COLOR]</description>
 		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
 		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
 		<language></language>
@@ -2036,8 +2056,11 @@ To support the backport the addon will now always create the merged_epg.xml.gz
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.0.2  (23.08.2019)[/COLOR][/B] by realvito[CR]
-- fixed: ständiger Encodingfehler bei Umlauten in den Bildern
+		<broken>
+- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.5 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No. 1.0.4 DEINSTALLIEREN.
+		</broken>
+		<news>[B][COLOR orangered]Version 1.04 (03.02.2020)[/COLOR][/B] by realvito[CR]
+- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.5 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No. 1.0.4 DEINSTALLIEREN.
 		</news>
 	</extension>
 </addon>
@@ -2624,10 +2647,11 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 	</extension>
 </addon>
 
-<addon id="plugin.video.L0RE.dmax" name="DMAX Mediathek" version="1.0.8" provider-name="L0RE">
+<addon id="plugin.video.L0RE.dmax" name="DMAX Mediathek" version="1.0.9" provider-name="L0RE">
 	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="service.L0RE.cron" version="1.0.1" optional="true"/>
+		<import addon="plugin.video.tyl0re.dmax" version="2.1.0"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
@@ -2635,13 +2659,13 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 	<extension point="xbmc.addon.metadata">
 		<summary lang="de_DE">DMAX Mediathek</summary>
 		<summary lang="en_GB">DMAX Mediathek</summary>
-		<description lang="de_DE">DMAX - der TV Sender. So läuft das hier ! Wann und wo du willst: Action, Abenteuer, Lifestyle. Echte Unterhaltung für echte Kerle. Nur auf dmax.de natürlich !</description>
-		<description lang="en_GB">DMAX - the TV station. That's how it works here ! When and where you want: action, adventure, lifestyle. Real entertainment for real guys. Only on dmax.de of course !</description>
+		<description lang="de_DE">[COLOR red]- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.1.0 AKTIVIEREN und einmal STARTEN (um die eigenen Addon-Favoriten automatisch zu übertragen) !!![CR]- Danach dieses Addon mit der Version-No. 1.0.9 DEINSTALLIEREN.[/COLOR]</description>
+		<description lang="en_GB">[COLOR red]- This Addon gets a new path in the KODI directory ![CR]- This restores the compatibility and the call by other addons.[CR][CR]- Please ACTIVATE the new Addon with the Version-No. 2.1.0 and START once (to automatically transfer your own add-on favorites) !!![CR]- After that UNINSTALL this Addon with the Version-No. 1.0.9.[/COLOR]</description>
 		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
 		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
 		<language></language>
 		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 3, June 1991</license>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
 		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
 		<website>https://www.dmax.de</website>
 		<email></email>
@@ -2650,9 +2674,11 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.0.8  (20.10.2019)[/COLOR][/B] by realvito[CR]
-- fixed: Titelanzeige aller Serien-Episoden fehlerhaft
-- fixed: Übertragung und Anzeige in die Medienbibliothek funktioniert nicht korrekt, wenn "&amp;" im Namen der Serie vorkommt
+		<broken>
+- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.1.0 AKTIVIEREN und einmal STARTEN (um die eigenen Addon-Favoriten automatisch zu übertragen) !!![CR]- Danach dieses Addon mit der Version-No. 1.0.9 DEINSTALLIEREN.
+		</broken>
+		<news>[B][COLOR orangered]Version 1.09 (03.02.2020)[/COLOR][/B] by realvito[CR]
+- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.1.0 AKTIVIEREN und einmal STARTEN (um die eigenen Addon-Favoriten automatisch zu übertragen) !!![CR]- Danach dieses Addon mit der Version-No. 1.0.9 DEINSTALLIEREN.
 		</news>
 	</extension>
 </addon>
@@ -2701,12 +2727,13 @@ oder online unter https://goo.gl/GtK41L nachlesen.
     </extension>
 </addon>
 
-<addon id="plugin.video.rtlnow" name="TVNOW - DE" version="2.0.4" provider-name="L0RE">
+<addon id="plugin.video.rtlnow" name="TVNOW - DE" version="2.0.5" provider-name="L0RE, realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="script.common.plugin.cache" version="2.6.0" optional="true"/>
 		<import addon="inputstream.adaptive" version="2.0.10"/>
 		<import addon="script.module.inputstreamhelper" version="0.4.0"/>
+		<import addon="service.cron.autobiblio" version="2.0.4" optional="true"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
@@ -2729,10 +2756,10 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 2.0.4  (09.01.2020)[/COLOR][/B] by realvito[CR]
-- fixed: Free-Token zum Abspielen von Videos wird NICHT gefunden
-- added: Premium-Kennzeichnung im Plot
-- added: Addon-Debug Schalter
+		<news>[B][COLOR orangered]Version 2.0.5  (03.02.2020)[/COLOR][/B] by realvito[CR]
+- added: Filme bzw. Specials zur besseren Unterscheidung besonders kennzeichen (settings)
+- changed: Addon-Abhängigkeit für zugehörigen Service (old=service.L0RE.cron -> new=service.cron.autobiblio)
+* Comment: Zuvor mit diesem Addon erstellte Einträge in der KODI-Bibliothek funktionieren NICHT mehr und müssen über die KODI-Sytemeinstellungen gelöscht werden !!! *
 		</news>
 	</extension>
 </addon>
@@ -2782,10 +2809,10 @@ oder online unter https://goo.gl/GtK41L nachlesen.
     </extension>
 </addon>
 
-<addon id="plugin.video.tvspielfilm_de" name="TV Spielfilm - Das Beste aus den Mediatheken" version="1.2.2" provider-name="realvito">
+<addon id="plugin.video.tvspielfilm_de" name="TV Spielfilm - Das Beste aus den Mediatheken" version="1.2.3" provider-name="realvito">
 	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="plugin.video.L0RE.arte" optional="true"/>
+		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="plugin.video.tyl0re.arte" optional="true"/>
 		<import addon="plugin.video.arteplussept" optional="true"/>
 		<import addon="plugin.video.rtlnow" optional="true"/>
 	</requires>
@@ -2810,9 +2837,9 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.2.2  (30.09.2019)[/COLOR][/B][CR]
-- fixed: ARTE-Videos über "plugin.video.arteplussept" abspielen (Code verändert)
-- fixed: LibreELEC - Fehler beim öffnen des Addons (Error: unsupported locale setting)
+		<news>[B][COLOR orangered]Version 1.2.3  (03.02.2020)[/COLOR][/B][CR]
+- fixed: ARTE-Videos über "plugin.video.tyl0re.arte" abspielen (Code verändert)
+- fixed: TVNOW-Videos über "plugin.video.rtlnow" abspielen (Code verändert)
 		</news>
 	</extension>
 </addon>
@@ -2978,10 +3005,10 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
     </extension>
 </addon>
 
-<addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.5.2" provider-name="realvito">
+<addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.5.3" provider-name="realvito">
 	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="plugin.video.L0RE.arte" optional="true"/>
+		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="plugin.video.tyl0re.arte" optional="true"/>
 		<import addon="plugin.video.arteplussept" optional="true"/>
 		<import addon="plugin.video.rtlnow" optional="true"/>
 	</requires>
@@ -3006,10 +3033,9 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.5.1+1.5.2  (30.09.2019)[/COLOR][/B][CR]
-- fixed: ARTE-Videos über "plugin.video.arteplussept" abspielen (Code verändert)
-- optimized: Einige kleine Scriptanpassungen
-- fixed: Github-Übertragungsfehler
+		<news>[B][COLOR orangered]Version 1.5.3  (03.02.2020)[/COLOR][/B][CR]
+- fixed: ARTE-Videos über "plugin.video.tyl0re.arte" abspielen (Code verändert)
+- fixed: TVNOW-Videos über "plugin.video.rtlnow" abspielen (Code verändert)
 		</news>
 	</extension>
 </addon>
@@ -4239,7 +4265,7 @@ Zattoo Live TV, Aufnahmen und EPG
 	</extension>
 </addon>
 
-<addon id="plugin.video.sporttotal" name="Sport-Total TV" version="1.0.4" provider-name="L0RE">
+<addon id="plugin.video.sporttotal" name="Sport-Total TV" version="1.0.5" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 	</requires>
@@ -4249,8 +4275,8 @@ Zattoo Live TV, Aufnahmen und EPG
 	<extension point="xbmc.addon.metadata">
 		<summary lang="de_DE">Regionalsport auf Sporttotal.tv</summary>
 		<summary lang="en_GB">Regionalsport on Sporttotal.tv</summary>
-		<description lang="de_DE">Sporttotal.tv zeigt Deutschlands Amateursport in voller Länge und Breite. Das Oberligaspiel vom Heimatverein? Die lustigen und besten Szenen aus Deutschlands Amateurligen?[CR]Ausgewählt und zusammengestellt von Sporttotal.tv (https://www.sporttotal.tv).</description>
-		<description lang="en_GB">Sporttotal.tv shows Germany's amateur sport in full length and width. The league game of the home club? The funny and best scenes from Germany's amateur leagues?[CR]Selected and compiled by Sporttotal.tv (https://www.sporttotal.tv).</description>
+		<description lang="de_DE">Sporttotal.tv zeigt Deutschlands Amateursport in voller Länge und Breite. Sporttotal.tv ist die kostenlose Plattform für live und on-demand Streaming von Fußball, Volleyball, Basketball, Eishockey und mehr ![CR]Hier wird Breitensport LIVE zu seinen Fans gebracht.</description>
+		<description lang="en_GB">Sporttotal.tv shows Germany's amateur sport in full length and width. Sporttotal.tv is the free platform for live and on-demand streaming of football, volleyball, basketball, ice hockey and more ![CR]This is where Breitensport LIVE is brought to its fans.</description>
 		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
 		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
 		<language></language>
@@ -4264,11 +4290,8 @@ Zattoo Live TV, Aufnahmen und EPG
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.0.4  (13.12.2019)[/COLOR][/B] by realvito[CR]
-- added: Mehr Sportrubriken in der Übersicht
-- added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19+) :-)
-- optimized: Aufgerufene Seiten an Webversion angepasst
-- optimized: Streamqualität gesteigert, durch weniger Filter
+		<news>[B][COLOR orangered]Version 1.0.5  (03.02.2020)[/COLOR][/B] by realvito[CR]
+- fixed: Addon lässt sich nicht öffnen und Fehler wird angezeigt
 		</news>
 	</extension>
 </addon>
@@ -4647,9 +4670,10 @@ Zattoo Live TV, Aufnahmen und EPG
 	</extension>
 </addon>
 
-<addon id="service.L0RE.cron" name="Crontab für andere Addons" version="1.0.2" provider-name="L0RE">
+<addon id="service.L0RE.cron" name="Crontab für andere Addons" version="1.0.3" provider-name="L0RE">
 	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="service.cron.autobiblio" version="2.0.4"/>
 	</requires>
 	<extension point="xbmc.service" library="service.py" start="login"/>
 	<extension point="xbmc.python.pluginsource" library="addon.py">
@@ -4658,8 +4682,8 @@ Zattoo Live TV, Aufnahmen und EPG
 	<extension point="xbmc.addon.metadata">
 		<summary lang="de_DE">Crontab - Aktionssteuerung</summary>
 		<summary lang="en_GB">Crontab - Action control</summary>
-		<description lang="de_DE">Ein Service um regelmäßig (Stunden/Tage) gespeicherte Aktionen (z.B. Aktualisierung der Addon-Medienbibliothek) in anderen Plugins aufzurufen.</description>
-		<description lang="en_GB">A service to call regular (hours/days) stored actions (e.g. update the addon media library) in other plugins.</description>
+		<description lang="de_DE">[COLOR red]- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.4 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No. 1.0.3 DEINSTALLIEREN.[/COLOR]</description>
+		<description lang="en_GB">[COLOR red]- This Addon gets a new path in the KODI directory ![CR]- This restores the compatibility and the call by other addons.[CR][CR]- Please ACTIVATE the new Addon with the Version-No. 2.0.4.[CR]- After that UNINSTALL this Addon with the Version-No. 1.0.3.[/COLOR]</description>
 		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
 		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
 		<language></language>
@@ -4671,10 +4695,12 @@ Zattoo Live TV, Aufnahmen und EPG
 		<source>https://github.com/kodinerds/repo/tree/master/service.L0RE.cron</source>
 		<assets>
 			<icon>icon.png</icon>
-			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.0.2  (20.10.2019)[/COLOR][/B] by realvito[CR]
-- fixed: Azeige und Löschen von Titeln mit Sonderzeichen fehlerhaft
+		<broken>
+- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.4 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No. 1.0.3 DEINSTALLIEREN.
+		</broken>
+		<news>[B][COLOR orangered]Version 1.04 (03.02.2020)[/COLOR][/B] by realvito[CR]
+- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.4 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No. 1.0.3 DEINSTALLIEREN.
 		</news>
 	</extension>
 </addon>
@@ -4768,9 +4794,10 @@ Zattoo Live TV, Aufnahmen und EPG
   </extension>
 </addon>
 
-<addon id="plugin.video.L0RE.tlc" name="TLC Mediathek" version="1.0.3" provider-name="L0RE">
+<addon id="plugin.video.L0RE.tlc" name="TLC Mediathek" version="1.0.4" provider-name="L0RE">
 	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="plugin.video.tyl0re.tlc" version="2.0.5"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
@@ -4778,13 +4805,13 @@ Zattoo Live TV, Aufnahmen und EPG
 	<extension point="xbmc.addon.metadata">
 		<summary lang="de_DE">TLC Mediathek</summary>
 		<summary lang="en_GB">TLC Mediathek</summary>
-		<description lang="de_DE">Anklicken und Abschalten! Gönn dir die beste Unterhaltung: Bewegende Schicksale, packender Crime, süße Tiere.[CR]Erlebe pure Emotionen auf tlc.de.</description>
-		<description lang="en_GB">Click and switch off! Treat yourself to the best entertainment: moving fates, thrilling crime, sweet animals.[CR]Experience pure emotions on tlc.de.</description>
+		<description lang="de_DE">[COLOR red]- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.5 AKTIVIEREN und einmal STARTEN (um die eigenen Addon-Favoriten automatisch zu übertragen) !!![CR]- Danach dieses Addon mit der Version-No. 1.0.4 DEINSTALLIEREN.[/COLOR]</description>
+		<description lang="en_GB">[COLOR red]- This Addon gets a new path in the KODI directory ![CR]- This restores the compatibility and the call by other addons.[CR][CR]- Please ACTIVATE the new Addon with the Version-No. 2.0.5 and START once (to automatically transfer your own add-on favorites) !!![CR]- After that UNINSTALL this Addon with the Version-No. 1.0.4.[/COLOR]</description>
 		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
 		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
 		<language></language>
 		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 3, June 1991</license>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
 		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
 		<website>https://www.tlc.de</website>
 		<email></email>
@@ -4793,8 +4820,11 @@ Zattoo Live TV, Aufnahmen und EPG
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.0.3  (20.10.2019)[/COLOR][/B] by realvito[CR]
-- fixed: Titelanzeige aller Serien-Episoden fehlerhaft
+		<broken>
+- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.5 AKTIVIEREN und einmal STARTEN (um die eigenen Addon-Favoriten automatisch zu übertragen) !!![CR]- Danach dieses Addon mit der Version-No. 1.0.4 DEINSTALLIEREN.
+		</broken>
+		<news>[B][COLOR orangered]Version 1.04 (03.02.2020)[/COLOR][/B] by realvito[CR]
+- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.5 AKTIVIEREN und einmal STARTEN (um die eigenen Addon-Favoriten automatisch zu übertragen) !!![CR]- Danach dieses Addon mit der Version-No. 1.0.4 DEINSTALLIEREN.
 		</news>
 	</extension>
 </addon>
