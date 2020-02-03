@@ -1,7 +1,7 @@
 ﻿# Kodi Media Center language file
 # Addon Name: TVNOW - DE
 # Addon id: plugin.video.rtlnow
-# Addon Provider: L0RE
+# Addon Provider: L0RE, realvito
 msgid ""
 msgstr ""
 "Project-Id-Version: KODI-Addons\n"
@@ -59,38 +59,42 @@ msgid "     Preferred Videoquality [COLOR yellow](for Premium-Customers)[/COLOR]
 msgstr ""
 
 msgctxt "#30114"
-msgid "     Show broadcastdate in title of the program"
+msgid "     Specifically mark MOVIES respectively Specials [COLOR yellow](italics)[/COLOR]"
 msgstr ""
 
 msgctxt "#30115"
-msgid "     Turn on web certificate validation"
+msgid "     Show broadcastdate in title of the program"
 msgstr ""
 
 msgctxt "#30116"
-msgid "     Check widevine -Status and -Installation regularly"
+msgid "     Turn on web certificate validation"
 msgstr ""
 
 msgctxt "#30117"
-msgid "     Show Addon-Settings in the overview"
+msgid "     Check widevine -Status and -Installation regularly"
 msgstr ""
 
 msgctxt "#30118"
-msgid "     Detailed Addon-Debug (otherwise only Minimal-Log)"
+msgid "     Show Addon-Settings in the overview"
 msgstr ""
 
 msgctxt "#30119"
-msgid "     Activate TVNOW-Media-Library"
+msgid "     Detailed Addon-Debug (otherwise only Minimal-Log)"
 msgstr ""
 
 msgctxt "#30120"
-msgid "     TVNOW-Media-Folder (for .strm- and .nfo- Files)"
+msgid "     Activate TVNOW-Media-Library"
 msgstr ""
 
 msgctxt "#30121"
+msgid "     TVNOW-Media-Folder (for .strm- and .nfo- Files)"
+msgstr ""
+
+msgctxt "#30122"
 msgid "     Update of the TVNOW-Library (in Hours)"
 msgstr ""
 
-# empty strings from id 30122 to 30229
+# empty strings from id 30123 to 30229
 # SETTINGS-TITLES
 
 msgctxt "#30230"
@@ -165,7 +169,7 @@ msgid "     * [COLOR yellow]For TVNOW-Premium- and HD-content, a Premium-Account
 msgstr ""
 
 msgctxt "#30358"
-msgid "     * [COLOR yellow]This function requires the "[/COLOR]service.L0RE.cron[COLOR yellow]" ! [/COLOR]*"
+msgid "     * [COLOR yellow]This function requires the "[/COLOR]service.cron.autobiblio[COLOR yellow]" ! [/COLOR]*"
 msgstr ""
 
 msgctxt "#30359"
@@ -173,7 +177,7 @@ msgid "     [COLOR orangered]Attention: The update period affects only newly add
 msgstr ""
 
 msgctxt "#30360"
-msgid "     [COLOR chartreuse]In order to delete old data, the entry must be deleted and newly added in *service.L0RE.cron* ![/COLOR]"
+msgid "     [COLOR chartreuse]In order to delete old data, the entry must be deleted and newly added in *service.cron.autobiblio* ![/COLOR]"
 msgstr ""
 
 # empty strings from id 30361 to 30500
