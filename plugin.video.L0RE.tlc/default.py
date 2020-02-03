@@ -57,8 +57,10 @@ if xbmcvfs.exists(cookie):
 	cj.load(cookie, ignore_discard=True, ignore_expires=True)
 
 def py2_enc(s, encoding='utf-8'):
-	if PY2 and isinstance(s, unicode):
-		s = s.encode(encoding)
+	if PY2:
+		if not isinstance(s, basestring):
+			s = str(s)
+		s = s.encode(encoding) if isinstance(s, unicode) else s
 	return s
 
 def py2_uni(s, encoding='utf-8'):
@@ -72,9 +74,7 @@ def py3_dec(d, encoding='utf-8'):
 	return d
 
 def translation(id):
-	LANGUAGE = addon.getLocalizedString(id)
-	LANGUAGE = py2_enc(LANGUAGE)
-	return LANGUAGE
+	return py2_enc(addon.getLocalizedString(id))
 
 def failing(content):
 	log(content, xbmc.LOGERROR)
@@ -83,8 +83,7 @@ def debug(content):
 	log(content, xbmc.LOGDEBUG)
 
 def log(msg, level=xbmc.LOGNOTICE):
-	msg = py2_enc(msg)
-	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+msg, level)
+	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+py2_enc(msg), level)
 
 def getUrl(url, header=None, agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36'):
 	global cj
@@ -259,16 +258,16 @@ def listepisodes(idd, originalSERIE):
 						Note_3 = ""
 						if 'publishStart' in vid and vid['publishStart'] != "" and vid['publishStart'] != None and not str(vid['publishStart']).startswith('1970'):
 							try:
-								startDATES = datetime(*(time.strptime(vid['publishStart'], '%Y-%m-%dT%H:%M:%SZ')[0:6])) # 2019-06-23T14:10:00Z
+								startDATES = datetime(*(time.strptime(vid['publishStart'][:19], '%Y{0}%m{0}%dT%H{1}%M{1}%S'.format('-', ':'))[0:6])) # 2019-06-23T14:10:00Z
 								LOCALstart = utc_to_local(startDATES)
-								startTIMES = LOCALstart.strftime('%d.%m.%y • %H:%M')
-								begins =  LOCALstart.strftime('%d.%m.%Y')
+								startTIMES = LOCALstart.strftime('%d{0}%m{0}%y {1} %H{2}%M').format('.', '•', ':')
+								begins =  LOCALstart.strftime('%d{0}%m{0}%Y').format('.')
 							except: pass
 						if 'publishEnd' in vid and vid['publishEnd'] != "" and vid['publishEnd'] != None and not str(vid['publishEnd']).startswith('1970'):
 							try:
-								endDATES = datetime(*(time.strptime(vid['publishEnd'], '%Y-%m-%dT%H:%M:%SZ')[0:6])) # 2019-06-23T14:10:00Z
+								endDATES = datetime(*(time.strptime(vid['publishEnd'][:19], '%Y{0}%m{0}%dT%H{1}%M{1}%S'.format('-', ':'))[0:6])) # 2019-06-23T14:10:00Z
 								LOCALend = utc_to_local(endDATES)
-								endTIMES = LOCALend.strftime('%d.%m.%y • %H:%M')
+								endTIMES = LOCALend.strftime('%d{0}%m{0}%y {1} %H{2}%M').format('.', '•', ':')
 							except: pass
 						if 'airDate' in vid and vid['airDate'] != "" and vid['airDate'] != None and not str(vid['airDate']).startswith('1970'):
 							year = vid['airDate'][:4]
@@ -308,16 +307,16 @@ def listepisodes(idd, originalSERIE):
 					Note_3 = ""
 					if 'publishStart' in item and item['publishStart'] != "" and item['publishStart'] != None and not str(item['publishStart']).startswith('1970'):
 						try:
-							startDATES = datetime(*(time.strptime(item['publishStart'], '%Y-%m-%dT%H:%M:%SZ')[0:6])) # 2019-06-23T14:10:00Z
+							startDATES = datetime(*(time.strptime(item['publishStart'][:19], '%Y{0}%m{0}%dT%H{1}%M{1}%S'.format('-', ':'))[0:6])) # 2019-06-23T14:10:00Z
 							LOCALstart = utc_to_local(startDATES)
-							startTIMES = LOCALstart.strftime('%d.%m.%y • %H:%M')
-							begins =  LOCALstart.strftime('%d.%m.%Y')
+							startTIMES = LOCALstart.strftime('%d{0}%m{0}%y {1} %H{2}%M').format('.', '•', ':')
+							begins =  LOCALstart.strftime('%d{0}%m{0}%Y').format('.')
 						except: pass
 					if 'publishEnd' in item and item['publishEnd'] != "" and item['publishEnd'] != None and not str(item['publishEnd']).startswith('1970'):
 						try:
-							endDATES = datetime(*(time.strptime(item['publishEnd'], '%Y-%m-%dT%H:%M:%SZ')[0:6])) # 2019-06-23T14:10:00Z
+							endDATES = datetime(*(time.strptime(item['publishEnd'][:19], '%Y{0}%m{0}%dT%H{1}%M{1}%S'.format('-', ':'))[0:6])) # 2019-06-23T14:10:00Z
 							LOCALend = utc_to_local(endDATES)
-							endTIMES = LOCALend.strftime('%d.%m.%y • %H:%M')
+							endTIMES = LOCALend.strftime('%d{0}%m{0}%y {1} %H{2}%M').format('.', '•', ':')
 						except: pass
 					if 'airDate' in item and item['airDate'] != "" and item['airDate'] != None and not str(item['airDate']).startswith('1970'):
 						year = item['airDate'][:4]
