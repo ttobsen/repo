@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="30000">
+		<setting label="30230" type="lsep"/>
+		<setting label="30110" type="action" action="RunScript($CWD/resources/lib/unload.py, loeschen)" visible="true"/>
+		<setting label="30350" type="text" option="readable"/>
+		<setting type="sep"/>
+		<setting label="30231" type="lsep"/>
+		<setting label="30111" type="bool" id="forceErasing" default="false"/>
+		<setting label="30351" type="text" option="readable"/>
+		<setting label="30352" type="text" option="readable"/>
+		<setting label="30353" type="text" option="readable"/>
+		<setting label="30354" type="text" option="readable"/>
+	</category>
+</settings>
