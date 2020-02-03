@@ -323,6 +323,37 @@ NOTE: Streams are available in SD only
 	</extension>
 </addon>
 
+<addon id="plugin.video.tyl0re.arte" name="ARTE.TV [COLOR FF00EE00](neu)[/COLOR]" version="1.0.1" provider-name="L0RE, realvito">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de_DE">Videoportal von ARTE (DE/FR)</summary>
+		<summary lang="en_GB">Videoportal of ARTE (DE/FR)</summary>
+		<description lang="de_DE">Mediathek und Livestream - Schwerpunkte sind Kultur, Europa und die Vermittlung von Informationen aus vorzugsweise ungewöhnlichen Perspektiven.[CR]Reportagen, Serien, Filme, Dokus, Magazine - Die Programme von ARTE online auf arte.tv.</description>
+		<description lang="en_GB">Media library and Livestream - focus is Culture, Europe and the transmission of information from preferably unusual Perspectives.[CR]Reports, Series, Movies, Documentaries, Magazines - The programs of ARTE online on arte.tv.</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+		<website>https://www.arte.tv/</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.tyl0re.arte</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 1.0.1  (03.02.2020)[/COLOR][/B] by realvito[CR]
+- Pluginname changed for KODI-compatibility (old=plugin.video.L0RE.arte -> new=plugin.video.tyl0re.arte)
+		</news>
+	</extension>
+</addon>
+
 
 <addon id="plugin.program.newscenter" name="NewsCenter" version="0.0.9" provider-name="NewsCenter">
     <requires>
@@ -532,6 +563,71 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 		<license>Check the LICENSE file for full details.</license>
 		<website>http://python-future.org/</website>
 		<source>https://github.com/PythonCharmers/python-future/tree/master/src/past</source>
+	</extension>
+</addon>
+
+<addon id="plugin.video.tyl0re.dmax" name="DMAX Mediathek [COLOR FF00EE00](neu)[/COLOR]" version="2.1.0" provider-name="L0RE, realvito">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="service.cron.autobiblio" version="2.0.4" optional="true"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de_DE">DMAX Mediathek</summary>
+		<summary lang="en_GB">DMAX Mediathek</summary>
+		<description lang="de_DE">DMAX - der TV Sender. So läuft das hier ! Wann und wo du willst: Action, Abenteuer, Lifestyle. Echte Unterhaltung für echte Kerle. Nur auf dmax.de natürlich !</description>
+		<description lang="en_GB">DMAX - the TV station. That's how it works here ! When and where you want: action, adventure, lifestyle. Real entertainment for real guys. Only on dmax.de of course !</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+		<website>https://www.dmax.de</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.tyl0re.dmax</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 2.1.0  (03.02.2020)[/COLOR][/B] by realvito[CR]
+- Pluginname changed for KODI-compatibility (old=plugin.video.L0RE.dmax -> new=plugin.video.tyl0re.dmax)
+- Bitte nach der Installation einmal STARTEN (um die eigenen Addon-Favoriten automatisch zu übertragen) !!!
+		</news>
+	</extension>
+</addon>
+
+<addon id="plugin.video.tyl0re.tlc" name="TLC Mediathek [COLOR FF00EE00](neu)[/COLOR]" version="2.0.5" provider-name="L0RE, realvito">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de_DE">TLC Mediathek</summary>
+		<summary lang="en_GB">TLC Mediathek</summary>
+		<description lang="de_DE">Anklicken und Abschalten! Gönn dir die beste Unterhaltung: Bewegende Schicksale, packender Crime, süße Tiere.[CR]Erlebe pure Emotionen auf tlc.de.</description>
+		<description lang="en_GB">Click and switch off! Treat yourself to the best entertainment: moving fates, thrilling crime, sweet animals.[CR]Experience pure emotions on tlc.de.</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+		<website>https://www.tlc.de</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.tyl0re.tlc</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 2.0.5  (03.02.2020)[/COLOR][/B] by realvito[CR]
+- Pluginname changed for KODI-compatibility (old=plugin.video.L0RE.tlc -> new=plugin.video.tyl0re.tlc)
+- Bitte nach der Installation einmal STARTEN (um die eigenen Addon-Favoriten automatisch zu übertragen) !!!
+		</news>
 	</extension>
 </addon>
 
@@ -2153,6 +2249,41 @@ To support the backport the addon will now always create the merged_epg.xml.gz
 	</extension>
 </addon>
 
+<addon id="plugin.video.tyl0re.spiegeltv" name="SPIEGEL.TV [COLOR FF00EE00](neu)[/COLOR]" version="2.0.3" provider-name="L0RE, realvito">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
+		<import addon="script.module.youtube.dl"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de_DE">Aktuelles auf Spiegel TV</summary>
+		<summary lang="en_GB">News on Spiegel TV</summary>
+		<description lang="de_DE">SPIEGEL TV zeichnet sich durch schnelles Reagieren auf aktuelle Ereignisse sowie sorgfältig recherchierte investigative Hintergrundgeschichten aus. Die Themen umfassen aktuelle deutsche und internationale Politik, Wirtschaft und Gesellschaft.[CR]Hier gibt es Reportagen und Dokus von SPIEGEL TV aus den Bereichen Politik, Wirtschaft, Gesellschaft, Kultur, Sport, Technik und Wissenschaft.</description>
+		<description lang="en_GB">SPIEGEL TV is characterized by fast reaction to current events as well as carefully researched background stories. The topics include current German and international politics, business and society.[CR]Here are reports and documentaries by SPIEGEL TV in the fields of politics, economics, society, culture, sports, technology and science.</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+		<website>https://www.spiegel.tv/</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.tyl0re.spiegeltv</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 2.0.3  (03.02.2020)[/COLOR][/B] by realvito[CR]
+- Pluginname changed for KODI-compatibility (old=plugin.video.L0RE.spiegeltv -> new=plugin.video.tyl0re.spiegeltv)
+- fixed: Fehler der Webseite beseitigt = doppelte Videoeinträge herausgefiltert
+- added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19+) :-)
+		</news>
+	</extension>
+</addon>
+
 <addon id="plugin.video.4playersweb" name="4players (Webbased)" version="0.2.3" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.20.0" />
@@ -2985,6 +3116,40 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
 	</extension>
 </addon>
 
+<addon id="plugin.video.tyl0re.weltderwunder" name="Welt der Wunder [COLOR FF00EE00](neu)[/COLOR]" version="2.0.5" provider-name="L0RE, realvito">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
+		<import addon="script.module.youtube.dl"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de_DE">Videoportal von Welt der Wunder</summary>
+		<summary lang="en_GB">Videoportal of Welt der Wunder</summary>
+		<description lang="de_DE">Jeden Tag, rund um die Uhr und mit immer vielfältigeren Inhalten: Dokumentationen, Reportagen, Magazine und demnächst mit noch nie dagewesenen, neuen Formaten - so schlägt das Herz von Welt der Wunder TV !</description>
+		<description lang="en_GB">Every day, around the clock and with ever more diverse content: documentaries, reportages, magazines and soon with unprecedented new formats - that's what the heart of the World of Miracles TV !</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+		<website>http://www.weltderwunder.de</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.tyl0re.weltderwunder</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 2.0.5  (03.02.2020)[/COLOR][/B] by realvito[CR]
+- Pluginname changed for KODI-compatibility (old=plugin.video.L0RE.weltderwunder -> new=plugin.video.tyl0re.weltderwunder)
+- added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19+) :-)
+		</news>
+	</extension>
+</addon>
+
 <addon id="repository.kodinerds_RPi" name="kodinerds.net Binary Addons for Rasperry 1" version="1.0.3" provider-name="L0RE">
 	<extension point="xbmc.addon.repository" name="L0RE">
 		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi/addons.xml</info>
@@ -3440,6 +3605,38 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
     <email>andreas at vogler dot name</email>
     <platform>all</platform>
   </extension>
+</addon>
+
+<addon id="service.cron.autobiblio" name="Crontab für andere Addons [COLOR FF00EE00](neu)[/COLOR]" version="2.0.4" provider-name="L0RE, realvito">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+	</requires>
+	<extension point="xbmc.service" library="service.py" start="login"/>
+	<extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de_DE">Crontab - Aktionssteuerung</summary>
+		<summary lang="en_GB">Crontab - Action control</summary>
+		<description lang="de_DE">Ein Service um regelmäßig (Stunden/Tage) gespeicherte Aktionen (z.B. Aktualisierung der Addon-Medienbibliothek) in anderen Plugins aufzurufen.</description>
+		<description lang="en_GB">A service to call regular (hours/days) stored actions (e.g. update the addon media library) in other plugins.</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+		<website></website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/service.cron.autobiblio</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<news>[B][COLOR orangered]Version 2.0.4  (03.02.2020)[/COLOR][/B] by realvito[CR]
+- Pluginname changed for KODI-compatibility (old=service.L0RE.cron -> new=service.cron.autobiblio)
+- added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19+) :-)
+		</news>
+	</extension>
 </addon>
 
 <addon id="plugin.video.euronews_com" name="euronews.com" version="2.1.5" provider-name="L0RE">
