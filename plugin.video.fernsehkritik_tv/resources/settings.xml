@@ -1,4 +1,10 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-   <setting id="download_path" type="folder" label="Download Verzeichnis" default=""/>
+	<category label="30000">
+		<setting label="30230" type="lsep"/>
+		<setting label="30110" type="folder" id="download_path" default=""/>
+		<setting type="sep"/>
+		<setting label="30231" type="lsep"/>
+		<setting label="30111" type="bool" id="useThumbAsFanart" default="true"/>
+	</category>
 </settings>
