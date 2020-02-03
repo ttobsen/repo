@@ -26,7 +26,7 @@ pluginhandle = int(sys.argv[1])
 __addon__ = xbmcaddon.Addon()  
 addonPath = xbmc.translatePath(__addon__.getAddonInfo('path')).encode('utf-8').decode('utf-8')
 profile    = xbmc.translatePath(__addon__.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
-temp       = xbmc.translatePath(os.path.join( profile, 'temp', '')).encode('utf-8').decode('utf-8')
+temp       = xbmc.translatePath(os.path.join(profile, 'temp', '')).encode('utf-8').decode('utf-8')
 icon = os.path.join(addonPath ,'icon.png')
 forceTrash = __addon__.getSetting("forceErasing") == 'true'
 
