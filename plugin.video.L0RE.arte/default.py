@@ -363,12 +363,12 @@ def playLive(url, name):
 def liveTV():
 	debug("(liveTV) ------------------------------------------------ START = liveTV -----------------------------------------------")
 	items = []
-	items.append(["ARTE-TV HD", "https://artelive-lh.akamaihd.net/i/artelive_de@393591/index_1_av-p.m3u8", icon])
-	items.append(["ARTE Event 1", "https://arteevent01-lh.akamaihd.net/i/arte_event01@395110/index_1_av-p.m3u8", icon])
-	items.append(["ARTE Event 2", "https://arteevent02-lh.akamaihd.net/i/arte_event02@308866/index_1_av-p.m3u8", icon])
-	items.append(["ARTE Event 3", "https://arteevent03-lh.akamaihd.net/i/arte_event03@305298/index_1_av-p.m3u8", icon])
-	items.append(["ARTE Event 4", "https://arteevent04-lh.akamaihd.net/i/arte_event04@308879/index_1_av-p.m3u8", icon])
-	items.append(["ARTE Event 5", "https://arteevent05-lh.akamaihd.net/i/arte_event05@391593/index_1_av-p.m3u8", icon])
+	items.append(["ARTE-TV HD", "https://artelive-lh.akamaihd.net/i/artelive_de@393591/index_1_av-b.m3u8", icon])
+	items.append(["ARTE Event 1", "https://arteevent01-lh.akamaihd.net/i/arte_event01@395110/index_1_av-b.m3u8", icon])
+	items.append(["ARTE Event 2", "https://arteevent02-lh.akamaihd.net/i/arte_event02@308866/index_1_av-b.m3u8", icon])
+	items.append(["ARTE Event 3", "https://arteevent03-lh.akamaihd.net/i/arte_event03@305298/index_1_av-b.m3u8", icon])
+	items.append(["ARTE Event 4", "https://arteevent04-lh.akamaihd.net/i/arte_event04@308879/index_1_av-b.m3u8", icon])
+	items.append(["ARTE Event 5", "https://arteevent05-lh.akamaihd.net/i/arte_event05@391593/index_1_av-b.m3u8", icon])
 	for item in items:
 		listitem = xbmcgui.ListItem(path=item[1], label=item[0])
 		listitem.setArt({'icon': icon, 'thumb': item[2], 'poster': item[2], 'fanart': defaultFanart})
@@ -466,7 +466,7 @@ def parameters_string_to_dict(parameters):
 	return paramDict
 
 def addDir(name, url, mode, image, tagline=None, plot=None, page=1, query=""):   
-	u = sys.argv[0]+'?url='+quote_plus(url)+'&mode='+str(mode)+'&query='+str(query)+'&page='+str(page)+'&image='+quote_plus(image)
+	u = '{0}?url={1}&mode={2}&query={3}&page={4}&image={5}'.format(sys.argv[0], quote_plus(url), str(mode), str(query), str(page), quote_plus(image))
 	liz = xbmcgui.ListItem(name)
 	liz.setInfo(type='Video', infoLabels={'Title': name, 'Plot': plot, 'Tagline': tagline})
 	liz.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
