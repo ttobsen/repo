@@ -38,7 +38,7 @@ temp        = xbmc.translatePath(os.path.join(dataPath, 'temp', '')).encode('utf
 channelFavsFile = os.path.join(dataPath, 'my_DMAX_favourites.txt').encode('utf-8').decode('utf-8')
 defaultFanart = os.path.join(addonPath, 'fanart.jpg')
 icon = os.path.join(addonPath, 'icon.png')
-spPIC = os.path.join(addonPath, 'resources', 'media', '').encode('utf-8').decode('utf-8')
+artpic = os.path.join(addonPath, 'resources', 'media', '').encode('utf-8').decode('utf-8')
 useThumbAsFanart = addon.getSetting("useThumbAsFanart") == "true"
 enableAdjustment = addon.getSetting("show_settings") == "true"
 enableInputstream = addon.getSetting("inputstream") == "true"
@@ -60,8 +60,10 @@ if xbmcvfs.exists(cookie):
 	cj.load(cookie, ignore_discard=True, ignore_expires=True)
 
 def py2_enc(s, encoding='utf-8'):
-	if PY2 and isinstance(s, unicode):
-		s = s.encode(encoding)
+	if PY2:
+		if not isinstance(s, basestring):
+			s = str(s)
+		s = s.encode(encoding) if isinstance(s, unicode) else s
 	return s
 
 def py2_uni(s, encoding='utf-8'):
@@ -75,9 +77,7 @@ def py3_dec(d, encoding='utf-8'):
 	return d
 
 def translation(id):
-	LANGUAGE = addon.getLocalizedString(id)
-	LANGUAGE = py2_enc(LANGUAGE)
-	return LANGUAGE
+	return py2_enc(addon.getLocalizedString(id))
 
 def failing(content):
 	log(content, xbmc.LOGERROR)
@@ -86,8 +86,7 @@ def debug(content):
 	log(content, xbmc.LOGDEBUG)
 
 def log(msg, level=xbmc.LOGNOTICE):
-	msg = py2_enc(msg)
-	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+msg, level)
+	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+py2_enc(msg), level)
 
 def getUrl(url, header=None, agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36'):
 	global cj
@@ -196,7 +195,7 @@ def listseries(url, PAGE, POS, ADDITION):
 					for line in lines:
 						idd_FS = re.compile('URL=<uu>(.*?)</uu>').findall(line)[0]
 						if idd == idd_FS: addType=2
-			addDir(name, idd, "listepisodes", image, plot, nosub=ADDITION, originalSERIE=title, addType=addType)
+			addDir(name, idd, "listepisodes", image, plot, nosub=ADDITION, origSERIE=title, addType=addType)
 	currentRESULT = count
 	debug("(listseries) ##### currentRESULT : "+str(currentRESULT)+" #####")
 	try:
@@ -204,17 +203,17 @@ def listseries(url, PAGE, POS, ADDITION):
 		totalPG = DATA['meta']['totalPages']
 		debug("(listseries) ##### currentPG : "+str(currentPG)+" from totalPG : "+str(totalPG)+" #####")
 		if int(currentPG) < int(totalPG):
-			addDir(translation(30610), url, "listseries", spPIC+"nextpage.png", page=int(currentPG)+1, position=int(currentRESULT), nosub=ADDITION)
+			addDir(translation(30610), url, "listseries", artpic+"nextpage.png", page=int(currentPG)+1, position=int(currentRESULT), nosub=ADDITION)
 	except: pass
 	xbmcplugin.endOfDirectory(pluginhandle)
 
-def listepisodes(idd, originalSERIE):
+def listepisodes(idd, origSERIE):
 	debug("-------------------------- LISTEPISODES --------------------------")
 	COMBI = []
 	SELECT = []
 	pos1 = 0
 	url = baseURL+"api/show-detail/"+str(idd)
-	debug("(listepisodes) ### URL : "+str(url)+" ### originalSERIE : "+str(originalSERIE)+" ###")
+	debug("(listepisodes) ### URL : "+str(url)+" ### origSERIE : "+str(origSERIE)+" ###")
 	try:
 		content = getUrl(url)
 		debug("(listepisodes) ##### CONTENT : "+str(content)+" #####")
@@ -260,16 +259,16 @@ def listepisodes(idd, originalSERIE):
 						Note_3 = ""
 						if 'publishStart' in vid and vid['publishStart'] != "" and vid['publishStart'] != None and not str(vid['publishStart']).startswith('1970'):
 							try:
-								startDATES = datetime(*(time.strptime(vid['publishStart'], '%Y-%m-%dT%H:%M:%SZ')[0:6])) # 2019-06-23T14:10:00Z
+								startDATES = datetime(*(time.strptime(vid['publishStart'][:19], '%Y{0}%m{0}%dT%H{1}%M{1}%S'.format('-', ':'))[0:6])) # 2019-06-23T14:10:00Z
 								LOCALstart = utc_to_local(startDATES)
-								startTIMES = LOCALstart.strftime('%d.%m.%y • %H:%M')
-								begins =  LOCALstart.strftime('%d.%m.%Y')
+								startTIMES = LOCALstart.strftime('%d{0}%m{0}%y {1} %H{2}%M').format('.', '•', ':')
+								begins =  LOCALstart.strftime('%d{0}%m{0}%Y').format('.')
 							except: pass
 						if 'publishEnd' in vid and vid['publishEnd'] != "" and vid['publishEnd'] != None and not str(vid['publishEnd']).startswith('1970'):
 							try:
-								endDATES = datetime(*(time.strptime(vid['publishEnd'], '%Y-%m-%dT%H:%M:%SZ')[0:6])) # 2019-06-23T14:10:00Z
+								endDATES = datetime(*(time.strptime(vid['publishEnd'][:19], '%Y{0}%m{0}%dT%H{1}%M{1}%S'.format('-', ':'))[0:6])) # 2019-06-23T14:10:00Z
 								LOCALend = utc_to_local(endDATES)
-								endTIMES = LOCALend.strftime('%d.%m.%y • %H:%M')
+								endTIMES = LOCALend.strftime('%d{0}%m{0}%y {1} %H{2}%M').format('.', '•', ':')
 							except: pass
 						if 'airDate' in vid and vid['airDate'] != "" and vid['airDate'] != None and not str(vid['airDate']).startswith('1970'):
 							year = vid['airDate'][:4]
@@ -309,16 +308,16 @@ def listepisodes(idd, originalSERIE):
 					Note_3 = ""
 					if 'publishStart' in item and item['publishStart'] != "" and item['publishStart'] != None and not str(item['publishStart']).startswith('1970'):
 						try:
-							startDATES = datetime(*(time.strptime(item['publishStart'], '%Y-%m-%dT%H:%M:%SZ')[0:6])) # 2019-06-23T14:10:00Z
+							startDATES = datetime(*(time.strptime(item['publishStart'][:19], '%Y{0}%m{0}%dT%H{1}%M{1}%S'.format('-', ':'))[0:6])) # 2019-06-23T14:10:00Z
 							LOCALstart = utc_to_local(startDATES)
-							startTIMES = LOCALstart.strftime('%d.%m.%y • %H:%M')
-							begins =  LOCALstart.strftime('%d.%m.%Y')
+							startTIMES = LOCALstart.strftime('%d{0}%m{0}%y {1} %H{2}%M').format('.', '•', ':')
+							begins =  LOCALstart.strftime('%d{0}%m{0}%Y').format('.')
 						except: pass
 					if 'publishEnd' in item and item['publishEnd'] != "" and item['publishEnd'] != None and not str(item['publishEnd']).startswith('1970'):
 						try:
-							endDATES = datetime(*(time.strptime(item['publishEnd'], '%Y-%m-%dT%H:%M:%SZ')[0:6])) # 2019-06-23T14:10:00Z
+							endDATES = datetime(*(time.strptime(item['publishEnd'][:19], '%Y{0}%m{0}%dT%H{1}%M{1}%S'.format('-', ':'))[0:6])) # 2019-06-23T14:10:00Z
 							LOCALend = utc_to_local(endDATES)
-							endTIMES = LOCALend.strftime('%d.%m.%y • %H:%M')
+							endTIMES = LOCALend.strftime('%d{0}%m{0}%y {1} %H{2}%M').format('.', '•', ':')
 						except: pass
 					if 'airDate' in item and item['airDate'] != "" and item['airDate'] != None and not str(item['airDate']).startswith('1970'):
 						year = item['airDate'][:4]
@@ -352,7 +351,7 @@ def listepisodes(idd, originalSERIE):
 					COMBI.append([number, title1, title2, idd2, image, plot, duration, season, episode, genstr, year, begins])
 	else:
 		debug("(listepisodes) ##### Keine COMBINATION-List - Kein Eintrag gefunden #####")
-		return xbmcgui.Dialog().notification(translation(30523), translation(30524).format(originalSERIE), icon, 8000)
+		return xbmcgui.Dialog().notification(translation(30523), translation(30524).format(origSERIE), icon, 8000)
 	if COMBI:
 		if addon.getSetting("sorting") == "1":
 			xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_UNSORTED)
@@ -368,7 +367,7 @@ def listepisodes(idd, originalSERIE):
 				name = title1.strip()
 			debug("(listepisodes) ### NAME : "+str(name)+" || IDD : "+str(idd2)+" || GENRE : "+str(genstr)+" ###")
 			debug("(listepisodes) ### IMAGE : "+str(image)+" || SEASON : "+str(season)+" || EPISODE : "+str(episode)+" ###")
-			addLink(name, idd2, "playvideo", image, plot, duration, seriesname=originalSERIE, season=season, episode=episode, genre=genstr, year=year, begins=begins)
+			addLink(name, idd2, "playvideo", image, plot, duration, origSERIE=origSERIE, season=season, episode=episode, genre=genstr, year=year, begins=begins)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def playvideo(idd2):
@@ -415,7 +414,7 @@ def listShowsFavs():
 				thumb = re.compile('THUMB=<ii>(.*?)</ii>').findall(line)[0]
 				plot = re.compile('PLOT=<pp>(.*?)</pp>').findall(line)[0].replace('#n#', '\n')
 				debug("(listShowsFavs) ##### NAME : "+str(name)+" | URL : "+str(url)+" #####")
-				addDir(name, url, "listepisodes", thumb, plot, originalSERIE=name, FAVdel=True)
+				addDir(name, url, "listepisodes", thumb, plot, origSERIE=name, FAVdel=True)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def favs(param):
@@ -452,7 +451,7 @@ def utc_to_local(dt):
 	else: return dt - timedelta(seconds=time.timezone)
 
 def tolibrary(param):
-	log("-------------------------- TOLIBRARY --------------------------")
+	debug("-------------------------- TOLIBRARY --------------------------")
 	if mediaPath =="":
 		xbmcgui.Dialog().ok(addon.getAddonInfo('id'), translation(30502))
 	elif mediaPath !="" and ADDON_operate('service.L0RE.cron'):
@@ -464,8 +463,8 @@ def tolibrary(param):
 		newURL = 'plugin://{0}/?mode=generatefiles&url={1}&name={2}'.format(addon.getAddonInfo('id'), url, name.replace('&', '%26'))
 		newURL = quote_plus(newURL)
 		source = quote_plus(mediaPath+fixPathSymbols(name))
-		log("(tolibrary) ##### newURL : "+str(newURL)+" #####")
-		log("(tolibrary) ##### SOURCE : "+str(source)+" #####")
+		debug("(tolibrary) ##### newURL : "+str(newURL)+" #####")
+		debug("(tolibrary) ##### SOURCE : "+str(source)+" #####")
 		xbmc.executebuiltin('RunPlugin(plugin://service.L0RE.cron/?mode=adddata&name={0}&stunden={1}&url={2}&source={3})'.format(name.replace('&', '%26'), stunden, newURL, source))
 		xbmcgui.Dialog().notification(translation(30528), translation(30529).format(name,str(stunden)), icon, 12000)
 
@@ -479,7 +478,7 @@ def generatefiles(idd, show):
 	SPECIALS = False
 	url = baseURL+"api/show-detail/"+str(idd)
 	debug("(generatefiles) ##### URL : "+str(url)+" #####")
-	ppath =py2_uni(mediaPath)+py2_uni(fixPathSymbols(show))
+	ppath = py2_uni(mediaPath)+py2_uni(fixPathSymbols(show))
 	debug("(generatefiles) ##### PPATH : "+str(ppath)+" #####")
 	if os.path.isdir(ppath):
 		shutil.rmtree(ppath, ignore_errors=True)
@@ -529,15 +528,15 @@ def generatefiles(idd, show):
 						Note_3 = ""
 						if 'publishStart' in vid and vid['publishStart'] != "" and vid['publishStart'] != None and not str(vid['publishStart']).startswith('1970'):
 							try:
-								startDATES = datetime(*(time.strptime(vid['publishStart'], '%Y-%m-%dT%H:%M:%SZ')[0:6])) # 2019-06-23T14:10:00Z
+								startDATES = datetime(*(time.strptime(vid['publishStart'][:19], '%Y{0}%m{0}%dT%H{1}%M{1}%S'.format('-', ':'))[0:6])) # 2019-06-23T14:10:00Z
 								LOCALstart = utc_to_local(startDATES)
-								startTIMES = LOCALstart.strftime('%d.%m.%y • %H:%M')
+								startTIMES = LOCALstart.strftime('%d{0}%m{0}%y {1} %H{2}%M').format('.', '•', ':')
 							except: pass
 						if 'publishEnd' in vid and vid['publishEnd'] != "" and vid['publishEnd'] != None and not str(vid['publishEnd']).startswith('1970'):
 							try:
-								endDATES = datetime(*(time.strptime(vid['publishEnd'], '%Y-%m-%dT%H:%M:%SZ')[0:6])) # 2019-06-23T14:10:00Z
+								endDATES = datetime(*(time.strptime(vid['publishEnd'][:19], '%Y{0}%m{0}%dT%H{1}%M{1}%S'.format('-', ':'))[0:6])) # 2019-06-23T14:10:00Z
 								LOCALend = utc_to_local(endDATES)
-								endTIMES = LOCALend.strftime('%d.%m.%y • %H:%M')
+								endTIMES = LOCALend.strftime('%d{0}%m{0}%y {1} %H{2}%M').format('.', '•', ':')
 							except: pass
 						if startTIMES: Note_1 = translation(30611).format(str(startTIMES))
 						if endTIMES: Note_2 = translation(30612).format(str(endTIMES))
@@ -587,15 +586,15 @@ def generatefiles(idd, show):
 					Note_3 = ""
 					if 'publishStart' in item and item['publishStart'] != "" and item['publishStart'] != None and not str(item['publishStart']).startswith('1970'):
 						try:
-							startDATES = datetime(*(time.strptime(item['publishStart'], '%Y-%m-%dT%H:%M:%SZ')[0:6])) # 2019-06-23T14:10:00Z
+							startDATES = datetime(*(time.strptime(item['publishStart'][:19], '%Y{0}%m{0}%dT%H{1}%M{1}%S'.format('-', ':'))[0:6])) # 2019-06-23T14:10:00Z
 							LOCALstart = utc_to_local(startDATES)
-							startTIMES = LOCALstart.strftime('%d.%m.%y • %H:%M')
+							startTIMES = LOCALstart.strftime('%d{0}%m{0}%y {1} %H{2}%M').format('.', '•', ':')
 						except: pass
 					if 'publishEnd' in item and item['publishEnd'] != "" and item['publishEnd'] != None and not str(item['publishEnd']).startswith('1970'):
 						try:
-							endDATES = datetime(*(time.strptime(item['publishEnd'], '%Y-%m-%dT%H:%M:%SZ')[0:6])) # 2019-06-23T14:10:00Z
+							endDATES = datetime(*(time.strptime(item['publishEnd'][:19], '%Y{0}%m{0}%dT%H{1}%M{1}%S'.format('-', ':'))[0:6])) # 2019-06-23T14:10:00Z
 							LOCALend = utc_to_local(endDATES)
-							endTIMES = LOCALend.strftime('%d.%m.%y • %H:%M')
+							endTIMES = LOCALend.strftime('%d{0}%m{0}%y {1} %H{2}%M').format('.', '•', ':')
 						except: pass
 					if startTIMES: Note_1 = translation(30611).format(str(startTIMES))
 					if endTIMES: Note_2 = translation(30612).format(str(endTIMES))
@@ -717,8 +716,8 @@ def parameters_string_to_dict(parameters):
 				paramDict[paramSplits[0]] = paramSplits[1]
 	return paramDict
 
-def addDir(name, url, mode, image, plot=None, page=1, position=0, nosub=0, originalSERIE="", addType=0, FAVdel=False):
-	u = sys.argv[0]+'?url='+quote_plus(url)+'&page='+str(page)+'&position='+str(position)+'&nosub='+str(nosub)+'&originalSERIE='+quote_plus(originalSERIE)+'&mode='+str(mode)
+def addDir(name, url, mode, image, plot=None, page=1, position=0, nosub=0, origSERIE="", addType=0, FAVdel=False):
+	u = sys.argv[0]+'?url='+quote_plus(url)+'&page='+str(page)+'&position='+str(position)+'&nosub='+str(nosub)+'&origSERIE='+quote_plus(origSERIE)+'&mode='+str(mode)
 	liz = xbmcgui.ListItem(name)
 	liz.setInfo(type='Video', infoLabels={'Title': name, 'Plot': plot})
 	liz.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
@@ -727,10 +726,10 @@ def addDir(name, url, mode, image, plot=None, page=1, position=0, nosub=0, origi
 	entries = []
 	if addType == 1 or addType == 2:
 		if addType == 1 and FAVdel == False:
-			playListInfos_1 = 'MODE=<mm>ADD</mm> ###TITLE=<tt>{0}</tt> URL=<uu>{1}</uu> THUMB=<ii>{2}</ii> PLOT=<pp>{3}</pp> END###'.format(originalSERIE, url, image, plot.replace('\n', '#n#'))
+			playListInfos_1 = 'MODE=<mm>ADD</mm> ###TITLE=<tt>{0}</tt> URL=<uu>{1}</uu> THUMB=<ii>{2}</ii> PLOT=<pp>{3}</pp> END###'.format(origSERIE, url, image, plot.replace('\n', '#n#'))
 			entries.append([translation(30651), 'RunPlugin('+sys.argv[0]+'?mode=favs&url='+quote_plus(playListInfos_1)+')'])
 		if enableLibrary:
-			libListInfos = '###START###{0}###{1}###{2}###END###'.format(url, originalSERIE, updatestd)
+			libListInfos = '###START###{0}###{1}###{2}###END###'.format(url, origSERIE, updatestd)
 			debug("(addDir) ##### libListInfos : "+py2_enc(libListInfos)+" #####")
 			entries.append([translation(30653), 'RunPlugin('+sys.argv[0]+'?mode=tolibrary&url='+quote_plus(libListInfos)+')'])
 	if FAVdel == True:
@@ -739,13 +738,13 @@ def addDir(name, url, mode, image, plot=None, page=1, position=0, nosub=0, origi
 	liz.addContextMenuItems(entries, replaceItems=False)
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
 
-def addLink(name, url, mode, image, plot=None, duration=None, seriesname=None, season=None, episode=None, genre=None, year=None, begins=None):
+def addLink(name, url, mode, image, plot=None, duration=None, origSERIE=None, season=None, episode=None, genre=None, year=None, begins=None):
 	u = sys.argv[0]+'?url='+quote_plus(url)+'&mode='+str(mode)
 	liz = xbmcgui.ListItem(name)
 	ilabels = {}
 	ilabels['Season'] = season
 	ilabels['Episode'] = episode
-	ilabels['Tvshowtitle'] = seriesname
+	ilabels['Tvshowtitle'] = origSERIE
 	ilabels['Title'] = name
 	ilabels['Tagline'] = None
 	ilabels['Plot'] = plot
@@ -776,7 +775,7 @@ image = unquote_plus(params.get('image', ''))
 page = unquote_plus(params.get('page', ''))
 position = unquote_plus(params.get('position', ''))
 nosub = unquote_plus(params.get('nosub', ''))
-originalSERIE = unquote_plus(params.get('originalSERIE', ''))
+origSERIE = unquote_plus(params.get('origSERIE', ''))
 stunden = unquote_plus(params.get('stunden', ''))
 
 if mode == 'aSettings':
@@ -788,7 +787,7 @@ elif mode == 'listthemes':
 elif mode == 'listseries':
 	listseries(url, page, position, nosub)
 elif mode == 'listepisodes':
-	listepisodes(url, originalSERIE)
+	listepisodes(url, origSERIE)
 elif mode == 'playvideo':
 	playvideo(url)
 elif mode == 'listShowsFavs':
