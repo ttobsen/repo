@@ -88,3 +88,7 @@
 [B]Version 1.2.2  (30.09.2019)[/B]
 - fixed: ARTE-Videos über "plugin.video.arteplussept" abspielen (Code verändert)
 - fixed: LibreELEC - Fehler beim öffnen des Addons (Error: unsupported locale setting)
+
+[B]Version 1.2.3  (03.02.2020)[/B]
+- fixed: ARTE-Videos über "plugin.video.tyl0re.arte" abspielen (Code verändert)
+- fixed: TVNOW-Videos über "plugin.video.rtlnow" abspielen (Code verändert)

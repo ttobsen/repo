@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<addon id="plugin.video.tvspielfilm_de" name="TV Spielfilm - Das Beste aus den Mediatheken" version="1.2.2" provider-name="realvito">
+<addon id="plugin.video.tvspielfilm_de" name="TV Spielfilm - Das Beste aus den Mediatheken" version="1.2.3" provider-name="realvito">
 	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="plugin.video.L0RE.arte" optional="true"/>
+		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="plugin.video.tyl0re.arte" optional="true"/>
 		<import addon="plugin.video.arteplussept" optional="true"/>
 		<import addon="plugin.video.rtlnow" optional="true"/>
 	</requires>
@@ -27,9 +27,9 @@
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.2.2  (30.09.2019)[/COLOR][/B][CR]
-- fixed: ARTE-Videos über "plugin.video.arteplussept" abspielen (Code verändert)
-- fixed: LibreELEC - Fehler beim öffnen des Addons (Error: unsupported locale setting)
+		<news>[B][COLOR orangered]Version 1.2.3  (03.02.2020)[/COLOR][/B][CR]
+- fixed: ARTE-Videos über "plugin.video.tyl0re.arte" abspielen (Code verändert)
+- fixed: TVNOW-Videos über "plugin.video.rtlnow" abspielen (Code verändert)
 		</news>
 	</extension>
 </addon>
