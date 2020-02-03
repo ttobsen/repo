@@ -144,3 +144,7 @@
 - fixed: ARTE-Videos über "plugin.video.arteplussept" abspielen (Code verändert)
 - optimized: Einige kleine Scriptanpassungen
 - fixed: Github-Übertragungsfehler
+
+[B]Version 1.5.3  (03.02.2020)[/B]
+- fixed: ARTE-Videos über "plugin.video.tyl0re.arte" abspielen (Code verändert)
+- fixed: TVNOW-Videos über "plugin.video.rtlnow" abspielen (Code verändert)
