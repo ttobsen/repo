@@ -925,7 +925,7 @@ To support the backport the addon will now always create the merged_epg.xml.gz
 	</extension>
 </addon>
 
-<addon id="plugin.video.ardundzdf" name="ARDundZDF" version="2.6.1" provider-name="rols1 (rols1@gmx.de)">
+<addon id="plugin.video.ardundzdf" name="ARDundZDF" version="2.6.2" provider-name="rols1 (rols1@gmx.de)">
   <requires>
    <import addon="xbmc.python" version="2.25.0"/>
    <import addon="script.module.kodi-six" />
@@ -3142,7 +3142,7 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
 	</extension>
 </addon>
 
-<addon id="plugin.video.tyl0re.weltderwunder" name="Welt der Wunder [COLOR FF00EE00](neu)[/COLOR]" version="2.0.5" provider-name="L0RE, realvito">
+<addon id="plugin.video.tyl0re.weltderwunder" name="Welt der Wunder [COLOR FF00EE00](neu)[/COLOR]" version="2.0.6" provider-name="L0RE, realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
@@ -3169,9 +3169,8 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 2.0.5  (03.02.2020)[/COLOR][/B] by realvito[CR]
-- Pluginname changed for KODI-compatibility (old=plugin.video.L0RE.weltderwunder -> new=plugin.video.tyl0re.weltderwunder)
-- added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19+) :-)
+		<news>[B][COLOR orangered]Version 2.0.6  (06.02.2020)[/COLOR][/B] by realvito[CR]
+- fixed: Syntaxfehler on Line 57
 		</news>
 	</extension>
 </addon>
