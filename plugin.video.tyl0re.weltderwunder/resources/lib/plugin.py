@@ -54,7 +54,7 @@ xbmcvfs.mkdirs(temp)
 cookie = os.path.join(temp, 'cookie.lwp')
 cj = LWPCookieJar()
 
-f xbmcvfs.exists(cookie):
+if xbmcvfs.exists(cookie):
 	cj.load(cookie, ignore_discard=True, ignore_expires=True)
 
 def py2_enc(s, encoding='utf-8'):

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<addon id="plugin.video.tyl0re.weltderwunder" name="Welt der Wunder [COLOR FF00EE00](neu)[/COLOR]" version="2.0.5" provider-name="L0RE, realvito">
+<addon id="plugin.video.tyl0re.weltderwunder" name="Welt der Wunder [COLOR FF00EE00](neu)[/COLOR]" version="2.0.6" provider-name="L0RE, realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
@@ -26,9 +26,8 @@
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 2.0.5  (03.02.2020)[/COLOR][/B] by realvito[CR]
-- Pluginname changed for KODI-compatibility (old=plugin.video.L0RE.weltderwunder -> new=plugin.video.tyl0re.weltderwunder)
-- added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19+) :-)
+		<news>[B][COLOR orangered]Version 2.0.6  (06.02.2020)[/COLOR][/B] by realvito[CR]
+- fixed: Syntaxfehler on Line 57
 		</news>
 	</extension>
 </addon>
