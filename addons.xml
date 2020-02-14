@@ -3245,7 +3245,7 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
 	</extension>
 </addon>
 
-<addon id="plugin.video.mediathekdirekt" name="Mediathek Direkt" version="0.0.13" provider-name="P_Aeh">
+<addon id="plugin.video.mediathekdirekt" name="Mediathek Direkt" version="0.0.14" provider-name="P_Aeh">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.requests" version="2.9.1"/>
@@ -3263,8 +3263,8 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
     <language></language>
     <platform>all</platform>
     <license></license>
-    <forum>https://forum.mediathekview.de/</forum>
-    <website>mediathekview.de</website>
+    <forum>https://www.kodinerds.net/index.php/Thread/53682-RELEASE-Mediathek-Direkt/</forum>
+    <website>mediathekdirekt.de</website>
     <email></email>
     <source>https://github.com/dojomo/plugin.video.mediathekdirekt</source>
     <news></news>
