@@ -4173,37 +4173,6 @@ Zattoo Live TV, Aufnahmen und EPG
   </extension>
 </addon>
 
-
-<addon id="plugin.video.zattooHiQ-2" version="1.7.0.6" name="Zattoo HiQ-2" provider-name="Steffen Rolapp">
-
-  <requires>
-    <import addon="xbmc.python" version="2.14.0"/>
-    <import addon="xbmc.addon" version="13.0.0" />
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="plugin.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.service" library="service.py" start="login" />
-
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Play Live TV and recorded shows from Zattoo.</summary>
-    <summary lang="de">Zattoo Live TV, Aufnahmen und EPG</summary>
-    <description lang="en">ZattooHiQ for second account
-    </description>
-    <description lang="de">ZattooHiQ für zweit Account
-    </description>
-   <platform>all</platform>
-    <language></language>
-    <news>Important !!! on Error renew Database from Settings/Database !!!  </news>
-    <license>GNU GENERAL PUBLIC LICENSEVersion 3, 29 June 2007</license>
-    <source>https://github.com/rolapp/plugin.video.zattooHiQ</source>
-    <website>https://github.com/rolapp/plugin.video.zattooHiQ/wiki/ZattooHiQ-Wiki</website>
-    <email>kodi@rolapp.de</email>
-    <disclaimer lang="en">Check http://www.zattoo.com for availability in your country.</disclaimer>
-    <disclaimer lang="de">Überprüfe ob http://www.zattoo.com in Deinem Land verfügbar ist.</disclaimer>
-  </extension>
-</addon>
-
 <addon id="script.module.pydes" name="pyDes" version="2.0.1" provider-name="Todd Whiteman">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
