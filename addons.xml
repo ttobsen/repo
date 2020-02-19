@@ -2272,10 +2272,10 @@ To support the backport the addon will now always create the merged_epg.xml.gz
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ-19" version="1.0" name="Zattoo HiQ-19" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ-19" version="1.0.1" name="Zattoo HiQ-19" provider-name="Steffen Rolapp">
   <requires>
-    <import addon="xbmc.python" version="2.14.0"/>
-    <import addon="xbmc.addon" version="13.0.0" />
+    <import addon="xbmc.python" version="3.0.0"/>
+    <import addon="xbmc.addon" version="18.9.701" />
   </requires>
   <extension point="xbmc.python.pluginsource" library="plugin.py">
     <provides>video</provides>
@@ -2323,6 +2323,10 @@ Zattoo Live TV, Aufnahmen und EPG
     <email>kodi@rolapp.de</email>
     <disclaimer lang="en">Check http://www.zattoo.com for availability in your country.</disclaimer>
     <disclaimer lang="de">Überprüfe ob http://www.zattoo.com in Deinem Land verfügbar ist.</disclaimer>
+    <assets>
+        <icon>resources/icon.png</icon>
+        <fanart>resources/fanart.jpg</fanart>
+    </assets>
   </extension>
 </addon>
 
@@ -3784,7 +3788,7 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ" version="1.7.0.6" name="Zattoo HiQ" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ" version="1.7.0.7" name="Zattoo HiQ" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
