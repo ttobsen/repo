@@ -2272,7 +2272,7 @@ To support the backport the addon will now always create the merged_epg.xml.gz
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ-19" version="1.0.1" name="Zattoo HiQ-19" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ-19" version="1.0.1.1" name="Zattoo HiQ-19" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
     <import addon="xbmc.addon" version="18.9.701" />
@@ -2285,7 +2285,7 @@ To support the backport the addon will now always create the merged_epg.xml.gz
   <extension point="xbmc.addon.metadata">
     <summary lang="en">Play Live TV and recorded shows from Zattoo.</summary>
     <summary lang="de">Zattoo Live TV, Aufnahmen und EPG</summary>
-    <description lang="en">ZattooHiQ is based on ZattooBox form Pascal Nançoz and ZattooBox Extended from Daniel Griner modify by L0RE
+    <description lang="en">ZattooHiQ-19 is Zattoo-HiQ for Kodi-19 Matrix
 
 Play Live TV and recorded shows from Zattoo.
 - switch between favourites/all channels
@@ -2296,7 +2296,7 @@ Play Live TV and recorded shows from Zattoo.
 - settings: stream quality, default language
 - touchscreen support
     </description>
-    <description lang="de">ZattooHiQ basiert auf ZattooBox von Pascal Nançoz und ZattooBox Extended von Daniel Griner verbessert von L0RE
+    <description lang="de">ZattooHiQ-19 ist Zattoo-HiQ for Kodi-19 Matrix
 
 Zattoo Live TV, Aufnahmen und EPG
 - wechsel zwischen Favoriten/Allen Kanälen
@@ -2310,13 +2310,10 @@ Zattoo Live TV, Aufnahmen und EPG
    <platform>all</platform>
     <language></language>
     <news>
-- Kodi Player OSD über Longpress Return zu erreichen
-- WidgetProblem bei Aeon Silvo behoben
-- EPG Datums Eingabe exit wenn heute
-- Settings können im Hauptmenu angezeigt werden
-- Aufnahmen nur wenn im Abo
-- 1und1 als Reseller hinzugefügt
-- EPG überarbeitet</news>
+- Portierung von ZattooHiQ zu Kodi-19 Matrix
+- Einfügen von Dolby Digital Unterstützung
+
+    </news>
     <license>GNU GENERAL PUBLIC LICENSEVersion 3, 29 June 2007</license>
     <source>https://github.com/rolapp/plugin.video.zattooHiQ</source>
     <website>https://github.com/rolapp/plugin.video.zattooHiQ/wiki/ZattooHiQ-Wiki</website>
