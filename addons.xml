@@ -2272,7 +2272,7 @@ To support the backport the addon will now always create the merged_epg.xml.gz
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ-19" version="1.0.1.1" name="Zattoo HiQ-19" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ-19" version="1.0.1.2" name="Zattoo HiQ-19" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
     <import addon="xbmc.addon" version="18.9.701" />
