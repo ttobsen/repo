@@ -23,9 +23,9 @@
 import xbmc, xbmcgui, xbmcaddon, datetime, time
 import os, urllib.parse
 
-from resources.library import library
-from resources.zattooDB import ZattooDB
-from resources.zapisession import ZapiSession
+from resources.lib.library import library
+from resources.lib.zattooDB import ZattooDB
+from resources.lib.zapisession import ZapiSession
 
 _zattooDB_ = ZattooDB()
 __addon__ = xbmcaddon.Addon()
@@ -55,7 +55,7 @@ def refreshProg():
     monitor = xbmc.Monitor()
     while not monitor.abortRequested():
         if monitor.waitForAbort(600): break
-        from resources.zattooDB import ZattooDB
+        from resources.lib.zattooDB import ZattooDB
         _zattooDB_ = ZattooDB()
         #update programInfo
         startTime=datetime.datetime.now()
@@ -69,7 +69,7 @@ def refreshProg():
 
 def recInfo():
     import urllib.request, urllib.parse, urllib.error
-    from resources.zattooDB import ZattooDB
+    from resources.lib.zattooDB import ZattooDB
     _zattooDB_ = ZattooDB()
 
     resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist', None)
@@ -81,17 +81,17 @@ def start():
     import urllib.request, urllib.parse, urllib.error
     #xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
     #re-import ZattooDB to prevent "convert_timestamp" error
-    from resources.zattooDB import ZattooDB
+    from resources.lib.zattooDB import ZattooDB
     _zattooDB_ = ZattooDB()
     _zattooDB_.cleanProg(True)
     
     #re-import ZattooDB to prevent "convert_timestamp" error
-    from resources.zattooDB import ZattooDB
+    from resources.lib.zattooDB import ZattooDB
     _zattooDB_ = ZattooDB()
     _zattooDB_.updateChannels()
     
     #re-import ZattooDB to prevent "convert_timestamp" error
-    from resources.zattooDB import ZattooDB
+    from resources.lib.zattooDB import ZattooDB
     _zattooDB_ = ZattooDB()
     _zattooDB_.updateProgram()
     
@@ -105,7 +105,7 @@ def start():
     endTime=datetime.datetime.now()+datetime.timedelta(minutes = 20)
     
     #re-import ZattooDB to prevent "convert_timestamp" error
-    from resources.zattooDB import ZattooDB
+    from resources.lib.zattooDB import ZattooDB
     _zattooDB_ = ZattooDB()
     #xbmcgui.Dialog().notification(localString(31916), localString(30110),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
     
@@ -123,7 +123,7 @@ def start():
 
 
 def getProgNextDay():
-    from resources.zattooDB import ZattooDB
+    from resources.lib.zattooDB import ZattooDB
     _zattooDB_ = ZattooDB()
 
     start = datetime.time(14, 0, 0)

@@ -112,10 +112,11 @@ class ZapiSession:
 
 
     def request_url(self, url, params):
+        
         try:
-            debug (str(url) )
+            #
             response = self.HttpHandler.open(url, urllib.urlencode(params) if params is not None else None)
-
+            
             if response is not None:
                 sessionId = self.extract_sessionId(response.info().getheader('Set-Cookie'))
 

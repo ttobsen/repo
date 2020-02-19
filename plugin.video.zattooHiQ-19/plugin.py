@@ -36,11 +36,11 @@ import sys, urllib.parse,  os, json
 import time, datetime, threading
 import _strptime
     
-from resources.zattooDB import ZattooDB
-from resources.library import library
-from resources.guiactions import *
-from resources.keymap import KeyMap
-from resources.helpmy import helpmy
+from resources.lib.zattooDB import ZattooDB
+from resources.lib.library import library
+from resources.lib.guiactions import *
+from resources.lib.keymap import KeyMap
+from resources.lib.helpmy import helpmy
 
 
 __addon__ = xbmcaddon.Addon()
@@ -79,8 +79,8 @@ def log(msg, level=xbmc.LOGNOTICE):
     xbmc.log('%s: %s' % (addonID, msg), level) 
 
 # get Timezone Offset
-from tzlocal import get_localzone
-import pytz
+from resources.lib.tzlocal import get_localzone
+import resources.lib.pytz
 try:
   tz = get_localzone()
   offset=tz.utcoffset(datetime.datetime.now()).total_seconds()
@@ -175,7 +175,7 @@ stream_type = __addon__.getSetting('stream_type')
 RECREADY = __addon__.getSetting('rec_ready')
 RECNOW = __addon__.getSetting('rec_now')
 VERSION = __addon__.getAddonInfo('version')
-
+DOLBY = __addon__.getSetting('dolby')
 KEYMAP = __addon__.getSetting('keymap')
    
 if premiumUser or SWISS: 
@@ -263,7 +263,7 @@ def build_root(__addonuri__, __addonhandle__):
     xbmcgui.Window(10000).setProperty('ZBEplayOnStart', 'false')
 
 
-  iconPath = __addon__.getAddonInfo('path') + '/icon.png'
+  iconPath = __addon__.getAddonInfo('path') + '/resources/icon.png'
   if _listMode_ == 'all': listTitle = localString(31100)
   else: listTitle = localString(31101)
 
@@ -610,8 +610,9 @@ def watch_recording(__addonuri__, __addonhandle__, recording_id, start=0):
   #if DASH: stream_type='dash'
   #else: stream_type='hls'
 
-  params = {'recording_id': recording_id, 'stream_type': stream_type, 'maxrate':max_bandwidth}
-  resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch', params)
+  #params = {'recording_id': recording_id, 'stream_type': stream_type, 'maxrate':max_bandwidth}
+  params = {'stream_type': stream_type, 'maxrate':max_bandwidth, 'enable_eac3':DOLBY}
+  resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch/recording/' + recording_id, params)
   #debug ('ResultData: '+str(resultData))
   if resultData is not None:
     streams = resultData['stream']['watch_urls']
@@ -748,23 +749,27 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
   if restart: 
     startTime = datetime.datetime.fromtimestamp(int(start))
     endTime = datetime.datetime.fromtimestamp(int(end))
-    params = {'stream_type': stream_type, 'maxrate':max_bandwidth}
-
+    params = {'stream_type': stream_type, 'maxrate':max_bandwidth, 'enable_eac3':DOLBY}
+    resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch/selective_recall/'+channel_id+'/'+showID, params)
   elif start == '0':
     startTime = datetime.datetime.now()
     endTime = datetime.datetime.now()
-    params = {'cid': channel_id, 'stream_type': stream_type, 'maxrate':max_bandwidth, 'enable_eac3':'true'}
+    #params = {'cid': channel_id, 'stream_type': stream_type, 'maxrate':max_bandwidth, 'enable_eac3':'true'}
+    params = {'stream_type': stream_type, 'maxrate':max_bandwidth, 'enable_eac3':DOLBY, 'timeshift':'10800', 'https_watch_urls': 'true'}
+    resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch/live/' + channel_id, params)
   else:
     startTime = datetime.datetime.fromtimestamp(int(start))
     endTime = datetime.datetime.fromtimestamp(int(end))
     zStart = datetime.datetime.fromtimestamp(int(start) - _timezone_ ).strftime("%Y-%m-%dT%H:%M:%SZ") #5min zattoo skips back
     zEnd = datetime.datetime.fromtimestamp(int(end) - _timezone_ ).strftime("%Y-%m-%dT%H:%M:%SZ")
-    params = {'cid': channel_id, 'stream_type': stream_type, 'start':zStart, 'end':zEnd, 'maxrate':max_bandwidth }
-   
+    #params = {'cid': channel_id, 'stream_type': stream_type, 'start':zStart, 'end':zEnd, 'maxrate':max_bandwidth }
+    params = {'stream_type': stream_type, 'maxrate':max_bandwidth, 'enable_eac3':DOLBY}
+    resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch/recall/' + channel_id + '/' + showID, params)
+    
   channelInfo = _zattooDB_.get_channelInfo(channel_id)
 
-  if restart: resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch/selective_recall/'+channel_id+'/'+showID, params)
-  else: resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch',params)
+  #if restart: resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch/selective_recall/'+channel_id+'/'+showID, params)
+  #else: resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch',params)
   #resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch',params)
   debug('Streams :' +str(resultData))
   if resultData is None:
@@ -776,9 +781,11 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
     xbmcgui.Dialog().notification("ERROR", "NO STREAM FOUND, CHECK SETTINGS!", channelInfo['logo'], 5000, False)
     return
   # change stream if settings are set
-  streamNr = 0
-  if len(streams) > 1 and  __addon__.getSetting('audio_stream') == 'B' and streams[1]['audio_channel'] == 'B': streamNr = 1
-  xbmcgui.Window(10000).setProperty('playstream', streams[streamNr]['url'])
+ 
+  elif len(streams) > 1 and  __addon__.getSetting('audio_stream') == 'B' and streams[1]['audio_channel'] == 'B': streamNr = 1
+  else:  streamNr = 0
+  
+  #xbmcgui.Window(10000).setProperty('playstream', streams[streamNr]['url'])
 
   # save currently playing
   streamsList = []
@@ -788,8 +795,9 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
 
   #make Info
   program = _zattooDB_.getPrograms({'index':[channel_id]}, True, startTime, endTime)
-
-  listitem = xbmcgui.ListItem(channel_id)
+  
+  listitem = xbmcgui.ListItem(path=streams[streamNr]['url'])
+    
   if program:
     program = program[0]
     heading = ('[B]' + channelInfo['title'] + '[/B] ').translate(_umlaut_) + '  ' + program['start_date'].strftime('%H:%M') + '-' + program['end_date'].strftime('%H:%M')
@@ -804,35 +812,40 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
   if stream_type == 'dash':
         listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
         listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
+        
   if stream_type == 'dash_widevine':
         listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
         listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
         listitem.setProperty('inputstream.adaptive.license_key', streams[1]['license_url'] + "||a{SSM}|")
         listitem.setProperty('inputstream.adaptive.license_type', "com.widevine.alpha")
         
+  xbmcplugin.setResolvedUrl(__addonhandle__, True, listitem)
   #play liveTV: info is created in OSD
   if (start=='0'):
+    debug('PlayLive')
+    player=xbmc.Player()
+    #player.startTime=startTime
+    player.play(streams[streamNr]['url'], listitem)
+    while (player.isPlaying()): xbmc.sleep(100)
+     
     _zattooDB_=ZattooDB()
     channelList = _zattooDB_.getChannelList(False)
     #print "ChannelList: " + str(channelList)
     currentChannel = _zattooDB_.get_playing()['channel']
     nr=channelList[currentChannel]['nr']
-    player=xbmc.Player()
-    #player.startTime=startTime
-    player.play(streams[streamNr]['url'], listitem, False)
-    #while (player.playing):xbmc.sleep(100)
     show_channelNr(nr+1)
     toggleChannel=xbmcgui.Window(10000).getProperty('toggleChannel')
     if toggleChannel !="": showToggleImg()
     
   else:
+    debug('PlayRecall')
     player= myPlayer()
     player.startTime=startTime
     player.play(streams[streamNr]['url'], listitem)
     #xbmc.sleep(1000)
     #player.seekTime(300)
-    while (player.playing):xbmc.sleep(100)
     
+    while (player.playing):xbmc.sleep(100)
   
   
 def skip_channel(skipDir):
@@ -1036,7 +1049,7 @@ def search_show(__addonuri__, __addonhandle__, search):
 
 def showPreview(popularList=''):
   xbmc.executebuiltin("Dialog.Close(all, true)")
-  from resources.channelspreview import ChannelsPreview
+  from resources.lib.channelspreview import ChannelsPreview
   preview = ChannelsPreview()
   if popularList=='popular': preview.createPreview('popular')
   else: preview.createPreview(_listMode_ == 'favourites')
@@ -1060,7 +1073,7 @@ def showHelp(__addonuri__, __addonhandle__):
   build_directoryContent(content, __addonhandle__, True, False, 'files')
   
 def showEpg():
-  from resources.epg.epg import EPG
+  from resources.lib.epg.epg import EPG
   currentChannel = _zattooDB_.get_playing()['channel']
   channelList = _zattooDB_.getChannelList(_listMode_ == 'favourites')
   #debug(str(channelList))
@@ -1194,16 +1207,20 @@ def makeOsdInfo():
   if channelInfo['favourite']==1: xbmc.executebuiltin( "Skin.SetBool(%s)" %'favourite')
   else: xbmc.executebuiltin( "Skin.Reset(%s)" %'favourite')
 
+        
 class myPlayer(xbmc.Player):
+  
     def __init__(self, skip=0):
       self.skip=skip
       self.startTime=0
       self.playing=True
+      
     def onPlayBackStarted(self):
         
         if (self.skip>0):
             self.seekTime(self.skip)
             self.startTime=self.startTime-datetime.timedelta(seconds=self.skip)
+            
     def onPlayBackSeek(self, time, seekOffset):
       
       if self.startTime+datetime.timedelta(milliseconds=time) > datetime.datetime.now().replace(microsecond=0):
@@ -1420,7 +1437,7 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
     elif controlID==210: #record program
       setup_recording(program['showID'])
     elif controlID==211: #teletext
-      from resources.teletext import Teletext
+      from resources.lib.teletext import Teletext
       tele = Teletext()
       tele.doModal()
       del tele
@@ -1569,12 +1586,14 @@ def main():
     if stream_type == 'hls': change_stream(1)
     else:
       streams=xbmc.Player().getAvailableAudioStreams()
+      debug('AudioStreams ' + str(streams))
       dialog=xbmcgui.Dialog()
       ret = dialog.select('audio streams', streams)
       if ret==-1: return
       xbmc.Player().setAudioStream(ret)
+      
   elif action == 'teletext':
-    from resources.teletext import Teletext
+    from resources.lib.teletext import Teletext
     tele = Teletext()
     tele.doModal()
     del tele
