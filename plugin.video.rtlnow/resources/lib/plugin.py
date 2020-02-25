@@ -14,13 +14,11 @@ if PY2:
 	reload(sys)
 	sys.setdefaultencoding('utf-8')
 	from urllib import quote, unquote, quote_plus, unquote_plus, urlencode  # Python 2.X
-	from urllib2 import build_opener, HTTPCookieProcessor, Request, urlopen  # Python 2.X
-	from cookielib import LWPCookieJar  # Python 2.X
+	from urllib2 import build_opener, Request, urlopen  # Python 2.X
 	from urlparse import urljoin, urlparse, urlunparse  # Python 2.X
 elif PY3:
 	from urllib.parse import quote, unquote, quote_plus, unquote_plus, urlencode, urljoin, urlparse, urlunparse  # Python 3+
-	from urllib.request import build_opener, HTTPCookieProcessor, Request, urlopen  # Python 3+
-	from http.cookiejar import LWPCookieJar  # Python 3+
+	from urllib.request import build_opener, Request, urlopen  # Python 3+
 try: import StorageServer
 except: from . import storageserverdummy as StorageServer
 import json
@@ -43,11 +41,10 @@ addon = xbmcaddon.Addon()
 socket.setdefaulttimeout(40)
 addonPath = xbmc.translatePath(addon.getAddonInfo('path')).encode('utf-8').decode('utf-8')
 dataPath    = xbmc.translatePath(addon.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
-temp           = xbmc.translatePath(os.path.join(dataPath, 'temp', '')).encode('utf-8').decode('utf-8')
 defaultFanart = os.path.join(addonPath, 'fanart.jpg')
 icon = os.path.join(addonPath, 'icon.png')
 artpic = os.path.join(addonPath, 'resources', 'media', '').encode('utf-8').decode('utf-8')
-filename = os.path.join(dataPath, 'episode_data.txt')
+WORKFILE = os.path.join(dataPath, 'episode_data.txt')
 channelFavsFile = os.path.join(dataPath, 'my_TVNOW_favourites.txt').encode('utf-8').decode('utf-8')
 cachePERIOD = int(addon.getSetting('cacherhythm'))
 cache = StorageServer.StorageServer(addon.getAddonInfo('id'), cachePERIOD) # (Your plugin name, Cache time in hours)
@@ -65,7 +62,7 @@ KODI_17 = int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) == 17
 KODI_18 = int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) >= 18
 KODI_vs18 = int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) == 18
 KODI_vs19 = int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) >= 19
-baseURL = "https://api.tvnow.de/v3/"
+baseURL = 'https://api.tvnow.de/v3/'
 
 if KODI_vs19:
 	addon.setSetting('Notify_Select', '1')
@@ -78,15 +75,8 @@ else:
 
 xbmcplugin.setContent(int(sys.argv[1]), 'movies')
 
-if xbmcvfs.exists(temp) and os.path.isdir(temp):
-	shutil.rmtree(temp, ignore_errors=True)
-	xbmc.sleep(500)
-xbmcvfs.mkdirs(temp)
-cookie = os.path.join(temp, 'cookie.lwp')
-cj = LWPCookieJar()
-
-if xbmcvfs.exists(cookie):
-	cj.load(cookie, ignore_discard=True, ignore_expires=True)
+if not xbmcvfs.exists(dataPath):
+	xbmcvfs.mkdirs(dataPath)
 
 def py2_enc(s, encoding='utf-8'):
 	if PY2:
@@ -125,7 +115,7 @@ def debug_MS(content):
 	log(content, DEB_LEVEL)
 
 def log(msg, level=xbmc.LOGNOTICE):
-	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+py2_enc(str(msg)), level)
+	xbmc.log('[{0} v.{1}]{2}'.format(addon.getAddonInfo('id'), addon.getAddonInfo('version'), py2_enc(msg)), level)
 
 if addon.getSetting('checkwidevine') == 'true':
 	pos = 0
@@ -150,10 +140,7 @@ def makeREQUEST(url):
 	return cache.cacheFunction(getUrl, url)
 
 def getUrl(url, header=None, referer=None, agent='Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0'):
-	global cj
-	for cook in cj:
-		debug_MS("(getUrl) Cookie : {0}".format(str(cook)))
-	opener = build_opener(HTTPCookieProcessor(cj))
+	opener = build_opener()
 	opener.addheaders = [('User-Agent', agent), ('Accept-Encoding', 'gzip, deflate')]
 	try:
 		if header: opener.addheaders = header
@@ -170,8 +157,6 @@ def getUrl(url, header=None, referer=None, agent='Mozilla/5.0 (Windows NT 10.0; 
 		content = ""
 		return sys.exit(0)
 	opener.close()
-	try: cj.save(cookie, ignore_discard=True, ignore_expires=True)
-	except: pass
 	return content
 
 def ADDON_operate(IDD):
@@ -203,7 +188,7 @@ def index():
 	addDir(translation(30604) , "", 'listTopics', icon)
 	addDir(translation(30605), "", 'listGenres', icon)
 	addDir(translation(30606), "", 'newShows', icon)
-	addDir(translation(30607), "", 'Searching', icon)
+	addDir(translation(30607), "0", 'getSearch', icon, nosub=1)
 	if STATUS==3 and KODI_18: addDir(translation(30608), "", 'liveTV', icon)
 	addDir(translation(30609).format(str(cachePERIOD)), "", 'clearCache', icon)
 	if enableAdjustment:
@@ -233,7 +218,7 @@ def listSeries(url):
 		else: elements = DATA['items']
 		for seriesITEM in elements:
 			debug_MS("(listSeries) ##### seriesITEM : {0} #####".format(str(seriesITEM)))
-			idd = str(seriesITEM['id'])
+			seriesID = str(seriesITEM['id'])
 			name = py2_enc(seriesITEM['title']).strip()
 			station = seriesITEM['station'].upper()
 			seoUrl = py2_enc(seriesITEM['seoUrl'])
@@ -244,7 +229,7 @@ def listSeries(url):
 				logo = cleanPhoto(seriesITEM['formatimageArtwork'])
 			if logo == "" and 'defaultImage169Logo' in seriesITEM and seriesITEM['defaultImage169Logo'] != "" and seriesITEM['defaultImage169Logo'] != None:
 				logo = cleanPhoto(seriesITEM['defaultImage169Logo'])
-			if logo == "": logo = 'https://aistvnow-a.akamaihd.net/tvnow/format/'+idd+'_02logo/image.jpg'
+			if logo == "": logo = 'https://aistvnow-a.akamaihd.net/tvnow/format/'+seriesID+'_02logo/image.jpg'
 			genre = py2_enc(seriesITEM['genre1']).strip()
 			category = seriesITEM['categoryId']
 			plot = ""
@@ -260,12 +245,12 @@ def listSeries(url):
 					for line in lines:
 						if line.startswith('###START'):
 							part = line.split('###')
-							if idd == part[2]: addType=2
+							if seriesID == part[2]: addType=2
 			if category == 'film':
 				addType=3
 				if markMOVIES: name = '[I]'+name+'[/I]'
-			debug_MS("(listSeries) ### TITLE = {0} || IDD = {1} || PHOTO = {2} || addType = {3} ###".format(name, idd, logo, str(addType)))
-			addDir(name, idd, 'listSeasons', logo, plot, origSERIE=name, genre=genre, studio=station, addType=addType)
+			debug_MS("(listSeries) ### TITLE = {0} || IDD = {1} || PHOTO = {2} || addType = {3} ###".format(name, seriesID, logo, str(addType)))
+			addDir(name, seriesID, 'listSeasons', logo, plot, origSERIE=name, genre=genre, studio=station, addType=addType)
 			position += 1
 		debug_MS("(listSeries) Anzahl-in-Liste : {0}".format(str(int(position)-1)))
 		try:
@@ -277,41 +262,45 @@ def listSeries(url):
 
 def listSeasons(Xidd, Xbild):
 	debug_MS("(listSeasons) -------------------------------------------------- START = listSeasons --------------------------------------------------")
-	COMBI_1 = []
+	COMBI_SEASON = []
 	#http://api.tvnow.de/v3/formats/seo?fields=*,.*,formatTabs.*,formatTabs.headline&name=chicago-fire
-	url_1 = "http://api.tvnow.de/v3/formats/"+str(Xidd)+"?fields="+quote_plus("*,.*,formatTabs.*,formatTabs.headline,annualNavigation.*")
+	url = 'http://api.tvnow.de/v3/formats/'+str(Xidd)+'?fields='+quote_plus('*,.*,formatTabs.*,formatTabs.headline,annualNavigation.*')
 	try:
-		content = makeREQUEST(url_1)
+		content = makeREQUEST(url)
 		debug_MS("(listSeasons) ##### CONTENT : {0} #####".format(str(content)))
 		DATA = json.loads(content, object_pairs_hook=OrderedDict)
 		seriesname = py2_enc(DATA['title']).strip()
 	except: return xbmcgui.Dialog().notification(translation(30522).format(str(Xidd)), translation(30523), icon, 12000)
-	newIDD = str(DATA['id'])
+	seasonID = str(DATA['id'])
 	Xbild = cleanPhoto(Xbild)
 	if DATA['annualNavigation']['total'] == 1:
-		url_2 = "https://api.tvnow.de/v3/movies?fields=*,format,paymentPaytypes,pictures,trailers&filter={%20%22FormatId%22%20:%20"+newIDD+"}&maxPerPage=500&order=BroadcastStartDate%20asc"
-		debug_MS("(listSeasons) no.1 ### SERIE = {0} || newIDD = {1} || PHOTO = {2} ###".format(seriesname, newIDD, str(Xbild)))
-		listEpisodes(url_2)
+		debug_MS("(listSeasons) no.1 ### SERIE = {0} || seasonID = {1} || PHOTO = {2} ###".format(seriesname, seasonID, str(Xbild)))
+		listEpisodes(seasonID)
 	else:
 		for each in DATA['annualNavigation']['items']:
 			year = str(each['year'])
-			url_3 = "https://api.tvnow.de/v3/movies?fields=*,format,paymentPaytypes,pictures,trailers&filter={%22BroadcastStartDate%22:{%22between%22:{%22start%22:%22"+year+"-01-01%2000:00:00%22,%22end%22:%20%22"+year+"-12-31%2023:59:59%22}},%20%22FormatId%22%20:%20"+newIDD+"}&maxPerPage=500&order=BroadcastStartDate%20asc"
-			debug_MS("(listSeasons) no.2 ### SERIE = {0} || newIDD = {1} || PHOTO = {2} || YEAR = {3} ###".format(seriesname, newIDD, str(Xbild), year))
-			COMBI_1.append([year, url_3, Xbild])
-	if COMBI_1:
-		for year, url_3, Xbild in sorted(COMBI_1, key=lambda num:num[0], reverse=True):
-			addDir(translation(30620).format(year), url_3, 'listEpisodes', Xbild)
+			debug_MS("(listSeasons) no.2 ### SERIE = {0} || seasonID = {1} || PHOTO = {2} || YEAR = {3} ###".format(seriesname, seasonID, str(Xbild), year))
+			COMBI_SEASON.append([seasonID, year, Xbild, seriesname])
+	if COMBI_SEASON:
+		for seasonID, year, Xbild, seriesname in sorted(COMBI_SEASON, key=lambda num:num[1], reverse=True):
+			addDir(translation(30620).format(year), seasonID+'@@'+year+'@@', 'listEpisodes', Xbild, origSERIE=seriesname, addType=2)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
-def listEpisodes(url):
+def listEpisodes(Xidd):
 	debug_MS("(listEpisodes) -------------------------------------------------- START = listEpisodes --------------------------------------------------")
 	xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_UNSORTED)
 	xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_LABEL)
 	STATUS,TOKEN = LOGIN()
-	COMBI_1 = []
-	workList = ""
-	debug_MS("(listEpisodes) ### startURL : {0} ###".format(url))
-	content = makeREQUEST(url)
+	COMBI_EPISODE = []
+	uno_LIST = []
+	if '@@' in Xidd:
+		elem_IDD = Xidd.split('@@')[0]
+		elem_YEAR = Xidd.split('@@')[1]
+		startURL = 'https://api.tvnow.de/v3/movies?fields=*,format,paymentPaytypes,pictures,trailers&filter={%22BroadcastStartDate%22:{%22between%22:{%22start%22:%22'+elem_YEAR+'-01-01%2000:00:00%22,%22end%22:%20%22'+elem_YEAR+'-12-31%2023:59:59%22}},%20%22FormatId%22%20:%20'+elem_IDD+'}&maxPerPage=500&order=BroadcastStartDate%20asc'
+	else:
+		startURL = 'https://api.tvnow.de/v3/movies?fields=*,format,paymentPaytypes,pictures,trailers&filter={%20%22FormatId%22%20:%20'+Xidd+'}&maxPerPage=500&order=BroadcastStartDate%20asc'
+	debug_MS("(listEpisodes) ### startURL : {0} ###".format(startURL))
+	content = makeREQUEST(startURL)
 	DATA = json.loads(content, object_pairs_hook=OrderedDict)    
 	if 'formatTabPages' in DATA and 'items' in str(DATA['formatTabPages']):
 		for each in DATA['formatTabPages']['items']:
@@ -332,7 +321,7 @@ def listEpisodes(url):
 			normTIMES = broadcast.strftime('%d{0}%m{0}%y {1} %H{2}%M').format('.', '•', ':')
 			begins =  broadcast.strftime('%d{0}%m{0}%Y').format('.')
 		except: pass
-		idd = str(folge['id'])
+		episID = str(folge['id'])
 		title = py2_enc(folge['title']).strip()
 		try: seriesname = py2_enc(folge['format']['title']).strip()
 		except: 
@@ -365,10 +354,10 @@ def listEpisodes(url):
 		if season != '0' and episode != '0': Note_3 = translation(30628).format(season, episode)
 		if spezTIMES: Note_4 = translation(30629).format(str(spezTIMES))
 		mpaa =""
-		if 'fsk' in folge and folge['fsk'] != "" and str(folge['fsk']) != "0" and folge['fsk'] != None:
+		if 'fsk' in folge and folge['fsk'] != "" and str(folge['fsk']) != '0' and folge['fsk'] != None:
 			mpaa = translation(30630).format(str(folge['fsk']))
 		year =""
-		if 'productionYear' in folge and folge['productionYear'] != "" and str(folge['productionYear']) != "0" and folge['productionYear'] != None:
+		if 'productionYear' in folge and folge['productionYear'] != "" and str(folge['productionYear']) != '0' and folge['productionYear'] != None:
 			year = folge['productionYear']
 		if showDATE and normTIMES:
 			Note_5 = translation(30631).format(str(normTIMES))
@@ -387,8 +376,8 @@ def listEpisodes(url):
 		except: deeplink =""
 		# BILD_1 = https://aistvnow-a.akamaihd.net/tvnow/movie/1454577/960x0/image.jpg
 		# BILD_2 = https://ais.tvnow.de/tvnow/movie/1454577/960x0/image.jpg
-		image = 'https://aistvnow-a.akamaihd.net/tvnow/movie/'+idd+'/1200x0/image.jpg'
-		if freeonly == 'true' and PayType == False and STATUS < 3: idd = '0'
+		image = 'https://aistvnow-a.akamaihd.net/tvnow/movie/'+episID+'/1200x0/image.jpg'
+		if freeonly == 'true' and PayType == False and STATUS < 3: episID = '0'
 		station =""
 		if 'format' in folge and 'station' in folge['format'] and folge['format']['station'] != "" and folge['format']['station'] != None:
 			station = folge['format']['station'].upper()
@@ -419,12 +408,13 @@ def listEpisodes(url):
 		title2 = title+Note_5+Note_6
 		if freeonly == 'true' and PayType == False and STATUS < 3: nosub = str(deeplink)+'@@'+str(folge['isDrm'])+'@@C3'+str(TOKEN)+'A5@@'+str(PayType)
 		else: nosub = str(deeplink)+'@@'+str(folge['isDrm'])+'@@'+str(TOKEN)+'@@'+str(PayType)
-		COMBI_1.append([idd, videoURL, image, title1, title2, plot, tagline, duration, seriesname, season, episode, genre, mpaa, year, begins, station, ftype, nosub])
-	if COMBI_1:
-		for idd, videoURL, image, title1, title2, plot, tagline, duration, seriesname, season, episode, genre, mpaa, year, begins, station, ftype, nosub in COMBI_1:
-			seq = py2_enc(idd+'@@'+str(videoURL)+'@@'+str(seriesname)+'@@'+str(title2)+'@@'+str(image)+'@@'+str(plot)+'@@'+str(duration)+'@@'+str(season)+'@@'+str(episode)+'@@'+str(nosub)+'@@')
-			workList = workList+seq.replace('\n', ' ')+'\n'
-			listitem = xbmcgui.ListItem(path=sys.argv[0]+'?number='+idd+'&mode=play_CODE')
+		COMBI_EPISODE.append([episID, videoURL, image, title1, title2, plot, tagline, duration, seriesname, season, episode, genre, mpaa, year, begins, station, ftype, nosub])
+	if COMBI_EPISODE:
+		for episID, videoURL, image, title1, title2, plot, tagline, duration, seriesname, season, episode, genre, mpaa, year, begins, station, ftype, nosub in COMBI_EPISODE:
+			EP_entry = py2_enc(episID+'@@'+str(videoURL)+'@@'+str(seriesname)+'@@'+str(title2)+'@@'+str(image)+'@@'+str(plot)+'@@'+str(duration)+'@@'+str(season)+'@@'+str(episode)+'@@'+str(nosub)+'@@')
+			if EP_entry not in uno_LIST:
+				uno_LIST.append(EP_entry)
+			listitem = xbmcgui.ListItem(path=sys.argv[0]+'?IDENTiTY='+episID+'&mode=playCODE')
 			ilabels = {}
 			ilabels['Season'] = season
 			if episode != '0':
@@ -451,14 +441,16 @@ def listEpisodes(url):
 				listitem.setArt({'fanart': image})
 			listitem.addStreamInfo('Video', {'Duration':duration})
 			listitem.setProperty('IsPlayable', 'true')
-			xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=sys.argv[0]+'?number='+idd+'&mode=play_CODE', listitem=listitem)
-	with open(filename, 'w') as input:
-		input.write(workList)
+			playInfos = '###START###{0}?IDENTiTY={1}&mode=playCODE###{2}###{3}###END###'.format(sys.argv[0], episID, title2, image)
+			listitem.addContextMenuItems([(translation(30654), 'RunPlugin('+sys.argv[0]+'?mode=addQueue&url='+quote_plus(playInfos)+')')])
+			xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=sys.argv[0]+'?IDENTiTY='+episID+'&mode=playCODE', listitem=listitem)
+		with open(WORKFILE, 'w') as input:
+			input.write('\n'.join(uno_LIST))
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def getToken():
 	debug_MS("(getToken) -------------------------------------------------- START = getToken --------------------------------------------------")
-	nomURL = "https://www.tvnow.de/"
+	nomURL = 'https://www.tvnow.de/'
 	rq1 =  getUrl(nomURL)
 	try: DOC = re.findall(r'<script src="(main\-[A-z0-9]+\.[A-z0-9]+\.js)"', rq1, re.S)[-1]
 	except:
@@ -564,7 +556,7 @@ def LOGIN():
 
 def listStations():
 	debug_MS("(listStations) -------------------------------------------------- START = listStations --------------------------------------------------")
-	content = makeREQUEST("https://api.tvnow.de/v3/settings")
+	content = makeREQUEST('https://api.tvnow.de/v3/settings')
 	settings = json.loads(content, object_pairs_hook=OrderedDict)
 	aliases = settings['settings']['nowtv']['local']['stations']['aliases']
 	for name, value in aliases.items():
@@ -575,43 +567,43 @@ def listStations():
 def listThemes(url):
 	debug_MS("(listThemes) -------------------------------------------------- START = listThemes --------------------------------------------------")
 	#https://api.tvnow.de/v3/channels/station/rtl?fields=*&filter=%7B%22Active%22:true%7D&maxPerPage=500&page=1
-	newURL = "https://api.tvnow.de/v3/channels/station/"+url+"?fields=*&filter=%7B%22Active%22:true%7D&maxPerPage=500"
+	newURL = 'https://api.tvnow.de/v3/channels/station/'+url+'?fields=*&filter=%7B%22Active%22:true%7D&maxPerPage=500'
 	content = makeREQUEST(newURL)
 	DATA = json.loads(content, object_pairs_hook=OrderedDict)
 	for themeITEM in DATA['items']:
-		idd = str(themeITEM['id'])
+		themeID = str(themeITEM['id'])
 		name = py2_enc(themeITEM['title']).strip()
 		logo = 'https://aistvnow-a.akamaihd.net/tvnow/cms/'+themeITEM['portraitImage']+'/image.jpg'
-		debug_MS("(listThemes) ### IDD = {0} || NAME = {1} || PHOTO = {2} ###".format(idd, name, logo))
-		addDir(name, idd, 'subThemes', logo)
+		debug_MS("(listThemes) ### IDD = {0} || NAME = {1} || PHOTO = {2} ###".format(themeID, name, logo))
+		addDir(name, themeID, 'subThemes', logo)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def listTopics():
 	debug_MS("(listTopics) -------------------------------------------------- START = listTopics --------------------------------------------------")
 	UN_Supported = ['2204', '2255', '7619', '10143', '10567', '11379'] # these lists are empty or not compatible
-	content = makeREQUEST("https://api.tvnow.de/v3/pages/nowtv/tvnow?fields=teaserSets.headline,teaserSets.id")
+	content = makeREQUEST('https://api.tvnow.de/v3/pages/nowtv/tvnow?fields=teaserSets.headline,teaserSets.id')
 	DATA = json.loads(content, object_pairs_hook=OrderedDict)
 	for topicITEM in DATA['teaserSets']['items']:
-		idd = str(topicITEM['id'])
+		topicID = str(topicITEM['id'])
 		name = py2_enc(topicITEM['headline']).strip()
-		debug_MS("(listTopics) ### IDD = {0} || NAME = {1} ###".format(idd, name))
-		if not any(x in idd for x in UN_Supported):
-			addDir(name , idd, 'subTopics', icon)
+		debug_MS("(listTopics) ### IDD = {0} || NAME = {1} ###".format(topicID, name))
+		if not any(x in topicID for x in UN_Supported):
+			addDir(name , topicID, 'subTopics', icon)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
-def subTopics(idd):
+def subTopics(Xidd):
 	debug_MS("(subTopics) -------------------------------------------------- START = subTopics --------------------------------------------------")
 	xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_LABEL)
 	UNIKAT = set()
-	content = makeREQUEST("https://api.tvnow.de/v3/teasersets/"+idd+"?fields=[%22teaserSetInformations%22,[%22format%22,[%22id%22,%22title%22,%22formatimageArtwork%22,%22defaultImage169Logo%22,%22defaultDvdImage%22,%22infoTextLong%22,%22infoText%22]]]")
+	content = makeREQUEST('https://api.tvnow.de/v3/teasersets/'+Xidd+'?fields=[%22teaserSetInformations%22,[%22format%22,[%22id%22,%22title%22,%22formatimageArtwork%22,%22defaultImage169Logo%22,%22defaultDvdImage%22,%22infoTextLong%22,%22infoText%22]]]')
 	DATA = json.loads(content, object_pairs_hook=OrderedDict)
 	for subITEM in DATA['teaserSetInformations']['items']:
 		if subITEM['format'] != None:
 			debug_MS("(subTopics) ##### subITEM : {0} #####".format(str(subITEM)))
-			newIDD = str(subITEM['format']['id'])
-			if newIDD in UNIKAT:
+			subID = str(subITEM['format']['id'])
+			if subID in UNIKAT:
 				continue
-			UNIKAT.add(newIDD)
+			UNIKAT.add(subID)
 			name = py2_enc(subITEM['format']['title']).strip()
 			logo = ""
 			if 'defaultDvdImage' in subITEM['format'] and subITEM['format']['defaultDvdImage'] != "" and subITEM['format']['defaultDvdImage'] != None:
@@ -625,42 +617,55 @@ def subTopics(idd):
 				plot = py2_enc(subITEM['format']['infoTextLong']).strip()
 			if plot == "" and 'infoText' in subITEM['format'] and subITEM['format']['infoText'] != "" and subITEM['format']['infoText'] != None:
 				plot = py2_enc(subITEM['format']['infoText']).strip()
-			debug_MS("(subTopics) ### newIDD = {0} || NAME = {1} || PHOTO = {2} ###".format(newIDD, name, logo))
-			addDir(name, newIDD, 'listSeasons', logo, plot, origSERIE=name)
+			debug_MS("(subTopics) ### subID = {0} || NAME = {1} || PHOTO = {2} ###".format(subID, name, logo))
+			addDir(name, subID, 'listSeasons', logo, plot, origSERIE=name)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def listGenres():
 	debug_MS("(listGenres) -------------------------------------------------- START = listGenres --------------------------------------------------")
 	xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_LABEL)
-	content = makeREQUEST("https://cdn.static-fra.de/tvnow/app/e81664b7.main.js")
+	content = makeREQUEST('https://cdn.static-fra.de/tvnow/app/e81664b7.main.js')
 	liste = re.compile('return\[([^\]]+?)\]\}return', re.DOTALL).findall(content)[0]
 	elements = liste.replace('"', '').split(',')
 	for genreITEM in elements:
-		newURL = "https://api.tvnow.de/v3/formats/genre/"+quote_plus(genreITEM.lower())+"?fields=*&filter=%7B%22station%22:%22none%22%7D&maxPerPage=500&order=NameLong+asc"
+		newURL = 'https://api.tvnow.de/v3/formats/genre/'+quote_plus(genreITEM.lower())+'?fields=*&filter=%7B%22station%22:%22none%22%7D&maxPerPage=500&order=NameLong+asc'
 		debug_MS("(listGenres) ### genreITEM = {0} || newURL = {1} ###".format(str(genreITEM), str(newURL)))
 		addDir(genreITEM, newURL, 'is_Serie', icon)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
-def Searching():
-	debug_MS("(Searching) -------------------------------------------------- START = Searching --------------------------------------------------")
+def getSearch(url, limit, default="", heading='Suche nach...', hidden=False):
+	debug_MS("(getSearch) ### LIMIT : {0} ###".format(str(limit)))
+	limit = int(limit)
+	if limit == 1:
+		keyboard = xbmc.Keyboard(default, heading, hidden)
+		keyboard.doModal()
+		if keyboard.isConfirmed() and keyboard.getText():
+			limit += 1
+			word = py2_enc(keyboard.getText())
+			return listSearch(word, limit)
+		else: return default
+	return default
+
+def listSearch(word, limit):
+	debug_MS("(listSearch) -------------------------------------------------- START = Searching --------------------------------------------------")
+	debug_MS("(listSearch) ### WORD : {0} ### LIMIT : {1} ###".format(word, str(limit)))
 	xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_LABEL)
-	word = xbmcgui.Dialog().input('Suche', type=xbmcgui.INPUT_ALPHANUM)
-	if word == "": return
-	url = "https://api.tvnow.de/v3/formats?fields=id,title,station,hasFreeEpisodes,seoUrl,formatimageArtwork,formatimageMoviecover169,genre1,categoryId,searchAliasName,metaTags,infoText,infoTextLong&maxPerPage=500"
-	#url="https://api.tvnow.de/v3/formats?fields=*,id,title,station,metaTags,searchAliasName,seoUrl,defaultDvdImage,formatimageArtwork,infoText,infoTextLong&maxPerPage=5000"
+	url = 'https://api.tvnow.de/v3/formats?fields=id,title,station,hasFreeEpisodes,seoUrl,formatimageArtwork,formatimageMoviecover169,genre1,categoryId,searchAliasName,metaTags,infoText,infoTextLong&maxPerPage=500'
+	#url = 'https://api.tvnow.de/v3/formats?fields=*,id,title,station,metaTags,searchAliasName,seoUrl,defaultDvdImage,formatimageArtwork,infoText,infoTextLong&maxPerPage=5000'
+	limit = int(limit)
 	pageNUMBER = 1
 	position = 1
 	total = 1
-	while (total > 0):  
+	while (total > 0) and limit < 3:
 		newURL = url+'&page='+str(pageNUMBER)
-		debug_MS("(Searching) ### newURL : {0} ###".format(newURL))
+		debug_MS("(listSearch) ### newURL : {0} ###".format(newURL))
 		content = makeREQUEST(newURL)
 		DATA = json.loads(content, object_pairs_hook=OrderedDict)
 		for foundITEM in DATA['items']:
 			COMBIstring = py2_enc(foundITEM['metaTags'].lower().replace('video,', '').replace('videos,', '').replace('online sehen,', '').replace('internet tv,', '').replace('fernsehen,', '').replace('video on demand,', '').replace('tv now,', ''))
 			COMBIstring += py2_enc(foundITEM['searchAliasName'].lower().replace(';', ','))
 			COMBIstring += py2_enc(foundITEM['title'].lower())
-			idd = str(foundITEM['id'])
+			searchID = str(foundITEM['id'])
 			title = py2_enc(foundITEM['title']).strip()
 			station = foundITEM['station'].upper()
 			seoUrl = foundITEM['seoUrl']
@@ -669,7 +674,7 @@ def Searching():
 				logo = cleanPhoto(foundITEM['formatimageArtwork'])
 			if logo == "" and 'formatimageMoviecover169' in foundITEM and foundITEM['formatimageMoviecover169'] != "" and foundITEM['formatimageMoviecover169'] != None:
 				logo = cleanPhoto(foundITEM['formatimageMoviecover169'])
-			if logo == "": logo = 'https://aistvnow-a.akamaihd.net/tvnow/format/'+idd+'_02logo/image.jpg'
+			if logo == "": logo = 'https://aistvnow-a.akamaihd.net/tvnow/format/'+searchID+'_02logo/image.jpg'
 			genre = py2_enc(foundITEM['genre1']).strip()
 			category = foundITEM['categoryId']
 			plot = ""
@@ -685,18 +690,18 @@ def Searching():
 					for line in lines:
 						if line.startswith('###START'):
 							part = line.split('###')
-							if idd == part[2]: addType=2
+							if searchID == part[2]: addType=2
 			if category == 'film':
 				addType=3
 				if markMOVIES: name = '[I]'+name+'[/I]'
 			if word.lower() in str(COMBIstring):
-				debug_MS("(Searching) ### Found in SEARCH = TITLE : {0} ###".format(title))
-				debug_MS("(Searching) ### Found in SEARCH = STRING : {0} ###".format(str(COMBIstring)))
-				addDir(title, idd, 'listSeasons', logo, plot, origSERIE=title, genre=genre, studio=station, addType=addType)
+				debug_MS("(listSearch) ### Found in SEARCH = TITLE : {0} ###".format(title))
+				debug_MS("(listSearch) ### Found in SEARCH = STRING : {0} ###".format(str(COMBIstring)))
+				addDir(title, searchID, 'listSeasons', logo, plot, origSERIE=title, genre=genre, studio=station, addType=addType)
 			position += 1
-		debug_MS("(Searching) Anzahl-in-Liste : {0}".format(str(int(position)-1)))
+		debug_MS("(listSearch) Anzahl-in-Liste : {0}".format(str(int(position)-1)))
 		try:
-			debug_MS("(Searching) Anzahl-auf-Webseite : {0}".format(str(DATA['total'])))
+			debug_MS("(listSearch) Anzahl-auf-Webseite : {0}".format(str(DATA['total'])))
 			total = DATA['total'] - position
 		except: total = 0
 		pageNUMBER += 1
@@ -708,13 +713,13 @@ def liveTV():
 	if freeonly=='true' and STATUS < 3:
 		failing("(liveTV) ##### Sie haben KEINE Berechtigung : Für LIVE-TV ist ein Premium-Account Voraussetzung !!! #####")
 		return xbmcgui.Dialog().notification('KEINE Berechtigung', translation(30532), icon, 8000)
-	content = getUrl("https://api.tvnow.de/v3/epgs/movies/nownext?fields=*,nowNextEpgTeasers.*,nowNextEpgMovies.*") 
+	content = getUrl('https://api.tvnow.de/v3/epgs/movies/nownext?fields=*,nowNextEpgTeasers.*,nowNextEpgMovies.*') 
 	DATA = json.loads(content, object_pairs_hook=OrderedDict)
 	for channelITEM in DATA['items']:
 		debug_MS("(liveTV) ##### channelITEM : {0} #####".format(str(channelITEM)))
 		short = channelITEM['nowNextEpgMovies']['items'][0]
 		station = py2_enc(channelITEM['name']).upper()
-		idd = str(short['id'])
+		liveID = str(short['id'])
 		title = py2_enc(short['title']).strip()
 		subTitle = py2_enc(short['subTitle']).strip()
 		if subTitle != "": title = '{0} - {1}'.format(title, subTitle)
@@ -724,7 +729,7 @@ def liveTV():
 		END = endDT.strftime(' {0} %H{1}%M{2}').format('-', ':', ')')
 		normSD = short['manifest']['dash']
 		highHD = short['manifest']['dashhd']
-		image = 'https://aistvnow-a.akamaihd.net/tvnow/epg/'+idd+'/960x0/image.jpg'
+		image = 'https://aistvnow-a.akamaihd.net/tvnow/epg/'+liveID+'/960x0/image.jpg'
 		plot = '[COLOR orangered]bis '+END.replace('-', '').replace(')', '').strip()+' Uhr[/COLOR]'
 		if 'total' in channelITEM['nowNextEpgMovies'] and str(channelITEM['nowNextEpgMovies']['total']) == '2':
 			shorten = channelITEM['nowNextEpgMovies']['items'][1]
@@ -743,7 +748,7 @@ def liveTV():
 		listitem = xbmcgui.ListItem(name, path=vidURL)
 		listitem.setInfo(type='Video', infoLabels={'Title': name, 'Plot': plot, 'Studio': station})
 		listitem.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': image})
-		xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=sys.argv[0]+"?mode=playChannel&url="+quote_plus(vidURL)+"&name="+str(name)+'&image='+str(image), listitem=listitem)
+		xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=sys.argv[0]+'?mode=playChannel&url='+quote_plus(vidURL)+'&name='+str(name)+'&image='+str(image), listitem=listitem)
 	xbmcplugin.endOfDirectory(pluginhandle, succeeded=True, updateListing=True, cacheToDisc=False)
 
 def playChannel(url, Xtitle, Xbild):
@@ -764,12 +769,12 @@ def playChannel(url, Xtitle, Xbild):
 	debug_MS("(playChannel) LICENSE : {0}".format(str(licstring)))
 	xbmc.Player().play(item=url, listitem=listitem)
 
-def play_CODE(IDD):
-	debug_MS("(play_CODE) -------------------------------------------------- START = play_CODE --------------------------------------------------")
-	with open(filename, 'r') as output:
-		sequence = output.read().split('\n')
-		for seq in sequence:
-			field = seq.split('@@')
+def playCODE(IDD):
+	debug_MS("(playCODE) -------------------------------------------------- START = playCODE --------------------------------------------------")
+	with open(WORKFILE, 'r') as output:
+		lines = output.readlines()
+		for line in lines:
+			field = line.split('@@')
 			if field[0]==IDD:
 				finalURL = field[1]
 				seriesname = field[2]
@@ -785,72 +790,76 @@ def play_CODE(IDD):
 				pay = field[12]
 	if IDD != '0' and finalURL != '0':
 		debug_MS("--------------------------------------------------------------------------- Gefunden ---------------------------------------------------------------------------------")
-		debug_MS("(play_CODE) ### STREAM : {0} ###".format(finalURL))
-		debug_MS("(play_CODE) ### TOKEN : {0} ###".format(token))
-		debug_MS("(play_CODE) ### DRM : {0} ###".format(DRM))
-		debug_MS("(play_CODE) ### PAY : {0} ###".format(pay))
+		debug_MS("(playCODE) ### STREAM : {0} ###".format(finalURL))
+		debug_MS("(playCODE) ### TOKEN : {0} ###".format(token))
+		debug_MS("(playCODE) ### DRM : {0} ###".format(DRM))
+		debug_MS("(playCODE) ### PAY : {0} ###".format(pay))
 		userAgent = 'User-Agent=Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0'
 		if deeplink != "": userAgent = userAgent+'&Referer='+deeplink
 		listitem = xbmcgui.ListItem(path=finalURL+'|'+userAgent)
-		log("(play_CODE) finalURL : {0}".format(str(finalURL+'|'+userAgent)))
+		log("(playCODE) finalURL : {0}".format(str(finalURL+'|'+userAgent)))
 		listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
 		listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
 		#listitem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
 		if KODI_18 and DRM == 'True':
 			if token == '0':
-				failing("(play_CODE) ##### persToken : Der erforderliche Token wurde NICHT gefunden !!! #####")
+				failing("(playCODE) ##### persToken : Der erforderliche Token wurde NICHT gefunden !!! #####")
 				xbmcgui.Dialog().notification('ERROR - Token_02 - ERROR', translation(30528), icon, 12000)
 			else:
 				licstring = 'https://widevine.tvnow.de/index/proxy|'+userAgent+'&x-auth-token='+token+'&content-type=text/html|R{SSM}|'
 				listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
 				listitem.setProperty('inputstream.adaptive.license_key', licstring)
-				debug_MS("(play_CODE) LICENSE : {0}".format(str(licstring)))
+				debug_MS("(playCODE) LICENSE : {0}".format(str(licstring)))
 		elif not KODI_18 and DRM == 'True':
-			failing("(play_CODE) ##### ACHTUNG : ... Für diese Sendung ist mindestens *KODI 18* erforderlich !!!\nBitte die vorhandene KODI-Installation mindestens auf KODI-Version 18 updaten !!! #####")
+			failing("(playCODE) ##### ACHTUNG : ... Für diese Sendung ist mindestens *KODI 18* erforderlich !!!\nBitte die vorhandene KODI-Installation mindestens auf KODI-Version 18 updaten !!! #####")
 			return xbmcgui.Dialog().ok(addon.getAddonInfo('id'), translation(30504))
 		xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 	else:
 		if DRM == 'True' and not KODI_18 and token == '0':
-			failing("(play_CODE) KEIN Token ##### ACHTUNG : ... Für diese Sendung ist mindestens *KODI 18* erforderlich !!!\nBitte die vorhandene KODI-Installation mindestens auf KODI-Version 18 updaten !!! #####")
+			failing("(playCODE) KEIN Token ##### ACHTUNG : ... Für diese Sendung ist mindestens *KODI 18* erforderlich !!!\nBitte die vorhandene KODI-Installation mindestens auf KODI-Version 18 updaten !!! #####")
 			return xbmcgui.Dialog().ok(addon.getAddonInfo('id'), translation(30504))
 		elif pay == 'False' and token.startswith('C3'):
-			failing("(play_CODE) ##### Sie haben KEINE Berechtigung : Für dieses Video ist ein Premium-Account Voraussetzung !!! #####")
+			failing("(playCODE) ##### Sie haben KEINE Berechtigung : Für dieses Video ist ein Premium-Account Voraussetzung !!! #####")
 			return xbmcgui.Dialog().notification('KEINE Berechtigung', translation(30530), icon, 8000)
 		else:
-			failing("(play_CODE) ##### Die angeforderte Video-Url wurde leider NICHT gefunden !!! #####")
+			failing("(playCODE) ##### Die angeforderte Video-Url wurde leider NICHT gefunden !!! #####")
 			return xbmcgui.Dialog().notification('KEIN Video gefunden', translation(30531), icon, 8000)
 
-def playDash(xnormSD, xhighHD, xlink, xdrm):
+def playDash(*args):
 	debug_MS("(playDash) -------------------------------------------------- START = playDash --------------------------------------------------")
 	STATUS,TOKEN = LOGIN()
 	streamURL = False
+	FOUND = 0
 	userAgent = 'User-Agent=Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0'
 	if xlink != "": userAgent = userAgent+'&Referer='+xlink
-	if (KODI_18 or KODI_17) and xnormSD != "" and xhighHD != "" and xdrm != "":
-		if (freeonly=="true" and TOKEN != '0' and xdrm == '1') or (freeonly=="true" and xdrm == '0') or (freeonly=="false" and STATUS == 3 and not selectionHD and TOKEN != '0'):
-			streamURL = xnormSD
-		elif freeonly=="false" and STATUS == 3 and selectionHD and TOKEN != '0':
-			streamURL = xhighHD
-		if KODI_17 and xdrm == '1':
+	if (KODI_18 or KODI_17) and xnormSD != "" and xhighHD != "" and xdrm != "" and xstat != "":
+		if not KODI_18 and xdrm == '1':
 			failing("(playDash) no.1 ##### ACHTUNG : ... Für diese Sendung ist mindestens *KODI 18* erforderlich !!!\nBitte die vorhandene KODI-Installation mindestens auf KODI-Version 18 updaten !!! #####")
 			return xbmcgui.Dialog().ok(addon.getAddonInfo('id'), translation(30504))
+		if (freeonly == 'false' and STATUS == 3 and selectionHD and TOKEN != '0'):
+			streamURL = xhighHD
+			FOUND = 1
+		elif (freeonly == 'false' and STATUS == 3 and not selectionHD and TOKEN != '0') or (freeonly == 'true' and TOKEN != '0' and xdrm == '1' and xstat == 'True') or (freeonly == 'true' and xdrm == '0' and xstat == 'True'):
+			streamURL = xnormSD
+			FOUND = 1
 		else:
-			if streamURL:
-				listitem = xbmcgui.ListItem(path=streamURL+'|'+userAgent)
-				log("(playDash) streamURL : {0}".format(str(streamURL+'|'+userAgent)))
-				listitem.setProperty('IsPlayable', 'true')
-				listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
-				listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
-				#listitem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
-				if KODI_18 and xdrm == "1":
-					licstring = 'https://widevine.tvnow.de/index/proxy|'+userAgent+'&x-auth-token='+TOKEN+'&content-type=text/html|R{SSM}|'
-					listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
-					listitem.setProperty('inputstream.adaptive.license_key', licstring)
-					debug_MS("(playDash) LICENSE : {0}".format(str(licstring)))
-				xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
+			failing("(playDash) ##### Sie haben KEINE Berechtigung : Für dieses Video ist ein Premium-Account Voraussetzung !!! #####")
+			return xbmcgui.Dialog().ok(addon.getAddonInfo('id'), translation(30505))
 	elif not KODI_18 and not KODI_17:
 		failing("(playDash) no.2 ##### ACHTUNG : ... Für diese Sendung ist mindestens *KODI 18* erforderlich !!!\nBitte die vorhandene KODI-Installation mindestens auf KODI-Version 18 updaten !!! #####")
 		return xbmcgui.Dialog().ok(addon.getAddonInfo('id'), translation(30504))
+	if FOUND == 1 and streamURL:
+		listitem = xbmcgui.ListItem(path=streamURL+'|'+userAgent)
+		log("(playDash) streamURL : {0}".format(str(streamURL+'|'+userAgent)))
+		listitem.setProperty('IsPlayable', 'true')
+		listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
+		listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
+		if KODI_18 and xdrm == '1':
+			licstring = 'https://widevine.tvnow.de/index/proxy|'+userAgent+'&x-auth-token='+TOKEN+'&content-type=text/html|R{SSM}|'
+			listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
+			listitem.setProperty('inputstream.adaptive.license_key', licstring)
+			debug_MS("(playDash) LICENSE : {0}".format(str(licstring)))
+		xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 	else:
 		failing("(playDash) ##### Der übertragene *Dash-Abspiel-Link* ist leider FEHLERHAFT !!! #####")
 		return xbmcgui.Dialog().notification(translation(30521).format('DASH - URL'), translation(30529), icon, 8000)
@@ -870,20 +879,20 @@ def listShowsFavs():
 
 def favs(param):
 	mode = param[param.find('MODE=')+5:+8]
-	SERIES_entry = param[param.find('###START'):]
-	SERIES_entry = SERIES_entry[:SERIES_entry.find('END###')]
-	url = SERIES_entry.split('###')[2]
-	name = SERIES_entry.split('###')[3]
+	TVSe = param[param.find('###START'):]
+	TVSe = TVSe[:TVSe.find('END###')]
+	url = TVSe.split('###')[2]
+	name = TVSe.split('###')[3]
 	if mode == 'ADD':
 		if os.path.exists(channelFavsFile):
 			with open(channelFavsFile, 'a+') as textobj:
 				content = textobj.read()
-				if content.find(SERIES_entry) == -1:
+				if content.find(TVSe) == -1:
 					textobj.seek(0,2) # change is here (for Windows-Error = "IOError: [Errno 0] Error") - because Windows don't like switching between reading and writing at same time !!!
-					textobj.write(SERIES_entry+'END###\n')
+					textobj.write(TVSe+'END###\n')
 		else:
 			with open(channelFavsFile, 'a') as textobj:
-				textobj.write(SERIES_entry+'END###\n')
+				textobj.write(TVSe+'END###\n')
 		xbmc.sleep(500)
 		xbmcgui.Dialog().notification(translation(30533), translation(30534).format(name), icon, 8000)
 	elif mode == 'DEL':
@@ -897,39 +906,68 @@ def favs(param):
 		xbmc.sleep(1000)
 		xbmcgui.Dialog().notification(translation(30533), translation(30535).format(name), icon, 8000)
 
-def tolibrary(param):
+def tolibrary(vid):
 	debug_MS("(tolibrary) -------------------------------------------------- START = tolibrary --------------------------------------------------")
 	if mediaPath =="":
-		xbmcgui.Dialog().ok(addon.getAddonInfo('id'), translation(30506))
+		xbmcgui.Dialog().ok(addon.getAddonInfo('id'), translation(30507))
 	elif mediaPath !="" and ADDON_operate('service.cron.autobiblio'):
-		LIB_entry = param[param.find('###START'):]
-		LIB_entry = LIB_entry[:LIB_entry.find('END###')]
-		url = LIB_entry.split('###')[2]
-		name = LIB_entry.split('###')[3]
-		stunden = LIB_entry.split('###')[4]
-		newURL = 'plugin://{0}/?mode=generatefiles&url={1}&name={2}'.format(addon.getAddonInfo('id'), url, name.replace('&', '%26'))
+		LIBe = vid[vid.find('###START'):]
+		LIBe = LIBe[:LIBe.find('END###')]
+		url = LIBe.split('###')[2]
+		name = LIBe.split('###')[3]
+		stunden = LIBe.split('###')[4]
+		title = name
+		if '@@' in url:
+			title += '  ('+url.split('@@')[1]+')'
+			addYear = url.split('@@')[1]
+			newSOURCE = quote_plus(mediaPath+fixPathSymbols(name)+os.sep+addYear)
+		else:
+			title += '  (Serie)'
+			newSOURCE = quote_plus(mediaPath+fixPathSymbols(name))
+		newURL = '{0}?mode=generatefiles&url={1}&name={2}'.format(sys.argv[0], url, quote_plus(name))
 		newURL = quote_plus(newURL)
-		source = quote_plus(mediaPath+fixPathSymbols(name))
+		newNAME = quote_plus(name)
+		debug_MS("(tolibrary) ### newNAME : {0} ###".format(str(newNAME)))
 		debug_MS("(tolibrary) ### newURL : {0} ###".format(str(newURL)))
-		debug_MS("(tolibrary) ### SOURCE : {0} ###".format(str(source)))
-		xbmc.executebuiltin('RunPlugin(plugin://service.cron.autobiblio/?mode=adddata&name={0}&stunden={1}&url={2}&source={3})'.format(name.replace('&', '%26'), stunden, newURL, source))
-		xbmcgui.Dialog().notification(translation(30536), translation(30537).format(name,str(stunden)), icon, 12000)
+		debug_MS("(tolibrary) ### newSOURCE : {0} ###".format(str(newSOURCE)))
+		xbmc.executebuiltin('RunPlugin(plugin://service.cron.autobiblio/?mode=adddata&name={0}&stunden={1}&url={2}&source={3})'.format(newNAME, stunden, newURL, newSOURCE))
+		xbmcgui.Dialog().notification(translation(30536), translation(30537).format(title, str(stunden)), icon, 15000)
 
-def generatefiles(idd, show):
+def generatefiles(*args):
+	from threading import Thread
 	debug_MS("(generatefiles) -------------------------------------------------- START = generatefiles --------------------------------------------------")
+	threads = []
+	th = Thread(target=LIBRARY_Worker, args=(args))
+	if hasattr(th, 'daemon'): th.daemon = True
+	else: th.setDaemon()
+	threads.append(th)
+	for th in threads: th.start()
+
+def LIBRARY_Worker(BroadCast_Idd, BroadCast_Name):
+	debug_MS("(LIBRARY_Worker) ### BroadCast_Idd = {0} ### BroadCast_Name = {1} ###".format(BroadCast_Idd, BroadCast_Name))
 	if not enableLibrary or mediaPath =="":
 		return
 	STATUS,TOKEN = LOGIN()
 	COMBINATION = []
 	pos = 0
-	url_1 = "http://api.tvnow.de/v3/formats/"+str(idd)+"?fields="+quote_plus("*,.*,formatTabs.*,formatTabs.headline,annualNavigation.*")
-	debug_MS("(generatefiles) ##### URL-01 : {0} #####".format(str(url_1)))
-	ppath = py2_uni(mediaPath)+py2_uni(fixPathSymbols(show))
-	debug_MS("(generatefiles) ### PPATH = {0} ###".format(str(ppath)))
-	if os.path.isdir(ppath):
-		shutil.rmtree(ppath, ignore_errors=True)
+	elem_IDD = BroadCast_Idd
+	if '@@' in BroadCast_Idd: elem_IDD = BroadCast_Idd.split('@@')[0]
+	url_1 = 'http://api.tvnow.de/v3/formats/'+str(elem_IDD)+'?fields='+quote_plus('*,.*,formatTabs.*,formatTabs.headline,annualNavigation.*')
+	debug_MS("(LIBRARY_Worker) ##### URL-01 : {0} #####".format(str(url_1)))
+	TVS_Path = os.path.join(py2_uni(mediaPath), py2_uni(fixPathSymbols(BroadCast_Name)))
+	if '@@' in BroadCast_Idd: 
+		yearPath = BroadCast_Idd.split('@@')[1]
+		EP_Path = os.path.join(py2_uni(mediaPath), py2_uni(fixPathSymbols(BroadCast_Name)), str(yearPath))
+	else:
+		EP_Path = os.path.join(py2_uni(mediaPath), py2_uni(fixPathSymbols(BroadCast_Name)))
+	debug_MS("(LIBRARY_Worker) ### EP_Path = {0} ###".format(str(EP_Path)))
+	if os.path.isdir(EP_Path):
+		shutil.rmtree(EP_Path, ignore_errors=True)
 		xbmc.sleep(500)
-	os.mkdir(ppath)
+	if xbmcvfs.exists(os.path.join(TVS_Path, 'tvshow.nfo')):
+		xbmcvfs.delete(os.path.join(TVS_Path, 'tvshow.nfo'))
+		xbmc.sleep(500)
+	os.makedirs(EP_Path)
 	try:
 		content_1 = getUrl(url_1)
 		FIRST = json.loads(content_1, object_pairs_hook=OrderedDict)
@@ -956,11 +994,15 @@ def generatefiles(idd, show):
 	pageNUMBER = 1
 	position = 1
 	total = 1
-	url_2 = "https://api.tvnow.de/v3/movies?fields=*,format,paymentPaytypes,pictures,trailers&filter={%20%22FormatId%22%20:%20"+SERIES_IDD+"}&maxPerPage=200"
-	debug_MS("(generatefiles) ##### URL-02 : {0} #####".format(str(url_2)))
+	if '@@' in BroadCast_Idd:
+		elem_YEAR = BroadCast_Idd.split('@@')[1]
+		url_2 = 'https://api.tvnow.de/v3/movies?fields=*,format,paymentPaytypes,pictures,trailers&filter={%22BroadcastStartDate%22:{%22between%22:{%22start%22:%22'+elem_YEAR+'-01-01%2000:00:00%22,%22end%22:%20%22'+elem_YEAR+'-12-31%2023:59:59%22}},%20%22FormatId%22%20:%20'+SERIES_IDD+'}&maxPerPage=200'
+	else:
+		url_2 = 'https://api.tvnow.de/v3/movies?fields=*,format,paymentPaytypes,pictures,trailers&filter={%20%22FormatId%22%20:%20'+SERIES_IDD+'}&maxPerPage=200'
+	debug_MS("(LIBRARY_Worker) ##### URL-02 : {0} #####".format(str(url_2)))
 	while (total > 0):  
 		newURL = url_2+'&page='+str(pageNUMBER)
-		debug_MS("(generatefiles) ### newURL : {0} ###".format(newURL))
+		debug_MS("(LIBRARY_Worker) ### newURL : {0} ###".format(newURL))
 		content = getUrl(newURL)
 		DATA = json.loads(content, object_pairs_hook=OrderedDict)
 		if 'formatTabPages' in DATA and 'items' in str(DATA['formatTabPages']):
@@ -970,7 +1012,7 @@ def generatefiles(idd, show):
 			items = DATA['movies']['items']
 		else: items = DATA['items']
 		for vid in items:
-			debug_MS("(generatefiles) ##### VIDEO-Item : {0} #####".format(str(vid)))
+			debug_MS("(LIBRARY_Worker) ##### VIDEO-Item : {0} #####".format(str(vid)))
 			try: debug_MS(str(vid['isDrm']))
 			except: continue
 			TVS_title = ""
@@ -991,7 +1033,7 @@ def generatefiles(idd, show):
 			else: continue
 			EP_title1 = py2_enc(vid['title']).strip()
 			pos += 1
-			EP_season = "00"
+			EP_season = '00'
 			if 'season' in vid and vid['season'] != "" and str(vid['season']) != "0" and vid['season'] != None:
 				EP_season = str(vid['season']).zfill(2)
 			EP_episode = ""
@@ -1017,10 +1059,10 @@ def generatefiles(idd, show):
 			if EP_season != '00' and EP_episode != "": Note_3 = translation(30628).format(EP_season, EP_episode)
 			if spezTIMES: Note_4 = translation(30629).format(str(spezTIMES))
 			EP_fsk = ""
-			if 'fsk' in vid and vid['fsk'] != "" and str(vid['fsk']) != "0" and vid['fsk'] != None:
+			if 'fsk' in vid and vid['fsk'] != "" and str(vid['fsk']) != '0' and vid['fsk'] != None:
 				EP_fsk = translation(30630).format(str(vid['fsk']))
 			EP_yeardate = ""
-			if 'productionYear' in vid and vid['productionYear'] != "" and str(vid['productionYear']) != "0" and vid['productionYear'] != None:
+			if 'productionYear' in vid and vid['productionYear'] != "" and str(vid['productionYear']) != '0' and vid['productionYear'] != None:
 				EP_yeardate = vid['productionYear']
 			if showDATE and normTIMES:
 				Note_5 = translation(30631).format(str(normTIMES))
@@ -1064,24 +1106,24 @@ def generatefiles(idd, show):
 			EP_title_long = EP_title1+Note_5+Note_6
 			try: EP_airdate = vid['broadcastStartDate'][:10]
 			except: EP_airdate = vid['broadcastPreviewStartDate'][:10]
-			if EP_season != "00" and EP_episode != "":
+			if EP_season != '00' and EP_episode != "":
 				EP_title = 'S'+EP_season+'E'+EP_episode+'_'+EP_title1
 			else:
 				EP_episode = str(pos).zfill(2)
 				EP_title = 'S00E'+EP_episode+'_'+EP_title1
-			EP_nosub = '&xnormSD='+str(videoFREE)+'&xhighHD='+str(videoHD)+'&xlink='+str(EP_deeplink)+'&xdrm='+EP_protected
+			EP_nosub = '&xnormSD='+str(videoFREE)+'&xhighHD='+str(videoHD)+'&xlink='+str(EP_deeplink)+'&xdrm='+EP_protected+'&xstat='+str(PayType)
 			episodeFILE = py2_uni(fixPathSymbols(EP_title))
 			COMBINATION.append([episodeFILE, EP_title_long, TVS_title, EP_idd, EP_season, EP_episode, EP_plot, EP_tagline, EP_duration, EP_image, EP_fsk, EP_genre1, EP_genre2, EP_genre3, EP_yeardate, EP_airdate, EP_studio, EP_nosub])
 			position += 1
-		debug_MS("(generatefiles) Anzahl-in-Liste : {0}".format(str(int(position)-1)))
+		debug_MS("(LIBRARY_Worker) Anzahl-in-Liste : {0}".format(str(int(position)-1)))
 		try:
-			debug_MS("(generatefiles) Anzahl-auf-Webseite : {0}".format(str(DATA['total'])))
+			debug_MS("(LIBRARY_Worker) Anzahl-auf-Webseite : {0}".format(str(DATA['total'])))
 			total = DATA['total'] - position
 		except: total = 0
 		pageNUMBER += 1
 	for episodeFILE, EP_title_long, TVS_title, EP_idd, EP_season, EP_episode, EP_plot, EP_tagline, EP_duration, EP_image, EP_fsk, EP_genre1, EP_genre2, EP_genre3, EP_yeardate, EP_airdate, EP_studio, EP_nosub in COMBINATION:
-		nfo_EPISODE_string = os.path.join(ppath, episodeFILE+".nfo")
-		with open(nfo_EPISODE_string, 'a') as textobj:
+		nfo_EPISODE_string = os.path.join(EP_Path, episodeFILE+'.nfo')
+		with open(nfo_EPISODE_string, 'w') as textobj:
 			textobj.write(
 '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <episodedetails>
@@ -1101,13 +1143,13 @@ def generatefiles(idd, show):
     <aired>{13}</aired>
     <studio clear="true">{14}</studio>
 </episodedetails>'''.format(EP_title_long, TVS_title, EP_season, EP_episode, EP_plot, EP_tagline, EP_duration, EP_image, EP_fsk, EP_genre1, EP_genre2, EP_genre3, EP_yeardate, EP_airdate, EP_studio))
-		streamfile = os.path.join(ppath, episodeFILE+".strm")
-		debug_MS("(generatefiles) ##### streamFILE : {0} #####".format(streamfile))
+		streamfile = os.path.join(EP_Path, episodeFILE+'.strm')
+		debug_MS("(LIBRARY_Worker) ##### streamFILE : {0} #####".format(py2_enc(streamfile)))
 		file = xbmcvfs.File(streamfile, 'w')
 		file.write('plugin://'+addon.getAddonInfo('id')+'/?mode=playDash'+EP_nosub)
 		file.close()
-	nfo_SERIE_string = os.path.join(ppath,"tvshow.nfo")
-	with open(nfo_SERIE_string, 'a') as textobj:
+	nfo_SERIE_string = os.path.join(TVS_Path, 'tvshow.nfo')
+	with open(nfo_SERIE_string, 'w') as textobj:
 		textobj.write(
 '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <tvshow>
@@ -1127,7 +1169,7 @@ def generatefiles(idd, show):
     <aired>{7}</aired>
     <studio clear="true">{8}</studio>
 </tvshow>'''.format(TVS_name, TVS_plot, TVS_image, EP_genre1, EP_genre2, EP_genre3, EP_yeardate, TVS_airdate, TVS_studio))
-	xbmcplugin.endOfDirectory(pluginhandle) 
+	debug_MS("(LIBRARY_Worker) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  ENDE = LIBRARY_Worker  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
 
 def cleanPhoto(img): # UNICODE-Zeichen für Browser übersetzen - damit Fotos angezeigt werden
 	img = py2_enc(img)
@@ -1148,6 +1190,18 @@ def fixPathSymbols(structure): # Sonderzeichen für Pfadangaben entfernen
 		structure = structure[:structure.rfind('_')]
 	return structure
 
+def addQueue(vid):
+	PL = xbmc.PlayList(1)
+	STREAMe = vid[vid.find('###START'):]
+	STREAMe = STREAMe[:STREAMe.find('END###')]
+	url = STREAMe.split('###')[2]
+	name = STREAMe.split('###')[3]
+	image = STREAMe.split('###')[4]
+	listitem = xbmcgui.ListItem(name)
+	listitem.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
+	listitem.setProperty('IsPlayable', 'true')
+	PL.add(url, listitem)
+
 def parameters_string_to_dict(parameters):
 	paramDict = {}
 	if parameters:
@@ -1161,21 +1215,21 @@ def parameters_string_to_dict(parameters):
 def addDir(name, url, mode, image, plot=None, tagline=None, origSERIE="", genre=None, mpaa=None, year=None, studio=None, addType=0, FAVdel=False, nosub=None):
 	u = (sys.argv[0]+'?url='+quote_plus(url)+'&mode='+str(mode)+("" if image=="" or image==icon else '&image='+image)+("" if nosub is None else '&nosub='+str(nosub)))
 	liz = xbmcgui.ListItem(name)
-	liz.setInfo(type='Video', infoLabels={'Tvshowtitle': origSERIE, 'Title': name, 'Plot': plot, 'Tagline': tagline, 'Genre': genre, 'Mpaa': mpaa, 'Year': year, 'Studio': studio})
+	liz.setInfo(type='Video', infoLabels={'Tvshowtitle': origSERIE, 'Title': name, 'Plot': plot, 'Tagline': tagline, 'Genre': genre, 'Mpaa': mpaa, 'Year': year, 'Studio': studio, 'Mediatype': 'video'})
 	liz.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
 	if image != icon and not artpic in image:
 		liz.setArt({'fanart': image})
 	entries = []
 	if addType == 1 or addType == 2:
 		if addType == 1 and FAVdel == False:
-			playListInfos_1 = 'MODE=ADD###START###{0}###{1}###{2}###{3}###END###'.format(url, origSERIE, py2_enc(image), plot.replace('\n', '#n#'))
-			entries.append([translation(30651), 'RunPlugin('+sys.argv[0]+'?mode=favs&url='+quote_plus(playListInfos_1)+')'])
+			FAVInfos_1 = 'MODE=ADD###START###{0}###{1}###{2}###{3}###END###'.format(url, origSERIE, py2_enc(image), plot.replace('\n', '#n#'))
+			entries.append([translation(30651), 'RunPlugin('+sys.argv[0]+'?mode=favs&url='+quote_plus(FAVInfos_1)+')'])
 		if enableLibrary:
-			libListInfos = '###START###{0}###{1}###{2}###END###'.format(url, origSERIE, updatestd)
-			entries.append([translation(30653), 'RunPlugin('+sys.argv[0]+'?mode=tolibrary&url='+quote_plus(libListInfos)+')'])
+			LIBInfos = '###START###{0}###{1}###{2}###END###'.format(url, origSERIE, updatestd)
+			entries.append([translation(30653), 'RunPlugin('+sys.argv[0]+'?mode=tolibrary&url='+quote_plus(LIBInfos)+')'])
 	if FAVdel == True:
-		playListInfos_2 = 'MODE=DEL###START###{0}###{1}###{2}###{3}###END###'.format(url, name, image, plot)
-		entries.append([translation(30652), 'RunPlugin('+sys.argv[0]+'?mode=favs&url='+quote_plus(playListInfos_2)+')'])
+		FAVInfos_2 = 'MODE=DEL###START###{0}###{1}###{2}###{3}###END###'.format(url, name, image, plot)
+		entries.append([translation(30652), 'RunPlugin('+sys.argv[0]+'?mode=favs&url='+quote_plus(FAVInfos_2)+')'])
 	liz.addContextMenuItems(entries, replaceItems=False)
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
 
@@ -1184,7 +1238,7 @@ name = unquote_plus(params.get('name', ''))
 url = unquote_plus(params.get('url', ''))
 mode = unquote_plus(params.get('mode', ''))
 image = unquote_plus(params.get('image', ''))
-number = unquote_plus(params.get('number', ''))
+IDENTiTY = unquote_plus(params.get('IDENTiTY', ''))
 nosub = unquote_plus(params.get('nosub', ''))
 origSERIE = unquote_plus(params.get('origSERIE', ''))
 stunden = unquote_plus(params.get('stunden', ''))
@@ -1194,6 +1248,7 @@ xnormSD = unquote_plus(params.get('xnormSD', ''))
 xhighHD = unquote_plus(params.get('xhighHD', ''))
 xlink = unquote_plus(params.get('xlink', ''))
 xdrm = unquote_plus(params.get('xdrm', ''))
+xstat = unquote_plus(params.get('xstat', ''))
 
 if mode == 'aSettings':
 	addon.openSettings()
@@ -1227,16 +1282,18 @@ elif mode == 'subTopics':
 	subTopics(url)
 elif mode == 'listGenres':
 	listGenres()
-elif mode == 'Searching':
-	Searching()
+elif mode == 'getSearch':
+	getSearch(url, nosub)
+elif mode == 'listSearch':
+	listSearch(url, nosub)
 elif mode == 'liveTV':
 	liveTV()
 elif mode == 'playChannel':
 	playChannel(url, name, image)
-elif mode == 'play_CODE':
-	play_CODE(number)
+elif mode == 'playCODE':
+	playCODE(IDENTiTY)
 elif mode == 'playDash':
-	playDash(xnormSD, xhighHD, xlink, xdrm)
+	playDash(xnormSD, xhighHD, xlink, xdrm, xstat)
 elif mode == 'listShowsFavs':
 	listShowsFavs()
 elif mode == 'favs':
@@ -1245,5 +1302,7 @@ elif mode == 'tolibrary':
 	tolibrary(url)
 elif mode == 'generatefiles':
 	generatefiles(url, name)
+elif mode == 'addQueue':
+	addQueue(url)
 else:
 	index()

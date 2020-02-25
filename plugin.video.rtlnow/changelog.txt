@@ -21,3 +21,8 @@
 - added: Filme bzw. Specials zur besseren Unterscheidung besonders kennzeichen (settings)
 - changed: Addon-Abhängigkeit für zugehörigen Service (old=service.L0RE.cron -> new=service.cron.autobiblio)
 * Comment: Zuvor mit diesem Addon erstellte Einträge in der KODI-Bibliothek funktionieren NICHT mehr und müssen über die KODI-Sytemeinstellungen gelöscht werden !!! *
+
+[B]Version 2.0.6  (25.02.2020)[/B] by realvito
+- added: Es können jetzt auch einzelne Jahrgänge einer Serie zur KODI-Bibliothek hinzugefügt werden
+- fixed: Teilweise können Free-Videos aus der KODI-Bibliothek nicht abgespielt werden
+- optimized: Updatezyklus für Bibliothek jetzt unabhängig von Addonnutzung, da separater Hintergrund-Prozess

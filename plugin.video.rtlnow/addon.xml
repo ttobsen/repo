@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<addon id="plugin.video.rtlnow" name="TVNOW - DE" version="2.0.5" provider-name="L0RE, realvito">
+<addon id="plugin.video.rtlnow" name="TVNOW - DE" version="2.0.6" provider-name="L0RE, realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="script.common.plugin.cache" version="2.6.0" optional="true"/>
@@ -28,8 +28,12 @@
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 2.0.5  (03.02.2020)[/COLOR][/B] by realvito[CR]
-- added: Filme bzw. Specials zur besseren Unterscheidung besonders kennzeichen (settings)
+		<news>[B][COLOR orangered]Version 2.0.6  (25.02.2020)[/COLOR][/B] by realvito[CR]
+- added: Es können jetzt auch einzelne Jahrgänge einer Serie zur KODI-Bibliothek hinzugefügt werden
+- fixed: Teilweise können Free-Videos aus der KODI-Bibliothek nicht abgespielt werden
+- optimized: Updatezyklus für Bibliothek jetzt unabhängig von Addonnutzung, da separater Hintergrund-Prozess
+---------------------------------------------------------------------------------------------------------------------------------
+[B][COLOR orangered]Version 2.0.5  (03.02.2020)[/COLOR][/B] by realvito[CR]
 - changed: Addon-Abhängigkeit für zugehörigen Service (old=service.L0RE.cron -> new=service.cron.autobiblio)
 * Comment: Zuvor mit diesem Addon erstellte Einträge in der KODI-Bibliothek funktionieren NICHT mehr und müssen über die KODI-Sytemeinstellungen gelöscht werden !!! *
 		</news>

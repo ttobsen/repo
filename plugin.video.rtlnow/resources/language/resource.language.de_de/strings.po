@@ -200,14 +200,18 @@ msgid "[COLOR orangered]ATTENTION : ... This broadcast requires at least *KODI 1
 msgstr "[COLOR orangered]ACHTUNG : ... Für diese Sendung ist mindestens *KODI 18* erforderlich !!![/COLOR][CR]Bitte die vorhandene KODI-Installation mindestens auf KODI-Version 18 updaten !!!"
 
 msgctxt "#30505"
+msgid "[COLOR orangered]ATTENTION : ... This video is only playable with *premium-access* !!![/COLOR][CR]Please choose another video without premium labeling !!!"
+msgstr "[COLOR orangered]ACHTUNG : ... Dieses Video ist nur mit *Premium-Zugang* abspielbar !!![/COLOR][CR]Bitte wählen Sie ein anderes Video ohne Premium-Kennzeichnung aus !!!"
+
+msgctxt "#30506"
 msgid "[COLOR orangered]ATTENTION : ... LOGIN was not successful !!![/COLOR][CR]Please check your Login-Data !!!"
 msgstr "[COLOR orangered]ACHTUNG : ... LOGIN leider NICHT erfolgreich !!![/COLOR][CR]Bitte überprüfen Sie Ihre Login-Daten !!!"
 
-msgctxt "#30506"
+msgctxt "#30507"
 msgid "[COLOR orangered]ATTENTION : ... there is NO folder to save Media appointed ![/COLOR][CR]Please select the desired folder in the addon settings !!!"
 msgstr "[COLOR orangered]ACHTUNG : ... es ist KEIN Ordner zum Speichern der Medien festgelegt ![/COLOR][CR]Bitte in den Addon-Einstellungen den gewünschten Ordner auswählen !!!"
 
-# empty strings from id 30507 to 30520
+# empty strings from id 30508 to 30520
 # WARNING/INFORMATION-MESSAGES-NOTIFICATION
 
 msgctxt "#30521"
@@ -275,8 +279,8 @@ msgid "[COLOR FF008B00]Added to TVNOW-Medialibrary :[/COLOR]"
 msgstr "[COLOR FF008B00]Zur TVNOW-Medienbibliothek hinzugefügt :[/COLOR]"
 
 msgctxt "#30537"
-msgid "* Show: [COLOR blue]{0:s}[/COLOR] | Update every: [COLOR blue]{1:s} Hrs.[/COLOR] *"
-msgstr "* Serie: [COLOR blue]{0:s}[/COLOR] | Update alle: [COLOR blue]{1:s} Std.[/COLOR] *"
+msgid "* [COLOR blue]{0:s}[/COLOR] | Update every: [COLOR blue]{1:s} Hrs.[/COLOR] *"
+msgstr "* [COLOR blue]{0:s}[/COLOR] | Update alle: [COLOR blue]{1:s} Std.[/COLOR] *"
 
 # empty strings from id 30538 to 30600
 # PLUGIN-MAIN and SIDEMENU
@@ -384,3 +388,7 @@ msgstr "[COLOR orangered]... Aus TVNOW-Favoriten entfernen[/COLOR]"
 msgctxt "#30653"
 msgid "[COLOR cyan]* Save to TVNOW-Library *[/COLOR]"
 msgstr "[COLOR cyan]* In TVNOW-Bibliothek speichern *[/COLOR]"
+
+msgctxt "#30654"
+msgid "[COLOR yellow]Add to TVNOW-Playlist[/COLOR]"
+msgstr "[COLOR yellow]In TVNOW-Abspielliste einreihen[/COLOR]"

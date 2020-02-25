@@ -200,14 +200,18 @@ msgid "[COLOR orangered]ATTENTION : ... This broadcast requires at least *KODI 1
 msgstr ""
 
 msgctxt "#30505"
-msgid "[COLOR orangered]ATTENTION : ... LOGIN was not successful !!![/COLOR][CR]Please check your Login-Data !!!"
+msgid "[COLOR orangered]ATTENTION : ... This video is only playable with *premium-access* !!![/COLOR][CR]Please choose another video without premium labeling !!!"
 msgstr ""
 
 msgctxt "#30506"
+msgid "[COLOR orangered]ATTENTION : ... LOGIN was not successful !!![/COLOR][CR]Please check your Login-Data !!!"
+msgstr ""
+
+msgctxt "#30507"
 msgid "[COLOR orangered]ATTENTION : ... there is NO folder to save Media appointed ![/COLOR][CR]Please select the desired folder in the addon settings !!!"
 msgstr ""
 
-# empty strings from id 30507 to 30520
+# empty strings from id 30508 to 30520
 # WARNING/INFORMATION-MESSAGES-NOTIFICATION
 
 msgctxt "#30521"
@@ -275,7 +279,7 @@ msgid "[COLOR FF008B00]Added to TVNOW-Medialibrary :[/COLOR]"
 msgstr ""
 
 msgctxt "#30537"
-msgid "* Show: [COLOR blue]{0:s}[/COLOR] | Update every: [COLOR blue]{1:s} Hrs.[/COLOR] *"
+msgid "* [COLOR blue]{0:s}[/COLOR] | Update every: [COLOR blue]{1:s} Hrs.[/COLOR] *"
 msgstr ""
 
 # empty strings from id 30538 to 30600
@@ -383,4 +387,8 @@ msgstr ""
 
 msgctxt "#30653"
 msgid "[COLOR cyan]* Save to TVNOW-Library *[/COLOR]"
+msgstr ""
+
+msgctxt "#30654"
+msgid "[COLOR yellow]Add to TVNOW-Playlist[/COLOR]"
 msgstr ""
