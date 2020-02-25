@@ -48,3 +48,8 @@
 
 [B]Version 2.1.0  (03.02.2020)[/B] by realvito
 - Pluginname changed for KODI-compatibility (old=plugin.video.L0RE.dmax -> new=plugin.video.tyl0re.dmax)
+
+[B]Version 2.1.1  (25.02.2020)[/B] by realvito
+- fixed: Fehler bei Eintrag in die Bibliothek, wenn im Titel bestimmte Zeichen enthalten sind
+- optimized: URL-Abfrage jetzt umgestellt auf das etwas schnellere requests-modul
+- optimized: Updatezyklus für Bibliothek jetzt unabhängig von Addonnutzung, da separater Hintergrund-Prozess

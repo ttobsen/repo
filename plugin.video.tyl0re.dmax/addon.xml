@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<addon id="plugin.video.tyl0re.dmax" name="DMAX Mediathek [COLOR FF00EE00](neu)[/COLOR]" version="2.1.0" provider-name="L0RE, realvito">
+<addon id="plugin.video.tyl0re.dmax" name="DMAX Mediathek [COLOR FF00EE00](neu)[/COLOR]" version="2.1.1" provider-name="L0RE, realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="script.module.requests" version="2.20.0"/>
 		<import addon="service.cron.autobiblio" version="2.0.4" optional="true"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
@@ -25,7 +26,12 @@
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 2.1.0  (03.02.2020)[/COLOR][/B] by realvito[CR]
+		<news>[B][COLOR orangered]Version 2.1.1  (25.02.2020)[/COLOR][/B] by realvito[CR]
+- fixed: Fehler bei Eintrag in die Bibliothek, wenn im Titel bestimmte Zeichen enthalten sind
+- optimized: URL-Abfrage jetzt umgestellt auf das etwas schnellere requests-modul
+- optimized: Updatezyklus für Bibliothek jetzt unabhängig von Addonnutzung, da separater Hintergrund-Prozess
+------------------------------------------------------------------------------------------------------------------------------------
+[B][COLOR orangered]Version 2.1.0  (03.02.2020)[/COLOR][/B] by realvito[CR]
 - Pluginname changed for KODI-compatibility (old=plugin.video.L0RE.dmax -> new=plugin.video.tyl0re.dmax)
 - Bitte nach der Installation einmal STARTEN (um die eigenen Addon-Favoriten automatisch zu übertragen) !!!
 		</news>

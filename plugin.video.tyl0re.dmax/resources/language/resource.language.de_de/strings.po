@@ -32,10 +32,14 @@ msgid "General"
 msgstr "Allgemein"
 
 msgctxt "#30001"
+msgid "Advanced"
+msgstr "Fortgeschritten"
+
+msgctxt "#30002"
 msgid "Media Library"
 msgstr "Medienbibliothek"
 
-# empty strings from id 30002 to 30109
+# empty strings from id 30003 to 30109
 # SETTINGS-BUTTONS
 
 msgctxt "#30110"
@@ -63,18 +67,22 @@ msgid "     Show Addon-Settings in the overview"
 msgstr "     Addon-Einstellungen in der Übersicht anzeigen"
 
 msgctxt "#30116"
+msgid "     Detailed Addon-Debug (otherwise only Minimal-Log)"
+msgstr "     Addon-Debug mit Details (sonst nur Minimal-Log)"
+
+msgctxt "#30117"
 msgid "     Activate DMAX-Media-Library"
 msgstr "     DMAX-Medien-Bibliothek aktivieren"
 
-msgctxt "#30117"
+msgctxt "#30118"
 msgid "     DMAX-Media-Folder (for .strm- and .nfo- Files)"
 msgstr "     DMAX-Media-Ordner (für .strm- und .nfo- Dateien)"
 
-msgctxt "#30118"
+msgctxt "#30119"
 msgid "     Update of the DMAX-Library (in Hours)"
 msgstr "     Update der DMAX-Bibliothek (in Stunden)"
 
-# empty strings from id 30119 to 30229
+# empty strings from id 30120 to 30229
 # SETTINGS-TITLES
 
 msgctxt "#30230"
@@ -94,14 +102,18 @@ msgid "[B][COLOR ff0099ff]SETTINGS[/COLOR][/B]"
 msgstr "[B][COLOR ff0099ff]EINSTELLUNGEN[/COLOR][/B]"
 
 msgctxt "#30234"
+msgid "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
+
+msgctxt "#30235"
 msgid "[B][COLOR ff0099ff]MEDIA[/COLOR][/B]"
 msgstr "[B][COLOR ff0099ff]MEDIEN[/COLOR][/B]"
 
-msgctxt "#30235"
+msgctxt "#30236"
 msgid "[B][COLOR ff0099ff]INFO[/COLOR][/B]"
 msgstr "[B][COLOR ff0099ff]INFO[/COLOR][/B]"
 
-# empty strings from id 30236 to 30349
+# empty strings from id 30237 to 30349
 # SETTINGS-DESCRIPTIONS
 
 msgctxt "#30350"
@@ -232,3 +244,7 @@ msgstr "[COLOR orangered]... Aus DMAX-Favoriten entfernen[/COLOR]"
 msgctxt "#30653"
 msgid "[COLOR cyan]* Save to DMAX-Library *[/COLOR]"
 msgstr "[COLOR cyan]* In DMAX-Bibliothek speichern *[/COLOR]"
+
+msgctxt "#30654"
+msgid "[COLOR yellow]Add to DMAX-Playlist[/COLOR]"
+msgstr "[COLOR yellow]In DMAX-Abspielliste einreihen[/COLOR]"
