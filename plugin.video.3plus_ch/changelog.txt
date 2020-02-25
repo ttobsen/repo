@@ -17,3 +17,8 @@
 [B]Version 1.0.1  (19.01.2020)[/B] by realvito
 - Pluginname changed for KODI-compatibility (old=plugin.video.L0RE.3plus -> new=plugin.video.3plus_ch)
 - optimized: Some Script improvements
+
+[B]Version 1.0.2  (25.02.2020)[/B] by realvito
+- Autor bisher @L0RE
+- Ab jetzt übernommen durch @realvito
+- fixed: Addon neu aufgesetzt nach Webseitenerneuerung

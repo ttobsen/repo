@@ -1,9 +1,11 @@
-﻿"""
+﻿# -*- coding: utf-8 -*-
+
+'''
      StorageServer override
      Version: 1.0
     Copyright (C) 2010-2011 Tobias Ussing And Henrik Mosgaard Jensen
     Copyright (C) 2019 anxdpanic
-"""
+'''
 
 class StorageServer(object):
     def __init__(self, table, timeout=24):
