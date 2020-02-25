@@ -13,21 +13,21 @@ import shutil
 PY2 = sys.version_info[0] == 2
 __addon__ = xbmcaddon.Addon('service.cron.autobiblio')
 addonPath = xbmc.translatePath(__addon__.getAddonInfo('path')).encode('utf-8').decode('utf-8')
-profile    = xbmc.translatePath(__addon__.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
-temp       = xbmc.translatePath(os.path.join(profile, 'temp', '')).encode('utf-8').decode('utf-8')
-database = os.path.join(temp, 'MyTimeOrders.db')
-icon = os.path.join(addonPath ,'icon.png')
+dataPath    = xbmc.translatePath(__addon__.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
+temp           = xbmc.translatePath(os.path.join(dataPath, 'temp', '')).encode('utf-8').decode('utf-8')
+Database = os.path.join(temp, 'MyTimeOrders.db')
+icon = os.path.join(addonPath, 'icon.png')
 
 
 class Unload:
 	def __init__(self, *args, **kwargs):
-		if sys.argv[1] == "loeschen":
-			if os.path.isdir(temp) and xbmcvfs.exists(database):
+		if sys.argv[1] == 'loeschen':
+			if os.path.isdir(temp) and xbmcvfs.exists(Database):
 				if xbmcgui.Dialog().yesno(heading=__addon__.getAddonInfo('id'), line1=translation(30502), line2=translation(30503), nolabel=translation(30504), yeslabel=translation(30505)):
 					shutil.rmtree(temp, ignore_errors=True)
 					xbmc.sleep(1000)
 					xbmcgui.Dialog().notification(translation(30521), translation(30522), icon, 8000)
-					xbmc.log("["+__addon__.getAddonInfo('id')+"](unload.py) ########## DELETING complete DATABASE ... "+database+" ... success ##########", xbmc.LOGNOTICE)
+					xbmc.log("["+__addon__.getAddonInfo('id')+"](unload.py) ########## DELETING complete DATABASE ... "+Database+" ... success ##########", xbmc.LOGNOTICE)
 				else:
 					return# they clicked no, we just have to exit the gui here
 			else:
@@ -41,10 +41,10 @@ def py2_enc(s, encoding='utf-8'):
 	return s
 
 def translation(id):
-	return py2_enc(addon.getLocalizedString(id))
+	return py2_enc(__addon__.getLocalizedString(id))
 
 def Main():
 	Unload()
 
-if (__name__ == "__main__"):
+if __name__ == '__main__':
 	Main()

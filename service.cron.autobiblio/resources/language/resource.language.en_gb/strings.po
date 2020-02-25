@@ -116,3 +116,19 @@ msgstr ""
 
 # empty strings from id 30523 to 30600
 # PLUGIN-MAIN and SIDEMENU
+
+msgctxt "#30601"
+msgid "  [COLOR yellow](Year {0:s})[/COLOR]"
+msgstr ""
+
+msgctxt "#30602"
+msgid "  [COLOR yellow](Series)[/COLOR]"
+msgstr ""
+
+msgctxt "#30603"
+msgid "[COLOR orangered]Delete Entry+Folder: [/COLOR]{0:s}"
+msgstr ""
+
+msgctxt "#30604"
+msgid "[COLOR orangered]Only delete Entry: [/COLOR]{0:s}"
+msgstr ""

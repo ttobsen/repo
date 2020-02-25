@@ -6,15 +6,17 @@ import xbmc
 import xbmcaddon
 import xbmcvfs
 import time
-from datetime import datetime,timedelta
+from datetime import datetime, timedelta
 import sqlite3
 
 
 global debuging
 PY2 = sys.version_info[0] == 2
 __addon__ = xbmcaddon.Addon()  
-profile    = xbmc.translatePath(__addon__.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
-temp       = xbmc.translatePath(os.path.join(profile, 'temp', '')).encode('utf-8').decode('utf-8')
+addonPath = xbmc.translatePath(__addon__.getAddonInfo('path')).encode('utf-8').decode('utf-8')
+dataPath    = xbmc.translatePath(__addon__.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
+temp           = xbmc.translatePath(os.path.join(dataPath, 'temp', '')).encode('utf-8').decode('utf-8')
+Database = os.path.join(temp, 'MyTimeOrders.db')
 
 wait_time = 180  # 180 seconds = 3 minutes - wait at KODI start
 loop_time = 3600  # 3600 seconds = 1 hour - time when the process started again
@@ -32,7 +34,7 @@ def py2_uni(s, encoding='utf-8'):
 	return s
 
 def translation(id):
-	return py2_enc(addon.getLocalizedString(id))
+	return py2_enc(__addon__.getLocalizedString(id))
 
 def special(msg, level=xbmc.LOGNOTICE):
 	xbmc.log(msg, level)
@@ -44,7 +46,7 @@ def debug(content):
 	log(content, xbmc.LOGDEBUG)
 
 def log(msg, level=xbmc.LOGNOTICE):
-	xbmc.log("["+__addon__.getAddonInfo('id')+"-"+__addon__.getAddonInfo('version')+"](service.py) "+py2_enc(msg), level)
+	xbmc.log('[{0} v.{1}](service.py) {2}'.format(__addon__.getAddonInfo('id'), __addon__.getAddonInfo('version'), py2_enc(msg)), level)
 
 def fixtime(date_string, format):
 	debug("fixtime ##### date_string : "+str(date_string)+" ##### format :" +str(format)+" #####")
@@ -68,9 +70,9 @@ if __name__ == '__main__':
 		if not xbmc.getCondVisibility('Library.IsScanningVideo'):
 			debug("########## START LOOP ... ##########")
 			try:
-				conn = sqlite3.connect(temp+'/MyTimeOrders.db')
+				conn = sqlite3.connect(Database)
 				cur = conn.cursor()
-				cur.execute('SELECT * FROM cron')
+				cur.execute('SELECT * FROM stocks')
 				r = list(cur)
 				conn.commit()
 				cur.close()
@@ -79,15 +81,17 @@ if __name__ == '__main__':
 					std = member[0]
 					url = member[1]
 					name = member[2]
-					last = member[3]
-					debug("###### Control-Session for TITLE = "+py2_uni(name)+" / LASTUPDATE: "+last+" ##########")
+					if '@@' in url: name += '  ('+url.split('@@')[1]+')'
+					else: name += '  (Serie)'
+					updated = member[3]
+					debug("###### Control-Session for TITLE = "+py2_uni(name)+" || LASTUPDATE: "+updated+" ##########")
 					now = datetime.now()
-					previous = fixtime(last, "%Y-%m-%d %H:%M:%S")
+					previous = fixtime(updated, '%Y-%m-%d %H:%M:%S')
 					if now > previous + timedelta(hours=std):
-						log("########## start ACTION for TITLE = "+py2_uni(name)+" / LASTUPDATE = "+last+" ##########")
-						conn = sqlite3.connect(temp+'/MyTimeOrders.db')
+						log("########## start ACTION for TITLE = "+py2_uni(name)+" || LASTUPDATE = "+updated+" ##########")
+						conn = sqlite3.connect(Database)
 						cur = conn.cursor()
-						cur.execute('UPDATE cron SET last={0} WHERE url="{1}"'.format("datetime('now','localtime')", py2_enc(url)))
+						cur.execute('UPDATE stocks SET last = {0} WHERE url = \'{1}\''.format("datetime('now', 'localtime')", py2_enc(url)))
 						conn.commit()
 						cur.close()
 						conn.close()

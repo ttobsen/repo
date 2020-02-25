@@ -20,3 +20,7 @@ B]Version 1.0.3  (03.02.2020)[/B] by realvito
 [B]Version 2.0.4  (03.02.2020)[/B] by realvito
 - Pluginname changed for KODI-compatibility (old=service.L0RE.cron -> new=service.cron.autobiblio)
 - added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19+) :-)
+
+[B]Version 2.0.5  (25.02.2020)[/B] by realvito
+- fixed: NameError: global name 'addon' is not defined
+- added: Anpassungen für 'plugin.video.rtlnow' damit auch einzelne Jahrgänge hinzugefügt und gelöscht werden können

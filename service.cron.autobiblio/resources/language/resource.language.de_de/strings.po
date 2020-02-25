@@ -116,3 +116,19 @@ msgstr "[COLOR FF008B00]* MyTimeOrders.db *[/COLOR] erfolgreich gelöscht !"
 
 # empty strings from id 30523 to 30600
 # PLUGIN-MAIN and SIDEMENU
+
+msgctxt "#30601"
+msgid "  [COLOR yellow](Year {0:s})[/COLOR]"
+msgstr "  [COLOR yellow](Jahr {0:s})[/COLOR]"
+
+msgctxt "#30602"
+msgid "  [COLOR yellow](Series)[/COLOR]"
+msgstr "  [COLOR yellow](Serie)[/COLOR]"
+
+msgctxt "#30603"
+msgid "[COLOR orangered]Delete Entry+Folder: [/COLOR]{0:s}"
+msgstr "[COLOR orangered]Eintrag+Ordner löschen: [/COLOR]{0:s}"
+
+msgctxt "#30604"
+msgid "[COLOR orangered]Only delete Entry: [/COLOR]{0:s}"
+msgstr "[COLOR orangered]Nur Eintrag löschen: [/COLOR]{0:s}"
