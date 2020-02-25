@@ -92,3 +92,6 @@
 [B]Version 1.2.3  (03.02.2020)[/B]
 - fixed: ARTE-Videos über "plugin.video.tyl0re.arte" abspielen (Code verändert)
 - fixed: TVNOW-Videos über "plugin.video.rtlnow" abspielen (Code verändert)
+
+[B]Version 1.2.4  (25.02.2020)[/B]
+- optimized: Jetzt auch HD-Qualität (wenn TVNOW-Premiumuser) über "plugin.video.rtlnow" abspielen (Code verändert)
