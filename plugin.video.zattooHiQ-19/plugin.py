@@ -1168,10 +1168,9 @@ def makeOsdInfo():
     else:
       xbmc.executebuiltin( "Skin.Reset(%s)" %'restart')
       
-  cred=''
-  director=[]
-  cast=[]
-  actor=[]      
+  cred = ''
+  director = ""
+  actor = ""   
   credjson = program['credits']
   
   if credjson is not None:
@@ -1184,8 +1183,9 @@ def makeOsdInfo():
       actor = json.dumps(actor, ensure_ascii=False)
       actor = actor.replace('"','').replace('[','').replace(']','')          
     except:pass
-
-  
+  director = director.replace('"','').replace('[','').replace(']','')
+  actor = actor.replace('"','').replace('[','').replace(']','')   
+         
   description = program['description']
   if description is None: description = ''
   else: description = '  -  ' + description

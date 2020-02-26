@@ -1165,9 +1165,9 @@ def makeOsdInfo():
     else:
       xbmc.executebuiltin( "Skin.Reset(%s)" %'restart')
       
-  cred=''
-  director=[]
-  cast=[]      
+  cred = ""
+  director = ""
+  actor = ""    
   credjson = program['credits']
 
   if credjson is not None:
