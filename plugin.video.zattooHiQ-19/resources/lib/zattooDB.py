@@ -343,7 +343,7 @@ class ZattooDB(object):
         return
     
 
-    xbmcgui.Dialog().notification(__addon__.getLocalizedString(31917), self.formatDate(date), __addon__.getAddonInfo('path') + '/icon.png', 5000, False)
+    xbmcgui.Dialog().notification(__addon__.getLocalizedString(31917), self.formatDate(date), __addon__.getAddonInfo('path') + '/resources/icon.png', 5000, False)
     #xbmc.executebuiltin("ActivateWindow(busydialog)")
     debug('update Program')
     #update 09.02.2018: zattoo only sends max 5h (6h?) of programdata -> load 6*4h
@@ -363,7 +363,7 @@ class ZattooDB(object):
                  #debug('Sender nicht im Abo: '+str(cid))
                 continue
             if cid == firstchan and not channel['programs']:
-                xbmcgui.Dialog().notification('Update Program', 'No Data',  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
+                xbmcgui.Dialog().notification('Update Program', 'No Data',  __addon__.getAddonInfo('path') + '/resources/icon.png', 3000, False)
                 #c.close()
                 continue
            

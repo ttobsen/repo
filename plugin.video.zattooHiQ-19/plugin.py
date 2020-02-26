@@ -501,7 +501,7 @@ def build_recordingsList(__addonuri__, __addonhandle__):
     if not showInfo: continue
     if showInfo == "NONE": continue
     #mark if show is future, running or finished
-    
+
     start = int(time.mktime(time.strptime(record['start'], "%Y-%m-%dT%H:%M:%SZ"))) + _timezone_  # local timestamp
     end = int(time.mktime(time.strptime(record['end'], "%Y-%m-%dT%H:%M:%SZ"))) + _timezone_  # local timestamp
     position = int(time.mktime(time.strptime(record['position'], "%Y-%m-%dT%H:%M:%SZ"))) + _timezone_  # local timestamp
@@ -534,10 +534,15 @@ def build_recordingsList(__addonuri__, __addonhandle__):
     if showInfo == "NONE": continue
     label+=' ('+showInfo[0]['channel_name']+')'
     
-    director=[]
-    cast=[]
+    director = []
+    cast = []
+
+    if showInfo[0]['cr'] != []:
+        director = showInfo[0]['cr']['director']
+        cast = showInfo[0]['cr']['actor']
+
     date = datetime.datetime.fromtimestamp(start).strftime('%d.%m.%Y')
-    meta.update({'title':label,'date':date,'year':showInfo[0]['year'], 'plot':showInfo[0]['d'], 'country':showInfo[0]['country'],'director':showInfo[0]['cr']['director'], 'cast':showInfo[0]['cr']['actor'], 'genre':', '.join(showInfo[0]['g'])  })
+    meta.update({'title':label,'date':date,'year':showInfo[0]['year'], 'plot':showInfo[0]['d'], 'country':showInfo[0]['country'],'director':director, 'cast':cast, 'genre':', '.join(showInfo[0]['g'])  })
     meta.update({'sorttitle':record['title']})
     '''
     #mark watched
