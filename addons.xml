@@ -2283,7 +2283,7 @@ To support the backport the addon will now always create the merged_epg.xml.gz
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ-19" version="1.0.1.3" name="Zattoo HiQ-19" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ-19" version="1.0.1.4" name="Zattoo HiQ-19" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
     <import addon="xbmc.addon" version="18.9.701" />
@@ -3802,7 +3802,7 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ" version="1.7.0.8" name="Zattoo HiQ" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ" version="1.7.0.9" name="Zattoo HiQ" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
