@@ -438,7 +438,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 	</extension>
 </addon>
 
-<addon id="plugin.video.spotitube" name="Youtube Music" version="2.1.6" provider-name="realvito (inspired by L0RE)">
+<addon id="plugin.video.spotitube" name="Youtube Music" version="2.1.7" provider-name="realvito (inspired by L0RE)">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="plugin.video.youtube" version="6.3.0"/>
@@ -464,8 +464,9 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 2.1.6  (25.02.2020)[/COLOR][/B] by realvito[CR]
-- added and fixed: Set your personal-API-KEY (AIza*****) for YouTube in settings to search and play Musicvideos (otherwise the Addon fails)
+		<news>[B][COLOR orangered]Version 2.1.7  (28.02.2020)[/COLOR][/B] by realvito[CR]
+- fixed: long wait time for playback
+- fixed: error for playback of playlists
 		</news>
 	</extension>
 </addon>
