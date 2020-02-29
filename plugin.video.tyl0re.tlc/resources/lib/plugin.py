@@ -12,21 +12,19 @@ PY2 = sys.version_info[0] == 2
 PY3 = sys.version_info[0] == 3
 if PY2:
 	from urllib import quote, unquote, quote_plus, unquote_plus, urlencode  # Python 2.X
-	from urllib2 import build_opener, HTTPCookieProcessor, Request, urlopen  # Python 2.X
-	from cookielib import LWPCookieJar  # Python 2.X
-	from urlparse import urljoin, urlparse, urlunparse  # Python 2.X
 elif PY3:
-	from urllib.parse import quote, unquote, quote_plus, unquote_plus, urlencode, urljoin, urlparse, urlunparse  # Python 3+
-	from urllib.request import build_opener, HTTPCookieProcessor, Request, urlopen  # Python 3+
-	from http.cookiejar import LWPCookieJar  # Python 3+
+	from urllib.parse import quote, unquote, quote_plus, unquote_plus, urlencode  # Python 3+
 import json
 import xbmcvfs
 import shutil
 import socket
 import time
 from datetime import datetime, timedelta
-import io
-import gzip
+import requests
+try:
+	from requests.packages.urllib3.exceptions import InsecureRequestWarning
+	requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+except: pass
 
 
 global debuging
@@ -35,7 +33,6 @@ pluginhandle = int(sys.argv[1])
 addon = xbmcaddon.Addon()
 addonPath = xbmc.translatePath(addon.getAddonInfo('path')).encode('utf-8').decode('utf-8')
 dataPath = xbmc.translatePath(addon.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
-temp        = xbmc.translatePath(os.path.join(dataPath, 'temp', '')).encode('utf-8').decode('utf-8')
 masterOLD  = 'my_TLC_favourites.txt'
 masterNEW = 'my_TLC_favourites.txt'
 masterBACK = '(BACKUP)my_TLC_favourites.txt'
@@ -49,27 +46,19 @@ artpic = os.path.join(addonPath, 'resources', 'media', '').encode('utf-8').decod
 useThumbAsFanart = addon.getSetting('useThumbAsFanart') == 'true'
 enableAdjustment = addon.getSetting('show_settings') == 'true'
 enableInputstream = addon.getSetting('inputstream') == 'true'
+DEB_LEVEL = (xbmc.LOGNOTICE if addon.getSetting('enableDebug') == 'true' else xbmc.LOGDEBUG)
 baseURL = 'https://www.tlc.de/'
 
+__HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0', 'Accept-Encoding': 'gzip, deflate'}
 xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
 
 if xbmcvfs.exists(sourceOLD):
-	if not xbmcvfs.exists(temp) and not os.path.isdir(temp):
-		xbmcvfs.mkdirs(temp)
+	if not xbmcvfs.exists(dataPath) and not os.path.isdir(dataPath):
+		xbmcvfs.mkdirs(dataPath)
 		xbmc.sleep(500)
 	if xbmcvfs.exists(sourceOLD) and not xbmcvfs.exists(sourceNEW):
 		xbmcvfs.copy(sourceOLD, sourceNEW)
 		xbmcvfs.rename(sourceOLD, sourceBACK)
-
-if xbmcvfs.exists(temp) and os.path.isdir(temp):
-	shutil.rmtree(temp, ignore_errors=True)
-	xbmc.sleep(500)
-xbmcvfs.mkdirs(temp)
-cookie = os.path.join(temp, 'cookie.lwp')
-cj = LWPCookieJar()
-
-if xbmcvfs.exists(cookie):
-	cj.load(cookie, ignore_discard=True, ignore_expires=True)
 
 def py2_enc(s, encoding='utf-8'):
 	if PY2:
@@ -94,32 +83,23 @@ def translation(id):
 def failing(content):
 	log(content, xbmc.LOGERROR)
 
-def debug(content):
-	log(content, xbmc.LOGDEBUG)
+def debug_MS(content):
+	log(content, DEB_LEVEL)
 
 def log(msg, level=xbmc.LOGNOTICE):
-	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+py2_enc(msg), level)
+	xbmc.log('[{0} v.{1}]{2}'.format(addon.getAddonInfo('id'), addon.getAddonInfo('version'), py2_enc(msg)), level)
 
-def getUrl(url, header=None, agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36'):
-	global cj
-	opener = build_opener(HTTPCookieProcessor(cj))
-	opener.addheaders = [('User-Agent', agent), ('Accept-Encoding', 'gzip, deflate')]
-	try:
-		if header: opener.addheaders = header
-		response = opener.open(url, timeout=30)
-		if response.info().get('Content-Encoding') == 'gzip':
-			content = py3_dec(gzip.GzipFile(fileobj=io.BytesIO(response.read())).read())
-		else:
-			content = py3_dec(response.read())
-	except Exception as e:
-		failure = str(e)
-		failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
-		content = ""
-		return sys.exit(0)
-	opener.close()
-	try: cj.save(cookie, ignore_discard=True, ignore_expires=True)
-	except: pass
-	return content
+def getUrl(url, method, allow_redirects=False, verify=False, stream=False, headers="", data="", timeout=40):
+	response = requests.Session()
+	access_token = '00'
+	if method == 'GET':
+		content = response.get(url, allow_redirects=allow_redirects, verify=verify, stream=stream, headers=headers, data=data, timeout=timeout).text
+	elif method == 'POST':
+		content = response.post(url, data=data, allow_redirects=allow_redirects, verify=verify).text
+	if 'sonicToken' in response.cookies and response.cookies['sonicToken']:
+		access_token = response.cookies['sonicToken']
+	content = py2_enc(content)
+	return content, access_token
 
 def ADDON_operate(TESTING):
 	js_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Addons.GetAddonDetails", "params": {"addonid":"'+TESTING+'", "properties": ["enabled"]}, "id":1}')
@@ -152,36 +132,36 @@ def index():
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def listThemes():
-	debug("(listThemes) ------------------------------------------------ START = listThemes -----------------------------------------------")
+	debug_MS("(listThemes) ------------------------------------------------ START = listThemes -----------------------------------------------")
 	xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
-	html = getUrl(baseURL+'themen')
-	content = html[html.find('href="/themen">Themen</a><div class="header__nav__dd-wrapper">')+1:]
-	content = content[:content.find('</ul></div>')]
-	result = re.compile('<a href="(.*?)">(.*?)</a>').findall(content)
+	content, access_token = getUrl(baseURL+'themen', 'GET', False, False, False, __HEADERS)
+	response = content[content.find('href="/themen">Themen</a><div class="header__nav__dd-wrapper">')+1:]
+	response = response[:response.find('</ul></div>')]
+	result = re.compile('<a href="(.*?)">(.*?)</a>').findall(response)
 	for link, name in result:
 		url = baseURL+'api/genres/'+link.split('/')[-1]+'?limit=100'
 		name = py2_enc(name).replace('&amp;', '&').strip()
-		debug("(listThemes) ### NAME : {0} || LINK : {1} || URL : {2} ###".format(str(name), str(link), str(url)))
+		debug_MS("(listThemes) ### NAME : {0} || LINK : {1} || URL : {2} ###".format(str(name), str(link), str(url)))
 		if 'themen' in link:
 			addDir(name, url, 'listSeries', icon, nosub='overview_themes')
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def listSeries(url, PAGE, POS, ADDITION):
-	debug("(listSeries) ------------------------------------------------ START = listSeries -----------------------------------------------")
-	debug("(listSeries) ### URL : {0} ### PAGE : {1} ### POS : {2} ### ADDITION : {3} ###".format(str(url), str(PAGE), str(POS), str(ADDITION)))
+	debug_MS("(listSeries) ------------------------------------------------ START = listSeries -----------------------------------------------")
+	debug_MS("(listSeries) ### URL : {0} ### PAGE : {1} ### POS : {2} ### ADDITION : {3} ###".format(str(url), str(PAGE), str(POS), str(ADDITION)))
 	count = int(POS)
 	readyURL = url+'&page='+str(PAGE)
-	content = getUrl(readyURL)
-	debug("++++++++++++++++++++++++")
-	debug("(listSeries) XXXXX CONTENT : {0} XXXXX".format(str(content)))
-	debug("++++++++++++++++++++++++")
+	content, access_token = getUrl(readyURL, 'GET', False, False, False, __HEADERS)
+	debug_MS("++++++++++++++++++++++++")
+	debug_MS("(listSeries) XXXXX CONTENT : {0} XXXXX".format(str(content)))
+	debug_MS("++++++++++++++++++++++++")
 	DATA = json.loads(content)
 	if 'search?query' in url:
 		elements = DATA['shows']
 	else:
 		elements = DATA['items']
 	for elem in elements:
-		debug("(listSeries) ##### ELEMENT : {0} #####".format(str(elem)))
+		debug_MS("(listSeries) ##### ELEMENT : {0} #####".format(str(elem)))
 		title = py2_enc(elem['title']).strip()
 		name = title
 		idd = ""
@@ -193,7 +173,7 @@ def listSeries(url, PAGE, POS, ADDITION):
 		image = ""
 		if 'image' in elem and 'src' in elem['image'] and elem['image']['src'] != "" and elem['image']['src'] != None:
 			image = elem['image']['src']
-		debug("(listSeries) noFilter ### NAME : {0} || IDD : {1} || IMAGE : {2} ###".format(str(name), str(idd), str(image)))
+		debug_MS("(listSeries) noFilter ### NAME : {0} || IDD : {1} || IMAGE : {2} ###".format(str(name), str(idd), str(image)))
 		if idd !="" and len(idd) < 9 and plot != "" and image != "":
 			count += 1
 			if 'beliebt' in url:
@@ -201,7 +181,7 @@ def listSeries(url, PAGE, POS, ADDITION):
 			try: 
 				if elem['hasNewEpisodes']: name = name+translation(30609)
 			except: pass
-			debug("(listSeries) Filtered --- NAME : {0} || IDD : {1} || IMAGE : {2} ---".format(str(name), str(idd), str(image)))
+			debug_MS("(listSeries) Filtered --- NAME : {0} || IDD : {1} || IMAGE : {2} ---".format(str(name), str(idd), str(image)))
 			addType=1
 			if os.path.exists(channelFavsFile):
 				with open(channelFavsFile, 'r') as output:
@@ -213,28 +193,28 @@ def listSeries(url, PAGE, POS, ADDITION):
 							if idd == idd_FS: addType=2
 			addDir(name, idd, 'listEpisodes', image, plot, nosub=ADDITION, origSERIE=title, addType=addType)
 	currentRESULT = count
-	debug("(listSeries) NUMBERING ### currentRESULT : {0} ###".format(str(currentRESULT)))
+	debug_MS("(listSeries) NUMBERING ### currentRESULT : {0} ###".format(str(currentRESULT)))
 	try:
 		currentPG = DATA['meta']['currentPage']
 		totalPG = DATA['meta']['totalPages']
-		debug("(listSeries) PAGES ### currentPG : {0} from totalPG : {1} ###".format(str(currentPG), str(totalPG)))
+		debug_MS("(listSeries) PAGES ### currentPG : {0} from totalPG : {1} ###".format(str(currentPG), str(totalPG)))
 		if int(currentPG) < int(totalPG):
 			addDir(translation(30610), url, 'listSeries', artpic+'nextpage.png', page=int(currentPG)+1, position=int(currentRESULT), nosub=ADDITION)
 	except: pass
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def listEpisodes(idd, origSERIE):
-	debug("(listEpisodes) ------------------------------------------------ START = listEpisodes -----------------------------------------------")
+	debug_MS("(listEpisodes) ------------------------------------------------ START = listEpisodes -----------------------------------------------")
 	COMBI = []
 	SELECT = []
 	pos1 = 0
 	url = baseURL+'api/show-detail/'+str(idd)
-	debug("(listEpisodes) ### URL : {0} ### origSERIE : {1} ###".format(str(url), str(origSERIE)))
+	debug_MS("(listEpisodes) ### URL : {0} ### origSERIE : {1} ###".format(str(url), str(origSERIE)))
 	try:
-		content = getUrl(url)
-		debug("++++++++++++++++++++++++")
-		debug("(listEpisodes) XXXXX CONTENT : {0} XXXXX".format(str(content)))
-		debug("++++++++++++++++++++++++")
+		content, access_token = getUrl(url, 'GET', False, False, False, __HEADERS)
+		debug_MS("++++++++++++++++++++++++")
+		debug_MS("(listEpisodes) XXXXX CONTENT : {0} XXXXX".format(str(content)))
+		debug_MS("++++++++++++++++++++++++")
 		DATA = json.loads(content)
 	except: return xbmcgui.Dialog().notification(translation(30521).format(str(idd)), translation(30522), icon, 12000)
 	genstr = ""
@@ -252,7 +232,7 @@ def listEpisodes(idd, origSERIE):
 			for number,videos in makeITEMS():
 				for vid in videos:
 					if 'isPlayable' in vid and vid['isPlayable'] == True:
-						debug("(listEpisodes) ##### subelement-1-vid : {0} #####".format(str(vid)))
+						debug_MS("(listEpisodes) ##### subelement-1-vid : {0} #####".format(str(vid)))
 						season = ""
 						if 'season' in vid and vid['season'] != "" and str(vid['season']) != "0" and vid['season'] != None:
 							season = str(vid['season']).zfill(2)
@@ -308,7 +288,7 @@ def listEpisodes(idd, origSERIE):
 			subelement = DATA['videos']['standalone']
 			for item in subelement:
 				if 'isPlayable' in item and item['isPlayable'] == True:
-					debug("(listEpisodes) ##### subelement-2-item : {0} #####".format(str(item)))
+					debug_MS("(listEpisodes) ##### subelement-2-item : {0} #####".format(str(item)))
 					season = "00"
 					if 'season' in item and item['season'] != "" and str(item['season']) != "0" and item['season'] != None:
 						season = str(item['season']).zfill(2)
@@ -368,7 +348,7 @@ def listEpisodes(idd, origSERIE):
 						number = 'S00E'+episode
 					COMBI.append([number, title1, title2, idd2, image, plot, duration, season, episode, genstr, year, begins])
 	else:
-		debug("(listEpisodes) ##### Keine COMBINATION-List - Kein Eintrag gefunden #####")
+		debug_MS("(listEpisodes) ##### Keine COMBINATION-List - Kein Eintrag gefunden #####")
 		return xbmcgui.Dialog().notification(translation(30523), translation(30524).format(origSERIE), icon, 8000)
 	if COMBI:
 		if addon.getSetting('sorting') == "1":
@@ -383,46 +363,40 @@ def listEpisodes(idd, origSERIE):
 			name = title1.strip()+"  "+title2.strip()
 			if title2 == "":
 				name = title1.strip()
-			debug("(listEpisodes) ##### NAME : {0} || IDD : {1} || GENRE : {2} #####".format(str(name), idd2, str(genstr)))
-			debug("(listEpisodes) ##### IMAGE : {0} || SEASON : {1} || EPISODE : {2} #####".format(str(image), str(season), str(episode)))
+			debug_MS("(listEpisodes) ##### NAME : {0} || IDD : {1} || GENRE : {2} #####".format(str(name), idd2, str(genstr)))
+			debug_MS("(listEpisodes) ##### IMAGE : {0} || SEASON : {1} || EPISODE : {2} #####".format(str(image), str(season), str(episode)))
 			addLink(name, idd2, 'playVideo', image, plot, duration, origSERIE=origSERIE, season=season, episode=episode, genre=genstr, year=year, begins=begins)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def playVideo(idd2):
-	debug("(playVideo) ------------------------------------------------ START = playVideo -----------------------------------------------")
-	content = getUrl(baseURL)
-	for cookief in cj:
-		debug("(playVideo) ##### COOKIE : {0} #####".format(str(cookief)))
-		if 'sonicToken' in str(cookief):
-			key = re.compile('sonicToken=(.*?) for', re.DOTALL).findall(str(cookief))[0]
-			break
-	playurl = 'https://sonic-eu1-prod.disco-api.com/playback/videoPlaybackInfo/'+str(idd2)
-	header = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36'), ('Authorization', 'Bearer '+key)]
-	result = getUrl(playurl, header=header)
-	debug("++++++++++++++++++++++++")
-	debug("(playVideo) XXXXX RESULT : {0} XXXXX".format(str(result)))
-	debug("++++++++++++++++++++++++")
+	debug_MS("(playVideo) ------------------------------------------------ START = playVideo -----------------------------------------------")
+	content, access_token = getUrl(baseURL, 'GET', False, False, False, __HEADERS)
+	debug_MS("(playVideo) ##### COOKIE : {0} #####".format(str(access_token)))
+	playURL = 'https://sonic-eu1-prod.disco-api.com/playback/videoPlaybackInfo/'+str(idd2)
+	__access_header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0', 'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(access_token)}
+	result, access_token = getUrl(playURL, 'GET', True, False, False, __access_header)
+	debug_MS("++++++++++++++++++++++++")
+	debug_MS("(playVideo) XXXXX RESULT : {0} XXXXX".format(str(result)))
+	debug_MS("++++++++++++++++++++++++")
 	DATA = json.loads(result)
 	videoURL = DATA['data']['attributes']['streaming']['hls']['url']
 	log("(playVideo) StreamURL : "+videoURL)
 	listitem = xbmcgui.ListItem(path=videoURL)
-	listitem.setProperty('IsPlayable', 'true')
 	if enableInputstream:
 		if ADDON_operate('inputstream.adaptive'):
 			licfile = DATA['data']['attributes']['protection']['schemes']['clearkey']['licenseUrl']
-			licurl = getUrl(licfile, header=header)
-			lickey = re.compile('"kid":"(.*?)"', re.DOTALL).findall(licurl)[0]
-			debug("(playVideo) ##### LIC-FILE : {0} || LIC-KEY : {1} #####".format(str(licfile), str(lickey)))
+			licurl, access_token = getUrl(licfile, 'GET', True, False, False, __access_header)
+			lickey = json.loads(licurl)['keys'][0]['kid']
+			debug_MS("(playVideo) ##### LIC-FILE : {0} || LIC-KEY : {1} #####".format(str(licfile), str(lickey)))
 			listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
 			listitem.setProperty('inputstream.adaptive.manifest_type', 'hls')
 			listitem.setProperty('inputstream.adaptive.license_key', lickey)
-			listitem.setContentLookup(False)
 		else:
 			addon.setSetting('inputstream', 'false')
 	xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
 def listShowsFavs():
-	debug("(listShowsFavs) ------------------------------------------------ START = listShowsFavs -----------------------------------------------")
+	debug_MS("(listShowsFavs) ------------------------------------------------ START = listShowsFavs -----------------------------------------------")
 	xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
 	if os.path.exists(channelFavsFile):
 		with open(channelFavsFile, 'r') as textobj:
@@ -430,26 +404,26 @@ def listShowsFavs():
 			for line in lines:
 				if line.startswith('###START'):
 					part = line.split('###')
-					debug("(listShowsFavs) ##### NAME : {0} || URL : {1} #####".format(str(part[3]), str(part[2])))
+					debug_MS("(listShowsFavs) ##### NAME : {0} || URL : {1} #####".format(str(part[3]), str(part[2])))
 					addDir(name=part[3], url=part[2], mode="listEpisodes", image=part[4].strip(), plot=part[5].replace('#n#', '\n').strip(), origSERIE=part[3], FAVdel=True)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def favs(param):
 	mode = param[param.find('MODE=')+5:+8]
-	SERIES_entry = param[param.find('###START'):]
-	SERIES_entry = SERIES_entry[:SERIES_entry.find('END###')]
-	name = SERIES_entry.split('###')[3]
-	url = SERIES_entry.split('###')[2]
+	TVSe = param[param.find('###START'):]
+	TVSe = TVSe[:TVSe.find('END###')]
+	url = TVSe.split('###')[2]
+	name = TVSe.split('###')[3]
 	if mode == 'ADD':
 		if os.path.exists(channelFavsFile):
 			with open(channelFavsFile, 'a+') as textobj:
 				content = textobj.read()
-				if content.find(SERIES_entry) == -1:
+				if content.find(TVSe) == -1:
 					textobj.seek(0,2) # change is here (for Windows-Error = "IOError: [Errno 0] Error") - because Windows don't like switching between reading and writing at same time !!!
-					textobj.write(SERIES_entry+'END###\n')
+					textobj.write(TVSe+'END###\n')
 		else:
 			with open(channelFavsFile, 'a') as textobj:
-				textobj.write(SERIES_entry+'END###\n')
+				textobj.write(TVSe+'END###\n')
 		xbmc.sleep(500)
 		xbmcgui.Dialog().notification(translation(30525), translation(30526).format(name), icon, 8000)
 	elif mode == 'DEL':
@@ -466,6 +440,18 @@ def favs(param):
 def utc_to_local(dt):
 	if time.localtime().tm_isdst: return dt - timedelta(seconds=time.altzone)
 	else: return dt - timedelta(seconds=time.timezone)
+
+def addQueue(vid):
+	PL = xbmc.PlayList(1)
+	STREAMe = vid[vid.find('###START'):]
+	STREAMe = STREAMe[:STREAMe.find('END###')]
+	url = STREAMe.split('###')[2]
+	name = STREAMe.split('###')[3]
+	image = STREAMe.split('###')[4]
+	listitem = xbmcgui.ListItem(name)
+	listitem.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
+	listitem.setProperty('IsPlayable', 'true')
+	PL.add(url, listitem)
 
 def parameters_string_to_dict(parameters):
 	paramDict = {}
@@ -486,11 +472,11 @@ def addDir(name, url, mode, image, plot=None, page=1, position=0, nosub=0, origS
 		liz.setArt({'fanart': image})
 	entries = []
 	if addType == 1 and FAVdel == False:
-		playListInfos_1 = 'MODE=ADD###START###{0}###{1}###{2}###{3}###END###'.format(url, origSERIE, image, plot.replace('\n', '#n#'))
-		entries.append([translation(30651), 'RunPlugin('+sys.argv[0]+'?mode=favs&url='+quote_plus(playListInfos_1)+')'])
+		FAVInfos_1 = 'MODE=ADD###START###{0}###{1}###{2}###{3}###END###'.format(url, origSERIE, image, plot.replace('\n', '#n#'))
+		entries.append([translation(30651), 'RunPlugin('+sys.argv[0]+'?mode=favs&url='+quote_plus(FAVInfos_1)+')'])
 	if FAVdel == True:
-		playListInfos_2 = 'MODE=DEL###START###{0}###{1}###{2}###{3}###END###'.format(url, name, image, plot)
-		entries.append([translation(30652), 'RunPlugin('+sys.argv[0]+'?mode=favs&url='+quote_plus(playListInfos_2)+')'])
+		FAVInfos_2 = 'MODE=DEL###START###{0}###{1}###{2}###{3}###END###'.format(url, name, image, plot)
+		entries.append([translation(30652), 'RunPlugin('+sys.argv[0]+'?mode=favs&url='+quote_plus(FAVInfos_2)+')'])
 	liz.addContextMenuItems(entries, replaceItems=False)
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
 
@@ -521,6 +507,8 @@ def addLink(name, url, mode, image, plot=None, duration=None, origSERIE=None, se
 	liz.addStreamInfo('Video', {'Duration': duration})
 	liz.setProperty('IsPlayable', 'true')
 	liz.setContentLookup(False)
+	playInfos = '###START###{0}###{1}###{2}###END###'.format(u, name, image)
+	liz.addContextMenuItems([(translation(30653), 'RunPlugin('+sys.argv[0]+'?mode=addQueue&url='+quote_plus(playInfos)+')')])
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
 
 params = parameters_string_to_dict(sys.argv[2])
@@ -549,5 +537,7 @@ elif mode == 'listShowsFavs':
 	listShowsFavs()
 elif mode == 'favs':
 	favs(url)
+elif mode == 'addQueue':
+	addQueue(url)
 else:
 	index()

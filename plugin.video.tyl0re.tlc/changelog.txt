@@ -24,3 +24,7 @@
 
 [B]Version 2.0.5  (03.02.2020)[/B] by realvito
 - Pluginname changed for KODI-compatibility (old=plugin.video.L0RE.tlc -> new=plugin.video.tyl0re.tlc)
+- Bitte nach der Installation einmal STARTEN (um die eigenen Addon-Favoriten automatisch zu übertragen) !!!
+
+[B]Version 2.0.6  (29.02.2020)[/B] by realvito
+- optimized: URL-Abfrage jetzt umgestellt auf das etwas schnellere requests-modul

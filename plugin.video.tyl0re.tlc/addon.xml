@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<addon id="plugin.video.tyl0re.tlc" name="TLC Mediathek [COLOR FF00EE00](neu)[/COLOR]" version="2.0.5" provider-name="L0RE, realvito">
+<addon id="plugin.video.tyl0re.tlc" name="TLC Mediathek [COLOR FF00EE00](neu)[/COLOR]" version="2.0.6" provider-name="L0RE, realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="script.module.requests" version="2.20.0"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
@@ -24,9 +25,13 @@
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 2.0.5  (03.02.2020)[/COLOR][/B] by realvito[CR]
+		<news>[B][COLOR orangered]Version 2.0.6  (29.02.2020)[/COLOR][/B] by realvito[CR]
+- optimized: URL-Abfrage jetzt umgestellt auf das etwas schnellere requests-modul
+------------------------------------------------------------------------------------------------------------------------------------
+[B][COLOR orangered]Version 2.0.5  (03.02.2020)[/COLOR][/B] by realvito[CR]
 - Pluginname changed for KODI-compatibility (old=plugin.video.L0RE.tlc -> new=plugin.video.tyl0re.tlc)
 - Bitte nach der Installation einmal STARTEN (um die eigenen Addon-Favoriten automatisch zu übertragen) !!!
+- optimized: URL-Abfrage jetzt umgestellt auf das etwas schnellere requests-modul
 		</news>
 	</extension>
 </addon>

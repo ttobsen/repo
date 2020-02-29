@@ -10,8 +10,12 @@
 		<setting type="sep"/>
 		<setting label="30232" type="lsep"/>
 		<setting label="30114" type="bool" id="useThumbAsFanart" default="true"/>
-		<setting type="sep"/>
+	</category>
+	<category label="30001">
 		<setting label="30233" type="lsep"/>
 		<setting label="30115" type="bool" id="show_settings" default="true"/>
+		<setting type="sep"/>
+		<setting label="30234" type="lsep"/>
+		<setting label="30116" type="bool" id="enableDebug" default="false"/>
 	</category>
 </settings>

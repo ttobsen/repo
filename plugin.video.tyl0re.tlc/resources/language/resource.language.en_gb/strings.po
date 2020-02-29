@@ -31,7 +31,11 @@ msgctxt "#30000"
 msgid "General"
 msgstr ""
 
-# empty strings from id 30001 to 30109
+msgctxt "#30001"
+msgid "Advanced"
+msgstr ""
+
+# empty strings from id 30002 to 30109
 # SETTINGS-BUTTONS
 
 msgctxt "#30110"
@@ -58,7 +62,11 @@ msgctxt "#30115"
 msgid "     Show Addon-Settings in the overview"
 msgstr ""
 
-# empty strings from id 30116 to 30229
+msgctxt "#30116"
+msgid "     Detailed Addon-Debug (otherwise only Minimal-Log)"
+msgstr ""
+
+# empty strings from id 30117 to 30229
 # SETTINGS-TITLES
 
 msgctxt "#30230"
@@ -77,7 +85,11 @@ msgctxt "#30233"
 msgid "[B][COLOR ff0099ff]SETTINGS[/COLOR][/B]"
 msgstr ""
 
-# empty strings from id 30234 to 30349
+msgctxt "#30234"
+msgid "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
+msgstr ""
+
+# empty strings from id 30235 to 30349
 # SETTINGS-DESCRIPTIONS
 
 msgctxt "#30350"
@@ -179,4 +191,8 @@ msgstr ""
 
 msgctxt "#30652"
 msgid "[COLOR orangered]... Remove from TLC-Favourites[/COLOR]"
+msgstr ""
+
+msgctxt "#30653"
+msgid "[COLOR yellow]Add to TLC-Playlist[/COLOR]"
 msgstr ""
