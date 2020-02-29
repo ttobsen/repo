@@ -96,11 +96,12 @@ def getUrl(url, method, allow_redirects=False, verify=False, stream=False, heade
 	response = requests.Session()
 	access_token = '00'
 	if method == 'GET':
-		content = response.get(url, allow_redirects=allow_redirects, verify=verify, stream=stream, headers=headers, data=data, timeout=timeout)
+		content = response.get(url, allow_redirects=allow_redirects, verify=verify, stream=stream, headers=headers, data=data, timeout=timeout).text
 	elif method == 'POST':
 		content = response.post(url, data=data, allow_redirects=allow_redirects, verify=verify).text
 	if 'sonicToken' in response.cookies and response.cookies['sonicToken']:
 		access_token = response.cookies['sonicToken']
+	content = py2_enc(content)
 	return content, access_token
 
 def ADDON_operate(TESTING):
@@ -137,8 +138,7 @@ def listThemes():
 	debug_MS("(listThemes) ------------------------------------------------ START = listThemes -----------------------------------------------")
 	xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
 	content, access_token = getUrl(baseURL+'themen', 'GET', False, False, False, __HEADERS)
-	html = content.text
-	response = html[html.find('href="/themen">Themen</a><div class="header__nav__dd-wrapper">')+1:]
+	response = content[content.find('href="/themen">Themen</a><div class="header__nav__dd-wrapper">')+1:]
 	response = response[:response.find('</ul></div>')]
 	result = re.compile('<a href="(.*?)">(.*?)</a>').findall(response)
 	for link, name in result:
@@ -156,9 +156,9 @@ def listSeries(url, PAGE, POS, ADDITION):
 	readyURL = url+'&page='+str(PAGE)
 	content, access_token = getUrl(readyURL, 'GET', False, False, False, __HEADERS)
 	debug_MS("++++++++++++++++++++++++")
-	debug_MS("(listSeries) XXXXX CONTENT : {0} XXXXX".format(content.text))
+	debug_MS("(listSeries) XXXXX CONTENT : {0} XXXXX".format(str(content)))
 	debug_MS("++++++++++++++++++++++++")
-	DATA = content.json()
+	DATA = json.loads(content)
 	if 'search?query' in url:
 		elements = DATA['shows']
 	else:
@@ -214,9 +214,9 @@ def listEpisodes(idd, origSERIE):
 	try:
 		content, access_token = getUrl(url, 'GET', False, False, False, __HEADERS)
 		debug_MS("++++++++++++++++++++++++")
-		debug_MS("(listEpisodes) XXXXX CONTENT : {0} XXXXX".format(content.text))
+		debug_MS("(listEpisodes) XXXXX CONTENT : {0} XXXXX".format(str(content)))
 		debug_MS("++++++++++++++++++++++++")
-		DATA = content.json()
+		DATA = json.loads(content)
 	except: return xbmcgui.Dialog().notification(translation(30521).format(str(idd)), translation(30522), icon, 12000)
 	genstr = ""
 	genreList=[]
@@ -377,9 +377,9 @@ def playVideo(idd2):
 	__access_header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0', 'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(access_token)}
 	result, access_token = getUrl(playURL, 'GET', True, False, False, __access_header)
 	debug_MS("++++++++++++++++++++++++")
-	debug_MS("(playVideo) XXXXX RESULT : {0} XXXXX".format(result.text))
+	debug_MS("(playVideo) XXXXX RESULT : {0} XXXXX".format(str(result)))
 	debug_MS("++++++++++++++++++++++++")
-	DATA = result.json()
+	DATA = json.loads(result)
 	videoURL = DATA['data']['attributes']['streaming']['hls']['url']
 	log("(playVideo) StreamURL : "+videoURL)
 	listitem = xbmcgui.ListItem(path=videoURL)
@@ -387,7 +387,7 @@ def playVideo(idd2):
 		if ADDON_operate('inputstream.adaptive'):
 			licfile = DATA['data']['attributes']['protection']['schemes']['clearkey']['licenseUrl']
 			licurl, access_token = getUrl(licfile, 'GET', True, False, False, __access_header)
-			lickey = licurl.json()['keys'][0]['kid']
+			lickey = json.loads(licurl)['keys'][0]['kid']
 			debug_MS("(playVideo) ##### LIC-FILE : {0} || LIC-KEY : {1} #####".format(str(licfile), str(lickey)))
 			listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
 			listitem.setProperty('inputstream.adaptive.manifest_type', 'hls')
@@ -493,7 +493,7 @@ def LIBRARY_Worker(BroadCast_Idd, BroadCast_Name):
 	os.makedirs(EP_Path)
 	try:
 		content, access_token = getUrl(url, 'GET', False, False, False, __HEADERS)
-		DATA = content.json()
+		DATA = json.loads(content)
 		TVS_title = py2_enc(DATA['show']['name'])
 	except:
 		return

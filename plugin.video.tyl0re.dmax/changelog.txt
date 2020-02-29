@@ -53,3 +53,6 @@
 - fixed: Fehler bei Eintrag in die Bibliothek, wenn im Titel bestimmte Zeichen enthalten sind
 - optimized: URL-Abfrage jetzt umgestellt auf das etwas schnellere requests-modul
 - optimized: Updatezyklus für Bibliothek jetzt unabhängig von Addonnutzung, da separater Hintergrund-Prozess
+
+[B]Version 2.1.2  (29.02.2020)[/B] by realvito
+- fixed: Ordner können nicht geöffnet werden (Encodingfehler-requests-modul)
