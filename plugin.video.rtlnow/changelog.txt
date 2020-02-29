@@ -26,3 +26,6 @@
 - added: Es können jetzt auch einzelne Jahrgänge einer Serie zur KODI-Bibliothek hinzugefügt werden
 - fixed: Teilweise können Free-Videos aus der KODI-Bibliothek nicht abgespielt werden
 - optimized: Updatezyklus für Bibliothek jetzt unabhängig von Addonnutzung, da separater Hintergrund-Prozess
+
+[B]Version 2.0.7  (29.02.2020)[/B] by realvito
+- fixed: Vereinzelt können Episoden z.B. "Das perfekte Dinner" oder "GZSZ" nicht abgespielt werden

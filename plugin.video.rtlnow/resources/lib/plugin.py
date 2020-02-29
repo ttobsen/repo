@@ -333,16 +333,16 @@ def listEpisodes(Xidd):
 		episode = '0'
 		if 'episode' in folge and folge['episode'] != "" and str(folge['episode']) != "0" and folge['episode'] != None:
 			episode = str(folge['episode'])
-		duration =""
+		duration = '0'
 		if 'duration' in folge and folge['duration'] !="" and folge['duration'] != None:
 			duration = get_sec(folge['duration'])
-		tagline =""
+		tagline = None
 		if 'teaserText' in folge and folge['teaserText'] !="" and folge['teaserText'] != None:
 			tagline = py2_enc(folge['teaserText']).strip()
-		plot =""
+		plot = None
 		if 'articleLong' in folge and folge['articleLong'] !="" and folge['articleLong'] != None:
 			plot = py2_enc(folge['articleLong']).strip()
-		if plot =="" and 'articleShort' in folge and folge['articleShort'] !="" and folge['articleShort'] != None:
+		if plot == None and 'articleShort' in folge and folge['articleShort'] !="" and folge['articleShort'] != None:
 			plot = py2_enc(folge['articleShort']).strip()
 		Note_1 =""
 		Note_2 =""
@@ -411,7 +411,7 @@ def listEpisodes(Xidd):
 		COMBI_EPISODE.append([episID, videoURL, image, title1, title2, plot, tagline, duration, seriesname, season, episode, genre, mpaa, year, begins, station, ftype, nosub])
 	if COMBI_EPISODE:
 		for episID, videoURL, image, title1, title2, plot, tagline, duration, seriesname, season, episode, genre, mpaa, year, begins, station, ftype, nosub in COMBI_EPISODE:
-			EP_entry = py2_enc(episID+'@@'+str(videoURL)+'@@'+str(seriesname)+'@@'+str(title2)+'@@'+str(image)+'@@'+str(plot)+'@@'+str(duration)+'@@'+str(season)+'@@'+str(episode)+'@@'+str(nosub)+'@@')
+			EP_entry = py2_enc(episID+'@@'+str(videoURL)+'@@'+str(seriesname)+'@@'+str(title2)+'@@'+str(image)+'@@'+str(duration)+'@@'+str(season)+'@@'+str(episode)+'@@'+str(nosub)+'@@')
 			if EP_entry not in uno_LIST:
 				uno_LIST.append(EP_entry)
 			listitem = xbmcgui.ListItem(path=sys.argv[0]+'?IDENTiTY='+episID+'&mode=playCODE')
@@ -482,7 +482,7 @@ def LOGIN():
 			debug_MS("(LOGIN) ##### END-CHECK = Setting(freeonly) : {0} #####".format(str(addon.getSetting("freeonly"))))
 			debug_MS("(LOGIN) <<<<< Ende LOGIN <<<<<")
 			return 1,persToken
-	url = "https://api.tvnow.de/v3/backend/login?fields=%5B%22id%22,%20%22token%22,%20%22user%22,%5B%22agb%22%5D%5D"
+	url = "https://api.tvnow.de/v3/backend/login?fields=[%22id%22,%22token%22,%22user%22,[%22agb%22]]"
 	values = {'email': USER, 'password': PWD}
 	data = urlencode(values)
 	debug_MS("(LOGIN) ##### Credentials : {0} #####".format(data))
@@ -780,14 +780,13 @@ def playCODE(IDD):
 				seriesname = field[2]
 				title2 = field[3]
 				photo = field[4]
-				plot = field[5] 
-				duration = field[6]
-				season = field[7]
-				episode = field[8]
-				deeplink = field[9]
-				DRM = field[10]
-				token = field[11]
-				pay = field[12]
+				duration = field[5]
+				season = field[6]
+				episode = field[7]
+				deeplink = field[8]
+				DRM = field[9]
+				token = field[10]
+				pay = field[11]
 	if IDD != '0' and finalURL != '0':
 		debug_MS("--------------------------------------------------------------------------- Gefunden ---------------------------------------------------------------------------------")
 		debug_MS("(playCODE) ### STREAM : {0} ###".format(finalURL))
