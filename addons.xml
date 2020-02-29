@@ -567,7 +567,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 	</extension>
 </addon>
 
-<addon id="plugin.video.tyl0re.dmax" name="DMAX Mediathek [COLOR FF00EE00](neu)[/COLOR]" version="2.1.1" provider-name="L0RE, realvito">
+<addon id="plugin.video.tyl0re.dmax" name="DMAX Mediathek [COLOR FF00EE00](neu)[/COLOR]" version="2.1.2" provider-name="L0RE, realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="script.module.requests" version="2.20.0"/>
@@ -594,7 +594,10 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 2.1.1  (25.02.2020)[/COLOR][/B] by realvito[CR]
+		<news>[B][COLOR orangered]Version 2.1.2  (29.02.2020)[/COLOR][/B] by realvito[CR]
+- fixed: Ordner können nicht geöffnet werden (Encodingfehler-requests-modul)
+------------------------------------------------------------------------------------------------------------------------------------
+[B][COLOR orangered]Version 2.1.1  (25.02.2020)[/COLOR][/B] by realvito[CR]
 - fixed: Fehler bei Eintrag in die Bibliothek, wenn im Titel bestimmte Zeichen enthalten sind
 - optimized: URL-Abfrage jetzt umgestellt auf das etwas schnellere requests-modul
 - optimized: Updatezyklus für Bibliothek jetzt unabhängig von Addonnutzung, da separater Hintergrund-Prozess
@@ -606,9 +609,10 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 	</extension>
 </addon>
 
-<addon id="plugin.video.tyl0re.tlc" name="TLC Mediathek [COLOR FF00EE00](neu)[/COLOR]" version="2.0.5" provider-name="L0RE, realvito">
+<addon id="plugin.video.tyl0re.tlc" name="TLC Mediathek [COLOR FF00EE00](neu)[/COLOR]" version="2.0.6" provider-name="L0RE, realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="script.module.requests" version="2.20.0"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
@@ -631,9 +635,13 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 2.0.5  (03.02.2020)[/COLOR][/B] by realvito[CR]
+		<news>[B][COLOR orangered]Version 2.0.6  (29.02.2020)[/COLOR][/B] by realvito[CR]
+- optimized: URL-Abfrage jetzt umgestellt auf das etwas schnellere requests-modul
+------------------------------------------------------------------------------------------------------------------------------------
+[B][COLOR orangered]Version 2.0.5  (03.02.2020)[/COLOR][/B] by realvito[CR]
 - Pluginname changed for KODI-compatibility (old=plugin.video.L0RE.tlc -> new=plugin.video.tyl0re.tlc)
 - Bitte nach der Installation einmal STARTEN (um die eigenen Addon-Favoriten automatisch zu übertragen) !!!
+- optimized: URL-Abfrage jetzt umgestellt auf das etwas schnellere requests-modul
 		</news>
 	</extension>
 </addon>
@@ -1627,7 +1635,7 @@ To support the backport the addon will now always create the merged_epg.xml.gz
   </extension>
 </addon>
 
-<addon id="plugin.video.3plus_ch" name="3plus TV [COLOR FF00EE00](neu)[/COLOR]" version="1.0.2" provider-name="realvito">
+<addon id="plugin.video.3plus_ch" name="3plus TV [COLOR FF00EE00](neu)[/COLOR]" version="1.0.3" provider-name="realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="script.common.plugin.cache" version="2.6.0" optional="true"/>
@@ -1653,7 +1661,10 @@ To support the backport the addon will now always create the merged_epg.xml.gz
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.0.2  (25.02.2020)[/COLOR][/B] by realvito[CR]
+		<news>[B][COLOR orangered]Version 1.0.3  (29.02.2020)[/COLOR][/B] by realvito[CR]
+- fixed: In manchen KODI-Skins werden die Episodentitel falsch oder gar nicht angezeigt
+------------------------------------------------------------------------------------------------------------------------
+[B][COLOR orangered]Version 1.0.2  (25.02.2020)[/COLOR][/B] by realvito[CR]
 - Autor bisher @L0RE
 - Ab jetzt übernommen durch @realvito
 - fixed: Addon neu aufgesetzt nach Webseitenveränderung
@@ -2794,7 +2805,7 @@ oder online unter https://goo.gl/GtK41L nachlesen.
     </extension>
 </addon>
 
-<addon id="plugin.video.rtlnow" name="TVNOW - DE" version="2.0.6" provider-name="L0RE, realvito">
+<addon id="plugin.video.rtlnow" name="TVNOW - DE" version="2.0.7" provider-name="L0RE, realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="script.common.plugin.cache" version="2.6.0" optional="true"/>
@@ -2823,7 +2834,10 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 2.0.6  (25.02.2020)[/COLOR][/B] by realvito[CR]
+		<news>[B][COLOR orangered]Version 2.0.7  (29.02.2020)[/COLOR][/B] by realvito[CR]
+- fixed: Vereinzelt können Episoden z.B. "Das perfekte Dinner" oder "GZSZ" nicht abgespielt werden
+---------------------------------------------------------------------------------------------------------------------------------
+[B][COLOR orangered]Version 2.0.6  (25.02.2020)[/COLOR][/B] by realvito[CR]
 - added: Es können jetzt auch einzelne Jahrgänge einer Serie zur KODI-Bibliothek hinzugefügt werden
 - fixed: Teilweise können Free-Videos aus der KODI-Bibliothek nicht abgespielt werden
 - optimized: Updatezyklus für Bibliothek jetzt unabhängig von Addonnutzung, da separater Hintergrund-Prozess
