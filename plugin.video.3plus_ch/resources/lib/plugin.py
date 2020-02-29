@@ -158,15 +158,15 @@ def listProductions(idd):  # https://www.3plus.tv/api/pub/gql/tv3plus/NewsArticl
 	content = makeREQUEST(url)
 	COMBI_FIRST = []
 	Isolated = set()
-	title = '00'
-	contextType = '00'
-	contextId = '00'
 	response = json.loads(content)['data']['page']['layout']['content']['content'][0]['content'][0]['content']
 	for item in response:
+		title = '00'
 		if 'type' in item and item['type'] == 'FramedContent':
 			title = _clean(item['header']['title'])
+		contextType = '00'
 		if 'content' in item and 'contextType' in item['content'] and item['content']['contextType'] != "" and item['content']['contextType'] != None:
 			contextType =  item['content']['contextType']
+		contextId = '00'
 		if 'content' in item and 'contextId' in item['content'] and item['content']['contextId'] != "" and item['content']['contextId'] != None:
 			contextId = item['content']['contextId']
 		group = '00'
@@ -209,7 +209,6 @@ def getSearch(url, limit, default="", heading="Suche nach...", hidden=False):
 			limit += 1
 			word = py2_enc(keyboard.getText())
 			return listVideos('Searchterm@@'+word, limit)
-		else: return default
 	return default
 
 def listVideos(idd, limit):  # https://www.3plus.tv/api/pub/gql/tv3plus/NewsArticleTeaser/2d5925defbf8ae31f3604f3dd6a5e44783a46a11?variables=%7B%22contextId%22%3A%22NewsArticle%3A136264072%22%7D
@@ -226,9 +225,6 @@ def listVideos(idd, limit):  # https://www.3plus.tv/api/pub/gql/tv3plus/NewsArti
 	pos2 = 0
 	FOUND = 1
 	limit = int(limit)
-	title = '00'
-	contextType = '00'
-	contextId = '00'
 	if 'Searchterm' in idd and limit <= 2:
 		# SEARCH = https://www.3plus.tv/api/pub/gql/tv3plus/Search/8edd5397e0fd160310524073f04d8200325310ed?variables=%7B%22fulltext%22%3A%22bauer%20sucht%22%2C%22assetType%22%3Anull%2C%22functionScore%22%3A%22%22%2C%22offset%22%3A0%7D
 		url = apiURL+'Search/8edd5397e0fd160310524073f04d8200325310ed?variables=%7B%22fulltext%22%3A%22{0}%22%2C%22assetType%22%3Anull%2C%22functionScore%22%3A%22%22%2C%22offset%22%3A0%7D'.format(idd.split('@@')[1].replace(' ', '%20'))
@@ -237,8 +233,11 @@ def listVideos(idd, limit):  # https://www.3plus.tv/api/pub/gql/tv3plus/NewsArti
 			content = makeREQUEST(url)
 			response = json.loads(content)['data']['search']['fulltext']['newsarticles']['data']
 			for item in response:
+				title = '00'
+				contextType = '00'
 				if 'baseType' in item and item['baseType'] == 'NewsArticle':
 					contextType = item['baseType']
+				contextId = '00'
 				if 'id' in item and item['id'] != "" and item['id'] != None:
 					contextId = item['id']
 				if contextId in Isolated or contextId == '00':
@@ -253,10 +252,13 @@ def listVideos(idd, limit):  # https://www.3plus.tv/api/pub/gql/tv3plus/NewsArti
 		content = makeREQUEST(url)
 		response = json.loads(content)['data']['page']['layout']['content']['content'][0]['content'][0]['content']
 		for item in response:
+			title = '00'
 			if 'type' in item and item['type'] == 'FramedContent':
 				title = _clean(item['header']['title'])
+			contextType = '00'
 			if 'content' in item and 'contextType' in item['content'] and item['content']['contextType'] != "" and item['content']['contextType'] != None:
 				contextType =  item['content']['contextType']
+			contextId = '00'
 			if 'content' in item and 'contextId' in item['content'] and item['content']['contextId'] != "" and item['content']['contextId'] != None:
 				contextId = item['content']['contextId']
 			group = '00'
@@ -273,21 +275,21 @@ def listVideos(idd, limit):  # https://www.3plus.tv/api/pub/gql/tv3plus/NewsArti
 			result = makeREQUEST(link)
 			debug_MS("(listVideos) ### LINK : {0} ###".format(str(link)))
 			short = json.loads(result)['data']['context']
-			try: title = _clean(short['mainAsset']['title'])
-			except: title = _clean(short['title'])
+			try: name = _clean(short['mainAsset']['title'])
+			except: name = _clean(short['title'])
 			origSERIE = ""
-			origSERIE = title.replace('|', '').replace('ST', 'Staffel ').split('Staffel')[0].strip()
+			origSERIE = _extractSHOW(name)
 			Note_1 =""
 			Note_2 =""
 			Note_3 =""
-			season = 0
-			episode = 0
-			if 'Staffel ' in title or 'ST ' in title:
-				try: season = re.findall('(?:Staffel|ST) ([0-9]+)', title, re.S)[0].strip().zfill(4)
+			season = '0'
+			episode = '0'
+			if 'Staffel ' in name or 'ST ' in name:
+				try: season = re.findall('(?:Staffel|ST) ([0-9]+)', name, re.S)[0].strip().zfill(4)
 				except: pass
-			if title[:2].isdigit() or 'Folge ' in title or 'Episode ' in title:
+			if name[:2].isdigit() or 'Folge ' in name or 'Episode ' in name:
 				try:
-					episode = re.findall('(?:Folge|Episode) ([0-9]+)', title, re.S)[0].strip().zfill(4)
+					episode = re.findall('(?:Folge|Episode) ([0-9]+)', name, re.S)[0].strip().zfill(4)
 					pos1 += 1
 				except: pass
 			else: pos2 += 1
@@ -303,53 +305,53 @@ def listVideos(idd, limit):  # https://www.3plus.tv/api/pub/gql/tv3plus/NewsArti
 				Note_3 = _clean(short['lead'])
 			plot = Note_1+Note_2+Note_3
 			try: duration = short['mainAsset']['video']['kaltura']['meta']['duration']
-			except: duration = ""
+			except: duration = '0'
 			try: kalturaId = str(short['mainAsset']['video']['kaltura']['kalturaId'])
 			except: kalturaId = '00'
 			# grösste Auflösung = https://static.az-cdn.ch/__ip/9w9PsDp2QzKB3vvT_4ZFEPzztfQ/8a0585a3041972617a5abe010d3c6407a2901bbd/n-ch12_2x-16x9-far
 			try: image = short['teaserImage']['image']['url']+'n-ch12_2x-16x9-far'
 			except: image = ""
-			SE_num = ""
+			SE_num = '00'
 			if 'contextLabel' in short and short['contextLabel'] != "" and short['contextLabel'] != None:
 				SE_num = _clean(short['contextLabel'])
+				debug_MS("(listVideos) ### SE_num : {0} ###".format(str(SE_num)))
 			SE_link = ""
 			if 'headRessort' in short and 'urls' in short['headRessort'] and 'relative' in short['headRessort']['urls'] and short['headRessort']['urls']['relative'] != "" and short['headRessort']['urls']['relative'] != None:
 				SE_link = _clean(short['headRessort']['urls']['relative']).replace('/', '')
-			debug_MS("(listVideos) no.2 ### TITLE = {0} || SEASON = {1} || EPISODE = {2} || startTIMES = {3} ###".format(title, str(season), str(episode), str(startTIMES)))
+			debug_MS("(listVideos) no.2 ### TITLE = {0} || SEASON = {1} || EPISODE = {2} || startTIMES = {3} ###".format(name, str(season), str(episode), str(startTIMES)))
 			debug_MS("(listVideos) no.2 ### SERIE = {0} || kalturaId = {1} || FOTO = {2} || DURATION = {3} ###".format(origSERIE, kalturaId, str(image), str(duration)))
-			if SE_num != "" and 'staffel' in SE_num.lower():
+			if SE_num != '00' and 'staffel ' in SE_num.lower():
 				COMBI_SEASON.append([SE_num, SE_link, image, plot])
 			else:
-				COMBI_EPISODE.append([episode, pos1, pos2, kalturaId, image, title, plot, duration, origSERIE, season])
+				COMBI_EPISODE.append([episode, kalturaId, image, name, plot, duration, origSERIE, season, pos1, pos2])
 	else:
 		return xbmcgui.Dialog().notification(translation(30522).format('Einträge'), translation(30525).format(idd), icon, 10000)
 	if COMBI_SEASON:
 		for SE_num, SE_link, image, plot in COMBI_SEASON:
-			if 'staffel' in SE_num.lower():
-				try:
-					NUMBER = SE_num.lower().replace('staffel', '').strip()
-					sea_LIST.append(NUMBER)
-					newSE = int(max(sea_LIST))+1
-					newLINK = SE_link.split('-staffel-')[0]+'-staffel-'+str(newSE)
-					if FOUND == 1:
-						FOUND += 1
-						addDir('Staffel '+str(newSE), newLINK, 'listVideos', image, limit=limit)
-				except: pass
-				addDir(SE_num, SE_link, 'listVideos', image, limit=limit)
+			try:
+				NUMBER = SE_num.lower().replace('staffel', '').strip()
+				sea_LIST.append(NUMBER)
+				newSE = int(max(sea_LIST))+1
+				newLINK = SE_link.split('-staffel-')[0]+'-staffel-'+str(newSE)
+				if FOUND == 1:
+					FOUND += 1
+					addDir('Staffel '+str(newSE), newLINK, 'listVideos', image, limit=limit)
+			except: pass
+			addDir(SE_num, SE_link, 'listVideos', image, limit=limit)
 	if COMBI_EPISODE and not COMBI_SEASON:
-		if pos2 <= 5 and not 'Notruf' in title:
-			COMBI_EPISODE = sorted(COMBI_EPISODE, key=lambda num:num[0], reverse=True)
-		for episode, pos1, pos2, kalturaId, image, title, plot, duration, origSERIE, season in COMBI_EPISODE:
-			EP_entry = py2_enc(kalturaId+'@@'+str(origSERIE)+'@@'+str(title)+'@@'+str(image)+'@@'+str(plot)+'@@'+str(duration)+'@@'+str(season)+'@@'+str(episode)+'@@')
+		if pos2 <= 5 and not 'Notruf' in name:
+			COMBI_EPISODE = sorted(COMBI_EPISODE, key=lambda no:no[0], reverse=True)
+		for episode, kalturaId, image, name, plot, duration, origSERIE, season, pos1, pos2 in COMBI_EPISODE:
+			EP_entry = py2_enc(kalturaId+'@@'+str(origSERIE)+'@@'+str(name)+'@@'+str(image)+'@@'+str(duration)+'@@'+str(season)+'@@'+str(episode)+'@@')
 			if kalturaId != '00':
 				if EP_entry not in uno_LIST:
 					uno_LIST.append(EP_entry)
-				listitem = xbmcgui.ListItem(path=sys.argv[0]+'?IDENTiTY='+kalturaId+'&mode=playCODE')
+				listitem = xbmcgui.ListItem(name, path=sys.argv[0]+'?IDENTiTY='+kalturaId+'&mode=playCODE')
 				ilabels = {}
 				ilabels['Season'] = season
 				ilabels['Episode'] = episode
 				ilabels['Tvshowtitle'] = origSERIE
-				ilabels['Title'] = title
+				ilabels['Title'] = name
 				ilabels['Tagline'] = None
 				ilabels['Plot'] = plot
 				ilabels['Duration'] = duration
@@ -366,11 +368,11 @@ def listVideos(idd, limit):  # https://www.3plus.tv/api/pub/gql/tv3plus/NewsArti
 					listitem.setArt({'fanart': image})
 				listitem.addStreamInfo('Video', {'Duration':duration})
 				listitem.setProperty('IsPlayable', 'true')
-				playInfos = '###START###{0}?IDENTiTY={1}&mode=playCODE###{2}###{3}###END###'.format(sys.argv[0], kalturaId, title, image)
+				playInfos = '###START###{0}?IDENTiTY={1}&mode=playCODE###{2}###{3}###END###'.format(sys.argv[0], kalturaId, name, image)
 				listitem.addContextMenuItems([(translation(30654), 'RunPlugin('+sys.argv[0]+'?mode=addQueue&url='+quote_plus(playInfos)+')')])
 				xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=sys.argv[0]+'?IDENTiTY='+kalturaId+'&mode=playCODE', listitem=listitem)
-		with open(WORKFILE, 'w') as input:
-			input.write('\n'.join(uno_LIST))
+				with open(WORKFILE, 'w') as input:
+					input.write('\n'.join(uno_LIST))
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def playCODE(IDD):
@@ -391,12 +393,11 @@ def playCODE(IDD):
 			if field[0]==IDD:
 				entryId = field[0]
 				origSERIE = field[1]
-				title = field[2]
+				name = field[2]
 				image = field[3]
-				plot = field[4] 
-				duration = field[5] 
-				season = field[6]
-				episode = field[7]
+				duration = field[4] 
+				season = field[5]
+				episode = field[6]
 	if IDD != '00' and entryId != '00':
 		firstUrl = 'https://cdnapisec.kaltura.com/p/{0}/sp/{0}00/playManifest/entryId/{1}/format/applehttp/protocol/https/a.m3u8?responseFormat=json'.format(PartnerId, entryId)
 		ref = 'https://license.theoplayer.com/'
@@ -463,6 +464,28 @@ def _clean(text):
 		, ('&agrave;', 'à'), ('&aacute;', 'á'), ('&acirc;', 'â'), ('&egrave;', 'è'), ('&eacute;', 'é'), ('&ecirc;', 'ê'), ('&igrave;', 'ì'), ('&iacute;', 'í'), ('&icirc;', 'î')
 		, ('&ograve;', 'ò'), ('&oacute;', 'ó'), ('&ocirc;', 'ô'), ('&ugrave;', 'ù'), ('&uacute;', 'ú'), ('&ucirc;', 'û'), ('_', ' ')):
 		text = text.replace(*n)
+	return text.strip()
+
+def _extractSHOW(text):
+	text = py2_enc(text)
+	namesList = []
+	readyList =  ['Adieu Heimat - Schweizer wandern aus', 'Der Bachelor@', 'Die Bachelorette', 'Bauer, ledig, sucht...', 'Bumannn, der Restauranttester'
+		, 'Notruf - Bergretter im Einsatz', 'Notruf - Retter@ im Einsatz', 'Schatz oder Plunder - Fundstücke vom Land', 'The Voice of Switzerland', 'Jung, wild und sexy'
+		, 'Mama ich bin schwanger', 'Camping Paradiso', 'Undercover Boss', 'Liebesglück im Osten', 'Die Bellers', 'Mike Shiva', 'Supervujo'
+		, 'Big Pictures', 'Bernegger & Juric, die Kommissare', 'Adam & Eva', 'Die Zehn', 'Wer wird Millionär', 'Sing and Win!', 'Supermodel']
+	spTitle = re.sub('[{@$%#^\\/;,:*?!\"+<>|}]', '', text)
+	spTitle = spTitle.lower().replace('notruf staffel', 'retter').replace('notruf', '').replace('einsatz', '').replace('vom land', '').replace('sumo', 'supermodel ').replace('staffel ', '').replace('folge ', '').split(' ')
+	for item in spTitle:
+		if item == 'bachelor': item = 'bachelor@' 
+		if item == 'retter': item = 'retter@'
+		if len(item) >= 4:
+			minWord = str(item)
+			namesList.append(minWord)
+	debug_MS("(_extractSHOW) ### namesList : {0} ###".format(str(namesList)))
+	for elem in readyList:
+		for minWord in namesList:
+			if minWord in elem.lower():
+				text = elem.replace('@', '')
 	return text.strip()
 
 def addQueue(vid):

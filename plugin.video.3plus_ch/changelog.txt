@@ -22,3 +22,6 @@
 - Autor bisher @L0RE
 - Ab jetzt übernommen durch @realvito
 - fixed: Addon neu aufgesetzt nach Webseitenerneuerung
+
+[B]Version 1.0.3  (29.02.2020)[/B]
+- fixed: In manchen KODI-Skins werden die Episodentitel falsch oder gar nicht angezeigt
