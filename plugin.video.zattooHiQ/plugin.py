@@ -1432,7 +1432,7 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
       start = int(time.mktime(program['start_date'].timetuple()))
       end = int(time.mktime(program['end_date'].timetuple()))
       showID = program['showID']
-      if RECALL: watch_channel(channel,start,end)
+      if RECALL: watch_channel(channel,start,end, showID)
       else: watch_channel(channel, start, end, showID, True)
     elif controlID==210: #record program
       setup_recording(program['showID'])

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.zattooHiQ-19" version="1.0.1.4" name="Zattoo HiQ-19" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ-19" version="1.0.1.5" name="Zattoo HiQ-19" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
     <import addon="xbmc.addon" version="18.9.701" />
