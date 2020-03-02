@@ -275,7 +275,7 @@ def listSeasons(Xidd, Xbild):
 	Xbild = cleanPhoto(Xbild)
 	if DATA['annualNavigation']['total'] == 1:
 		debug_MS("(listSeasons) no.1 ### SERIE = {0} || seasonID = {1} || PHOTO = {2} ###".format(seriesname, seasonID, str(Xbild)))
-		listEpisodes(seasonID)
+		listEpisodes('##'+seasonID+'##')
 	else:
 		for each in DATA['annualNavigation']['items']:
 			year = str(each['year'])
@@ -297,8 +297,10 @@ def listEpisodes(Xidd):
 		elem_IDD = Xidd.split('@@')[0]
 		elem_YEAR = Xidd.split('@@')[1]
 		startURL = 'https://api.tvnow.de/v3/movies?fields=*,format,paymentPaytypes,pictures,trailers&filter={%22BroadcastStartDate%22:{%22between%22:{%22start%22:%22'+elem_YEAR+'-01-01%2000:00:00%22,%22end%22:%20%22'+elem_YEAR+'-12-31%2023:59:59%22}},%20%22FormatId%22%20:%20'+elem_IDD+'}&maxPerPage=500&order=BroadcastStartDate%20asc'
+	elif '##' in Xidd:
+		startURL = 'https://api.tvnow.de/v3/movies?fields=*,format,paymentPaytypes,pictures,trailers&filter={%20%22FormatId%22%20:%20'+Xidd.replace('##', '')+'}&maxPerPage=500&order=BroadcastStartDate%20asc'
 	else:
-		startURL = 'https://api.tvnow.de/v3/movies?fields=*,format,paymentPaytypes,pictures,trailers&filter={%20%22FormatId%22%20:%20'+Xidd+'}&maxPerPage=500&order=BroadcastStartDate%20asc'
+		startURL = Xidd
 	debug_MS("(listEpisodes) ### startURL : {0} ###".format(startURL))
 	content = makeREQUEST(startURL)
 	DATA = json.loads(content, object_pairs_hook=OrderedDict)    

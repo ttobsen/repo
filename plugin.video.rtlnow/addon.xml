@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<addon id="plugin.video.rtlnow" name="TVNOW - DE" version="2.0.7" provider-name="L0RE, realvito">
+<addon id="plugin.video.rtlnow" name="TVNOW - DE" version="2.0.8" provider-name="L0RE, realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="script.common.plugin.cache" version="2.6.0" optional="true"/>
@@ -28,7 +28,11 @@
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 2.0.7  (29.02.2020)[/COLOR][/B] by realvito[CR]
+		<news>[B][COLOR orangered]Version 2.0.8  (02.03.2020)[/COLOR][/B] by realvito[CR]
+- fixed: Rubrik = Neue Sendungen werden nicht angezeigt
+- fixed: Letzter Ordner unter Rubrik = Themen wird nicht geöffnet
+---------------------------------------------------------------------------------------------------------------------------------
+[B][COLOR orangered]Version 2.0.7  (29.02.2020)[/COLOR][/B] by realvito[CR]
 - fixed: Vereinzelt können Episoden z.B. "Das perfekte Dinner" oder "GZSZ" nicht abgespielt werden
 ---------------------------------------------------------------------------------------------------------------------------------
 [B][COLOR orangered]Version 2.0.6  (25.02.2020)[/COLOR][/B] by realvito[CR]
