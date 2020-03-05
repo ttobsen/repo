@@ -3666,7 +3666,6 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
   </extension>
 </addon>
 
-
 <addon id="plugin.video.sesamstrasse_de" name="Sesamstrasse.de" version="1.0.8" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
