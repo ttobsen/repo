@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="Settings">
+	 <setting label="SmartDNS-Update-URL" id="dnsurl" type="text" default=""/>
+    </category>
+</settings>
