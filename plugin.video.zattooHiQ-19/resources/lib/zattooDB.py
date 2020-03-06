@@ -38,20 +38,6 @@ local = xbmc.getLocalizedString
 DEBUG = __addon__.getSetting('debug')
 _umlaut_ = {ord('ä'): 'ae', ord('ö'): 'oe', ord('ü'): 'ue', ord('ß'): 'ss'}
 
-REMOTE_DBG = False
-
-# append pydev remote debugger
-if REMOTE_DBG:
-  # Make pydev debugger works for auto reload.
-  # Note pydevd module need to be copied in XBMC\system\python\Lib\pysrc
-  try:
-    import pysrc.pydevd as pydevd  # with the addon script.module.pydevd, only use `import pydevd`
-  # stdoutToServer and stderrToServer redirect stdout and stderr to eclipse console
-    #pydevd.settrace('localhost', stdoutToServer=True, stderrToServer=True, suspend=False)
-    pydevd.settrace('localhost', port=5678, stdoutToServer=True, stderrToServer=True)
-  except ImportError:
-    sys.stderr.write("Error: You must add org.python.pydev.debug.pysrc to your PYTHONPATH.")
-    sys.exit(1)
 
 def debug(content):
     if DEBUG:log(content, xbmc.LOGDEBUG)
