@@ -2295,10 +2295,12 @@ To support the backport the addon will now always create the merged_epg.xml.gz
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ-19" version="1.0.1.6" name="Zattoo HiQ-19" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ-19" version="1.0.1.7" name="Zattoo HiQ-19" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
     <import addon="xbmc.addon" version="18.9.701" />
+    <import addon="inputstream.adaptive" />
+    <import addon="script.module.tzlocal" />
   </requires>
   <extension point="xbmc.python.pluginsource" library="plugin.py">
     <provides>video</provides>
@@ -2333,8 +2335,7 @@ Zattoo Live TV, Aufnahmen und EPG
    <platform>all</platform>
     <language></language>
     <news>
-- Portierung von ZattooHiQ zu Kodi-19 Matrix
-- Einfügen von Dolby Digital Unterstützung
+- Change Code to Kodi Guidelines
 
     </news>
     <forum>https://www.kodinerds.net/index.php/Thread/68785-ZattooHiQ-19/?postID=573693#post573693</forum>
@@ -4807,6 +4808,35 @@ Zattoo Live TV, Aufnahmen und EPG
 - forced: Standardcodierung = utf-8 wegen andauernden Encodingfehlern
 		</news>
 	</extension>
+</addon>
+
+<addon id="script.module.kodi-six"
+       name="Kodi Six"
+       version="0.1.2"
+       provider-name="Roman V.M.">
+  <requires>
+    <import addon="xbmc.python" version="2.26.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="libs" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Wrappers around Kodi Python API for seamless Python 2/3 compatibility</summary>
+    <description lang="en_GB">Wrappers around Kodi Python API that normalize handling of textual and byte strings in Python 2 and 3.</description>
+    <platform>all</platform>
+    <license>GPL v.3</license>
+    <forum>https://forum.kodi.tv/showthread.php?tid=327883</forum>
+    <source>https://github.com/romanvm/kodi.six</source>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+    <news>0.1.2:
+- Use different method for Unicode error handling.
+0.1.1:
+- Fixed UnicodeDecodeErrors when Kodi API returns non-UTF-8 byte strings.
+0.1.0:
+- Implemented lazy patching of Kodi API functions and classes.
+0.0.3:
+- Added xbmcdrm module.</news>
+  </extension>
 </addon>
 
 <addon id="plugin.video.br3" name="Bayerisches Fernsehen" version="0.8.1" provider-name="L0RE">
