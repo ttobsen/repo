@@ -70,7 +70,7 @@ def log(msg, level=xbmc.LOGNOTICE):
     xbmc.log('%s: %s' % (addonID, msg), level)
 
 # get Timezone Offset
-from resources.lib.tzlocal import get_localzone
+from tzlocal import get_localzone
 #import resources.lib.pytz
 try:
   tz = get_localzone()
@@ -576,7 +576,6 @@ def build_recordingsList(__addonuri__, __addonhandle__):
     if seriesrec == 'true':
       contextMenuItems.append((localString(31925),'RunPlugin("plugin://'+__addonId__+'/?mode=remove_series&recording_id='+str(record['id'])+'&series='+str(series)+'")',))
     contextMenuItems.append((localString(31921), 'RunPlugin("plugin://'+__addonId__+'/?mode=remove_recording&recording_id='+str(record['id'])+'&title='+str(title)+'")'))
-    #contextMenuItems.append(('Download', 'RunPlugin("plugin://'+__addonId__+'/?mode=download&recording_id='+str(record['id'])+'&title='+str(title)+'&duration='+str(duration)+'")'))
     li.addContextMenuItems(contextMenuItems, replaceItems=True)
 
     xbmcplugin.addDirectoryItem(
@@ -688,24 +687,6 @@ def delete_series(recording_id, series):
     _library_.delete_entry_from_library(str(recording_id)) # NEW added - by Samoth
   resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/series_recording/remove', params)
   xbmc.executebuiltin('Container.Refresh')
-
-def start_download(recording_id, title, duration):
-    max_bandwidth = __addon__.getSetting('max_bandwidth')
-    params = {'recording_id': recording_id, 'stream_type': 'hls', 'maxrate':max_bandwidth}
-    resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch', params)
-    debug ('Result:'+str(resultData))
-    streams = None
-    if resultData is not None:
-      streams = resultData['stream']['watch_urls']
-    
-    if len(streams)==0:
-      xbmcgui.Dialog().notification("ERROR", "NO STREAM FOUND, CHECK SETTINGS!", channelInfo['logo'], 5000, False)
-      return
-    elif len(streams) > 1 and  __addon__.getSetting('audio_stream') == 'B' and streams[1]['audio_channel'] == 'B': streamNr = 1
-    else: streamNr = 0
-    url = streams[streamNr]['url']
-   
-    _ffmpg_.start_download(url, title, duration)
 
 def slugify(value):
     """
@@ -1404,7 +1385,7 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
       self.close()
       #print 'Action Stop'
       xbmc.sleep(1000)
-      xbmc.executebuiltin('Action(OSD)') #close hidden gui
+      #xbmc.executebuiltin('Action(OSD)') #close hidden gui
       #xbmc.executebuiltin("Action(Back)")
     elif action == ACTION_SKIPPREW:
       xbmc.executebuiltin("Action(Left)")
@@ -1441,7 +1422,7 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
     elif controlID==205: #stop
       #xbmc.executebuiltin("Action(OSD)")
       xbmc.executebuiltin("Action(Stop)")
-      
+      self.close()
     #elif controlID==208: #start channel
     #  if xbmcgui.Dialog().yesno(channeltitle, __addon__.getLocalizedString(31907)):
     #     __addon__.setSetting(id="start_channel", value=channeltitle)
@@ -1625,12 +1606,6 @@ def main():
     _helpmy_.showHelp(img)
     
   elif action == 'showhelp': showHelp(__addonuri__, __addonhandle__)
-  
-  elif action == 'download':
-    recording_id = args.get('recording_id')[0]
-    title = args.get('title')[0]
-    duration = args.get('duration')[0]
-    start_download(recording_id, title, duration)
     
   elif action == 'inputsearch':
     __addonuri__= sys.argv[0]
@@ -1654,6 +1629,4 @@ def main():
     search = _zattooDB_.edit_search(item)
     xbmc.executebuiltin('Container.Refresh')
     
-    
 
-main()

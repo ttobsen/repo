@@ -18,17 +18,7 @@
 #    along with zattooHiQ.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import resources.lib.service
-from resources.lib.zattooDB import ZattooDB
+import resources.lib.service as service
 
-_zattooDB_ = ZattooDB()
+service.start() 
 
-##############################################
-player=myPlayer()
-
-if OLDVERSION != VERSION:
-   #_zattooDB_.reloadDB(True)
-   _zattooDB_.set_version(VERSION)
-
-start() 
-refreshProg()

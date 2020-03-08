@@ -49,7 +49,10 @@ def log(msg, level=xbmc.LOGNOTICE):
     addon = xbmcaddon.Addon()
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
-    
+
+def script_chk(script_name):
+    return xbmc.getCondVisibility('System.AddonIsEnabeled(%s)' % script_name)
+     
 def refreshProg():
     import urllib.request, urllib.parse, urllib.error
     monitor = xbmc.Monitor()
@@ -78,6 +81,13 @@ def recInfo():
         _zattooDB_.getShowInfo(record['program_id'])
 
 def start():
+    
+    player=myPlayer()
+
+    if OLDVERSION != VERSION:
+       #_zattooDB_.reloadDB(True)
+       _zattooDB_.set_version(VERSION)
+        
     import urllib.request, urllib.parse, urllib.error
     #xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
     #re-import ZattooDB to prevent "convert_timestamp" error
@@ -115,11 +125,7 @@ def start():
         _library_.delete_library() # add by samoth
         _library_.make_library()
   
-    #xbmcgui.Dialog().notification(localString(31106), localString(31915),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
-   
-    
-    #xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
-
+    refreshProg()
 
 
 def getProgNextDay():
@@ -194,16 +200,5 @@ class myPlayer(xbmc.Player):
           xbmc.sleep(200)
           xbmc.executebuiltin('XBMC.Action(reloadkeymaps)')
         except:pass
-        
-###########################################################################################
-debug('Service started')
-player=myPlayer()
 
-if OLDVERSION != VERSION:
-   #_zattooDB_.reloadDB(True)
-   _zattooDB_.set_version(VERSION)
-
-start()
-    
-refreshProg()
 

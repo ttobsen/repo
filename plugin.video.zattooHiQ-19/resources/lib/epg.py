@@ -47,7 +47,7 @@ localString = __addon__.getLocalizedString
 local = xbmc.getLocalizedString
 
 # get Timezone Offset
-from resources.lib.tzlocal import get_localzone
+from tzlocal import get_localzone
 #import .resources.lib.pytz
 try:
   tz = get_localzone()
