@@ -53,9 +53,9 @@
     </variable>
     <variable name="WidgetInProgressPlace1">
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),movies)+Skin.HasSetting(Widget_inProgress_movie_Place1)">special://skin/playlists/Videos_inprogress.xsp</value>
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)+Skin.HasSetting(Widget_inProgress_tvshow_Place1)">plugin://service.library.data.provider?type=recommendedepisodes&amp;reload=$INFO[Window.Property(recommendedepisodes)]&amp;limit=20</value>
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)+Skin.HasSetting(Widget_inProgress_tvshow_Place1)">plugin://service.library.data.provider?type=recommendedepisodes&amp;reload=$INFO[Window.Property(recommendedepisodes)]&amp;limit=1</value>
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),musicvideo)+Skin.HasSetting(Widget_inProgress_musicvideo_Place1)">videodb://musicvideos/titles</value>
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)+Skin.HasSetting(Widget_inProgress_music_Place1)">plugin://service.library.data.provider?type=recommendedalbums&amp;reload=$INFO[Window.Property(recommendedalbums)]&amp;limit=20</value>
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)+Skin.HasSetting(Widget_inProgress_music_Place1)">plugin://service.library.data.provider?type=recommendedalbums&amp;reload=$INFO[Window.Property(recommendedalbums)]&amp;limit=1</value>
     </variable>
     <variable name="WidgetInProgressRow1_Label">
         <value condition="!String.IsEmpty(Container.ListItem.Property(type))">$INFO[Container.ListItem.Property(type)]</value>

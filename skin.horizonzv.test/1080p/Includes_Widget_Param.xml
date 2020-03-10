@@ -54,7 +54,7 @@
 				<param name="HomePageWidget_content" value="plugin://service.library.data.provider?type=randomsongs&amp;reload=$INFO[Window.Property(randomsongs)]&amp;limit=10"/>
 				<param name="HomePageWidget_content2" value="$VAR[WidgetInProgressPlace1]"/>
 				<param name="HomePageWidget_limit" value="10"/>
-				<param name="HomePageWidget_sortby" value="Random"/>
+				<param name="HomePageWidget_sortby" value=""/>
 				<param name="HomePageWidget_list_id" value="211"/>
 				<param name="HomePageWidget_list_width" value="729"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
@@ -71,7 +71,7 @@
 				<param name="HomePageWidget_content2" value="$VAR[WidgetInProgressPlace1]"/>
 				<param name="HomePageWidget_limit" value="10"/>
 				<param name="HomePageWidget_sortby" value="dateadded"/>
-				<param name="HomePageWidget_sortorder" value="ascending"/>
+				<param name="HomePageWidget_sortorder" value="descending"/>
 				<param name="HomePageWidget_list_id" value="212"/>
 				<param name="HomePageWidget_list_width" value="729"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
@@ -87,7 +87,7 @@
 				<param name="HomePageWidget_content" value="plugin://service.library.data.provider?type=recommendedalbums&amp;reload=$INFO[Window.Property(recommendedalbums)]&amp;limit=10"/>
 				<param name="HomePageWidget_limit" value="10"/>
 				<param name="HomePageWidget_sortby" value="lastplayed"/>
-				<param name="HomePageWidget_sortorder" value="ascending"/>
+				<param name="HomePageWidget_sortorder" value="descending"/>
 				<param name="HomePageWidget_list_id" value="213"/>
 				<param name="HomePageWidget_list_width" value="729"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
@@ -193,7 +193,7 @@
 				<!-- inprogress -->
 				<param name="HomePageWidget_content" value="special://skin/playlists/Videos_inprogress.xsp"/>
 				<param name="HomePageWidget_limit" value="10"/>
-				<param name="HomePageWidget_sortby" value="lastplayed"/>
+				<param name="HomePageWidget_sortby" value=""/>
 				<param name="HomePageWidget_sortorder" value="descending"/>
 				<param name="HomePageWidget_list_id" value="224"/>
 				<param name="HomePageWidget_list_width" value="720"/>
@@ -211,7 +211,7 @@
 				<param name="HomePageWidget_list_ondown" value="9000"/>
 				<param name="HomePageWidget_limit" value="10"/>
 				<param name="HomePageWidget_sortby" value="random"/>
-				<param name="HomePageWidget_sortorder" value="descending"/>
+				<param name="HomePageWidget_sortorder" value=""/>
 				<param name="HomePageWidget_list_id" value="225"/>
 				<param name="HomePageWidget_list_width" value="720"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
@@ -279,8 +279,8 @@
 				<!-- inprogress -->
 				<param name="HomePageWidget_content" value="plugin://service.library.data.provider?type=recommendedepisodes&amp;reload=$INFO[Window.Property(recommendedepisodes)]&amp;limit=10"/>
 				<param name="HomePageWidget_limit" value="10"/>
-				<param name="HomePageWidget_sortby" value="lastplayed"/>
-				<param name="HomePageWidget_sortorder" value="ascending"/>
+				<param name="HomePageWidget_sortby" value=""/>
+				<param name="HomePageWidget_sortorder" value=""/>
 				<param name="HomePageWidget_list_id" value="232"/>
 				<param name="HomePageWidget_list_width" value="180"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
@@ -362,7 +362,7 @@
 				<param name="HomePageWidget_content" value="$VAR[WidgetInProgressPlace1]"/>
 				<param name="HomePageWidget_limit" value="1"/>
 				<param name="HomePageWidget_sortby" value=""/>
-				<param name="HomePageWidget_sortorder" value=""/>
+				<param name="HomePageWidget_sortorder" value="descending"/>
 				<param name="HomePageWidget_list_id" value="237"/>
 				<param name="HomePageWidget_list_width" value="720"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
@@ -447,7 +447,7 @@
 				<param name="HomePageWidget_content" value="$VAR[WidgetInProgressPlace1]"/>
 				<param name="HomePageWidget_limit" value="1"/>
 				<param name="HomePageWidget_sortby" value="lastplayed"/>
-				<param name="HomePageWidget_sortorder" value="ascending"/>
+				<param name="HomePageWidget_sortorder" value="descending"/>
 				<param name="HomePageWidget_list_id" value="244"/>
 				<param name="HomePageWidget_list_width" value="720"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
@@ -1694,7 +1694,7 @@
 				<include content="Widget_Listlayout">
 					<param name="Widget_Listlayout_id" value="$PARAM[HomePageWidget_list_id]"/>
 				</include>
-				<content limit="1" target="$VAR[WidgetTarget]" sortby="lastplayed" sortorder="descending">$PARAM[HomePageWidget_content2]</content>
+				<content limit="1" target="$VAR[WidgetTarget]" sortby="$PARAM[HomePageWidget_sortby]" sortorder="$PARAM[HomePageWidget_sortorder]">$PARAM[HomePageWidget_content2]</content>
 				<content limit="$PARAM[HomePageWidget_limit]" target="$VAR[WidgetTarget]" sortby="$PARAM[HomePageWidget_sortby]" sortorder="$PARAM[HomePageWidget_sortorder]">$PARAM[HomePageWidget_content]</content>
 			</control>
 		</control>

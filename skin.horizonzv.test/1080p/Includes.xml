@@ -1177,7 +1177,8 @@
             <colordiffuse>$VAR[CoverDim]</colordiffuse>
             <texture>$VAR[StreamFlag]</texture>
 			<visible>!ListItem.IsParentFolder </visible>
-            <visible>String.Contains(ListItem.Path,video.amazon)|String.Contains(ListItem.FileExtension,strm)|String.Contains(ListItem.FileExtension,disc)</visible>
+			<visible>!String.Contains(ListItem.Path,emby)</visible>
+            <!-- <visible>String.Contains(ListItem.Path,video.amazon)|String.Contains(ListItem.FileExtension,strm)|String.Contains(ListItem.FileExtension,disc)|String.Contains(ListItem.Path,video.netflix)</visible> -->
             <visible>Window.IsVisible(Videos) + [Container.Content(Movies)|Container.Content(Episodes)|Container.Content(MusicVideos)]</visible>
         </control>
     </include>
@@ -1190,7 +1191,8 @@
             <aspectratio align="left" aligny="top">keep</aspectratio>
             <texture>$VAR[StreamFlag]</texture>
 			<visible>!ListItem.IsParentFolder </visible>
-            <visible>String.Contains(ListItem.Path,video.amazon)|String.Contains(ListItem.FileExtension,strm)|String.Contains(ListItem.FileExtension,disc)</visible>
+			<visible>!String.Contains(ListItem.Path,emby)</visible>
+            <!-- <visible>String.Contains(ListItem.Path,video.amazon)|String.Contains(ListItem.FileExtension,strm)|String.Contains(ListItem.FileExtension,disc)|String.Contains(ListItem.Path,video.netflix)</visible> -->
             <visible>Window.IsVisible(Videos) + [Container.Content(Movies)|Container.Content(Episodes)|Container.Content(MusicVideos)]</visible>
         </control>
     </include>
@@ -1204,7 +1206,8 @@
             <colordiffuse>$VAR[CoverDim]</colordiffuse>
             <texture>$VAR[StreamFlag]</texture>
 			<visible>!ListItem.IsParentFolder </visible>
-            <visible>String.Contains(ListItem.Path,video.amazon)|String.Contains(ListItem.FileExtension,strm)|String.Contains(ListItem.FileExtension,disc)</visible>
+			<visible>!String.Contains(ListItem.Path,emby)</visible>
+            <!-- <visible>String.Contains(ListItem.Path,video.amazon)|String.Contains(ListItem.FileExtension,strm)|String.Contains(ListItem.FileExtension,disc)</visible> -->
             <visible>Window.IsVisible(Videos) + [Container.Content(Movies)|Container.Content(Episodes)|Container.Content(MusicVideos)]</visible>
         </control>
     </include>
@@ -1217,7 +1220,8 @@
             <aspectratio align="left" aligny="top">keep</aspectratio>
             <texture>$VAR[StreamFlag]</texture>
 			<visible>!ListItem.IsParentFolder </visible>
-            <visible>String.Contains(ListItem.Path,video.amazon)|String.Contains(ListItem.FileExtension,strm)|String.Contains(ListItem.FileExtension,disc)</visible>
+			<visible>!String.Contains(ListItem.Path,emby)</visible>
+            <!-- <visible>String.Contains(ListItem.Path,video.amazon)|String.Contains(ListItem.FileExtension,strm)|String.Contains(ListItem.FileExtension,disc)</visible> -->
             <visible>Window.IsVisible(Videos) + [Container.Content(Movies)|Container.Content(Episodes)|Container.Content(MusicVideos)]</visible>
         </control>
     </include>
