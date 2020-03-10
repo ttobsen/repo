@@ -1,11 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from kodi_six.utils import py2_decode
 import json
 import time
 import base64
 # cryptopy
 from crypto.cipher import aes_cbc
+
+try:
+    from urllib.parse import urlencode
+except:
+    from urllib import urlencode
 
 
 class Clips:
@@ -24,10 +30,17 @@ class Clips:
         if content == 'ENTITLED USER' or content == 'SUBSCRIBED USER':
             clipType = 'NOTFREE'
         timestamp = str(time.time()).replace('.', '')
-        url = 'https://www.skygo.sky.de/SILK/services/public/clipToken?clipType={0}&product=SG&platform=web&version=12354=&_{1}'.format(clipType, timestamp)
+        url = 'https://www.skygo.sky.de/SILK/services/public/clipToken?{0}'.format(urlencode({
+            'clipType': clipType,
+            'version': '12354',
+            'platform': 'web',
+            'product': 'SG'
+        }))
+        url = '{0}&_{1}'.format(timestamp)
+
         r = self.skygo.session.get(url)
         if common.get_dict_value(r.headers, 'content-type').startswith('application/json'):
-            return json.loads(r.text[3:len(r.text) - 1])
+            return json.loads(py2_decode(r.text[3:len(r.text) - 1]))
         else:
             None
 

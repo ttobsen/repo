@@ -1,26 +1,39 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.video.doku5.com" name="Doku5" version="1.0.3" provider-name="itouch5000">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="script.module.requests" version="2.7.0"/>
-        <import addon="plugin.video.youtube" version="5.1.20.6"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="en">The largest german documentary library on the net</summary>
-        <description lang="en">Over 15,000 documentaries, documentaries, reports and lectures in full length.</description>
-        <summary lang="de">Die größte Doku-Mediathek im Netz</summary>
-		<description lang="de">Über 15.000 Dokumentationen, Dokumentafilme, Reportagen und Voträge in voller Länge.</description>
-        <license>GPL 2.0</license>
-        <assets>
-            <icon>resources\icon.png</icon>
-            <fanart>resources\fanart.jpg</fanart>
-            <screenshot>resources\screenshot-01.jpg</screenshot>
-            <screenshot>resources\screenshot-02.jpg</screenshot>
-            <screenshot>resources\screenshot-03.jpg</screenshot>
-        </assets>
-    </extension>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<addon id="plugin.video.doku5.com" name="Doku5" version="1.0.4" provider-name="itouch5000">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="plugin.video.youtube" version="6.3.0"/>
+		<import addon="script.module.requests" version="2.20.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Doku5 - Dokumentationen</summary>
+		<summary lang="en">Doku5 - documentaries</summary>
+		<description lang="de">[COLOR red]- Addon-Support eingestellt ![CR]- Webseite abgeschaltet ![/COLOR]</description>
+		<description lang="en">[COLOR red]- Addon-Support discontinued ![CR]- Website switched off ![/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GPL 2.0</license>
+		<forum></forum>
+		<website></website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.doku5.com</source>
+		<assets>
+			<icon>resources\icon.png</icon>
+			<fanart>resources\fanart.jpg</fanart>
+			<screenshot>resources\screenshot-01.jpg</screenshot>
+			<screenshot>resources\screenshot-02.jpg</screenshot>
+			<screenshot>resources\screenshot-03.jpg</screenshot>
+		</assets>
+		<broken>
+- Addon-Support eingestellt ![CR]- Webseite abgeschaltet !
+		</broken>
+		<news>[B][COLOR orangered]Version 1.0.4 (25.01.2020)[/COLOR][/B] by realvito[CR]
+- Addon-Support eingestellt ![CR]- Webseite abgeschaltet !
+		</news>
+	</extension>
 </addon>

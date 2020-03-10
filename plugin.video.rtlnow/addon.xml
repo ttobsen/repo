@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<addon id="plugin.video.rtlnow" name="TVNOW - DE" version="2.0.1" provider-name="L0RE">
+<addon id="plugin.video.rtlnow" name="TVNOW - DE" version="2.0.8" provider-name="L0RE, realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
-		<import addon="script.common.plugin.cache" version="2.5.5" optional="true"/>
+		<import addon="script.common.plugin.cache" version="2.6.0" optional="true"/>
 		<import addon="inputstream.adaptive" version="2.0.10"/>
 		<import addon="script.module.inputstreamhelper" version="0.4.0"/>
+		<import addon="service.cron.autobiblio" version="2.0.4" optional="true"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
@@ -27,10 +28,21 @@
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 2.0.1  (01.12.2019)[/COLOR][/B] by realvito[CR]
-- optimized: Script komplett überarbeitet und wieder funktionsfähig gemacht, unnötige Passagen entfernt (läuft über die alte API v3) ...
-- added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19+) :-)
-*** für die volle Funktionsfähigkeit unter KODI-Matrix ist das Addon - script.common.plugin.cache - mindestens in der Version 2.6.0 erforderlich ***
+		<news>[B][COLOR orangered]Version 2.0.8  (02.03.2020)[/COLOR][/B] by realvito[CR]
+- fixed: Rubrik = Neue Sendungen werden nicht angezeigt
+- fixed: Letzter Ordner unter Rubrik = Themen wird nicht geöffnet
+---------------------------------------------------------------------------------------------------------------------------------
+[B][COLOR orangered]Version 2.0.7  (29.02.2020)[/COLOR][/B] by realvito[CR]
+- fixed: Vereinzelt können Episoden z.B. "Das perfekte Dinner" oder "GZSZ" nicht abgespielt werden
+---------------------------------------------------------------------------------------------------------------------------------
+[B][COLOR orangered]Version 2.0.6  (25.02.2020)[/COLOR][/B] by realvito[CR]
+- added: Es können jetzt auch einzelne Jahrgänge einer Serie zur KODI-Bibliothek hinzugefügt werden
+- fixed: Teilweise können Free-Videos aus der KODI-Bibliothek nicht abgespielt werden
+- optimized: Updatezyklus für Bibliothek jetzt unabhängig von Addonnutzung, da separater Hintergrund-Prozess
+---------------------------------------------------------------------------------------------------------------------------------
+[B][COLOR orangered]Version 2.0.5  (03.02.2020)[/COLOR][/B] by realvito[CR]
+- changed: Addon-Abhängigkeit für zugehörigen Service (old=service.L0RE.cron -> new=service.cron.autobiblio)
+* Comment: Zuvor mit diesem Addon erstellte Einträge in der KODI-Bibliothek funktionieren NICHT mehr und müssen über die KODI-Sytemeinstellungen gelöscht werden !!! *
 		</news>
 	</extension>
 </addon>

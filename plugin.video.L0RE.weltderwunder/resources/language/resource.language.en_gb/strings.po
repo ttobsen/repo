@@ -94,6 +94,10 @@ msgctxt "#30523"
 msgid "ERROR = [COLOR red]NO Stream entry found ![/COLOR]"
 msgstr ""
 
+msgctxt "#30524"
+msgid "ERROR = [COLOR red]Unfortunately no Live-Stream found ![/COLOR]"
+msgstr ""
+
 #empty strings from id 30524 to 30600
 # PLUGIN-MAIN and SIDEMENU
 
@@ -110,6 +114,10 @@ msgid "Search ..."
 msgstr ""
 
 msgctxt "#30604"
+msgid "[COLOR lime]* Welt der Wunder - LIVE TV *[/COLOR]"
+msgstr ""
+
+msgctxt "#30605"
 msgid "WdW Settings"
 msgstr ""
 

@@ -7,6 +7,7 @@
 #	sondern die Seiten ab https://zdf-cdn.live.cellular.de/mediathekV2 - diese
 #	Seiten werden im json-Format ausgeliefert
 #	22.11.2019 Migration Python3 Modul six + manuelle Anpassungen
+# Stand: 06.02.2020
 
 # Python3-Kompatibilität:
 from __future__ import absolute_import		# sucht erst top-level statt im akt. Verz. 
@@ -36,22 +37,7 @@ import re, json				# u.a. Reguläre Ausdrücke
 
 
 # import ardundzdf					# -> ZDF_get_content - nicht genutzt
-import resources.lib.util as util	# (util_imports.py)
-PLog=util.PLog; home=util.home; check_DataStores=util.check_DataStores;  make_newDataDir=util. make_newDataDir; 
-getDirZipped=util.getDirZipped; Dict=util.Dict; name=util.name; ClearUp=util.ClearUp; 
-addDir=util.addDir; get_page=util.get_page; img_urlScheme=util.img_urlScheme; 
-R=util.R; RLoad=util.RLoad; RSave=util.RSave; GetAttribute=util.GetAttribute; repl_dop=util.repl_dop; 
-repl_char=util.repl_char; repl_json_chars=util.repl_json_chars; mystrip=util.mystrip; 
-DirectoryNavigator=util.DirectoryNavigator; stringextract=util.stringextract; blockextract=util.blockextract; 
-teilstring=util.teilstring; cleanhtml=util.cleanhtml; decode_url=util.decode_url; 
-unescape=util.unescape; transl_doubleUTF8=util.transl_doubleUTF8; make_filenames=util.make_filenames; 
-transl_umlaute=util.transl_umlaute; transl_json=util.transl_json; humanbytes=util.humanbytes; 
-CalculateDuration=util.CalculateDuration; time_translate=util.time_translate; seconds_translate=util.seconds_translate; 
-get_keyboard_input=util.get_keyboard_input; transl_wtag=util.transl_wtag; xml2srt=util.xml2srt; 
-ReadFavourites=util.ReadFavourites; get_summary_pre=util.get_summary_pre; get_playlist_img=util.get_playlist_img; 
-get_startsender=util.get_startsender; PlayVideo=util.PlayVideo; PlayAudio=util.PlayAudio; 
-
-
+from resources.lib.util import *
 
 # Globals
 ADDON_ID      	= 'plugin.video.ardundzdf'
@@ -154,23 +140,19 @@ def Hub(ID):
 	
 	if ID=='Startseite':
 		v = 'Startpage' 		# speichern
-		vars()[v] = jsonObject
-		Dict('store', v, vars()[v])
+		Dict('store', v, jsonObject)
 		li = PageMenu(li,jsonObject,DictID='Startpage')		
 	if ID=='Kategorien':
 		v = 'Kategorien'
-		vars()['Kategorien'] = jsonObject
-		Dict("store", v, vars()[v])
+		Dict("store", v, jsonObject)
 		li = PageMenu(li,jsonObject,DictID='Kategorien')		
 	if ID=='Sendungen A-Z':
 		v = 'A_Z'
-		vars()['A_Z'] = jsonObject
-		Dict("store", v, vars()[v])
+		Dict("store", v, jsonObject)
 		li = PageMenu(li,jsonObject,DictID='A_Z')		
 	if ID=='Live TV':
 		v = 'Live'
-		vars()['Live'] = jsonObject
-		Dict("store", v, vars()[v])
+		Dict("store", v, jsonObject)
 		li = PageMenu(li,jsonObject,DictID='Live')	
 
 	return li
@@ -217,8 +199,7 @@ def Verpasst_load(path, datum):		# 5 Tages-Abschnitte in 1 Datei, path -> DictID
 	jsonObject = json.loads(page)
 	path = path.split('/')[-1]			# Pfadende -> Dict-ID
 	v = path
-	vars()[path] = jsonObject
-	Dict("store", v, vars()[v])
+	Dict("store", v, jsonObject)
 	li = PageMenu(li,jsonObject,DictID=path)
 	xbmcplugin.endOfDirectory(HANDLE)
 				
@@ -250,7 +231,8 @@ def PageMenu(li,jsonObject,DictID):										# Start- + Folgeseiten
 				if subTitle:
 					title = '%s | %s' % (title,subTitle)
 
-				date = '%s |  Laenge: %s' % (date, dauer)
+				if dauer:
+					date = u'%s | Länge: %s' % (date, dauer)
 				path = 'stage|%d' % i
 				PLog(path)
 				
@@ -339,6 +321,10 @@ def Get_content(stageObject, maxWidth):
 			date = stageObject["date"]
 			#now = datetime.datetime.now()
 			#date = now.strftime("%d.%m.%Y %H:%M")
+	if date == '':						# id=date-Ersatz: ..-sendung-vom-..
+		if("id" in stageObject):
+			date = "ID: >" + stageObject["id"] + "<"
+			date = date.replace('-', ' ')
 		
 	title=repl_json_chars(title) 		# json-komp. für func_pars in router()
 	subTitle=repl_json_chars(subTitle) 	# dto

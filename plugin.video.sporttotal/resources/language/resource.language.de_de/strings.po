@@ -21,8 +21,8 @@ msgid "Regionalsport on Sporttotal.tv"
 msgstr "Regionalsport auf Sporttotal.tv"
 
 msgctxt "Addon Description"
-msgid "Sporttotal.tv shows Germany's amateur sport in full length and width. The league game of the home club? The funny and best scenes from Germany's amateur leagues?[CR]Selected and compiled by Sporttotal.tv (https://www.sporttotal.tv)."
-msgstr "Sporttotal.tv zeigt Deutschlands Amateursport in voller Länge und Breite. Das Oberligaspiel vom Heimatverein? Die lustigen und besten Szenen aus Deutschlands Amateurligen?[CR]Ausgewählt und zusammengestellt von Sporttotal.tv (https://www.sporttotal.tv)."
+msgid "Sporttotal.tv shows Germany's amateur sport in full length and width. Sporttotal.tv is the free platform for live and on-demand streaming of football, volleyball, basketball, ice hockey and more ![CR]This is where Breitensport LIVE is brought to its fans."
+msgstr "Sporttotal.tv zeigt Deutschlands Amateursport in voller Länge und Breite. Sporttotal.tv ist die kostenlose Plattform für live und on-demand Streaming von Fußball, Volleyball, Basketball, Eishockey und mehr ![CR]Hier wird Breitensport LIVE zu seinen Fans gebracht."
 
 #strings start
 # SETTINGS-CATEGORIES

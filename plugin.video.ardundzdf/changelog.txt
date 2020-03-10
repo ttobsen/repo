@@ -1,11 +1,272 @@
 CHANGE HISTORY 	Kodi-Addon-ARDundZDF -  (vormals Plugin für den Plexmediaserver)
 --------------		Releases: https://github.com/rols1/Kodi-Addon-ARDundZDF/releases/latest
+
 --------------		Nachfolger von Plex-Plugin-ARDMediathek2016
 			Kodi-Forum, Support:
 			https://www.kodinerds.net/index.php/Thread/64244-RELEASE-Kodi-Addon-ARDundZDF
 			Plex-Foren:
 			https://forums.plex.tv/t/rel-ardundzdf/309751
 			https://forums.plex.tv/discussion/213947/rel-plex-plugin-ardmediathek2016	
+
+
+10.03.2020	2.7.2	ARD Audiothek: Anpassungen an Webseite 
+			Auswertung Themen und Rubriken getrennt.
+			Überarbeitete Funktionen: AudioStart, AudioStartThemen, AudioStartRubrik,
+			Audio_get_rubriken, Audio_get_rubrik, Audio_get_sendungen, AudioContentJSON,
+			AudioContentXML, AudioContentXML.
+			AudioContentXML: Seitensteuerung für große Listen (100/Seite). 
+
+not on Github	2.7.1	ARDStartRubrik (ARD Neu), get_page_content: Kennzeichnung der Mehrfachbeiträge bei 
+			Highlights mit "Folgeseiten".
+			Modul slides: Anzeige Verzeichnis|Dateiname hinzugefügt, Anpassung Skindatei
+			(Anzeige oben rechts).
+			ZDF_get_content: Fix Erkennung von Mehrfachbeiträgen (icon-502_play, icon-301_clock),
+			dto. für zdf-sportreportage-Seiten ()
+			ZDF_get_content: "Verfügbar bis.." zusätzl. ausgewertet.
+			get_teaserElement (Nachlade-Beiträge ZDF): "Verfügbar bis.." zusätzl. ausgewertet.
+			time_translate (Modul util): Code für ZDF-Datum-/Zeit-format erweitert.
+			ZDFRubriken: Aufruf ZDFRubrikSingle nur noch mit Abgleich Cluster-Titel (Überspringen
+			nicht mehr erforderlich).
+			ZDFRubrikSingle: Blank vor > bei clustertitle berücksichtigt, Datensatz begrenzt
+			auf '</article>'
+			PodFolder (Modul Podcontent): Zugriff auf Netzwerkverz. hinzugefügt, Eintrag in
+			podcast-favorits.txt hinzugefügt (Sounddateien Raspi-Share), Anpassung in
+			PlayAudio (Modul util).
+			 
+03.03.2020	2.7.0	Module util, slides, merkliste: einheitliche Variablenbezeichner für ADDON_ID
+			und Settings (Merkliste funktionierte nicht mehr).
+			Modul Podcontent: experimentelle Funktion (PodFolder) zum Abspielen lokaler
+			Audiodateien, Eintrag in podcast-favorits.txt - bisher nur Linux-Systeme
+			unterstützt.
+
+02.03.2020	2.6.9	PlayAudio (Modul util):	Fix Decoding-Error (Kodi-Matrix) für ADDON.getAddonInfo.
+			Addon-Slideshow: Absicherung gegen Rekursion nach GetDirectory_Error in PlayAudio
+			(Return falls STOPFILE jünger als 4 sec). 
+			ARDVerpasstContent: Url-Zusatz devicetype in mobile geändert (leere html-Seite
+			bei Datum=Heute).
+			Kika_VideosBuendelAZ (Modul childs): A-Z-Liste begrenzt (wurde am Fuß der HTML-
+			Seite wiederholt).
+			get_page (modul util): Abschalthinweis für fehlende Beiträge in Classic-Version
+			auskommentiert (sind noch möglich).
+
+01.03.2020	2.6.8	neues Modul slides: Slideshow mit Musik-infos für Kodi-Musik-Player ergänzend
+			zur Kodi-Slideshow, einschl. Tastatur-Steuerung, Dialog-Skin-Datei, Cacheverwaltung 
+			+ Player-Ende-Erkennung.
+			Beide Slideshow-Varianten: rekursives Bildladen hinzugefügt. 
+			Anpassung Addon-Settings in settings.xml und PlayAudio (Modul util).
+			curl-/wget-Download entfernt: Anpassungen settings.xml, DownloadsTools,
+			DownloadExtern, DownloadsList, test_downloads, Modul Podcontent.
+			Radio-Livestreams (Hauptmenü): Fix Homebutton (Rücksprung erfolgte bei den 
+			Einzelsendern zur Audiothek statt zum Hauptmenü).
+
+23.02.2020	2.6.7	Parseplaylist: Fix index-Problem bei Auswertung m3u8-Dateien (bei ZDF Medien-Info
+			und Link in einer Zeile, sonst 2-zeilig).
+			ARDStartRubrik: Berücksichtigung von Live-Sendungen in Highlights (Swiper-
+			Bereich).	
+
+23.02.2020	2.6.6	PlayAudio (Modul util): optionale Slideshow, Anpassung Addon-Settings in
+			settings.xml.
+			Parseplaylist: Anpassung an geänderte master.m3u8-Dateien der ZDF-Sender
+			ZDF, ZDFneo und ZDFinfo (getrennte Video- und Audiostreams). Bei 3sat + phoenix
+			HTTP-Error 403 bei den Einzelauflösungen.
+			livesenderTV.xml aktualisiert (ZDF-Sender).
+			Modul 3sat: Anpassungen an geänderten Import des Haupt-PRG's (prefix ardundzdf
+			bei den Funktions-Calls entfernt). 	
+
+18.02.2020	2.6.5	thread_getpic (Bildgalerien): Fix für Windows7 (Multi-Line verhindert
+			Absturz im Modul PIL), detailliertere Berechnung von Textbreite und -position.
+			BilderDasErsteSingle: Auswertung Bildquelle an weitere Hosts angepasst
+			(checkeins.de).
+			ZDF_BildgalerieSingle: Fix Auswertung Copyright.	
+
+15.02.2020	2.6.4	Ausbau der Bildgalerien:
+			Auswertung Bildgalerien ZDF geändert: Code in ZDF_get_content und ZDF_getVideoSources 
+			entfernt (Grund: Rekursion ZDF_Bildgalerie -> ZDF_getVideoSources), Umbenennung
+			Bildgalerie -> ZDF_BildgalerieSingle, neue Funktion ZDF_Bildgalerien.
+			Neue Funktion thread_getpic: Download-Routine (urlretrieve) für Bildgalerien,  
+			einschl. Erzeugung von Wasserzeichen (python-Modul PIL), Listing-Refresh nach
+			Bilderdownload, RGBA->RGB-Konvertierung für LibreElec.
+			settings.xml: neue Option für die Nutzung von Wasserzeichen, zusätzlich
+			Auswahl der Fontgröße.
+			Neue Funktionen BilderDasErste, BilderDasErsteSingle (Auswertung Bildgalerien
+			Sender Das Erste), Anpassung Menüs (Main_ARD, Main_NEW).
+			Anpassung an Download + Wasserzeichen: BildgalerieSingle, 
+			XL_Bildgalerie, ARDSportBilder.
+			Modul 3sat: Bildgalerie hinzugefügt (Funktionen Bilder3sat + Bilder3satSingle). 
+			thread_getfile + thread_getpic: Abbruchoption für Startdialog ergänzt.
+			DownloadsDelete: Abbruch-Option ergänzt - Buttontext in allen aufrufenden 
+			Funktionen geändert ("ohne Rückfrage" entfernt). 
+			Modul util: wrap-Funktion erneuert (reduce lambda ersetzt duch textwrap).
+
+06.02.2020	2.6.3	Umbenennung: ZDFSlideShow -> ZDF_SlideShow (HauptPRG, Modul TagesschauXL).
+			SenderLiveListePre, ARD Sportschau: verbliebene util-Calls entfernt.	
+
+06.02.2020	2.6.2	Modul phoenix: Funktion get_epg_ARD entfernt (ersetzt durch get_live_data).
+			Aktualisierung Watchdog_Plex-2: phoenix_Search, phoenix_Rubriken,
+			phoenix_Dossiers,phoenix_Sendungen.
+			Modul childs: Url für Radiokanal Kiraka aktualisiert. 	
+			DIR-Icons: Urhebervermerk ergänzt (verlorengegangen bei Migration).
+			ZDF_Bildgalerie, ARDSportBilder: Nutzung internen Download (thread_getfile).
+			thread_getfile: Anpassung für Bildgalerien (Trigger notice, Param. destdir),
+			Austausch Dialog gegen Notification bei Download-Abschluss.
+			DownloadsDelete: Austausch Dialog gegen Notification.
+			Modul ARD_Bildgalerie: gelöscht (nicht mehr genutzt).
+			Import-Statement für Modul util gekürzt: Haupt-PRG, ARD_NEW, childs, funk,
+			my3Sat, phoenix, TagesschauXL.  
+
+02.02.2020	2.6.1	Merkliste (Script merkliste.py): Austausch xbmcgui-Dialog gegen 
+			xbmcgui-notification, Anpassung Info-Texte an Box-Maße.
+			ZDF_get_content: zusätzl. Auswertung teaser-cat-brand-ellipsis für Serien-
+			Kennzeichnung.
+			ZDFRubrikSingle: "Titel | Label" gedreht -> "Label | Titel" (Layout).
+			Merkliste (Script merkliste.py): Unicode-Behandlung für "Merkliste unverändert.". 
+			"Suche in ARD und ZDF", Tivi_Search (Modul childs): Ergebnisabfrage angepasst 
+			an Webänderung ZDF (wie V2.5.3).   	
+
+31.01.2020	2.6.0	PlayVideo(Modul util): 0.5 sec Pause nach Player-Call - verhindert selbständige 
+			Restarts nach Videostop.
+			Repo: update_single_files entfernt (Einzelupdates nicht mehr im Code).
+			livesenderTV.xml: Streamlink für "WDR" aktualisiert (dto. Watchdog-TV-Live).
+			
+not on Github	2.5.9	ZDF_getVideoSources: für ZDF-Suche bei Verpasst-Beiträgen Uhrzeit abschneiden.
+			get_zdfplayer_content (Modul 3sat): altern. img-Quelle, falls data-srcset fehlt.
+			Rubrik_Single (Modul 3sat): Dialog-Verweis auf Menü Verpasst bei Rubriken/
+			Film/TV-SENDETERMINE (Liste hier leer).
+			yt (Steuermodul für pytube): return ausgetauscht gegen endOfDirectory (verhindert
+			hier Rekursion).
+			
+not on Github	2.5.8	test_downloads (Haupt-PRG): Return, falls Download in Setting nicht gesetzt,
+			detailtxt speichern ohne vars()-Funktion.
+			Dict (Modul util): vars()-Funktion aus Kopfdoku enfernt (nicht mehr genutzt).
+			Modul ZDFmobile: vars()-Funktion in Dict-Aufrufen durch jew. Wert ersetzt.
+			Get_content (Modul ZDFmobile): fehlendes Datum durch ID ersetzt (relevant für 
+			stage-Beiträge).
+				
+28.01.2020	2.5.7	Aktualisierung podcast-favorits.txt: 
+			Austausch "Wirtschaft und Soz. B5" gegen "Wirtschaft hrINFO",
+			"ARD Radiofestival 2018" entfernt,
+			Austausch "Antenne Brandenburg - Interviews" gegen Interviews -Inforadio RBB,
+			Austausch "Tatort mit Til Schweiger" gegen "ARD Radio Tatort",
+			Austausch "Das Campusmagazin" gegen "zukunftschule".	
+			PodFavoriten (Modul Podcontent): repl_json_chars(title),epl_json_chars(descr).
+			SingleSendung (ARD Classic): py2_encode(summ_lable).
+			ZDFSportLive und SearchARDundZDF: Anpassung an Änderung der Webseiten (wie V.2.5.3).
+			home-ID (Haupt-PRG): Austausch "ARDaudio" gegen "ARD Audiothek".	
+				
+not on Github	2.5.6	thread_getfile: Info-Dialog nach Abschluss Download (mit Dateiname, bei
+			Podcast-Sammeldownloads mit Zeitstempel).
+			DownloadMultiple (Modul Podcontent): Aufruf thread mit Zeitstempel.
+			get_page-Aufruf (gesamtes Addon, wo sinnvoll): Info-Dialog mit URLError bei
+			Ladefehler (get_page) ergänzt.
+
+25.01.2020	2.5.5	DownloadsMove (interner Download, Verzeichnisinhalt verschieben): Code
+			erneuert, einschl. Fehlerbehandlung. 	
+
+23.01.2020	2.5.4	Rückkehrfunktion interner Download: Verwendung endOfDirectory vor return
+			(verhindert, dass Kodi das Ende von thread_getfile abwartet), Anpassung
+			DownloadExtern, DownloadMultiple (Modul Podcontent) sowie Dialog in thread_getfile.
+			interner Download: Fix delete(textsrc) in DownloadsMove (vorher wurde die 
+			Zieldatei gelöscht).
+			get_zdf_search (Modul phoenix): Fix Erkennung "phoenix history"-Seiten
+			(title_org statt title).	
+
+23.01.2020	2.5.3	ZDF_get_content: Anpassung an Änderung der Webseiten bei "Sendung verpasst",
+			"Sendungen A-Z" und Suche.
+			get_live_data (Modul phoenix): Hinw. auf Ausfall livestream_json abgeschaltet
+			(Störung scheint anzudauern).
+
+22.01.2020	2.5.2	Main_phoenix (Modul phoenix): Blockierung bei Ausfall der Seite livestream_json
+			aufgehoben, Anpassung in get_live_data, Hinweis beibehalten.	
+
+22.01.2020	2.5.1	zusätzl. interne Download-Funktion: neue Funktion thread_getfile, Anpassungen
+			in settings.xml, DownloadExtern, LiveRecord, PodFavoriten, DownloadMultiple,
+			DownloadsList.
+			ShowText (Menü Info): Textviewer auf monospace-Font geschaltet für bessere 
+			Lesbarkeit.
+			DirectoryNavigator (Modul util): Shares-Auswahl ermöglicht für Verschiebeverzeichnis
+			in DownloadsTools (Haupt-PRG).
+			settings.xml (Verschiebeverzeichnis): Auswahl Shares ermöglicht (source="",
+			option="writeable" entfernt).  
+			settings.xml (Downloadverzeichnis): Parameter source='' entfernt (Share für 
+			curl/wget nicht nutzbar).
+			DownloadsMove (Haupt-PRG): Codeanpassungen für Verschieben in Shares via xbmcvfs.copy
+			und xbmcvfs.delete.
+
+not on Github	2.5.0	Modul pytube: Ersatz Leerzeichen -> Tabs (Kompatibilität Python2/3).
+			get_zdf_search (Modul phoenix): zusätzl. Suchbutton für Subtitel (nicht für
+			history-Beiträge).
+			VerpasstWoche: Info-Zusatz für ZDF-Button "Datum eingeben".
+
+17.01.2020	2.4.9	Modul phoenix: optionale Suche beim Partnersender ZDF (Austausch gegen
+			Nachprüfung auf Mehrfachbeiträge), neue Funktion get_zdf_search, 
+			Anpassungen in SingleBeitrag, GetContent und unescape. 
+			get_live_data (Modul phoenix): Logausgabe gekürztauf 80 Zeichen.
+			unescape (Modul util): Behandlung von "&bdquo;" und "&ldquo;".
+
+not on Github	2.4.8	Verpasst (ARD-Classic): Vorschaltung Sender-Filter wie in ARD-Neu (Classic-
+			Webseite zeigt Inhalte ebenfalls nur noch gefiltert).
+			SinglePage, get_sendungen (ARD-Classic): Fix Auswertung Uhrzeit bei "Verpasst".
+			EPG_ShowSingle, SenderLiveListe: Fix import EPG (fehlte für Direktsprünge
+			nach import-Verlagerung zur router-Funktion).
+			EPG_ShowAll: Info 'weiter zum Livestream' einheitlich von Titel zur tagline 
+			verlagert.
+			get_teaserElement (Modul 3sat): altern. Auswertung für Titel + Beschreibung
+			(wenn leer: title, descr).
+
+13.01.2020	2.4.7	Neue Funktion: ZDF_Verpasst_Datum, zusätzl. Button für  Eingabedialog.
+			ZDF_get_content: Auswertung Uhrzeit hinzugefügt ("special-info" -> Titel),
+			Auswertung Sendestation hinzugefügt ("data-station" -> tagline).
+			Neue Funktion: ZDF_Verpasst_Filter, zusätzl. Button für  Eingabedialog,
+			Filterung in ZDF_get_content, Anpassung Params in ZDF_get_content,
+			VerpasstWoche und ZDF_Verpasst_Datum.
+			Senderwahl-Button ARD-Neu + ZDF-Verpasst: rote Kennzeichung der akt. Wahl.
+			Main_ZDF: Fix title für "Sendung verpasst"-Aufruf.
+
+not on Github	2.4.6	get_teaserElement (<- ZDFRubrikSingle): strip ctitle2 (\n wurde als Text 
+			behandelt).
+			ZDF_Search + ARDSearchnew: Blanks in mehrteiligem Suchbegriff durch '+'  
+			ersetzt (ist bei Aufruf aus Merkliste unbehandelt).
+			phoenix_Search: Encoding-Behandl. für Suchbegriff + Button "Weitere Beiträge".
+			SingleBeitrag (Modul phoenix): Fehlerdialog bei Seite ohne Video.	
+
+09.01.2020	2.4.5	Merkliste, Haupt-PRG: Codeverlagerung für add/delete in Script merkliste.py 
+			(ermöglicht Verbleib im Listing), Anpassungen in ShowFavs (Haupt-PRG), addDir
+			(Modul util) und Wicki.	
+
+not on Github	2.4.4	Modul phoenix: Austausch Titel/Subtitel in GetContent (Titel meistens identisch +
+			erschwert Download + Merkliste).
+			Modul phoenix: Funktion Bildgalerie entfernt (nicht genutzt).
+			get_formitaeten (Modul phoenix): Titel ergänzt in tagline (eigentl. Titelzeile 
+			enthält Video-Qualitäten).
+			yt (Modul phoenix): Videoinfos bei Sofortstart hinzugefügt, Auslesen Videoinfos
+			nach get_stream_details ausgelagert.
+			router (Haupt-PRG): Fehlermeldung bei Modul-Ladeproblem ergänzt.	
+
+07.01.2020	2.4.3	neues Modul phoenix: Icons, Anpassungen im Haupt-PRG und Github-Repo PluginPictures.
+			Migration von Funktionen aus Plex-Plugin-Phoenix_Mediathek.
+			Erweiterungen: Bestimmung Zeitstatus (time_state: Vergangenheit, Gegenwart, Zukunft)
+			+ entspr.Kennzeichnung der Sendezeit.
+			Für Youtube-Videos Integration pytube-Modul von Nick Ficano, Anpassung an Addon,
+			Github-Fix Issue #536 integriert. 
+			make_filenames (Modul util): Begrenzung auf 255 Zeichen (Kompat. div. Filesysteme).
+			
+not on Github	2.4.2	Settings: Option "Info-Menue-Button ausblenden", Anpassung settings.xml und
+			Funktion ShowFavs.
+			Speichern von TeaserElementen im Modul 3sat: Nutzung des Python-
+			Moduls codes in Funktion RSave (Modul util), um leere Dateien zu verhindern.
+			Modul 3sat: Löschen leerer Dateien mit TeaserElementen (Bilder und Infos fehlen 
+			im Listing).
+			Modul util: Anpassung an zusätzl. Timecode (broadcast) im Moduls ARDnew.
+			Modul ARDnew: Unterdrückung Auswertung Timecode bei Livesendern (unsinnige Werte).	
+
+27.12.2019	2.4.1	neues Modul TagesschauXL: Anpassung Settings, Haupt-PRG, Modul util,
+			Portierung der meisten python-Funktionen von Plex-Plugin-TagesschauXL.
+			Livestream mit EPG + intern. Link ergänzt, Bildgalerie für Kodi angepasst. 
+			Weitere Ergänzungen: Downloadfunktion, Farbmarkierung in Suche, Archivauszug
+			für Bericht aus Berlin. 
+			Aus Platzgründen Verlagerung der meisten Icons auf Github-Repo PluginPictures.
+			addon.xml / Ordner Screenshots: aus Platzgründen alle Bilder auf Github-Repo
+			verlagert.  
 
 20.12.2019	2.4.0	Modul childs: neue Funktion Tivi_Search (Suche in ZDFtivi, Nutzung ZDF_get_content).
 			Modul childs: neue Funktion Kika_VideosBuendelAZ, bisherige Funktion Kika_VideosBuendel
@@ -23,7 +284,7 @@ not on Github	2.3.9	Modul funk: Downloads ermöglicht. Anpassung in ShowVideo un
 			Quelle für Bild (teaser-image statt data-srcset). 
 
 16.12.2019	2.3.8	Test-Update ohne Änderungen	
-
+neues Modul
 16.12.2019	2.3.7	ChannelSingle (Modul funk): Param. mediatype vorbelegt (Einzelvideos fehlten,
 			nur Rubriken wurden gezeigt).
 
@@ -630,7 +891,7 @@ not on Github	1.4.9	SenderLiveResolution (TV-Livesender): Fallback zum Classic-S
 			Classic-Sendername.
 			SenderLiveResolution: zusätzl. Param. "Startsender" für Aufruf aus ARDStartRubrik
 			und ARDStartSingle (ARD-Neu).
-			Lokal: zusätzl. Watchdog "Watchdog_TV-Live.py" für Senderlinks (1 x tägl.).  
+			Lokal: zusätzl. Watchdog "Watchdog_TV-Live.py" für Senderlinks (2 x tägl.).  
 
 14.05.2019	1.4.8	Settings - Umstellung "Text input" auf "Browser dialog": Pfade, Verzeichnisse,
 			Curl-/Wget-PRG.

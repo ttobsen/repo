@@ -1,0 +1,8 @@
+﻿[B]Version 1.0.0  (08.01.2017)[/B]
+ - Initial release
+
+[B]Version 2.0.0  (24.06.2018)[/B]
+ - Changed License from GPL(v2) to GPL(v3)
+
+[B]Version 2.0.1  (02.07.2018)[/B]
+ - Fixed Error in License GPL(v3)

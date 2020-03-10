@@ -12,29 +12,19 @@ PY2 = sys.version_info[0] == 2
 PY3 = sys.version_info[0] == 3
 if PY2:
 	from urllib import quote, unquote, quote_plus, unquote_plus, urlencode  # Python 2.X
-	from urllib2 import build_opener, HTTPCookieProcessor, Request, urlopen  # Python 2.X
-	from cookielib import LWPCookieJar  # Python 2.X
-	from urlparse import urljoin, urlparse, urlunparse  # Python 2.X
 elif PY3:
-	from urllib.parse import quote, unquote, quote_plus, unquote_plus, urlencode, urljoin, urlparse, urlunparse  # Python 3+
-	from urllib.request import build_opener, HTTPCookieProcessor, Request, urlopen  # Python 3+
-	from http.cookiejar import LWPCookieJar  # Python 3+
+	from urllib.parse import quote, unquote, quote_plus, unquote_plus, urlencode  # Python 3+
 import json
 import xbmcvfs
 import shutil
 import socket
 import time
 from datetime import datetime
-import io
-import gzip
-import ssl
-
+import requests
 try:
-	_create_unverified_https_context = ssl._create_unverified_context
-except AttributeError:
-	pass
-else:
-	ssl._create_default_https_context = _create_unverified_https_context
+	from requests.packages.urllib3.exceptions import InsecureRequestWarning
+	requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+except: pass
 
 global debuging
 pluginhandle = int(sys.argv[1])
@@ -48,31 +38,19 @@ langSHORTCUT = addon.getSetting("language")
 useThumbAsFanart = addon.getSetting("useThumbAsFanart") == 'true'
 baseURL = "https://sovietmoviesonline.com"
 
+__HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0','Accept-Encoding': 'gzip, deflate'}
 xbmcplugin.setContent(int(sys.argv[1]), 'movies')
 
-if xbmcvfs.exists(temp) and os.path.isdir(temp):
-	shutil.rmtree(temp, ignore_errors=True)
-xbmcvfs.mkdirs(temp)
-cookie = os.path.join(temp, 'cookie.lwp')
-cj = LWPCookieJar()
-
-if xbmcvfs.exists(cookie):
-	cj.load(cookie, ignore_discard=True, ignore_expires=True)
 
 def py2_enc(s, encoding='utf-8'):
-	if PY2 and isinstance(s, unicode):
-		s = s.encode(encoding)
+	if PY2:
+		if not isinstance(s, basestring):
+			s = str(s)
+		s = s.encode(encoding) if isinstance(s, unicode) else s
 	return s
 
-def py3_dec(d, encoding='utf-8'):
-	if PY3 and isinstance(d, bytes):
-		d = d.decode(encoding)
-	return d
-
 def translation(id):
-	LANGUAGE = addon.getLocalizedString(id)
-	LANGUAGE = py2_enc(LANGUAGE)
-	return LANGUAGE
+	return py2_enc(addon.getLocalizedString(id))
 
 def failing(content):
 	log(content, xbmc.LOGERROR)
@@ -81,39 +59,14 @@ def debug(content):
 	log(content, xbmc.LOGDEBUG)
 
 def log(msg, level=xbmc.LOGNOTICE):
-	msg = py2_enc(msg)
-	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+msg, level)
+	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+py2_enc(msg), level)
 
-def getUrl(url, header=None, referer=None):
-	global cj
-	#debug("(getUrl) ##### getUrl : "+url+" #####")
-	for cook in cj:
-		debug("(getUrl) ##### COOKIE : "+str(cook)+" #####")
-	opener = build_opener(HTTPCookieProcessor(cj))
-	try:
-		if header:
-			opener.addheaders = header
-		else:
-			opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0')]
-			opener.addheaders = [('Accept-Encoding', 'gzip, deflate')]
-		if referer:
-			opener.addheaders = [('Referer', referer)]
-		response = opener.open(url, timeout=30)
-		if response.info().get('Content-Encoding') == 'gzip':
-			content = py3_dec(gzip.GzipFile(fileobj=io.BytesIO(response.read())).read())
-		else:
-			content = py3_dec(response.read())
-	except Exception as e:
-		failure = str(e)
-		if hasattr(e, 'code'):
-			failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
-		elif hasattr(e, 'reason'):
-			failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
-		content = ""
-		return sys.exit(0)
-	opener.close()
-	try: cj.save(cookie, ignore_discard=True, ignore_expires=True)
-	except: pass
+def getUrl(url, method, allow_redirects=False, verify=False, headers="", data="", timeout=40):
+	response = requests.Session()
+	if method == 'GET':
+		content = response.get(url, allow_redirects=allow_redirects, verify=verify, headers=headers, data=data, timeout=timeout).text
+	elif method == 'POST':
+		content = response.post(url, data=data, allow_redirects=allow_redirects, verify=verify).text
 	return content
 
 def index():
@@ -136,7 +89,7 @@ def listTopics(category=""):
 	else:
 		startURL = baseURL+"/ru/"
 	debug("(listTopics) ##### startURL : "+startURL+" ##### Category : "+category+" #####")
-	content = getUrl(startURL)
+	content = getUrl(startURL, 'GET', False, False, __HEADERS)
 	if category == "Genres":
 		result = content[content.find('<span class="link movie-popup-link">')+1:]
 		result = result[:result.find('</div>')]
@@ -166,7 +119,8 @@ def listTopics(category=""):
 			if thumb[:4] != "http":
 				thumb = baseURL+thumb
 			name = py2_enc(re.sub('\<.*?\>', '', title))
-			debug("(listTopics) no.2 ### TITLE : "+name+" ### URL-2 : "+url2+" ###")
+			log("(listTopics) no.2 ### TITLE : "+name+" ### URL-2 : "+url2+" ###")
+			log("(listTopics) no.2 ### THUMB : "+thumb+" ###")
 			addDir(name, url2, "listVideos", thumb)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
@@ -175,7 +129,7 @@ def listVideos(url):
 	debug("(listVideos) ##### startURL : "+url+" #####")
 	un_WANTED = ['sovietmoviesonline.com/blog/', 'sovietmoviesonline.com/ru/blog/']
 	startURL = url
-	content = getUrl(url)
+	content = getUrl(url, 'GET', False, False, __HEADERS)
 	part = content.split('<!--small movie-->')
 	for i in range(1, len(part), 1):
 		entry = part[i]
@@ -207,11 +161,11 @@ def listVideos(url):
 			failing("(listVideos) ERROR - ERROR - ERROR ### {0} ###".format(str(entry)))
 	xbmcplugin.endOfDirectory(pluginhandle)
 
-def listSeries(url, image):
+def listSeries(url, photo):
 	debug("(listSeries) -------------------------------------------------- START = listSeries --------------------------------------------------")
 	debug("(listSeries)  ##### startURL : "+url+" ##### IMAGE : "+image+" #####")
 	startURL = url
-	content = getUrl(url)
+	content = getUrl(url, 'GET', False, False, __HEADERS)
 	pos = 0
 	result = content[content.find('<div id="video">')+1:]
 	result = result[:result.find('<script type="text/javascript" src=')]
@@ -223,7 +177,7 @@ def listSeries(url, image):
 			EPlinks = re.findall('<div class="episodes-links ru">(.+?)</div>', result, re.DOTALL)
 		for chtml in EPlinks:
 			debug("(listSeries) no.1 ### TITLE : Episode 1 ### URL-2 : "+startURL+" ###")
-			addLink("Episode 1", startURL, "playVideo", image)
+			addLink("Episode 1", startURL, "playVideo", photo)
 			match = re.compile('<a href="([^"]+?)">(.+?)</a>', re.DOTALL).findall(chtml)
 			for url2, title in match:
 				pos += 1
@@ -231,7 +185,7 @@ def listSeries(url, image):
 					url2 = baseURL+url2
 				name = py2_enc(re.sub('\<.*?\>', '', title))
 				debug("(listSeries) no.2 ### TITLE : "+name+" ### URL-2 : "+url2+" ###")
-				addLink("Episode "+name, url2, "playVideo", image)
+				addLink("Episode "+name, url2, "playVideo", photo)
 	if pos == 0:
 		playVideo(url)
 	xbmcplugin.endOfDirectory(pluginhandle)
@@ -240,11 +194,10 @@ def playVideo(url):
 	debug("(playVideo) -------------------------------------------------- START = playVideo --------------------------------------------------")
 	debug("(playVideo)  ##### startURL : "+url+" #####")
 	finalURL = False
-	content = getUrl(url)
+	content = getUrl(url, 'GET', False, False, __HEADERS)
 	try:
-		finalURL = re.compile('<source src="([^"]+?)"', re.DOTALL).findall(content)[0]
-		if finalURL and finalURL != "" and finalURL[:4] != "http":
-			finalURL = baseURL+finalURL
+		finalURL = re.compile('<iframe src="([^"]+?)" width', re.DOTALL).findall(content)[0]
+		finalURL = "https://vimeo.com/"+finalURL.split('/')[-1]
 		try:
 			if langSHORTCUT == "EN":
 				SUB = re.compile('track src="([^"]+?)"', re.DOTALL).findall(content)[0]
@@ -275,8 +228,7 @@ def cleanTitle(title):
 	title = py2_enc(title)
 	title = title.replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&").replace("&#039;", "'").replace("&quot;", "\"").replace("&szlig;", "ß").replace("&ndash;", "-")
 	title = title.replace("&Auml;", "Ä").replace("&Uuml;", "Ü").replace("&Ouml;", "Ö").replace("&auml;", "ä").replace("&uuml;", "ü").replace("&ouml;", "ö")
-	title = title.strip()
-	return title
+	return title.strip()
 
 def parameters_string_to_dict(parameters):
 	paramDict = {}
@@ -290,24 +242,20 @@ def parameters_string_to_dict(parameters):
 
 def addDir(name, url, mode, image, plot=None, category=""):
 	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)+"&image="+quote_plus(image)+"&category="+str(category)
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=image)
+	liz = xbmcgui.ListItem(name)
 	liz.setInfo(type='Video', infoLabels={'Title': name, 'Plot': plot})
+	liz.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
 	if useThumbAsFanart and image != icon:
 		liz.setArt({'fanart': image})
-	else:
-		liz.setArt({'fanart': defaultFanart})
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
 
 def addLink(name, url, mode, image, plot=None, duration=None, year=""):
 	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=image)
+	liz = xbmcgui.ListItem(name)
 	liz.setInfo(type='Video', infoLabels={'Title': name, 'Plot': plot, 'Duration': duration, 'Year': year, 'Studio': 'sovietmovies'})
-	if image != icon:
-		liz.setArt({'poster': image})
+	liz.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
 	if useThumbAsFanart and image != icon:
 		liz.setArt({'fanart': image})
-	else:
-		liz.setArt({'fanart': defaultFanart})
 	liz.addStreamInfo('Video', {'Duration': duration})
 	liz.setProperty('IsPlayable', 'true')
 	liz.setContentLookup(False)
@@ -319,7 +267,6 @@ url = unquote_plus(params.get('url', ''))
 mode = unquote_plus(params.get('mode', ''))
 image = unquote_plus(params.get('image', ''))
 category = unquote_plus(params.get('category', ''))
-referer = unquote_plus(params.get('referer', ''))
 
 if mode == 'listTopics':
 	listTopics(category)

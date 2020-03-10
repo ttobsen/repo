@@ -1,8 +1,17 @@
 # -*- coding: utf-8 -*-
-# util.py
+###################################################################################################
+#							 util.py - Hilfsfunktionen Kodiversion
+#	Modulnutzung: 
+#					import resources.lib.util as util
+#					PLog=util.PLog;  home=util.home; ...  (manuell od.. script-generiert)
+#
+#	convert_util_imports.py generiert aus util.py die Zuordnungen PLog=util.PLog; ...
+####################################################################################################
+# 
 #	02.11.2019 Migration Python3 Modul future
 #	17.11.2019 Migration Python3 Modul kodi_six + manuelle Anpassungen
 # 	
+#	Stand '03.03.2020'
 
 # Python3-Kompatibilität:
 from __future__ import absolute_import
@@ -28,6 +37,8 @@ elif PYTHON3:
 # import requests		# kein Python-built-in-Modul, urllib2 verwenden
 import datetime as dt	# für xml2srt
 import time, datetime
+from time import sleep  # PlayVideo
+
 import glob, shutil
 from io import BytesIO	# Python2+3 -> get_page (compressed Content), Ersatz für StringIO
 import gzip, zipfile
@@ -35,14 +46,14 @@ import base64 			# url-Kodierung für Kontextmenüs
 import json				# json -> Textstrings
 import pickle			# persistente Variablen/Objekte
 import re				# u.a. Reguläre Ausdrücke, z.B. in CalculateDuration
-import string
+import string, textwrap
 	
 # Globals
 PYTHON2 = sys.version_info.major == 2	# Stammhalter Pythonversion 
 PYTHON3 = sys.version_info.major == 3
 
 NAME			= 'ARD und ZDF'
-KODI_VERSION = xbmc.getInfoLabel('System.BuildVersion')
+KODI_VERSION 	= xbmc.getInfoLabel('System.BuildVersion')
 
 ADDON_ID      	= 'plugin.video.ardundzdf'
 SETTINGS 		= xbmcaddon.Addon(id=ADDON_ID)
@@ -72,17 +83,12 @@ PLAYLIST 		= 'livesenderTV.xml'		# TV-Sender-Logos erstellt von: Arauco (Plex-Fo
 ICON_MAIN_POD	= 'radio-podcasts.png'
 ICON_MAIN_AUDIO	= 'ard-audiothek.png'
 ICON_MAIN_ZDFMOBILE	= 'zdf-mobile.png'
-			
+ICON_PHOENIX	= 'phoenix.png'			
+
+# Github-Icons zum Nachladen aus Platzgründen
+ICON_MAINXL 	= 'https://github.com/rols1/PluginPictures/blob/master/ARDundZDF/TagesschauXL/tagesschau.png?raw=true'
 BASE_URL 		= 'https://classic.ardmediathek.de'
 
-###################################################################################################
-#									Hilfsfunktionen Kodiversion
-#	Modulnutzung: 
-#					import resources.lib.util as util
-#					PLog=util.PLog;  home=util.home; ...  (manuell od.. script-generiert)
-#
-#	convert_util_imports.py generiert aus util.py die Zuordnungen PLog=util.PLog; ...
-####################################################################################################
 #----------------------------------------------------------------  
 def PLog(msg, loglevel=xbmc.LOGDEBUG):
 	if DEBUG == 'false':
@@ -93,7 +99,7 @@ def PLog(msg, loglevel=xbmc.LOGDEBUG):
 	loglevel = xbmc.LOGNOTICE
 	# PLog('loglevel: ' + str(loglevel))
 	if loglevel >= 2:
-		xbmc.log("%s --> %s" % ('ARDundZDF2_3', msg), level=loglevel)
+		xbmc.log("%s --> %s" % ('ARDundZDF', msg), level=loglevel)
 #---------------------------------------------------------------- 
 
 # Home-Button, Aufruf: item = home(item=item, ID=NAME)
@@ -151,7 +157,7 @@ def home(li, ID):
 		addDir(li=li, label=title, action="dirList", dirID="Main_POD", fanart=R(ICON_MAIN_POD), 
 			thumb=R(ICON_MAIN_POD), fparams=fparams)
 			
-	if ID == 'ARDaudio':
+	if ID == 'ARD Audiothek':
 		name = 'Home :' + "ARD Audiothek"
 		fparams="&fparams={'title': '%s'}" % quote(name)
 		addDir(li=li, label=title, action="dirList", dirID="AudioStart", fanart=R(ICON_MAIN_AUDIO), 
@@ -171,9 +177,23 @@ def home(li, ID):
 			
 	if ID == 'Kinderprogramme':
 		name = 'Home :' + ID
+		thumb = R('childs.png')
 		fparams="&fparams={}"
-		addDir(li=li, label=title, action="dirList", dirID="resources.lib.childs.Main_childs", fanart=R('childs.png'), 
-			thumb=R('childs.png'), fparams=fparams)
+		addDir(li=li, label=title, action="dirList", dirID="resources.lib.childs.Main_childs", fanart=thumb, 
+			thumb=thumb, fparams=fparams)
+
+	if ID == 'TagesschauXL':
+		name = 'Home :' + ID
+		fparams="&fparams={}"
+		addDir(li=li, label=title, action="dirList", dirID="resources.lib.TagesschauXL.Main_XL", fanart=ICON_MAINXL, 
+			thumb=ICON_MAINXL, fparams=fparams)
+			
+	if ID == 'phoenix':
+		name = 'Home :' + ID
+		thumb = R(ICON_PHOENIX)
+		fparams="&fparams={}"
+		addDir(li=li, label=title, action="dirList", dirID="resources.lib.phoenix.Main_phoenix", fanart=thumb, 
+			thumb=thumb, fparams=fparams)
 
 	return li
 	 
@@ -266,10 +286,6 @@ def getDirZipped(path, zipf):
 #	persistenter Speicher. Der Name Dict lehnt sich an die
 #	allerdings wesentlich komfortablere Dict-Funktion in Plex an.
 #
-#	Den Dict-Vorteil, beliebige Strings als Kennzeichnung zu ver-
-#	wenden, können wir bei Bedarf außerhalb von Dict
-#	mit der vars()-Funktion ausgleichen (siehe Zuweisungen). 
-#
 #	Falls (außerhalb von Dict) nötig, kann mit der Zusatzfunktion 
 #	name() ein Variablenname als String zurück gegeben werden.
 #	
@@ -278,14 +294,13 @@ def getDirZipped(path, zipf):
 #	keine Bedingung).
 #
 # Zuweisungen: 
-#	Dictname=value 			- z.B. Dict_sender = 'ARD-Alpha'
-#	vars('Dictname')=value 	- 'Dict_name': _name ist beliebig (prg-generiert)
 #	Bsp. für Speichern:
-#		 Dict('store', "Dict_name", Dict_name)
+#		 Dict('store', "Dict_name", value)
 #			Dateiname: 		"Dict_name"
-#			Wert in:		Dict_name
+#			Wert in:		value
 #	Bsp. für Laden:
 #		CurSender = Dict("load", "CurSender")
+#
 #   Bsp. für CacheTime: 5*60 (5min) - Verwendung bei "load", Prüfung mtime 
 #	ev. ergänzen: OS-Verträglichkeit des Dateinamens
 
@@ -412,9 +427,10 @@ def up_low(line, mode='up'):
 #		Eintrag in die Datenbank MyVideos116.db (Tabs u.a. bookmark, files).s
 #		Mehr s. PlayVideo
 #
-#	Kontextmenüs (Par. cmenu): base64-Kodierung wird benötigt für url-Parameter (nötig für router)
-#		und als Prophylaxe gegen durch doppelte utf-8-Kodierung erzeugte Sonderzeichen.
-#		Dekodierung erfolgt in ShowFavs.
+#	Kontextmenüs (Par. cmenu): base64-Kodierung wurde 2019 benötigt für url-Parameter (nötig für
+#		router) und als Prophylaxe gegen durch doppelte utf-8-Kodierung erzeugte Sonderzeichen.
+#		Dekodierung erfolgt in Watch + ShowFavs. Nicht mehr benötigt, falls nochmal: s. Commit
+#		9137781 on 16 Oct 2019.
 #	
 
 def addDir(li, label, action, dirID, fanart, thumb, fparams, summary='', tagline='', mediatype='', cmenu=True):
@@ -470,9 +486,12 @@ def addDir(li, label, action, dirID, fanart, thumb, fparams, summary='', tagline
 			PLog("fparams_del: " + fparams_del)
 			fparams_del = quote_plus(fparams_del)	
 
-			li.addContextMenuItems([('Zur Merkliste hinzufügen', 'RunAddon(%s, ?action=dirList&dirID=Watch%s)' \
-				% (ADDON_ID, fparams_add)), ('Aus Merkliste entfernen', 'RunAddon(%s, ?action=dirList&dirID=Watch%s)' \
-				% (ADDON_ID, fparams_del))])
+			# Script: This behaviour will be removed - siehe https://forum.kodi.tv/showthread.php?tid=283014
+			MERK_SCRIPT=xbmc.translatePath('special://home/addons/%s/resources/lib/merkliste.py' % (ADDON_ID) )
+			li.addContextMenuItems([('Zur Merkliste hinzufügen', 'RunScript(%s, %s, ?action=dirList&dirID=Watch%s)' \
+					% (MERK_SCRIPT, HANDLE, fparams_add)),
+				 ('Aus Merkliste entfernen', 'RunScript(%s, %s, ?action=dirList&dirID=Watch%s)' \
+					% (MERK_SCRIPT, HANDLE, fparams_del))])
 		else:
 			pass											# Kontextmenü entfernen klappt so nicht
 			#li.addContextMenuItems([('Zur Merkliste hinzufügen', 'RunAddon(%s, ?action=dirList&dirID=dummy)' \
@@ -582,12 +601,15 @@ def get_page(path, header='', cTimeout=None, JsonPage=False, GetOnlyRedirect=Fal
 			PLog(msg)						
 			
 	if page == '':
+		# Abschalthinweis verfrüht - fehlende Beiträge in Classic-
+		#	Version immer noch möglich (02.03.2020)
 		error_txt = 'Seite nicht erreichbar oder nicht mehr vorhanden'
-		if 'classic.ardmediathek.de' in path:
-			msg1 = 'Die ARD-Classic-Mediathek ist vermutlich nicht mehr verfügbar.'	
-			msg2 = 'Bitte in den Einstellungen abschalten, um das Modul'
-			msg3 = 'ARD-Neu zu aktivieren.'
-			xbmcgui.Dialog().ok(ADDON_NAME, msg1, msg2, msg3)		 			 	 
+		#error_txt = msg
+		#if 'classic.ardmediathek.de' in path:
+		#	msg1 = 'Die ARD-Classic-Mediathek ist vermutlich nicht mehr verfügbar.'	
+		#	msg2 = 'Bitte in den Einstellungen abschalten, um das Modul'
+		#	msg3 = 'ARD-Neu zu aktivieren.'
+		#	xbmcgui.Dialog().ok(ADDON_NAME, msg1, msg2, msg3)		 			 	 
 		msg = error_txt + ' | %s' % msg
 		PLog(msg)
 		return page, msg
@@ -714,7 +736,7 @@ def RSave(fname, page, withcodec=False):
 		
 	except Exception as exception:
 		msg = str(exception)
-		PLog(msg)
+		PLog('RSave_Exception: ' + msg)
 	return msg
 #----------------------------------------------------------------  
 # Holt Bandwith, Codecs + Resolution aus m3u8-Datei
@@ -761,7 +783,7 @@ def repl_json_chars(line):	# für json.loads (z.B.. in router) json-Zeichen in l
 	for r in	((u'"', u''), (u'\\', u''), (u'\'', u'')
 		, (u'&', u'und'), ('(u', u'<'), (u'(', u'<'),  (u')', u'>'), (u'∙', u'|')
 		, (u'„', u'>'), (u'“', u'<'), (u'”', u'>'),(u'°', u' Grad')
-		, (u'\r', u'')):			
+		, (u'\r', u''), (u'#', u'*')):			
 		line_ret = line_ret.replace(*r)
 	
 	return line_ret
@@ -784,7 +806,7 @@ def DirectoryNavigator(settingKey, mytype, heading, shares='files', useThumbs=Fa
 	PLog(settingKey); PLog(mytype); PLog(heading); PLog(path);
 	
 	dialog = xbmcgui.Dialog()
-	d_ret = dialog.browseSingle(int(mytype), heading, 'files', '', False, False, path)	
+	d_ret = dialog.browseSingle(int(mytype), heading, shares, '', False, False, path)	
 	PLog('d_ret: ' + d_ret)
 	
 	SETTINGS.setSetting(settingKey, d_ret)	
@@ -841,7 +863,29 @@ def teilstring(zeile, startmarker, endmarker):  		# rfind: endmarker=letzte Fund
     teils = ''
   #PLog(pos1) PLog(pos2) 
   return teils 
-#----------------------------------------------------------------  
+# ----------------------------------------------------------------------
+def my_rfind(left_pattern, start_pattern, line):  # sucht ab start_pattern rückwärts + erweitert 
+#	start_pattern nach links bis left_pattern.
+#	Rückgabe: Position von left_pattern und String ab left_pattern bis einschl. start_pattern	
+#	Mit Python's rfind-Funktion nicht möglich
+
+	# PLog(left_pattern); PLog(start_pattern); 
+	if left_pattern == '' or start_pattern == '' or line.find(start_pattern) == -1:
+		return -1, ''
+	startpos = line.find(start_pattern)
+	# Log(startpos); Log(line[startpos-10:startpos+len(start_pattern)]); 
+	i = 1; pos = startpos
+	while pos >= 0:
+		newline = line[pos-i:startpos+len(start_pattern)]	# newline um 1 Zeichen nach links erweitern
+		# Log(newline)
+		if newline.find(left_pattern) >= 0:
+			leftpos = pos						# Position left_pattern in line
+			leftstring = newline
+			# Log(leftpos);Log(newline)
+			return leftpos, leftstring
+		i = i+1				
+	return -1, ''								# Fehler, wenn Anfang line erreicht
+#----------------------------------------------------------------  	
 # make_mark: farbige Markierung plus fett (optional	
 # Groß-/Kleinschreibung egal
 # bei Fehlschlag mString unverändert zurück
@@ -850,22 +894,19 @@ def teilstring(zeile, startmarker, endmarker):  		# rfind: endmarker=letzte Fund
 def make_mark(mark, mString, color='red', bold=''):	
 	PLog("make_mark:")	
 	mark=py2_decode(mark); mString=py2_decode(mString)
-	mS = up_low(mString, mode='low'); ma = up_low(mark, mode='low')
-	PLog('Mark0.0')
+	mS = up_low(mString); ma = up_low(mark)
 	if ma in mS or mark == mString:
 		pos1 = mS.find(ma)
 		pos2 = pos1 + len(ma)		
 		ms = mString[pos1:pos2]		# Mittelstück mark unverändert
 		s1 = mString[:pos1]; s2 = mString[pos2:];
-		PLog('Mark1')
 		if bold:
 			rString= u"%s[COLOR %s][B]%s[/B][/COLOR]%s"	% (s1, color, ms, s2)
 		else:
 			rString= u"%s[COLOR %s]%s[/COLOR]%s"	% (s1, color, ms, s2)
-		PLog('Mark2')
 		return rString
 	else:
-		return mString		# Markierung fehlt, mString unverändert zurück	
+		return mString		# Markierung fehlt, mString unverändert zurück
 #----------------------------------------------------------------  
 # Migration PY2/PY3: py2_decode aus kodi-six
 def cleanhtml(line): # ersetzt alle HTML-Tags zwischen < und >  mit 1 Leerzeichen
@@ -897,14 +938,15 @@ def unescape(line):
 		, (u"&#39;", u"'"), (u"&#039;", u"'"), (u"&quot;", u'"'), (u"&#x27;", u"'")
 		, (u"&ouml;", u"ö"), (u"&auml;", u"ä"), (u"&uuml;", u"ü"), (u"&szlig;", u"ß")
 		, (u"&Ouml;", u"Ö"), (u"&Auml;", u"Ä"), (u"&Uuml;", u"Ü"), (u"&apos;", u"'")
-		, (u"&nbsp;|&nbsp;", u""), (u"&nbsp;", u""), 
+		, (u"&nbsp;|&nbsp;", u""), (u"&nbsp;", u" "), (u"&bdquo;", u""), (u"&ldquo;", u""),
 		# Spezialfälle:
 		#	https://stackoverflow.com/questions/20329896/python-2-7-character-u2013
 		#	"sächsischer Genetiv", Bsp. Scott's
 		#	Carriage Return (Cr)
 		(u"–", u"-"), (u"&#x27;", u"'"), (u"&#xD;", u""), (u"\xc2\xb7", u"-"),
 		(u'undoacute;', u'o'), (u'&eacute;', u'e'), (u'&egrave;', u'e'),
-		(u'&atilde;', u'a'), (u'quot;', u' ')):
+		(u'&atilde;', u'a'), (u'quot;', u' '), (u'&#10;', u'\n'),
+		(u'&#8222;', u' '), (u'&#8220;', u' '), (u'&#034;', u' ')):
 		line = line.replace(*r)
 	return line
 #----------------------------------------------------------------  
@@ -923,7 +965,7 @@ def transl_doubleUTF8(line):	# rückgängig: doppelt kodiertes UTF-8
 	return line	
 #----------------------------------------------------------------  
 # Migration PY2/PY3: py2_decode aus kodi-six
-def make_filenames(title):
+def make_filenames(title, max_length=255):
 	PLog('make_filenames:')
 	# erzeugt - hoffentlich - sichere Dateinamen (ohne Extension)
 	# zugeschnitten auf Titelerzeugung in meinen Plugins 
@@ -934,7 +976,7 @@ def make_filenames(title):
 	valid_chars = "-_ %s%s" % (string.ascii_letters, string.digits)
 	fname = ''.join(c for c in fname if c in valid_chars)
 	fname = fname.replace(u' ', u'_')
-	return fname
+	return fname[:max_length]
 #----------------------------------------------------------------  
 # Umlaute übersetzen, wenn decode nicht funktioniert
 # Migration PY2/PY3: py2_decode aus kodi-six
@@ -949,13 +991,39 @@ def transl_umlaute(line):
 	line_ret = line_ret.replace(u"ö", u"oe", len(line_ret))
 	line_ret = line_ret.replace(u"ß", u"ss", len(line_ret))	
 	return line_ret
-#----------------------------------------------------------------  
+#---------------------------------------------------------------- 
+# Zeilenumbrüche bei Erhalt von Newlines
+# Pythons textwrap kümmert sich nicht um \n
+# http://code.activestate.com/recipes/148061-one-liner-word-wrap-function/
+# reduce wurde in python3 nach functools verlagert
+def wrap_old(text, width):		# 15.02.2020 abgelöst durch wrap s.u.
+    return reduce(lambda line, word, width=width: '%s%s%s' %
+                  (line,
+                   ' \n'[(len(line)-line.rfind('\n')-1
+                         + len(word.split('\n',1)[0]
+                              ) >= width)],
+                   word),
+                  text.split(' ')
+                 )
+#  wrap-Funktion ohne reduce:                
+def wrap(text, width):
+	text = text.strip()
+	lines = text.splitlines()
+	newtxt = []
+	for line in lines:
+		newline = textwrap.fill(line, width)
+		newline = newline.strip()
+		newtxt.append(newline)
+		
+	return "\n".join(newtxt)
+
+#----------------------------------------------------------------   
 # Migration PY2/PY3: py2_decode aus kodi-six
 def transl_json(line):	# json-Umlaute übersetzen
 	# Vorkommen: Loader-Beiträge ZDF/3Sat (ausgewertet als Strings)
 	# Recherche Bsp.: https://www.compart.com/de/unicode/U+00BA
 	# 
-	line= py2_decode(line)	
+	line=py2_decode(line)
 	#PLog(line)
 	for r in ((u'\\u00E4', u"ä"), (u'\\u00C4', u"Ä"), (u'\\u00F6', u"ö"), (u'u002F', u"/")		
 		, (u'\\u00C6', u"Ö"), (u'\\u00D6', u"Ö"),(u'\\u00FC', u"ü"), (u'\\u00DC', u'Ü')
@@ -1053,7 +1121,7 @@ def seconds_translate(seconds, days=False):
 		#PLog("%d:%02d" % (hour, minutes))
 		return  "%d:%02d" % (hour, minutes)		
 #----------------------------------------------------------------  	
-# Format timecode 	2018-11-28T23:00:00Z (ARD Neu, broadcastedOn)
+# Format timecode 	2018-11-28T23:00:00Z (ARDNew, broadcastedOn)
 #					y-m-dTh:m:sZ 	ISO8601 date
 # Rückgabe:			28.11.2018, 23:00 Uhr   (Sekunden entfallen)
 #					bzw. '' bei Fehlschlag
@@ -1074,10 +1142,23 @@ def time_translate(timecode, add_hour=2):
 
 	if timecode.strip() == '':
 		return ''
-	if '.000' in timecode:					# Besp. Funk: 2019-09-30T12:59:27.000+0000
-		timecode = timecode.split('.000')[0]
+	timecode = py2_encode(timecode)
+		
+	# Bsp.: Funk: 			2019-09-30T12:59:27.000+0000,
+	# 		ARDNew Live: 	2019-12-12T06:16:04.413Z
+	#		ZDF:			2021-03-03T17:20:00+01:00	mit Korr.-Faktor 1 Std.
+	if timecode.find('.') == 19:			# Zielformat 2018-11-28T23:00:00Z			
+		timecode = timecode.split('.')[0]
 		timecode = timecode + "Z"
-	PLog(timecode)
+	if timecode.find('+') == 19:			# ZDF mit Korr.-Faktor s.o.			
+		timecode, add_hour = timecode.split('+')
+		timecode = timecode + "Z"
+		try:
+			add_hour = re.search('(\d+)',add_hour).group(1)
+			add_hour = int(add_hour)
+		except:
+			add_hour = 0
+	PLog(timecode);  PLog(add_hour)
 	
 	if timecode[10] == 'T' and timecode[-1] == 'Z':  # Format OK?
 		try:
@@ -1278,7 +1359,10 @@ def get_summary_pre(path, ID='ZDF', skip_verf=False):
 		#	summ = "UT | " + summ
 		if u'erfügbar bis' in page:										# enth. Uhrzeit									
 			verf = stringextract(u'erfügbar bis ', '<', page)			# Blank bis <
-		if verf:														# Verfügbar voraanstellen
+		if verf == '':
+			verf = stringextract('plusbar-end-date="', '"', page)
+			verf = time_translate(verf, add_hour=0)
+		if verf:														# Verfügbar voranstellen
 			summ = u"[B]Verfügbar bis %s[/B]\n\n%s\n" % (verf, summ)
 		
 	if 	ID == 'ARDnew':
@@ -1384,13 +1468,6 @@ def PlayVideo(url, title, thumb, Plot, sub_path=None, Merk='false'):
 	Plot=(Plot.replace('[B]', '').replace('[/B]', ''))	# Kodi-Problem: [/B] wird am Info-Ende platziert
 	url=url.replace('\\u002F', '/')						# json-Pfad noch unbehandelt
 	
-	if url_check(url, caller='PlayVideo') == False:
-		if IsPlayable == 'true':								# true
-			xbmcplugin.setResolvedUrl(HANDLE, True, li)			# indirekt
-		else:													# false, None od. Blank
-			xbmc.Player().play(url, li, windowed=False) 		# direkter Start
-		return				
-		
 	li = xbmcgui.ListItem(path=url)		
 	# li.setArt({'thumb': thumb, 'icon': thumb})
 	li.setArt({'poster': thumb, 'banner': thumb, 'thumb': thumb, 'icon': thumb, 'fanart': thumb})	
@@ -1417,7 +1494,7 @@ def PlayVideo(url, title, thumb, Plot, sub_path=None, Merk='false'):
 			local_path = "%s/%s" % (SUBTITLESTORE, sub_path.split('/')[-1])
 			local_path = os.path.abspath(local_path)
 			try:
-					urlretrieve(sub_path, local_path)
+				urlretrieve(sub_path, local_path)
 			except Exception as exception:
 				PLog(str(exception))
 				local_path = ''
@@ -1435,28 +1512,29 @@ def PlayVideo(url, title, thumb, Plot, sub_path=None, Merk='false'):
 			li.setSubtitles(sub_path)
 			xbmc.Player().showSubtitles(True)		
 		
-	# Abfrage: ist gewählter Eintrag als Video deklariert? - Falls ja,	# IsPlayable-Test
+	# Abfrage: ist gewähltes ListItem als Video deklariert? - Falls ja,	
 	#	erfolgt der Aufruf indirekt (setResolvedUrl). Falls nein,
 	#	wird der Player direkt aufgerufen. Direkter Aufruf ohne IsPlayable-Eigenschaft 
 	#	verhindert Resume-Funktion.
 	# Mit xbmc.Player() ist  die Unterscheidung Kodi V18/V17 nicht mehr erforderlich,
 	#	xbmc.Player().updateInfoTag bei Kodi V18 entfällt. 
 	# Die Player-Varianten PlayMedia + XBMC.PlayMedia scheitern bei Kommas in Url.	
-	# 
+	# 29.01.2020 sleep verhindert selbständige Restarts nach Stop - Bsp. phoenix/
+	#	Sendungen/"Armes Deutschland? Deine Kinder" 
 	IsPlayable = xbmc.getInfoLabel('ListItem.Property(IsPlayable)') # 'true' / 'false'
 	PLog("IsPlayable: %s, Merk: %s" % (IsPlayable, Merk))
 	PLog("kodi_version: " + KODI_VERSION)							# Debug
 	# kodi_version = re.search('(\d+)', KODI_VERSION).group(0) # Major-Version reicht hier - entfällt
-			
-	#if Merk == 'true':										# entfällt bisher - erfordert
-	#	xbmc.Player().play(url, li, windowed=False) 		# eigene Resumeverwaltung
-	#	return
 	
-	if IsPlayable == 'true':								# true
-		xbmcplugin.setResolvedUrl(HANDLE, True, li)			# indirekt
-	else:													# false, None od. Blank
-		xbmc.Player().play(url, li, windowed=False) 		# direkter Start
-	return				
+	if url_check(url, caller='PlayVideo'):
+		if IsPlayable == 'true':								# true - Call via listitem
+			PLog('PlayVideo_Start: listitem')
+			xbmcplugin.setResolvedUrl(HANDLE, True, li)			# indirekt
+		else:													# false, None od. Blank
+			PLog('PlayVideo_Start: direkt')
+			xbmc.Player().play(url, li, windowed=False) 		# direkter Start
+			sleep(50 / 100)
+			return
 
 #---------------------------------------------------------------- 
 # SSL-Probleme in Kodi mit https-Code 302 (Adresse verlagert) - Lösung:
@@ -1481,16 +1559,11 @@ def PlayAudio(url, title, thumb, Plot, header=None, url_template=None, FavCall='
 	PLog('PlayAudio:'); PLog(title); PLog(FavCall); 
 	Plot=transl_doubleUTF8(Plot)
 				
-	if url.startswith('http') == False:		# lokale Datei
-		url = os.path.abspath(url)
-				
-	#if header:							
-	#	Kodi Header: als Referer url injiziert - z.Z nicht benötigt	
-	# 	header='Accept-Encoding=identity;q=1, *;q=0&User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36&Accept=*/*&Referer=%s&Connection=keep-alive&Range=bytes=0-' % slink	
-	#	# PLog(header)
-	#	url = '%s|%s' % (url, header) 
+	if url.startswith('http') == False:			# lokale Datei
+		if url.startswith('smb://') == False:	# keine Share
+			url = os.path.abspath(url)
 	
-	PLog('PlayAudio Player_Url: ' + url)
+	PLog('Player_Url: ' + url)
 
 	li = xbmcgui.ListItem(path=url)				# ListItem + Player reicht für BR
 	li.setArt({'thumb': thumb, 'icon': thumb})
@@ -1498,13 +1571,56 @@ def PlayAudio(url, title, thumb, Plot, header=None, url_template=None, FavCall='
 	ilabels.update({'Comment': '%s' % Plot})	# Plot im MusicPlayer nicht verfügbar
 	li.setInfo(type="music", infoLabels=ilabels)							
 	li.setContentLookup(False)
-	 	
-	xbmc.Player().play(url, li, False)			# Player nicht mehr spezifizieren (0,1,2 - deprecated)
+	
+	# optionale Slideshow starten 
+	path = SETTINGS.getSetting('pref_slides_path')
+	PLog(path)
+	slide_mode = SETTINGS.getSetting('pref_musicslideshow') 
+	if "Kodi" in slide_mode:
+		slide_mode = "Kodi"
+	if "Addon" in slide_mode:				
+		slide_mode = "Addon"
+		
+	if slide_mode != "Keine":
+		if xbmcvfs.exists(path) == False:
+			msg1 = 'Slideshow: %s' % slide_mode
+			msg2 = 'Slideshow-Verzeichnis fehlt'
+			xbmcgui.Dialog().notification(msg1,msg2,R('icon-stream.png'),4000)
+		else:	
+			if slide_mode == "Kodi":								# Slideshow Kodi
+				xbmc.executebuiltin('SlideShow(%s, "recursive")' % path)
+				PLog('Starte_SlideShow1: %s' % path)
+				# Konfig: Kodi Player-Einstellungen / Bilder
+				xbmc.sleep(200)
+				xbmc.Player().play(url, li, False)
+				return
+			if slide_mode == "Addon":								# Slideshow Addon
+				# Absicherung gegen Rekursion nach GetDirectory_Error 
+				#	nach exit in SlideShow2 - exit falls STOPFILE 
+				#	jünger als 4 sec:
+				STOPFILE = os.path.join(DICTSTORE, 'stop_slides')
+				if os.path.exists(STOPFILE):							
+					now = time.time()
+					PLog(now - os.stat(STOPFILE).st_mtime)
+					if now - os.stat(STOPFILE).st_mtime < 4:	
+						PLog("GetDirectory_Error_Rekursion")
+						xbmc.executebuiltin("PreviousMenu")
+						return
+					else:
+						os.remove(STOPFILE)							# Stopdatei entfernen	
+				xbmc.Player().play(url, li, False)					# Start vor modaler Slideshow			
+				import resources.lib.slides as slides
+				PLog('Starte_SlideShow2: %s' % path)
+				CWD = SETTINGS.getAddonInfo('path') 					# working dir
+				DialogSlides = slides.Slideshow('slides.xml', CWD, 'default')
+				DialogSlides.doModal()
+				xbmc.Player().stop()					
+				del DialogSlides
+				PLog("del_DialogSlides")
+				return
+	else:			
+		xbmc.Player().play(url, li, False)						# ohne Slideshow 
 
-	# -> zurück zum Menü Favoriten, ohne: Rücksprung ins Bibl.-Menü
-	if FavCall == 'true':
-		PLog('Call_from_Favourite')
-		xbmc.executebuiltin('ActivateWindow(10134)')
 #---------------------------------------------------------------- 
 # Aufruf: PlayVideo
 def url_check(url, caller=''):
@@ -1527,6 +1643,7 @@ def url_check(url, caller=''):
 		msg1= '%s: Seite nicht erreichbar - Url:' % caller
 		msg2 = url
 		msg3 = 'Fehler: %s' % err
+		PLog(msg3)
 		xbmcgui.Dialog().ok(ADDON_NAME, msg1, msg2, msg3)		 			 	 
 		return False
 	

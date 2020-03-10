@@ -1,3 +1,30 @@
+1.3.11
+  Maven85  Fixed creating movie streams when streamref is original plugin
+1.3.10
+  Maven85  Fixed creating episode streams when streamref is original plugin
+1.3.9
+  Maven85  Fixed playing streams with umlauts
+  Maven85  Fixed stream url for individually added movies
+1.3.8
+  Maven85  Refactoring
+  Maven85  Fixed stream file creation
+1.3.7
+  Maven85  Create video streams from favorites
+  Maven85  Python 3 compability
+1.3.6
+  lars-a   Various improvements (tvdb, medialist handling etc.)
+  Maven85  Removed script.module.simple.downloader
+1.3.5
+  Maven85  Remove dialog: remove single provider from medialist & entry from OSMOSIS' database
+  Maven85  Possibility to select the entry from medialist in the creation dialog
+  Maven85  Skip OV-Streams for episodes
+  Maven85  Modernize folderstructure of languages
+  Maven85  New resumepoint dialog
+1.3.4
+  Maven85  Option to search for episode information from TheTVDB
+  Maven85  Refactoring and optimize encoding
+1.3.3
+  Maven85  Python cache enabled
 1.3.0-1.3.2
   Maven85  Fix resume function in kodi18
   Maven85  Search episode data on TVDB if season and episode numbers are not specified + caching

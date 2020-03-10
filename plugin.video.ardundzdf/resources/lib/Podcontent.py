@@ -15,7 +15,7 @@
 #
 #	04.11.2019 Migration Python3
 #	21.11.2019 Migration Python3 Modul kodi_six + manuelle Anpassungen
-#
+#	Stand:  03.03.2020
 
 # Python3-Kompatibilität:
 from __future__ import absolute_import		# sucht erst top-level statt im akt. Verz. 
@@ -41,19 +41,12 @@ elif PYTHON3:
 # Python
 import sys, os, subprocess 
 import json, re
+import datetime, time
 
-# Addonmodule + Funktionsziele (util_imports.py)
-import resources.lib.util as util
-PLog=util.PLog;  home=util.home;  Dict=util.Dict;  name=util.name; 
-addDir=util.addDir;  get_page=util.get_page; 
-img_urlScheme=util.img_urlScheme;  R=util.R;  RLoad=util.RLoad;  RSave=util.RSave; 
-GetAttribute=util.GetAttribute; CalculateDuration=util.CalculateDuration;  
-teilstring=util.teilstring; repl_char=util.repl_char;  mystrip=util.mystrip; 
-DirectoryNavigator=util.DirectoryNavigator; stringextract=util.stringextract;  blockextract=util.blockextract; 
-teilstring=util.teilstring;  repl_dop=util.repl_dop; cleanhtml=util.cleanhtml;  decode_url=util.decode_url;  
-unescape=util.unescape;  mystrip=util.mystrip; make_filenames=util.make_filenames;  transl_umlaute=util.transl_umlaute;  
-humanbytes=util.humanbytes;  time_translate=util.time_translate; get_keyboard_input=util.get_keyboard_input; 
-repl_json_chars=util.repl_json_chars; 
+# Addonmodule + Funktionsziele 
+import ardundzdf					# -> thread_getfile 
+from resources.lib.util import *
+ 
 
 
 ADDON_ID      	= 'plugin.video.ardundzdf'
@@ -142,7 +135,9 @@ def PodFavoriten(title, path, pagenr='1'):
 		img		= img.replace('{width}', '640')
 		
 		title = rubrik + ' | ' + title
+		title = repl_json_chars(title)
 		descr	= "" + sender + ' | ' + dauer + ' | ' + pub_date + '\n\n' + descr 
+		descr = repl_json_chars(descr)
 		summ_par= descr.replace('\n', '||')
 	
 		PLog('Satz:');
@@ -166,18 +161,19 @@ def PodFavoriten(title, path, pagenr='1'):
 		xbmcgui.Dialog().ok(ADDON_NAME, msg1, msg2, '')
 											
 	#																			# Download-Button?				
-	if SETTINGS.getSetting('pref_use_downloads') == 'true' and len(downl_list) > 1:
-		# Sammel-Downloads - alle angezeigten Favoriten-Podcasts downloaden?
-		#	für "normale" Podcasts erfolgt die Abfrage in SinglePage
-		title=u'Download! Alle angezeigten [B]%d[/B] Podcasts ohne Rückfrage speichern?' % cnt
-		summ = u'Download von insgesamt %s Podcasts' % len(downl_list)	
-		Dict("store", 'downl_list', downl_list) 
-		Dict("store", 'URL_rec', downl_list) 
+	if SETTINGS.getSetting('pref_use_downloads') == 'true':
+		if len(downl_list) > 1:
+			# Sammel-Downloads - alle angezeigten Favoriten-Podcasts downloaden?
+			#	für "normale" Podcasts erfolgt die Abfrage in SinglePage
+			title=u'Download! Alle angezeigten [B]%d[/B] Podcasts ohne Rückfrage speichern?' % cnt
+			summ = u'Download von insgesamt %s Podcasts' % len(downl_list)	
+			Dict("store", 'downl_list', downl_list) 
+			Dict("store", 'URL_rec', downl_list) 
 
-		fparams="&fparams={'key_downl_list': 'downl_list', 'key_URL_rec': 'downl_list'}" 
-		addDir(li=li, label=title, action="dirList", dirID="resources.lib.Podcontent.DownloadMultiple", 
-			fanart=R(ICON_DOWNL), thumb=R(ICON_DOWNL), fparams=fparams, summary=summ)
-	
+			fparams="&fparams={'key_downl_list': 'downl_list', 'key_URL_rec': 'downl_list'}" 
+			addDir(li=li, label=title, action="dirList", dirID="resources.lib.Podcontent.DownloadMultiple", 
+				fanart=R(ICON_DOWNL), thumb=R(ICON_DOWNL), fparams=fparams, summary=summ)
+		
 	try:  																		# Mehr-Button?
 		items_per_page =  int(stringextract('items_per_page":', ',', page))
 		total 			= int(stringextract('total":', '}', page)) 
@@ -198,7 +194,7 @@ def PodFavoriten(title, path, pagenr='1'):
 			quote(title), page_next)
 		addDir(li=li, label=title, action="dirList", dirID="resources.lib.Podcontent.PodFavoriten", \
 			fanart=img, thumb=img, fparams=fparams, tagline=tag)	
-	
+		
 		
 	xbmcplugin.endOfDirectory(HANDLE, cacheToDisc=False)
 	
@@ -215,9 +211,10 @@ def PodFavoriten(title, path, pagenr='1'):
 #	bis ca. 4 KByte getestet) 
 #
 # Rücksprung-Problem: unter Kodi keine wie unter Plex beoachtet.
-#
-#----------------------------------------------------------------  
-	
+# Bei internem Download wird mit path_url_list zu thread_getfile verzweigt.
+# 27.02.2020 Code für curl/wget-Download entfernt
+
+#----------------------------------------------------------------  	
 def DownloadMultiple(key_downl_list, key_URL_rec):			# Sammeldownloads
 	PLog('DownloadMultiple:'); 
 	import shlex											# Parameter-Expansion
@@ -226,27 +223,21 @@ def DownloadMultiple(key_downl_list, key_URL_rec):			# Sammeldownloads
 	# PLog('downl_list: %s' % downl_list)
 
 	li = xbmcgui.ListItem()
-	li = home(li, ID='PODCAST')								# Home-Button
+	li = home(li, ID='ARDaudio')							# Home-Button
 	
 	rec_len = len(downl_list)
-	AppPath = SETTINGS.getSetting('pref_curl_path')
-	AppPath = os.path.abspath(AppPath)
-	dest_path = SETTINGS.getSetting('pref_curl_download_path')
-	
-	# -k schaltet curl's certificate-verification ab, -L folgt einem ev. Redirect
-	curl_param_list = '-k -L '									
+	dest_path = SETTINGS.getSetting('pref_download_path')
+			
+	path_url_list = []									# für int. Download									
 
-	PLog(AppPath)
-	if os.path.exists(AppPath)	== False:					# Existenz Curl prüfen
-		msg1='curl nicht gefunden'
-		xbmcgui.Dialog().ok(ADDON_NAME, msg1, '', '')		
-	if os.path.isdir(dest_path)	== False:			
-		msg1='Downloadverzeichnis nicht gefunden:'	# Downloadverzeichnis prüfen
+	if os.path.isdir(dest_path)	== False:				# Downloadverzeichnis prüfen		
+		msg1='Downloadverzeichnis nicht gefunden:'	
 		msg2=path
 		xbmcgui.Dialog().ok(ADDON_NAME, msg1, msg2, '')		
+		return li		
 	
 	i = 0
-	for rec in downl_list:									# Parameter-Liste für Curl erzeugen
+	for rec in downl_list:									# Parameter-Liste erzeugen
 		i = i + 1
 		#if  i > 2:											# reduz. Testlauf
 		#	break
@@ -261,41 +252,105 @@ def DownloadMultiple(key_downl_list, key_URL_rec):			# Sammeldownloads
 			dfname = 'Download_' + mydate + '.mp3'
 
 		# Parameter-Format: -o Zieldatei_kompletter_Pfad Podcast-Url -o Zieldatei_kompletter_Pfad Podcast-Url ..
-		curl_fullpath = os.path.join(dest_path, dfname)		 
-		curl_fullpath = os.path.abspath(curl_fullpath)		# os-spezischer Pfad
-		curl_param_list = curl_param_list + ' -o '  + curl_fullpath + ' ' + url
+		# path_url_list (int. Download): Zieldatei_kompletter_Pfad|Podcast, Zieldatei_kompletter_Pfad|Podcast ..
+		fullpath = os.path.join(dest_path, dfname)
+		fullpath = os.path.abspath(fullpath)		# os-spezischer Pfad
+		path_url_list.append('%s|%s' % (fullpath, url))
 		
-	cmd = AppPath + ' ' + curl_param_list
-	PLog(len(cmd))
-	
 	PLog(sys.platform)
-	if sys.platform == 'win32':								# s. Funktionskopf
-		args = cmd
-	else:
-		args = shlex.split(cmd)								# ValueError: No closing quotation (1 x, Ursache n.b.)
-	PLog(len(args))											
-	# PLog(args)
-												
-	try:
-		PIDcurlPOD = ''
-		sp = subprocess.Popen(args, shell=False)			# shell=True entf. hier nach shlex-Nutzung	
-		output,error = sp.communicate()						#  output,error = None falls Aufruf OK
-		PLog('call = ' + str(sp))	
-		if str(sp).find('object at') > 0:  				# Bsp.: <subprocess.Popen object at 0x7fb78361a210>
-			PIDcurlPOD = sp.pid							# PID zum Abgleich gegen Wiederholung sichern
-			PLog('PIDcurlPOD neu: %s' % PIDcurlPOD)
-			msg1 = 'curl: Download erfolgreich gestartet'
-			msg2 = 'Anzahl der Podcast: %s' % rec_len
-			xbmcgui.Dialog().ok(ADDON_NAME, msg1, msg2, '')
-			return li				
-		else:
-			raise Exception('Start von curl fehlgeschlagen')			
-	except Exception as exception:
-		PLog(str(exception))		
-		msg1='Download fehlgeschlagen'
-		msg2 = str(exception)
-		xbmcgui.Dialog().ok(ADDON_NAME, msg1, msg2, '')
-		return li				
+	from threading import Thread	# thread_getfile
+	textfile='';pathtextfile='';storetxt='';url='';fulldestpath=''
+	now = datetime.datetime.now()
+	timemark = now.strftime("%Y-%m-%d_%H-%M-%S")
+	background_thread = Thread(target=ardundzdf.thread_getfile,
+		args=(textfile,pathtextfile,storetxt,url,fulldestpath,path_url_list,timemark))
+	background_thread.start()
+	# return li						# Kodi-Problem: wartet bis Ende Thread			
+	xbmcplugin.endOfDirectory(HANDLE, cacheToDisc=True)
+	return							# hier trotz endOfDirectory erforderlich
+
+#---------------------------------------------------------------- 
+#	lokale Dateiverzeichnisse /Shares in	podcast-favorits.txt
+#		Audiodateien im Verz. mit Abspielbutton listen 
+#		Browser zeigen, falls keine Dateien im Verz.
+# 	library://music/ funktioniert nicht - Kodi-Player kann die
+#		Dateiquelle zur Browserausgabe nicht auflösen (Bsp.:
+#		 audio_path: musicdb://sources/1/788/931/?albumartistsonly=
+#			false&artistid=788&sourceid=1/4393.mp3
+ 
+def PodFolder(title, path):
+	PLog('PodFolder:'); PLog(path);
+	allow = [".MIDI", ".AIFF", ".WAV", ".WAVE", ".AIFF", ".MP2", ".MP3", ".AAC", 
+				".AAC", ".VORBIS", ".AC3", ".DTS", ".ALAC", ".AMR", ".FLAC"
+			]
+	
+	li = xbmcgui.ListItem()
+	li = home(li, ID='ARDaudio')							# Home-Button
+
+	if 'library://music/' in path:							# Sound-Bibliothek
+		msg1=u'Sound-Bibliothek nicht verfügbar:'	
+		msg2=path
+		xbmcgui.Dialog().ok(ADDON_NAME, msg1, msg2, '')		
+		return li		
+
+	path = xbmc.translatePath(path)
+	PLog(path);
+	if not xbmcvfs.exists(path):
+		msg1='Verzeichnis nicht gefunden:'	
+		msg2=path
+		xbmcgui.Dialog().ok(ADDON_NAME, msg1, msg2, '')		
+		return li		
+	
+	dirs, files = xbmcvfs.listdir(path)
+	PLog('dirs: %s, files: %s' % (len(dirs), len(files)))
+
+	dialog = xbmcgui.Dialog()
+	mytype=0; heading='Audioverzeichnis wählen'
+	d_ret = dialog.browseSingle(mytype, heading, 'music', '', False, False, path)	
+	PLog('d_ret: ' + d_ret)
+	dirs, files = xbmcvfs.listdir(d_ret)
+	PLog(dirs);PLog(files[:3]);
+
+	fstring = '\t'.join(files)							# schnelle Teilstringsuche in Liste
+	# if '.mp3' not in fstring: return li
+		
+	cnt=0
+	summ = d_ret
+	PLog('title: %s, summ: %s' % (title, summ))		
+	for audio in files:
+		d_ret=py2_encode(d_ret)
+		audio_path = os.path.join(d_ret, audio)
+		PLog("audio_path: " + audio_path)
+		ext = os.path.splitext(audio_path)[-1]
+		if up_low(ext) not in allow:
+			continue	
+			
+		title=py2_encode(title); audio=py2_encode(audio);
+		summ=py2_encode(summ); audio_path=py2_encode(audio_path);
+		thumb = R(ICON_NOTE)
+		fparams="&fparams={'url': '%s', 'title': '%s', 'thumb': '%s', 'Plot': '%s'}" %\
+			(quote(audio_path), quote(title),  quote(thumb), quote(audio))
+		addDir(li=li, label=audio, action="dirList", dirID="PlayAudio", fanart=R(ICON_NOTE), 
+			thumb=R(ICON_NOTE), fparams=fparams, summary=summ, tagline=title, mediatype='music')
+		cnt=cnt+1
+			
+	if cnt == 0:
+		msg1='keine Audiodateien gefunden. Verzeichnis:'	
+		msg2=d_ret
+		xbmcgui.Dialog().ok(ADDON_NAME, msg1, msg2, '')		
 		
 	xbmcplugin.endOfDirectory(HANDLE, cacheToDisc=True)
+			
+		
+
+
+
+
+
+
+
+
+
+
+
 

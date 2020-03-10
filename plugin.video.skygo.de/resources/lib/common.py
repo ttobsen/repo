@@ -1,35 +1,41 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import xbmcaddon
-import ast
+from kodi_six.utils import py2_decode
+from ast import literal_eval
 from collections import OrderedDict
+import xbmc
 
 try:
-    import urllib.parse as urllib
+    from urllib.parse import urlencode
 except:
-    import urllib
+    from urllib import urlencode
 
 
 class Common:
 
 
-    def __init__(self, addon, addon_handle):
+    def __init__(self, addon, addon_handle, memcache):
 
         self.addon = addon
         self.addon_handle = addon_handle
+        self.memcache = memcache
+        self.addon_id = self.addon.getAddonInfo('id')
+        self.addon_path = py2_decode(xbmc.translatePath(self.addon.getAddonInfo('path')))
+        self.addon_profile = py2_decode(xbmc.translatePath(self.addon.getAddonInfo('profile')))
 
-        self.base_url = 'plugin://{0}'.format(self.addon.getAddonInfo('id'))
+        self.base_url = 'plugin://{0}'.format(self.addon_id)
+        self.startup = self.addon.getSetting('startup') == 'true'
 
 
     def build_url(self, query):
         query.update({'zz': ''})
         query = OrderedDict(query.items())
-        return '{0}?{1}'.format(self.base_url, urllib.urlencode(query))
+        return '{0}?{1}'.format(self.base_url, urlencode(query))
 
 
     def getDictFromString(self, str):
-        return ast.literal_eval(str) if str else None
+        return literal_eval(str) if str else None
 
 
     def get_dict_value(self, dict, key):

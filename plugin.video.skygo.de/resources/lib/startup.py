@@ -7,20 +7,21 @@ import xbmc, xbmcaddon
 from .clips import Clips
 from .common import Common
 from .livetv import LiveTV
+from .memcache import Memcache
 from .navigation import Navigation
 from .skygo import SkyGo
 from .vod import VOD
 from .watchlist import Watchlist
 
 try:
-    import urllib.parse as urlparse
+    from urllib.parse import parse_qsl
 except:
-    import urlparse
+    from urlparse import parse_qsl
 
 
 def run(argv):
 
-    common = Common(xbmcaddon.Addon(), int(argv[1]))
+    common = Common(xbmcaddon.Addon(), int(argv[1]), Memcache())
     skygo = SkyGo(common)
     nav = Navigation(common, skygo)
     clips = Clips(skygo)
@@ -28,7 +29,7 @@ def run(argv):
     vod = VOD(nav, skygo)
     watchlist = Watchlist(common, nav, skygo)
 
-    params = dict(urlparse.parse_qsl(argv[2][1:]))
+    params = dict(parse_qsl(argv[2][1:]))
 
     # Router for all plugin actions
     if 'action' in params:
@@ -40,7 +41,7 @@ def run(argv):
         elif params['action'] == 'playClip':
             clips.playClip(params['id'])
         elif params['action'] == 'playLive':
-            liveTV.playLiveTv(params['manifest_url'], package_code=params.get('package_code'), infolabels=common.getDictFromString(params.get('infolabels', None)), art=common.getDictFromString(params.get('art', None)), parental_rating=int(params.get('parental_rating', 0)))
+            liveTV.playLiveTv(asset_id=params.get('vod_id'), manifest_url=params.get('manifest_url'), package_code=params.get('package_code'), infolabels=common.getDictFromString(params.get('infolabels', None)), art=common.getDictFromString(params.get('art', None)), parental_rating=int(params.get('parental_rating', 0)))
         elif params['action'] == 'listLiveTvChannelDirs':
             nav.listLiveTvChannelDirs()
         elif params['action'] == 'listLiveTvChannels':
@@ -72,7 +73,7 @@ def run(argv):
                 nav.listPath(params['path'])
 
         elif params['action'] == 'listSeries':
-            nav.listSeasonsFromSeries(params['id'])
+            nav.listSeasonsFromSeries(params['id'], params.get('calltype'))
         elif params['action'] == 'listSeason':
             nav.listEpisodesFromSeason(params['series_id'], params['id'])
 
@@ -90,3 +91,4 @@ def run(argv):
 
     else:
         nav.rootDir()
+        common.addon.setSetting('startup', 'false')

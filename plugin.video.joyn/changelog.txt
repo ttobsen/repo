@@ -70,3 +70,27 @@ v2.2.2
 fixed: re-set container-focus fails on some systems
 refix access to ip-api.com fails
 add usage disclaimer
+v2.3.0
+add api-based resume postions
+partly fixed live stream audio sync issue
+add save username/password option
+add option to show categories in main menu
+add ask-for-login dialog on first addon start
+show content based on current subscription
+add option to hightlight premium content
+rework some stuff
+v2.3.1
+improve addon overall addon performance by reusing languageinvoker/splitting into submodules/logging on demand only
+create singleton-instances on per addon-handle basis
+cache epg/landing-page in libjoyn-instance
+fix playback on OSX
+create fake-uuid for allwinner android sdk level 24 (importing uuid module crashes kodi)
+implement own get_node() and make it more unique (espacially on android)
+fix set sort as per settings on matrix
+use window.setProperty for asset_id instead of 'hiding' in it imdb-infolabel
+make sure only playback for this addon is tracked in service.py
+fix relogin issue, when decrypting username/password fails
+fix language files
+make sure addon is used on kodi >= 18
+v2.3.1.1
+Hotfix: Website changed again

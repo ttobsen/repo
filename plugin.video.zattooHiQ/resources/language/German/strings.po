@@ -397,6 +397,10 @@ msgctxt "#310065"
 msgid "Stream-Type"
 msgstr "Stream-Type"
 
+msgctxt "#310066"
+msgid "enable Dolby"
+msgstr "Dolby einschalten"
+
 msgctxt "#310067"
 msgid "Only show favourite channels"
 msgstr "Nur Favoriten-Kanäle anzeigen"

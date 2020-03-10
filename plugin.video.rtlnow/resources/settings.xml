@@ -23,25 +23,29 @@
 		<setting label="Videoformat" type="bool" id="high_definition" default="true" visible="false"/>
 		<setting type="sep"/>
 		<setting label="30233" type="lsep"/>
-		<setting label="30114" type="bool" id="show_date" default="true"/>
+		<setting label="30114" type="bool" id="mark_movies" default="false"/>
+		<setting label="30115" type="bool" id="show_date" default="true"/>
 	</category>
 	<category label="30001">
 		<setting label="30234" type="lsep"/>
-		<setting label="30115" type="bool" id="show_settings" default="true"/>
-		<setting type="sep"/>
-		<setting label="30235" type="lsep"/>
 		<setting label="30116" type="bool" id="cert" default="true"/>
 		<setting type="sep"/>
-		<setting label="30236" type="lsep"/>
+		<setting label="30235" type="lsep"/>
 		<setting label="30117" type="bool" id="checkwidevine" default="true"/>
+		<setting type="sep"/>
+		<setting label="30236" type="lsep"/>
+		<setting label="30118" type="bool" id="show_settings" default="true"/>
+		<setting type="sep"/>
+		<setting label="30237" type="lsep"/>
+		<setting label="30119" type="bool" id="enableDebug" default="false"/>
 	</category>
 	<category label="30002">
-		<setting label="30237" type="lsep"/>
-		<setting label="30118" type="bool" id="tvnow_library" default="false"/>
-		<setting label="30119" type="folder" id="mediapath" default="" enable="eq(-1,true)"/>
-		<setting label="30120" type="slider" id="updatestd" range="12,4,72" default="24" option="int" enable="!eq(-1,)+eq(-2,true)"/>
-		<setting type="sep"/>
 		<setting label="30238" type="lsep"/>
+		<setting label="30120" type="bool" id="tvnow_library" default="false"/>
+		<setting label="30121" type="folder" id="mediapath" default="" enable="eq(-1,true)"/>
+		<setting label="30122" type="slider" id="updatestd" range="12,4,72" default="24" option="int" enable="!eq(-1,)+eq(-2,true)"/>
+		<setting type="sep"/>
+		<setting label="30239" type="lsep"/>
 		<setting label="30358" type="text" option="readable"/>
 		<setting label="30359" type="text" option="readable"/>
 		<setting label="30360" type="text" option="readable"/>

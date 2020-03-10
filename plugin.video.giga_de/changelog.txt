@@ -29,3 +29,6 @@
 2.2.1
 - Patch
 
+2.2.2 (18.01.2020)
+- Kaum noch Videos auf der Webseite vorhanden.
+- Daher Updates für dieses Addon eingestellt !
