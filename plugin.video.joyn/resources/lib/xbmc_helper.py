@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+from distutils.version import LooseVersion
 from io import open as io_open
 from datetime import datetime, timedelta
 from xbmc import translatePath, executeJSONRPC, executebuiltin, getCondVisibility, getInfoLabel, getSkinDir, log, \
@@ -31,12 +32,31 @@ class xbmc_helper(Singleton):
 		self.prop_cache = {}
 		self.addon_params = None
 		self.android_properties = {}
+		self.xbmc_python_version = None
+		self.xbmc_version = None
 
 		debug_rpc_res = self.json_rpc(method='Settings.GetSettingValue', params={'setting': 'debug.showloginfo'})
 		if debug_rpc_res is not None and debug_rpc_res.get('value', False) is True:
 			self.kodi_debug = True
 		else:
 			self.kodi_debug = False
+
+		try:
+			from xbmcaddon import Addon
+			_xbmc_python_version = Addon('xbmc.python').getAddonInfo('version')
+			self.log_debug('Detected xbmc.python version {}', _xbmc_python_version)
+			self.xbmc_python_version = LooseVersion(_xbmc_python_version)
+		except Exception as e:
+			self.log_notice('Could not detect xbmc.python version: {}', e)
+			pass
+
+		try:
+			_xbmc_version = getInfoLabel('System.BuildVersion')
+			self.log_debug('Detected xbmc version: {}', _xbmc_version)
+			self.xbmc_version = LooseVersion(_xbmc_version)
+		except Exception as e:
+			self.log_notice('Could not detect xbmc version version: {}', e)
+			pass
 
 	def __del__(self):
 		self.addon = None
@@ -130,10 +150,6 @@ class xbmc_helper(Singleton):
 
 		return self.addon_version
 
-	def open_foreign_addon_settings(self, foreign_addon_id):
-		from xbmcaddon import Addon
-		Addon(foreign_addon_id).openSettings()
-
 	def notification(self, msg, description, icon=NOTIFICATION_ERROR):
 		if icon == NOTIFICATION_ERROR:
 			time = 10000
@@ -213,8 +229,8 @@ class xbmc_helper(Singleton):
 		if 'sort' in folder_defs.keys():
 			self.set_folder_sort(folder_defs['sort'])
 
-		# reset the postion to the last known, if pluginurls matching -> likely to be a 'refresh'
-		if getInfoLabel('Container.FolderPath') == old_pluginurl and old_postion.isdigit():
+		# reset the postion to the last "known" if it is gt 1, if pluginurls matching -> likely to be a 'refresh'
+		if getInfoLabel('Container.FolderPath') == old_pluginurl and old_postion.isdigit() and int(old_postion) > 1:
 			from xbmcgui import Window, getCurrentWindowId, getCurrentWindowDialogId
 
 			# wait untl all Dialogs are closed; 10099 => WINDOW_DIALOG_POINTER => smallest dialog_id; max 500 msecs
@@ -226,11 +242,7 @@ class xbmc_helper(Singleton):
 
 			self.log_debug('FolderPath old pos {} ', old_postion)
 			focus_id = Window(getCurrentWindowId()).getFocusId()
-			# different skins/viewtypes counting differently ?!?!
-			if str(getSkinDir()).startswith('skin.estuary') and focus_id in [53, 55, 50]:
-				set_postion = str(int(old_postion) + 1)
-			else:
-				set_postion = old_postion
+			set_postion = old_postion
 
 			cmd = compat._format('Control.SetFocus({},{})', focus_id, set_postion)
 			executebuiltin(cmd)
@@ -248,10 +260,10 @@ class xbmc_helper(Singleton):
 			executebuiltin(compat._format('Container.SetSortMethod({:s})', str(folder_sort_def['order_type'])))
 
 			if (order == CONST['SETTING_VALS']['SORT_ORDER_DESC'] and
-			    (getInfoLabel('Container.SortOrder').lower() == 'ascending'
+			    (getInfoLabel('Container.SortOrder').lower() == self.translation('ASCENDING_LABEL')
 			     or str(getCondVisibility('Container.SortDirection(ascending)')) == '1')) or (
 			             order == CONST['SETTING_VALS']['SORT_ORDER_ASC'] and
-			             (getInfoLabel('Container.SortOrder').lower() == 'descending'
+			             (getInfoLabel('Container.SortOrder').lower() == self.translation('DESCENDING_LABEL')
 			              or str(getCondVisibility('Container.SortDirection(descending)')) == '1')):
 				self.log_debug('Toggle sort')
 				executebuiltin('Container.SetSortDirection')
@@ -370,6 +382,7 @@ class xbmc_helper(Singleton):
 					from subprocess import check_output
 					prop_output = check_output(['/system/bin/getprop']).splitlines()
 					for prop in prop_output:
+						prop = compat._decode(prop)
 						prop_k_v = prop.split(']: [')
 						if len(prop_k_v) == 2 and prop_k_v[0].startswith('[') and prop_k_v[1].endswith(']'):
 							self.android_properties.update({prop_k_v[0][1:]: prop_k_v[1][:-1]})
@@ -389,7 +402,8 @@ class xbmc_helper(Singleton):
 					from subprocess import check_output
 					prop_output = check_output(['/system/bin/getprop', key]).splitlines()
 					if len(prop_output) == 1 and len(prop_output) != 0:
-						self.android_properties.update({key: prop_output[0]})
-						return prop_output[0]
+						prop = compat._decode(prop_output[0])
+						self.android_properties.update({key: prop})
+						return prop
 				except Exception as e:
 					self.log_error('Getting android property {} with exception: {}', key, e)
