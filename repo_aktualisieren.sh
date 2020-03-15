@@ -32,8 +32,16 @@ for name in `find . -maxdepth 1 -type d |grep -v \.git|grep -v addons|egrep -v "
      if [ ! -f "$name/$name-$VERSION.zip" ]; then
        zip -r $name/$name-$VERSION.zip $name -x \*.zip -x \*.git
      fi
+   array=`find $name -maxdepth 1 -name \*.zip | sort | head -n -5`
+    for zip in $array
+    do
+        rm -rf $zip
+    done
+    
    cat $name/addon.xml|grep -v "<?xml " >> $REPO/addons.xml
    echo "" >> $REPO/addons.xml
  done
  echo "</addons>" >> $REPO/addons.xml
  md5sum  $REPO/addons.xml > $REPO/addons.xml.md5
+
+
