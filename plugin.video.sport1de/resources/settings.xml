@@ -1,9 +1,0 @@
-<settings>
-    <category label="Einstellungen">
-        <setting label="Keine Einstellungen vorhanden" type="text" id="empty_settings" default=""/>
-        <setting label="email" type="text" id="email" default="" visible="false"/>
-        <setting label="password" type="text" id="password" default="" visible="false"/>
-        <setting label="cookie" type="text" id="cookie" default="" visible="false"/>
-        <setting label="startup" type="bool" id="startup" default="true" visible="false"/>
-    </category>
-</settings>

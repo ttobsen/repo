@@ -1,4 +1,0 @@
-﻿
-2.0.4 (19.01.2020)
-- Addon-Support eingestellt !
-- Direktzugriff über Youtube-Addon realisierbar.

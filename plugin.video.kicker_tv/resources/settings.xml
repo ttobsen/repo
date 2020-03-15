@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<settings>
-   <setting id="videoQuality" type="enum" label="30101" values="270p|360p|576p|720p" default="3"/>
-</settings>

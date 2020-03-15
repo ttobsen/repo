@@ -1,4 +1,0 @@
-﻿
-Version 0.2.0  (19.01.2020)
-- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.
-- Updates für dieses Addon vorerst eingestellt !

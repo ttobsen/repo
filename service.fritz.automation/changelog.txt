@@ -1,9 +1,0 @@
-0.2.0
-* Added Pause Funktion
-* Added Manual Switching
-0.1.2
-* More Debugging
-0.1.1
-* SID Fehler wenn sender aber nicht authentifiziert
-0.1
-* Initial Release

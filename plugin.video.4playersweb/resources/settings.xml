@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<settings>
-   <setting id="ip" type="text" label="Proxy NAME/IP" default=""/>
-   <setting id="port" type="number" label="Proxy Port" default=""/>
-   <setting id="NEWType" type="select" label="Neue Videos" values="Alle|Top|Meistgesehen|PC|One|PS4|PSVR|PS4P|PC-VR|Switch|Handhelds|Select" default="Alle"/>
-   <setting id="Type" type="select" label="SpieleTyp" values="Alle Systeme|PC|XBox One|Playstation 4|XBox 360|Playstation 3|Switch|Wii U|Select" default="Alle Systeme"/>
-   <setting id="quality" type="select" label="Quality" values="Select|1080p60|1080p|720p|270p" default="Select"/>   
-   <setting id="fallback" type="select" label="Fallback Quality" values="Max|Min|Select" default="Select" enable='!eq(-1,0)'/>
-</settings>

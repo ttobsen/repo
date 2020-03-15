@@ -1,3 +1,0 @@
-<settings>
-     <setting id="quality" type="select" label="Qualität" default="high" values="high|standard|hd|low200|low400" />
-</settings>

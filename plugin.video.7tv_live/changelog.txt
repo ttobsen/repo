@@ -1,4 +1,0 @@
-﻿0.1.0
-- Initial Source
-0.2.0
-- Sender Logos

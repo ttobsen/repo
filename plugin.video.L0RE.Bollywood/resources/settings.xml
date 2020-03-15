@@ -1,3 +1,0 @@
-<settings>
-   <setting id="language" type="enum" label="30100" values="English|Greek|French|German|Italian|Spanish|Portuguese|Polish|Russian|Ukrainian|Turkish|Arabic|Persian" default="0"/>
-</settings>

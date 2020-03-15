@@ -1,9 +1,0 @@
-﻿0.1.0 - Initial Source by L0RE
-...
-
-[B]Version 2.2.0  (01.12.2019)[/B] by realvito[CR]
-- optimized: Filterverfahren für leere Ordner verbessert und Meldung eingebaut
-- optimized: Doppelte Sendungen werden herausgefiltert
-- fixed: LiveTV funktioniert nicht mehr
-- changed: Sprach-Files from "strings.xml" to "strings.po"
-- added: Addon kompatibel mit PYTHON vers.3 gemacht (für KODI-19+) :-)

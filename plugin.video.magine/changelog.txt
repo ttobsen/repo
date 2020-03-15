@@ -1,4 +1,0 @@
-﻿0.1 
-- Initial Source
-0.3
-- Fehler bereinigt, die Chance das das Plugin Weiterleuft

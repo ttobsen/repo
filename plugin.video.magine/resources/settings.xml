@@ -1,8 +1,0 @@
-<settings>
-   <setting id="user" type="text" label="30101" default=""/>   
-   <setting id="password" type="text" option="hidden" label="30102" default=""/>
-   <setting id="pin" type="number" option="hidden" label="30105" default=""/>
-   <setting id="anzeige" type="select" label="30140" default="30141" lvalues="30141|30142|30143|30144" />
-   <setting label="31011"  id="time_offset" type="labelenum" values="-2|-1|0|1|2" default="-2"/>
-   <setting label="Play"  id="playlive" type="labelenum" values="Live|Start|Select" default="Live"/>
-</settings>

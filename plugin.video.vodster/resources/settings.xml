@@ -1,3 +1,0 @@
-<settings>
- <setting id="Quality" type="enum" label="Quality" values="480p|720p|1080p" default="1"/>
-</settings>
