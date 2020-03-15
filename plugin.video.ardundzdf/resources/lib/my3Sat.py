@@ -6,7 +6,7 @@
 ################################################################################
 # 	dieses Modul nutzt die Webseiten der Mediathek ab https://www.3sat.de,
 #	Seiten werden im html-format, teils. json ausgeliefert
-#	Stand: 23.02.2020
+#	Stand: 15.03.2020
 #
 #	04.11.2019 Migration Python3  Python3 Modul future
 #	18.11.2019 Migration Python3 Modul kodi_six + manuelle Anpassungen
@@ -74,6 +74,11 @@ ICON = xbmc.translatePath('special://home/addons/' + ADDON_ID + '/icon.png')
 ARDStartCacheTime = 300						# 5 Min.	
 USERDATA		= xbmc.translatePath("special://userdata")
 ADDON_DATA		= os.path.join("%sardundzdf_data") % USERDATA
+
+if 	check_AddonXml('"xbmc.python" version="3.0.0"'):
+	ADDON_DATA	= os.path.join("%s", "%s", "%s") % (USERDATA, "addon_data", ADDON_ID)
+WATCHFILE		= os.path.join("%s/merkliste.xml") % ADDON_DATA
+
 DICTSTORE 		= os.path.join("%s/Dict") % ADDON_DATA			# hier nur DICTSTORE genutzt
 SLIDESTORE 		= os.path.join("%s/slides") % ADDON_DATA
 SUBTITLESTORE 	= os.path.join("%s/subtitles") % ADDON_DATA
@@ -1093,7 +1098,7 @@ def SingleBeitrag(title, path, img_src, summ, dauer, duration, Merk='false'):
 		tagline=tag_org
 		li = test_downloads(li,download_list,title_org,Plot_par,tag,thumb,high=0)  # Downloadbutton(s)
 					
-	xbmcplugin.endOfDirectory(HANDLE)
+	xbmcplugin.endOfDirectory(HANDLE, cacheToDisc=True)
 
 ####################################################################################################
 # 3Sat - TV-Livestream mit EPG
@@ -1132,7 +1137,7 @@ def Live(name, epg='', Merk='false'):
 	
 	li = Parseplaylist(li, url, img, geoblock='', descr=Plot)	
 	
-	xbmcplugin.endOfDirectory(HANDLE)
+	xbmcplugin.endOfDirectory(HANDLE, cacheToDisc=True)
 	
 #-----------------------------
 def get_epg():		# akt. PRG-Hinweis von 3Sat-Startseite holen

@@ -2,7 +2,7 @@
 ################################################################################
 #				ARD_NEW.py - Teil von Kodi-Addon-ARDundZDF
 #			neue Version der ARD Mediathek, Start Beta Sept. 2018
-#	Stand 02.03.2020
+#	Stand 15.03.2020
 ################################################################################
 # 	dieses Modul nutzt die Webseiten der Mediathek ab https://www.ardmediathek.de/,
 #	Seiten werden im json-Format, teilweise html + json ausgeliefert
@@ -78,6 +78,11 @@ ICON = xbmc.translatePath('special://home/addons/' + ADDON_ID + '/icon.png')
 ARDStartCacheTime = 300						# 5 Min.	
 USERDATA		= xbmc.translatePath("special://userdata")
 ADDON_DATA		= os.path.join("%sardundzdf_data") % USERDATA
+
+if 	check_AddonXml('"xbmc.python" version="3.0.0"'):
+	PLog('Matrix-Version')
+	ADDON_DATA	= os.path.join("%s", "%s", "%s") % (USERDATA, "addon_data", ADDON_ID)
+
 DICTSTORE 		= os.path.join("%s/Dict") % ADDON_DATA			# hier nur DICTSTORE genutzt
 SLIDESTORE 		= os.path.join("%s/slides") % ADDON_DATA
 SUBTITLESTORE 	= os.path.join("%s/subtitles") % ADDON_DATA
@@ -157,9 +162,11 @@ def Main_NEW(name, CurSender=''):
 #		Verarbeitung der Links zu den restlichen Rubriken in ARDStartRubrik. 	
 #	
 #		Um horizontales Scrolling (Nachladen innerhalb einer Rubrik) zu vermeiden, fordern
-#			wir via pageSize am path-Ende alle verfügbaren Beiträge an.
+#			wir via pageSize am path-Ende alle verfügbaren Beiträge an - entf., s.u.
 # 27.10.2019 Laden aus Cache nur noch bei Senderausfall - vorheriges Laden mit ARDStartCacheTime
 #	als 1. Stufe störte beim Debugging
+# 11.03.2020 Pfad aus Widget-Links ermittelt, pageSize entfällt hier - Seitensteuerung inzwischen
+#	auf den json-Seiten OK (s. get_pagination)
 #
 def ARDStart(title, sender, widgetID=''): 
 	PLog('ARDStart:'); 
@@ -215,16 +222,11 @@ def ARDStart(title, sender, widgetID=''):
 
 	for grid in widget_list:
 		wid = stringextract('"Widget:', '"', grid)	# "id":"58mGm6b0Wi4FSIcQ5TkPuq","type":"gridlist","title":...
-		item	= stringextract('"id":"%s"' %  wid,  '{"id":', page)
+		item	= stringextract('"id":"%s"' %  wid,  '{"id":', page) # unterhalb widget_list mit titel + Pfad 
 		# PLog(item)
 		title 	= stringextract('"title":"', '"', item)
-		
-		pageSize 	= stringextract('"pageSize":', ',', item)
-		# pageSize stimmt nicht mit tats. Anzahl überein! Wir wiederholen statdessen den Titel, um
-		#	im Webplayer die Ansicht Details zu erzwingen.
-		widgetID = "%s|%s" % (wid, pageSize)
-		offset = "pageNumber=0&pageSize=%s" % pageSize				# Verzicht auf horiz. Scrolling - alle zeigen
-		path = 'http://page.ardmediathek.de/page-gateway/widgets/ard/editorials/%s?%s' % (wid, offset)
+		path = stringextract('"href":"', '"', item)	# 11.03.2020 in item verfügbar, (vorher manuell zusammengesetzt)
+		path=path.replace('\\u002F', '/')
 		img = R(ICON_DIR_FOLDER)
 		
 		if 'Livestream' in title:
@@ -240,7 +242,7 @@ def ARDStart(title, sender, widgetID=''):
 		addDir(li=li, label=title, action="dirList", dirID="resources.lib.ARDnew.ARDStartRubrik", fanart=img, thumb=img, 
 			tagline=tagline, fparams=fparams)													
 
-	xbmcplugin.endOfDirectory(HANDLE)
+	xbmcplugin.endOfDirectory(HANDLE, cacheToDisc=True)
 
 #-----------------------------------------------------------------------
 # img_via_id: ermittelt im json-Teil (ARD-Neu) img + sender via href_id
@@ -389,7 +391,7 @@ def ARDStartRubrik(path, title, widgetID='', ID='', img=''):
 				addDir(li=li, label=title, action="dirList", dirID="resources.lib.ARDnew.ARDStartRubrik", fanart=img, thumb=img, 
 					fparams=fparams, summary=summ, tagline="Folgeseiten")	
 																													
-		xbmcplugin.endOfDirectory(HANDLE)						# Ende Swiper
+		xbmcplugin.endOfDirectory(HANDLE, cacheToDisc=True)		# Ende Swiper
 
 	mehrfach=False; mediatype=''
 	if 'Livestream' in ID:
@@ -547,8 +549,14 @@ def get_page_content(li, page, ID, mark=''):
 			else:
 				gridlist = blockextract('id":"Link:', page)		# deckt auch Serien in Swiper ab
 					
+		if 'ARDStart' in ID:									# zusätzl. Beiträge ganz links
+			decorlist = blockextract( '{"decor":', page)
+			PLog('decorlist: ' + str(len(decorlist)))
+			gridlist = decorlist + gridlist
+			
 		if len(gridlist) == 0:									# Fallback (außer Livestreams)
-			gridlist = blockextract( '"images":', page) 		# geändert 20.09.2019 				
+			gridlist = blockextract( '"images":', page) 		# geändert 20.09.2019 
+							
 		
 	if len(gridlist) == 0:				
 		msg1 = 'keine Beiträge gefunden'
@@ -567,30 +575,28 @@ def get_page_content(li, page, ID, mark=''):
 			targetID = target.split('/')[-1]
 		PLog(targetID)
 		if targetID == '':										# kein Video
-			continue
-				
+			continue			
 																# Einzelbeträge:
 		PLog('"availableTo":null' in s)	
 		if '"availableTo":"' in s or '"duration":' in s or 'Livestream' in ID:
 			if not '"availableTo":null' in s:					# u.a. Bsp. "show":null 
-				mehrfach = False	
+				mehrfach = False
+		if '/compilation/' in s or '/grouping/' in s:			# Serie Vorrang vor z.B. Teaser 
+			mehrfach = True
 					
 		# Alternative: "%s/ard/player/%s"  % (BETA_BASE_URL,targetID), wenn
 		#	auf Filterung der Sender verzichtet werden soll (s. pubServ)
-		href = '%s/%s/live/%s' % (BETA_BASE_URL, sender, targetID)
+		href = '%s/%s/live/%s' % (BETA_BASE_URL, sender, targetID) # Pfad Singlebeitrag
 		
-		if mehrfach == True:									# targetID von grouping-Url holen 
-			groupingID= stringextract('/ard/grouping/', '"', s)	# leer bei Beiträgen von A-Z-Seiten
-			if groupingID:
-				targetID = groupingID
-			href = 'http://page.ardmediathek.de/page-gateway/pages/%s/grouping/%s'  % (sender, targetID)
-			if '/compilation/' in s:							# Bsp.: Filme nach Rubriken - keine grouping-Url
-				hreflist = blockextract('"href":"', s)
-				for h in hreflist:
-					if '/compilation/' in h:
+		if mehrfach == True:									# Pfad für Mehrfachbeiträge ermitteln 						
+			url_parts = ['/grouping/', '/compilation/']
+			hreflist = blockextract('"href":"', s)
+			for h in hreflist:
+				for u in url_parts:
+					if u in h:
 						href = stringextract('"href":"', '"', h)
-						break
-						
+						break					
+								
 		title=''	
 		if 'longTitle":"' in s:
 			title 	= stringextract('longTitle":"', '"', s)
@@ -649,6 +655,12 @@ def get_page_content(li, page, ID, mark=''):
 		PLog('Satz:');
 		PLog(mehrfach); PLog(title); PLog(href); PLog(img); PLog(summ); PLog(duration); PLog(ID)
 		
+		if u'Hörfassung' in title or 'Audiodeskription' in title:				# Filter
+			if SETTINGS.getSetting('pref_filter_hoerfassung') == 'true':
+				continue		
+			if SETTINGS.getSetting('pref_filter_audiodeskription') == 'true':
+				continue		
+		
 		if mehrfach:
 			summ = "Folgeseiten"
 			href=py2_encode(href); title=py2_encode(title); 
@@ -660,14 +672,14 @@ def get_page_content(li, page, ID, mark=''):
 				summ_new = get_summary_pre(path=href, ID='ARDnew', skip_verf=True) # skip availableTo (hier in tag)
 				if 	summ_new:
 					summ = summ_new
-		
+			
 			href=py2_encode(href); title=py2_encode(title); 
 			fparams="&fparams={'path': '%s', 'title': '%s', 'duration': '%s', 'ID': '%s'}" %\
 				(quote(href), quote(title), duration, ID)
 			addDir(li=li, label=title, action="dirList", dirID="resources.lib.ARDnew.ARDStartSingle", fanart=img, thumb=img, 
 				fparams=fparams, tagline=tag, summary=summ, mediatype=mediatype)	
 	
-	return li	
+	return li
 		
 #---------------------------------------------------------------------------------------------------
 # Ermittlung der Videoquellen für eine Sendung - hier Aufteilung Formate Streaming + MP4
@@ -826,6 +838,12 @@ def get_ardsingle_more(li, gridlist, page, mediatype=''):
 
 		PLog('Satz:');
 		PLog(title); PLog(href); PLog(img); PLog(summ); 
+
+		if u'Hörfassung' in title or 'Audiodeskription' in title:				# Filter
+			if SETTINGS.getSetting('pref_filter_hoerfassung') == 'true':
+				continue		
+			if SETTINGS.getSetting('pref_filter_audiodeskription') == 'true':
+				continue		
 		 								 
 		href=py2_encode(href); title=py2_encode(title); 
 		fparams="&fparams={'path': '%s', 'title': '%s', 'duration': ' ', 'ID': 'mehrzS'}" %\
@@ -1203,6 +1221,12 @@ def SendungenAZ_ARDnew(title, button, api_call):
 		if sender != 'ard':								# Alle (ard) oder filtern
 			if az_sender != pubServ:
 				continue
+				
+		if u'Hörfassung' in title or 'Audiodeskription' in title:				# Filter
+			if SETTINGS.getSetting('pref_filter_hoerfassung') == 'true':
+				continue		
+			if SETTINGS.getSetting('pref_filter_audiodeskription') == 'true':
+				continue				
 
 		PLog('Satz:');
 		PLog(title); PLog(href); PLog(img); PLog(summ); PLog(tagline);
@@ -1251,6 +1275,19 @@ def get_api_call(function, sender, myhash, pageNumber='', text='', clipId='', de
 #
 def SearchARDundZDFnew(title, query='', pagenr=''):
 	PLog('SearchARDundZDFnew:');
+	query_file 	= os.path.join("%s/search_ardundzdf") % ADDON_DATA
+	
+	if query == '':														# Liste letzte Sucheingaben
+		query_recent= RLoad(query_file, abs_path=True)
+		if query_recent.strip():
+			search_list = ['neue Suche']
+			query_recent= query_recent.strip().splitlines()
+			query_recent=sorted(query_recent, key=str.lower)
+			search_list = search_list + query_recent
+			ret = xbmcgui.Dialog().select('Sucheingabe', search_list, preselect=0)
+			if ret > 0:
+				query = search_list[ret]
+				query = "%s|%s" % (query,query)							# doppeln
 	
 	if query == '':
 		query = ardundzdf.get_query(channel='ARDundZDF') 
@@ -1265,6 +1302,7 @@ def SearchARDundZDFnew(title, query='', pagenr=''):
 	
 	tag_negativ =u'neue Suche in ARD und ZDF starten'					# ohne Treffer
 	tag_positiv =u'gefundene Beiträge zeigen'							# mit Treffer
+	store_recents = False												# Sucheingabe nicht speichern
 	
 	li = xbmcgui.ListItem()
 	li = home(li, ID=NAME)												# Home-Button
@@ -1292,6 +1330,7 @@ def SearchARDundZDFnew(title, query='', pagenr=''):
 		addDir(li=li, label=label, action="dirList", dirID="resources.lib.ARDnew.SearchARDundZDFnew", 
 			fanart=R('suche_ardundzdf.png'), thumb=R('suche_ardundzdf.png'), tagline=tag_negativ, fparams=fparams)
 	else:	
+		store_recents = True											# Sucheingabe speichern
 		PLog(type(vodTotal)); 	PLog(type(query_lable)); 			
 		title = "ARD: %s Video(s)  | %s" % (vodTotal, query_lable)
 		query_ard=py2_encode(query_ard); title=py2_encode(title); 
@@ -1320,13 +1359,24 @@ def SearchARDundZDFnew(title, query='', pagenr=''):
 		addDir(li=li, label=label, action="dirList", dirID="resources.lib.ARDnew.SearchARDundZDFnew", 
 			fanart=R('suche_ardundzdf.png'), thumb=R('suche_ardundzdf.png'), tagline=tag_negativ, fparams=fparams)
 	else:	
+		store_recents = True											# Sucheingabe speichern
 		title = "ZDF: %s Video(s)  | %s" % (searchResult, query_lable)
 		query_zdf=py2_encode(query_zdf); title=py2_encode(title);
 		fparams="&fparams={'query': '%s', 'title': '%s', 'pagenr': '%s'}" % (quote(query_zdf), 
 			quote(title), pagenr)
 		addDir(li=li, label=title, action="dirList", dirID="ZDF_Search", fanart=R('suche_ardundzdf.png'), 
 			thumb=R('suche_ardundzdf.png'), tagline=tag_positiv, fparams=fparams)
-				
+					
+	if 	store_recents:													# Sucheingabe speichern
+		query_recent= RLoad(query_file, abs_path=True)
+		query_recent= query_recent.strip().splitlines()
+		if len(query_recent) >= 24:										# 1. Eintrag löschen (ältester)
+			del query_recent[0]
+		if query_ard not in query_recent:								# query_ard + query_zdf ident.
+			query_recent.append(query_ard)
+			query_recent = "\n".join(query_recent)
+			RSave(query_file, query_recent)								# withcodec: code-error
+			
 	xbmcplugin.endOfDirectory(HANDLE)
 	
 #---------------------------------------------------------------- 
@@ -1604,8 +1654,14 @@ def ARDVerpasstContent(title, path, CurSender, timeline_sender='', label_sender=
 
 		PLog('Satz:');
 		PLog(title); PLog(href); PLog(img); PLog(summ); PLog(zeit); 
-		title = repl_json_chars(title); summ = repl_json_chars(summ);
-		 
+		
+		if u'Hörfassung' in title or 'Audiodeskription' in title:				# Filter
+			if SETTINGS.getSetting('pref_filter_hoerfassung') == 'true':
+				continue		
+			if SETTINGS.getSetting('pref_filter_audiodeskription') == 'true':
+				continue				
+		
+		title = repl_json_chars(title); summ = repl_json_chars(summ);	 
 		href=py2_encode(href); title=py2_encode(title); 
 		fparams="&fparams={'path': '%s', 'title': '%s', 'duration': '%s', 'ID': '%s'}" %\
 			(quote(href), quote(title), '', ID)
