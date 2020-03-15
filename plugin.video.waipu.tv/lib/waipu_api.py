@@ -2,7 +2,7 @@ import requests
 import time
 import base64
 import json
-import mechanize
+
 try:
     import http.cookiejar
 except ImportError:
@@ -10,7 +10,7 @@ except ImportError:
 import xbmc
 
 
-class Waipu:
+class WaipuAPI:
     user_agent = "kodi plugin for waipu.tv (python)"
 
     def __init__(self, username, password, provider):
@@ -42,6 +42,7 @@ class Waipu:
         return r.status_code
 
     def fetchTokenO2(self):
+        import mechanize
         br = mechanize.Browser()
         cj = cookielib.CookieJar()
         br.set_cookiejar(cj)
@@ -176,6 +177,23 @@ class Waipu:
                    'Authorization': 'Bearer ' + self._auth['access_token'],
                    'Accept': 'application/vnd.waipu.epg-program-v1+json'}
         url = "https://epg.waipu.tv/api/channels/" + channelId + "/programs/current"
+        r = requests.get(url, headers=headers)
+        return r.json()
+    
+    def getEPGForChannel(self, channelId):
+        self.getToken()
+        starttime = time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime(time.time() - 3*24 * 60 * 60));
+        endtime = time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime(time.time() + 3*24 * 60 * 60))
+        headers = {'User-Agent': self.user_agent,
+                   'Authorization': 'Bearer ' + self._auth['access_token']}
+        url = "https://epg.waipu.tv/api/channels/" + channelId + "/programs?startTime="+starttime+"&stopTime="+endtime
+        r = requests.get(url, headers=headers)
+        return r.json()
+    
+    def getUrl(self, url):
+        self.getToken()
+        headers = {'User-Agent': self.user_agent,
+                   'Authorization': 'Bearer ' + self._auth['access_token']}
         r = requests.get(url, headers=headers)
         return r.json()
 
