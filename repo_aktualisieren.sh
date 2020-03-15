@@ -37,3 +37,6 @@ for name in `find . -maxdepth 1 -type d |grep -v \.git|grep -v addons|egrep -v "
  done
  echo "</addons>" >> $REPO/addons.xml
  md5sum  $REPO/addons.xml > $REPO/addons.xml.md5
+
+find -maxdepht 2 -name \*.zip ! -newer "$(ls -t1 | sed -n '6p')" -delete
+
