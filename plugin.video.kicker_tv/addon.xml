@@ -1,17 +1,33 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.kicker_tv" name="Kicker.tv" version="1.0.1" provider-name="PUR3">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<addon id="plugin.video.kicker_tv" name="Kicker.tv" version="1.1.0" provider-name="PUR3">
 	<requires>
-		<import addon="xbmc.python" version="2.1.0"/>
+		<import addon="xbmc.python" version="2.24.0"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary lang="de">Kicker.tv</summary>
-		<description lang="de">Videos mit Bezug zum Fussball und anderen Sportarten</description>
-		<language>de</language>
+		<summary lang="en">Kicker.tv</summary>
+		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
+		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<website>www.kicker.tv</website>
+		<forum></forum>
+		<website></website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.kicker_tv</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<broken>
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</broken>
+		<news>[B][COLOR orangered]Version 1.1.0 (16.03.2020)[/COLOR][/B] by realvito[CR]
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</news>
 	</extension>
 </addon>

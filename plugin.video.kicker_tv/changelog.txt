@@ -1,2 +1,6 @@
+﻿v 1.0.0 - First release
 v 1.0.1 - Fixed escaping single quotes
-v 1.0.0 - First release
+
+Version 1.1.0  (16.03.2020)
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.
+- Updates für dieses Addon vorerst eingestellt !
