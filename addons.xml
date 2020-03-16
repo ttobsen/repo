@@ -915,31 +915,6 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
    </extension>
 </addon>
 
-<addon id="plugin.video.test" name="Test" version="2.7.2" provider-name="rols1 (rols1@gmx.de)">
-  <requires>
-   <import addon="xbmc.python" version="2.25.0"/>
-   <import addon="script.module.kodi-six" />
-</requires>
-  <extension point="xbmc.python.pluginsource" library="ardundzdf.py">
-        <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-	<summary lang="de">ARD- und ZDF-Mediathek</summary>
-	<description lang="de">ARD- und ZDF-Mediathek, einschließlich Live-TV mit Aufnahmefunktion, Merkliste, Live-Radio, Podcasts. Screenshots siehe https://github.com/rols1/PluginPictures/tree/master/Kodi/ARDundZDF. Wicki zu den Settings siehe https://github.com/rols1/Kodi-Addon-ARDundZDF/wiki.
-	</description>
-	<platform>all</platform>
-         <source>https://github.com/rols1/Kodi-Addon-ARDundZDF</source>
-        <forum>https://www.kodinerds.net/index.php/Thread/64244-RELEASE-Kodi-Addon-ARDundZDF/</forum>
-	<license>The MIT License (MIT)</license>
-	<language>"de_DE"</language>
- 	<email>rols1@gmx.de</email>
-        <assets>
-             <icon>icon.png</icon>
-            <fanart>fanart.png</fanart>           
-     </assets>
-   </extension>
-</addon>
-
 <addon id="plugin.video.wiesn" name="Oktoberfest" version="0.2.3" provider-name="L0RE">
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
