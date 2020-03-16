@@ -87,22 +87,6 @@
 	</extension>
 </addon>
 
-<addon id="repository.kodinerds_Generic_x68_64" name="kodinerds.net Binary Addons for Generic Linux" version="1.0.3" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/Generic_x68_64/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/Generic_x68_64/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/Generic_x68_64/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Official Repository of Kodinerds</summary>
-		<summary lang="de">Offizielles Repository der Kodinerds</summary>
-		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
-		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
-		<disclaimer></disclaimer>
-		<platform>linux</platform>
-	</extension>
-</addon>
-
 <addon id="script.service.gto" name="German Telecast Offers" version="2.1.9" provider-name="Birger Jesch">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
@@ -289,23 +273,6 @@ NOTE: Streams are available in SD only
   </extension>
 </addon>
 
-<addon id="repository.kodinerds_S905" name="kodinerds.net Binary Addons for AML S905 based devices" version="1.0.3" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/S905/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/S905/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/S905/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary>A Kodi 17 binary addon repository for AML S905 based devices</summary>
-		<description>None of the addons are checkted against other projects then Odroid_C2.
-			Use them, on other AML S905 based devices, at your own risk! 
-			We are not responsible for any damage or data loss!</description>
-		<disclaimer>Some parts of this addons may not be legal in your country of residence - please check with
-			your local laws before installing.</disclaimer>
-		<platform>linux</platform>
-	</extension>
-</addon>
-
 <addon id="script.module.3to2" name="3to2" version="1.1.1" provider-name="Python software foundation">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
@@ -419,22 +386,6 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 		<news>[B][COLOR orangered]Version 0.7.0 (03.02.2020)[/COLOR][/B] by realvito[CR]
 - Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 1.0.1 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No. 0.7.0 DEINSTALLIEREN.
 		</news>
-	</extension>
-</addon>
-
-<addon id="repository.kodinerds_RPi2" name="kodinerds.net Binary Addons for Rasperry 2+3" version="1.0.3" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi2/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi2/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi2/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Official Repository of Kodinerds</summary>
-		<summary lang="de">Offizielles Repository der Kodinerds</summary>
-		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
-		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
-		<disclaimer></disclaimer>
-		<platform>linux</platform>
 	</extension>
 </addon>
 
@@ -706,22 +657,6 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 - fixed: Serien -> Die populärsten Serien+Meisterwartete neue Staffeln+Neue Staffeln+Kommende Staffeln+Neu gestartete Serien+Neue Serien-Trailer (kein Inhalt)
 - added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19+) :-)
 		</news>
-	</extension>
-</addon>
-
-<addon id="repository.kodinerds_WIN_32" name="kodinerds.net Binary Addons for Windows" version="1.0.3" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/WIN_32/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/WIN_32/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/WIN_32/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Official Repository of Kodinerds</summary>
-		<summary lang="de">Offizielles Repository der Kodinerds</summary>
-		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
-		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
-		<disclaimer></disclaimer>
-		<platform>windx</platform>
 	</extension>
 </addon>
 
@@ -2035,22 +1970,6 @@ To support the backport the addon will now always create the merged_epg.xml.gz
   </extension>
 </addon>
 
-<addon id="repository.kodinerds_OSX_64" name="kodinerds.net Binary Addons for OSX 64" version="1.0.3" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/OSX_64/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/OSX_64/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/OSX_64/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Official Repository of Kodinerds</summary>
-		<summary lang="de">Offizielles Repository der Kodinerds</summary>
-		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
-		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
-		<disclaimer></disclaimer>
-		<platform>osx</platform>
-	</extension>
-</addon>
-
 <addon id="plugin.video.L0RE.weltderwunder" name="Welt der Wunder" version="1.0.4" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
@@ -2978,22 +2897,6 @@ oder online unter https://goo.gl/GtK41L nachlesen.
   </extension>
 </addon>
 
-<addon id="repository.kodinerds_Odroid_C2" name="kodinerds.net Binary Addons for Odroid_C2" version="1.0.3" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/Odroid_C2/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/Odroid_C2/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/Odroid_C2/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Official Repository of Kodinerds</summary>
-		<summary lang="de">Offizielles Repository der Kodinerds</summary>
-		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
-		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
-		<disclaimer></disclaimer>
-		<platform>linux</platform>
-	</extension>
-</addon>
-
 <addon id="plugin.video.wakanim" name="Wakanim" version="0.8.0" provider-name="MrKrabat">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
@@ -3260,22 +3163,6 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
 		<news>[B][COLOR orangered]Version 2.0.6  (06.02.2020)[/COLOR][/B] by realvito[CR]
 - fixed: Syntaxfehler on Line 57
 		</news>
-	</extension>
-</addon>
-
-<addon id="repository.kodinerds_RPi" name="kodinerds.net Binary Addons for Rasperry 1" version="1.0.3" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Official Repository of Kodinerds</summary>
-		<summary lang="de">Offizielles Repository der Kodinerds</summary>
-		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
-		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
-		<disclaimer></disclaimer>
-		<platform>linux</platform>
 	</extension>
 </addon>
 
@@ -4029,21 +3916,6 @@ Zattoo Live TV, Aufnahmen und EPG
 - z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
 		</news>
 	</extension>
-</addon>
-
-<addon id="plugin.video.helloworld" name="Helo World" version="0.0.8" provider-name="L0RE">
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Test Plugin von L0RE</summary>
-    <summary lang="de">Test Plugin von L0RE</summary>
-    <description lang="en">Test Plugin von L0RE</description>
-    <description lang="de">Test Plugin von L0RE</description>
-    <website></website>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
 </addon>
 
 <addon id="script.module.future" name="future" version="0.16.0.1" provider-name="Ed Schofield">
