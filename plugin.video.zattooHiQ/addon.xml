@@ -36,14 +36,12 @@ Zattoo Live TV, Aufnahmen und EPG
     </description>
    <platform>all</platform>
     <language></language>
+    <broken>
+- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.1 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No.  DEINSTALLIEREN.
+    </broken>
     <news>
-- Kodi Player OSD über Longpress Return zu erreichen
-- WidgetProblem bei Aeon Silvo behoben
-- EPG Datums Eingabe exit wenn heute
-- Settings können im Hauptmenu angezeigt werden
-- Aufnahmen nur wenn im Abo
-- 1und1 als Reseller hinzugefügt
-- EPG überarbeitet</news>
+- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.1 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No.  DEINSTALLIEREN.
+    </news>
     <license>GNU GENERAL PUBLIC LICENSEVersion 3, 29 June 2007</license>
     <source>https://github.com/rolapp/plugin.video.zattooHiQ</source>
     <website>https://github.com/rolapp/plugin.video.zattooHiQ/wiki/ZattooHiQ-Wiki</website>
