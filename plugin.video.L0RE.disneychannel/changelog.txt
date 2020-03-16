@@ -1,1 +1,5 @@
 ﻿0.1- Initial Source
+
+Version 0.2.0  (16.03.2020)
+- Die Webseite wird bald abgeschaltet.
+- Addon-Support eingestellt !
