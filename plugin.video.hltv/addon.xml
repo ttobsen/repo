@@ -1,27 +1,34 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.hltv" version="0.4.0" name="HLTV" provider-name="Jin">
-    <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
-        <import addon="inputstream.adaptive" version="2.0.18"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="addon.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <news>
-- fix youtube
-- add p2l.tv
-        </news>
-        <summary lang="de_DE">CS:GO Live und auf Abruf</summary>
-        <description lang="de_DE">Video Addon für hltv.org</description>
-        <disclaimer lang="de_DE">Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
-        <summary lang="en_GB">CS:GO Live and On Demand</summary>
-        <description lang="en_GB">Video Addon for hltv.org</description>
-        <disclaimer lang="en_GB">Unofficial Addon - Use at your own risk</disclaimer>
-        <platform>all</platform>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <website>https://www.hltv.org</website>
-        <email>[jin] at [xyz] dot [de]</email>
-        <source>https://github.com/kodinerds/repo/tree/master/plugin.video.hltv</source>
-    </extension>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<addon id="plugin.video.hltv" name="HLTV" version="0.5.0" provider-name="Jin">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="inputstream.adaptive" version="2.0.18"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">CS:GO Live und auf Abruf</summary>
+		<summary lang="en">CS:GO Live and On Demand</summary>
+		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
+		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum></forum>
+		<website></website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.hltv</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<broken>
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</broken>
+		<news>[B][COLOR orangered]Version 0.5.0 (16.03.2020)[/COLOR][/B] by realvito[CR]
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</news>
+	</extension>
 </addon>
