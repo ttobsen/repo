@@ -809,28 +809,6 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 	</extension>
 </addon>
 
-<addon id="service.rytecepgdownloader" name="Rytec EPG Downloader" version="18.1.3" provider-name="Jin">
-    <requires>
-        <import addon="xbmc.python" version="2.14.0"/>
-        <import addon="script.module.requests"/>
-    </requires>
-    <extension point="xbmc.service" library="service.py" start="startup" />
-    <extension point="xbmc.addon.metadata">
-        <news>
-This addon will now require the lzma module to support .xz archives
-which is available in python 3 only*.
-It is now marked as broken untill python 3 is included in kodi 18.
-
-* There is a backport available for python 2. https://pypi.python.org/pypi/backports.lzma
-To support the backport the addon will now always create the merged_epg.xml.gz
-        </news>
-        <broken>xz files not yet supported</broken>
-        <platform>all</platform>
-        <summary>XMLTV EPG Downloader</summary>
-        <description>XMLTV EPG Downloader</description>
-    </extension>
-</addon>
-
 <addon id="script.module.oauthlib" name="oauthlib" version="2.0.1" provider-name="Idan Gazit">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
@@ -4307,7 +4285,10 @@ Zattoo Live TV, Aufnahmen und EPG
 	</extension>
 </addon>
 
-<addon id="repository.kodinerds" name="kodinerds.net Add-ons" version="6.0.19" provider-name="L0RE, Steffen Rolapp">
+<addon id="repository.kodinerds" name="kodinerds.net Add-ons" version="6.19.1" provider-name="L0RE, Steffen Rolapp">
+	<requires>
+		<import addon="xbmc.addon" version="12.0.0"/>
+	</requires>
 	<extension point="xbmc.addon.repository" name="L0RE">
 		<dir>
 			<info compressed="true">https://raw.githubusercontent.com/kodinerds/repo/master/addons.xml</info>
