@@ -1,4 +1,4 @@
-0.1 
+﻿0.1 
 - Initial Source
 0.2 
 - Changed to Dectory View
@@ -10,3 +10,8 @@
 - Hintergrund Bilder+ Video Infos
 0.8
 - Serien Hinzugefuegt
+
+
+Version 0.9.0  (16.03.2020)
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.
+- Updates für dieses Addon vorerst eingestellt !
