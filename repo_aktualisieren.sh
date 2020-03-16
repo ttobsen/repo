@@ -32,7 +32,7 @@ for name in `find . -maxdepth 1 -type d |grep -v \.git|grep -v addons|egrep -v "
      if [ ! -f "$name/$name-$VERSION.zip" ]; then
        zip -r $name/$name-$VERSION.zip $name -x \*.zip -x \*.git
      fi
-   array=`find $name -maxdepth 1 -name \*.zip | sort | head -n -5`
+   array=`find $name -maxdepth 1 -name \*.zip |sort -t . -V -k 2 | head -n -5`
     for zip in $array
     do
         rm -rf $zip
