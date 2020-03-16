@@ -1,20 +1,36 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.magine" name="Magine" version="0.3.13" provider-name="L0RE">
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-  <requires>
-      <import addon="script.module.requests" version="2.12.4"/>
-      <import addon="inputstream.adaptive" version="1.0.8"/>
-      <import addon="script.module.inputstreamhelper" version="0.2.2"/>
-  </requires>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Magine TV</summary>
-    <summary lang="de">Magine TV</summary>
-    <description lang="en">Magine TV</description>
-    <description lang="de">Magine TV</description>
-    <website></website>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<addon id="plugin.video.magine" name="Magine" version="0.4.0" provider-name="L0RE">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="inputstream.adaptive" version="1.0.8"/>
+		<import addon="script.module.inputstreamhelper" version="0.4.2"/>
+		<import addon="script.module.requests" version="2.20.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Magine TV</summary>
+		<summary lang="en">Magine TV</summary>
+		<description lang="de">[COLOR red]- Addon-Support eingestellt ![CR]- Webseite abgeschaltet ![/COLOR]</description>
+		<description lang="en">[COLOR red]- Addon-Support discontinued ![CR]- Website switched off ![/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+		<website></website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.magine</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<broken>
+- Addon-Support eingestellt ![CR]- Webseite abgeschaltet !
+		</broken>
+		<news>[B][COLOR orangered]Version 0.4.0 (16.03.2020)[/COLOR][/B] by realvito[CR]
+- Addon-Support eingestellt ![CR]- Webseite abgeschaltet !
+		</news>
+	</extension>
 </addon>

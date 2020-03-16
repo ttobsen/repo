@@ -2,3 +2,7 @@
 - Initial Source
 0.3
 - Fehler bereinigt, die Chance das das Plugin Weiterleuft
+
+Version 0.4.0  (16.03.2020)
+- Addon-Support eingestellt !
+- Webseite abgeschaltet !
