@@ -3752,28 +3752,9 @@ oder online unter https://goo.gl/GtK41L nachlesen.
   <extension point="xbmc.addon.metadata">
     <summary lang="en">Play Live TV and recorded shows from Zattoo.</summary>
     <summary lang="de">Zattoo Live TV, Aufnahmen und EPG</summary>
-    <description lang="en">ZattooHiQ is based on ZattooBox form Pascal Nançoz and ZattooBox Extended from Daniel Griner modify by L0RE
-
-Play Live TV and recorded shows from Zattoo.
-- switch between favourites/all channels
-- channels preview
-- EPG: live/setup recording/recall (for paying Zattoo customers)
-- search shows
-- teletext
-- settings: stream quality, default language
-- touchscreen support
-    </description>
-    <description lang="de">ZattooHiQ basiert auf ZattooBox von Pascal Nançoz und ZattooBox Extended von Daniel Griner verbessert von L0RE
-
-Zattoo Live TV, Aufnahmen und EPG
-- wechsel zwischen Favoriten/Allen Kanälen
-- Kanalvorschau
-- EPG: Live/Aufnahmen programieren/Recall (mit Zattoo Abo)
-- Sendungen suchen
-- Teletext
-- Einstellungen: Stream Qulität, Standart Sprache (Zweikanalton)
-- Touchscreen Unterstützung
-    </description>
+		<description lang="de_DE">[COLOR red]- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.1 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No. 1.7.10 DEINSTALLIEREN.[/COLOR]</description>
+		<description lang="en_GB">[COLOR red]- This Addon gets a new path in the KODI directory ![CR]- This restores the compatibility and the call by other addons.[CR][CR]- Please ACTIVATE the new Addon with the Version-No. 2.0.1.[CR]- After that UNINSTALL this Addon with the Version-No. 1.7.10.[/COLOR]</description>
+		
    <platform>all</platform>
     <language></language>
     <broken>
