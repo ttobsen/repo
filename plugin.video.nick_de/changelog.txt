@@ -1,4 +1,4 @@
-1.0.0
+﻿1.0.0
 - Initial release
 1.0.1
 - Fixed site changes
@@ -10,3 +10,7 @@
 - Added Nick Night
 1.1.5
 - Fix New Urls
+
+Version 1.2.0  (16.03.2020)
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.
+- Updates für dieses Addon vorerst eingestellt !
