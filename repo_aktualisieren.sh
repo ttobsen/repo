@@ -29,7 +29,7 @@ rm -rf .idea
 # Lösche als Broken markierte Addons nach 3 Monaten
 
 for addon in `git log -S'broken' --date=short --before="3 month" --after="6 month" --pretty="" --name-only ./*/addon.xml | cut -d / -f1`; do
-    echo $addon
+    rm -rf $addon
 done
 
 echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' >$REPO/addons.xml
