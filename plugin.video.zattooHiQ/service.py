@@ -195,22 +195,13 @@ class myPlayer(xbmc.Player):
         except:pass
         
 # ###########################################################################################
-# debug('Service started')
-# player=myPlayer()
+debug('Service started')
+player=myPlayer()
 
-# if OLDVERSION != VERSION:
-   # #_zattooDB_.reloadDB(True)
-   # _zattooDB_.set_version(VERSION)
+if OLDVERSION != VERSION:
+   #_zattooDB_.reloadDB(True)
+   _zattooDB_.set_version(VERSION)
 
-# start()
-    
-# refreshProg()
+start()
+refreshProg()
 
-dialog = xbmcgui.Dialog()
-ok = dialog.ok('ZattooHiQ, Das Addon muss neu installiert werden, da es nicht komplett Kodi Konform ist!, Das neue Addon bekommt ein neues Verzeichnis und wird jetzt automatisch installiert')
-
-if ok:
-    xbmc.executebultin('InstallAddon(plugin.video.zattoo_hiq)')
-    xbmc.executebultin('EnableAddon(plugin.video.zattoo_hiq)')
-    
-exit
