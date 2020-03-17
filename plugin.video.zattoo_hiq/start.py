@@ -24,7 +24,7 @@ import xbmc, xbmcgui, xbmcaddon, xbmcvfs
 
 __addon__ = xbmcaddon.Addon()
 __addondir__  = xbmc.translatePath( __addon__.getAddonInfo('profile') ) 
-__ALT__ = xbmcaddon.Addon(plugin.video.zattooHiQ)
+__ALT__ = xbmcaddon.Addon('plugin.video.zattooHiQ')
 __ALTDIR__ =  xbmc.translatePath( __ALT__.getAddonInfo('profile') ) 
 
 if xbmc.getCondVisibility(System.HasAddon(plugin.video.zattooHiQ)):
@@ -33,7 +33,7 @@ if xbmc.getCondVisibility(System.HasAddon(plugin.video.zattooHiQ)):
     
     if ret:
         if xbmcvfs.exists(__ALTDIR__):
-             xbmcvfs.copy(__ALTDIR__/settings.xml, __addindir__/settings.xml)
+             xbmcvfs.copy(__ALTDIR__'/settings.xml', __addindir__'/settings.xml')
              xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","id":7,"params":{"addonid": "%s","enabled":false}}' % 'plugin.video.zattooHiQ')
     
 
