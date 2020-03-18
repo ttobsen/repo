@@ -17,11 +17,11 @@
 		
    <platform>all</platform>
     <language></language>
-<!--
+
     <broken>
 - Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.2 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No.  DEINSTALLIEREN.
     </broken>
--->
+
     <news>
 - Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.2 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No.  DEINSTALLIEREN.
     </news>
