@@ -3915,7 +3915,6 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 	</extension>
 </addon>
 
-
 <addon id="script.module.future" name="future" version="0.16.0.1" provider-name="Ed Schofield">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
