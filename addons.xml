@@ -312,23 +312,6 @@ NOTE: Streams are available in SD only
 	</extension>
 </addon>
 
-<addon id="script.module.3to2" name="3to2" version="1.1.1" provider-name="Python software foundation">
-	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-	</requires>
-	<extension point="xbmc.python.module" library="lib" />
-	<extension point="xbmc.addon.metadata">
-		<platform>all</platform>
-		<language></language>
-		<summary lang="en">Part of CPython 3.7.0</summary>
-		<description lang="en">Part of Cpyton 3.7.0</description>
-		<disclaimer lang="en">Part of Cpyton 3.7.0</disclaimer>
-		<license>PYTHON SOFTWARE FOUNDATION LICENSE VERSION 2</license>
-		<website>https://pypi.python.org/pypi/3to2</website>
-		<source>https://pypi.python.org/pypi/3to2</source>
-	</extension>
-</addon>
-
 <addon id="plugin.video.tyl0re.arte" name="ARTE.TV [COLOR FF00EE00](neu)[/COLOR]" version="1.0.1" provider-name="L0RE, realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
@@ -538,23 +521,6 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
         <website>http://www.liga3-online.de/live-spiele/</website>
     </extension>
 
-</addon>
-
-<addon id="script.module.past" name="past" version="0.16.0" provider-name="Ed Schofield">
-	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-	</requires>
-	<extension point="xbmc.python.module" library="lib" />
-	<extension point="xbmc.addon.metadata">
-		<platform>all</platform>
-		<language></language>
-		<summary lang="en">Part of python-future</summary>
-		<description lang="en">Part of python-future</description>
-		<disclaimer lang="en">Part of python-future</disclaimer>
-		<license>Check the LICENSE file for full details.</license>
-		<website>http://python-future.org/</website>
-		<source>https://github.com/PythonCharmers/python-future/tree/master/src/past</source>
-	</extension>
 </addon>
 
 <addon id="plugin.video.tyl0re.dmax" name="DMAX Mediathek [COLOR FF00EE00](neu)[/COLOR]" version="2.1.2" provider-name="L0RE, realvito">
@@ -809,23 +775,6 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 	</extension>
 </addon>
 
-<addon id="script.module.oauthlib" name="oauthlib" version="2.0.1" provider-name="Idan Gazit">
-	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-	</requires>
-	<extension point="xbmc.python.module" library="lib" />
-	<extension point="xbmc.addon.metadata">
-		<platform>all</platform>
-		<language></language>
-		<summary lang="en">A generic, spec-compliant, thorough implementation of the OAuth request-signing logic</summary>
-		<description lang="en">A generic, spec-compliant, thorough implementation of the OAuth request-signing logic</description>
-		<disclaimer lang="en">A generic, spec-compliant, thorough implementation of the OAuth request-signing logic</disclaimer>
-		<license>OAuthLib is yours to use and abuse according to the terms of the BSD license. Check the LICENSE file for full details</license>
-		<website>https://pypi.python.org/pypi/oauthlib</website>
-		<source>https://pypi.python.org/pypi/oauthlib</source>
-	</extension>
-</addon>
-
 <addon id="plugin.video.giga_de" name="GIGA.de" version="2.2.2" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.14.0"/>
@@ -1000,23 +949,6 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
         <source>https://github.com/b-jesch/service.kn.switchtimer</source>
         <email>birger.jesch@gmail.com</email>
     </extension>
-</addon>
-
-<addon id="script.module.lib2to3" name="future" version="3.7.0" provider-name="Python software foundation">
-	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-	</requires>
-	<extension point="xbmc.python.module" library="lib" />
-	<extension point="xbmc.addon.metadata">
-		<platform>all</platform>
-		<language></language>
-		<summary lang="en">Part of CPython 3.7.0</summary>
-		<description lang="en">Part of Cpyton 3.7.0</description>
-		<disclaimer lang="en">Part of Cpyton 3.7.0</disclaimer>
-		<license>PYTHON SOFTWARE FOUNDATION LICENSE VERSION 2</license>
-		<website>https://github.com/python/cpython/tree/master/Lib/lib2to3</website>
-		<source>https://github.com/python/cpython/tree/master/Lib/lib2to3</source>
-	</extension>
 </addon>
 
 <addon id="plugin.video.mvmix" version="1.13.0" name="Music Video Mix" provider-name="Jin">
@@ -1931,31 +1863,6 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="service.rsspopup" name="Rss Popus" version="0.3.9" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.24.0"/>			       
-	    <import addon="script.module.feedparser" version="5.1.3"/>
-        <import addon="script.module.dateutil" version="2.5.3"/>
-		<import addon="service.popwindow" version="0.2.6"/>	
-    </requires>
-    <extension point="xbmc.service" library="service.py" start="login" />
-	
-	<extension point="xbmc.python.pluginsource" library="service.py" >
-	    <provides>executable</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-    <description lang="en">Shows RSS-Feed in overlay messages, now you can watch your favorite TV show, and get a message when something is posted in your favorite forum (when RSS is avaible), or something happens in the world (on your favorite RSS newsfeed) </description>
-    <description lang="de">Zeigt Rss Updates in Popup Nachrichten an. Endlich kann man Fernsehen und bleibt auf dem Laufenden was im Lieblingsforum oder in den Nachrichten passiert (Solange Sie einen RSS-Feed benutzen)</description>
-    <summary lang="en">Shows RSS Feed in Overlay Message</summary>
-    <summary lang="de">Zeigt RSS-Feeds in einer Einblendung</summary>
-    <website></website>
-    <source>https://github.com/kodinerds/repo/tree/master/service.rsspopup/</source>
-    <forum>http://www.kodinerds.net/</forum>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
-</addon>
-
 <addon id="plugin.video.atv_at" name="ATV.at - Mediathek" version="3.0.6" provider-name="realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
@@ -2024,34 +1931,6 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 - Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 1.0.1 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No. 0.2.2 DEINSTALLIEREN.
 		</news>
 	</extension>
-</addon>
-
-<addon id="service.twitterfeed" name="Twitter Feed" version="0.9.0" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
-        <import addon="script.module.requests" version="2.9.1"/>	
-        <import addon="service.popwindow" version="0.2.7"/>	
-        <import addon="script.module.future" version="0.16.0"/>	
-        <import addon="script.module.3to2" version="1.1.1"/>	
-        <import addon="script.module.libfuturize" version="0.16.0"/>
-        <import addon="script.module.requests_oauthlib" version="0.7.0"/>
-        <import addon="script.module.past" version="0.16.0"/>
-    </requires>
-    <extension point="xbmc.service" library="service.py" start="login" />
-	<extension point="xbmc.python.pluginsource" library="service.py" >
-	    <provides>executable</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-    <summary lang="en">Shows Twitter Messages in Kodi</summary>
-    <summary lang="de">Zeigt Twitter Nachrichten in Kodi an</summary>
-    <description lang="en">Shows Hastags from "TV Shows and Sender" or "Timline" or a "defined search word"</description>
-    <description lang="de">Zeigt Hashtags aus dem Fernsehen an oder die Timeline oder ein Suchbegriff an</description>
-    <website></website>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/service.livetv.twitter</source>
-    <forum>http://www.kodinerds.net/index.php/Thread/49221-Release-Twitterfeeds/</forum>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
 </addon>
 
 <addon id="plugin.video.L0RE.weltderwunder" name="Welt der Wunder" version="1.0.4" provider-name="L0RE">
@@ -2437,23 +2316,6 @@ oder online unter https://goo.gl/GtK41L nachlesen.
   </extension>
 </addon>
 
-<addon id="script.module.libfuturize" name="libfuturize" version="0.16.0" provider-name="Ed Schofield">
-	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-	</requires>
-	<extension point="xbmc.python.module" library="lib" />
-	<extension point="xbmc.addon.metadata">
-		<platform>all</platform>
-		<language></language>
-		<summary lang="en">Part of python-future</summary>
-		<description lang="en">Part of python-future</description>
-		<disclaimer lang="en">Part of python-future</disclaimer>
-		<license>Check the LICENSE file for full details.</license>
-		<website>https://http://python-future.org/</website>
-		<source>https://github.com/PythonCharmers/python-future/tree/master/src/libfuturize</source>
-	</extension>
-</addon>
-
 <addon id="plugin.video.sportdeutschland_tv" name="Sportdeutschland.TV" version="1.1.2" provider-name="PUR3">
 	<requires>
     	<import addon="xbmc.python" version="2.1.0"/>
@@ -2707,20 +2569,6 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 - Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.1.0 AKTIVIEREN und einmal STARTEN (um die eigenen Addon-Favoriten automatisch zu übertragen) !!![CR]- Danach dieses Addon mit der Version-No. 1.0.9 DEINSTALLIEREN.
 		</news>
 	</extension>
-</addon>
-
-<addon id="script.module.jwt" name="PyJWT" version="1.6.4" provider-name="jpadilla">
-  <requires>
-    <import addon="xbmc.python" version="2.25.0"/>
-  </requires>
-  <extension point="xbmc.python.module" library="lib"/>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">JSON Web Token implementation in Python</summary>
-    <website>https://pyjwt.readthedocs.io/</website>
-    <license>MIT</license>
-    <platform>all</platform>
-    <source>https://github.com/jpadilla/pyjwt</source>
-  </extension>
 </addon>
 
 <addon id="plugin.program.fritzact" name="Fritz Smart Home" version="0.0.16" provider-name="Birger Jesch">
@@ -3757,11 +3605,11 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 		
    <platform>all</platform>
     <language></language>
-<!--
+
     <broken>
 - Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.2 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No.  DEINSTALLIEREN.
     </broken>
--->
+
     <news>
 - Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.2 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No.  DEINSTALLIEREN.
     </news>
@@ -4221,24 +4069,6 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 		<description lang="de_DE">MediathekViewWeb ist eine einfache Browser-Oberfläche für den Zugriff auf die Filmliste des MediathekView Projekts.</description>
         <license>GPL 2.0</license>
     </extension>
-</addon>
-
-<addon id="script.module.requests_oauthlib" name="requests_oauthlib" version="0.7.0" provider-name="Ib Lundgren">
-	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-    <import addon="script.module.oauthlib" version="2.0.1"/>    
-	</requires>
-	<extension point="xbmc.python.module" library="lib" />
-	<extension point="xbmc.addon.metadata">
-		<platform>all</platform>
-		<language></language>
-		<summary lang="en">This project provides first-class OAuth library support for Requests.</summary>
-		<description lang="en">This project provides first-class OAuth library support for Requests.</description>
-		<disclaimer lang="en">This project provides first-class OAuth library support for Requests.</disclaimer>
-		<license>ISC</license>
-		<website>https://pypi.python.org/pypi/requests-oauthlib</website>
-		<source>https://pypi.python.org/pypi/requests-oauthlib</source>
-	</extension>
 </addon>
 
 <addon id="plugin.video.sporttotal" name="Sport-Total TV" version="1.0.5" provider-name="L0RE">
@@ -4726,37 +4556,6 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 	</extension>
 </addon>
 
-<addon id="service.popwindow" name="Display Popup" version="0.4.0" provider-name="L0RE">
-	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="script.module.requests" version="2.9.1"/>
-	</requires>
-	<extension point="xbmc.service" library="service.py" start="login"/>
-	<extension point="xbmc.python.module" library="lib"/>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Show Popup-Messages from other Addons</summary>
-		<summary lang="de">Popup-Meldungen von anderen Addons anzeigen</summary>
-		<description lang="en">Display pop-up messages on the screen of KODI.[CR]Do not miss any important events while e.g. watch a video or listen to music !</description>
-		<description lang="de">Popup-Meldungen auf dem Bildschirm von KODI anzeigen.[CR]Verpasse keine wichtigen Ereignisse während Du z.B. ein Video schaust oder Musik hörst !</description>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
-		<website></website>
-		<email>andreas at vogler dot name</email>
-		<source>https://github.com/kodinerds/repo/tree/master/service.popwindow</source>
-		<assets>
-			<icon>icon.png</icon>
-		</assets>
-		<news>[B][COLOR orangered]Version 0.4.0  (16.09.2018)[/COLOR][/B] by realvito[CR]
-- added: Fehlerzähler - damit der Service bei Fehlern nicht sofort abbricht
-- added: Standard-Logmeldungen - zur Kontrolle auf einwandfreie Funktion
-- optimized: Die Abstände zwischen Bildern und Text vergrössert, zur besseren Übersicht
-- forced: Standardcodierung = utf-8 wegen andauernden Encodingfehlern
-		</news>
-	</extension>
-</addon>
-
 <addon id="plugin.video.br3" name="Bayerisches Fernsehen" version="0.8.1" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -5032,7 +4831,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattoo_hiq" version="2.0.4" name="Zattoo HiQ [COLOR FF00EE00](neu)[/COLOR]" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattoo_hiq" version="2.0.5" name="Zattoo HiQ [COLOR FF00EE00](neu)[/COLOR]" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.25.0"/>
     <import addon="xbmc.addon" version="13.0.0" />

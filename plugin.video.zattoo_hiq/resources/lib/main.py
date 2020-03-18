@@ -253,7 +253,7 @@ def build_root(__addonuri__, __addonhandle__):
     xbmcgui.Window(10000).setProperty('ZBEplayOnStart', 'false')
 
 
-  iconPath = __addon__.getAddonInfo('path') + '/icon.png'
+  iconPath = __addon__.getAddonInfo('path') + '/resources/icon.png'
   if _listMode_ == 'all': listTitle = localString(31100)
   else: listTitle = localString(31101)
 
@@ -1122,7 +1122,7 @@ def showCategory():
     __addonhandle__ = int(sys.argv[1])
     cat = _zattooDB_.set_category()
     #debug('Kategorien: '+str(cat))
-    iconPath = __addon__.getAddonInfo('path') + '/icon.png'
+    iconPath = __addon__.getAddonInfo('path') + '/resources/icon.png'
     content = []
       
     for record in cat: 
