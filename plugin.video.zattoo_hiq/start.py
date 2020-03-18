@@ -19,6 +19,5 @@
 #
 
 import resources.lib.service as service
-
 service.start() 
 

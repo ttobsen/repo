@@ -194,7 +194,7 @@ class myPlayer(xbmc.Player):
           xbmc.executebuiltin('XBMC.Action(reloadkeymaps)')
         except:pass
         
-###########################################################################################
+# ###########################################################################################
 debug('Service started')
 player=myPlayer()
 
@@ -203,6 +203,5 @@ if OLDVERSION != VERSION:
    _zattooDB_.set_version(VERSION)
 
 start()
-    
 refreshProg()
 

@@ -915,31 +915,6 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
    </extension>
 </addon>
 
-<addon id="plugin.video.test" name="Test" version="2.7.2" provider-name="rols1 (rols1@gmx.de)">
-  <requires>
-   <import addon="xbmc.python" version="2.25.0"/>
-   <import addon="script.module.kodi-six" />
-</requires>
-  <extension point="xbmc.python.pluginsource" library="ardundzdf.py">
-        <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-	<summary lang="de">ARD- und ZDF-Mediathek</summary>
-	<description lang="de">ARD- und ZDF-Mediathek, einschließlich Live-TV mit Aufnahmefunktion, Merkliste, Live-Radio, Podcasts. Screenshots siehe https://github.com/rols1/PluginPictures/tree/master/Kodi/ARDundZDF. Wicki zu den Settings siehe https://github.com/rols1/Kodi-Addon-ARDundZDF/wiki.
-	</description>
-	<platform>all</platform>
-         <source>https://github.com/rols1/Kodi-Addon-ARDundZDF</source>
-        <forum>https://www.kodinerds.net/index.php/Thread/64244-RELEASE-Kodi-Addon-ARDundZDF/</forum>
-	<license>The MIT License (MIT)</license>
-	<language>"de_DE"</language>
- 	<email>rols1@gmx.de</email>
-        <assets>
-             <icon>icon.png</icon>
-            <fanart>fanart.png</fanart>           
-     </assets>
-   </extension>
-</addon>
-
 <addon id="plugin.video.wiesn" name="Oktoberfest" version="0.2.3" provider-name="L0RE">
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
@@ -2321,62 +2296,6 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 			<fanart>resources/fanart.png</fanart>
 		</assets>
 	</extension>
-</addon>
-
-<addon id="plugin.video.zattooHiQ-19" version="1.0.1.8" name="Zattoo HiQ-19" provider-name="Steffen Rolapp">
-  <requires>
-    <import addon="xbmc.python" version="3.0.0"/>
-    <import addon="xbmc.addon" version="18.9.701" />
-    <import addon="inputstream.adaptive" />
-    <import addon="script.module.tzlocal" />
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="plugin.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.service" library="start.py"/>
-
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Play Live TV and recorded shows from Zattoo.</summary>
-    <summary lang="de">Zattoo Live TV, Aufnahmen und EPG</summary>
-    <description lang="en">ZattooHiQ-19 is Zattoo-HiQ for Kodi-19 Matrix
-
-Play Live TV and recorded shows from Zattoo.
-- switch between favourites/all channels
-- channels preview
-- EPG: live/setup recording/recall (for paying Zattoo customers)
-- search shows
-- teletext
-- settings: stream quality, default language
-- touchscreen support
-    </description>
-    <description lang="de">ZattooHiQ-19 ist Zattoo-HiQ for Kodi-19 Matrix
-
-Zattoo Live TV, Aufnahmen und EPG
-- wechsel zwischen Favoriten/Allen Kanälen
-- Kanalvorschau
-- EPG: Live/Aufnahmen programieren/Recall (mit Zattoo Abo)
-- Sendungen suchen
-- Teletext
-- Einstellungen: Stream Qulität, Standart Sprache (Zweikanalton)
-- Touchscreen Unterstützung
-    </description>
-   <platform>all</platform>
-    <language></language>
-    <news>
-- Change Code to Kodi Guidelines
-
-    </news>
-    <forum>https://www.kodinerds.net/index.php/Thread/68785-ZattooHiQ-19/?postID=573693#post573693</forum>
-    <license>GNU GENERAL PUBLIC LICENSEVersion 3, 29 June 2007</license>
-    <source>https://github.com/rolapp/plugin.video.zattooHiQ-19</source>
-    <email>kodi@rolapp.de</email>
-    <disclaimer lang="en">Check http://www.zattoo.com for availability in your country.</disclaimer>
-    <disclaimer lang="de">Überprüfe ob http://www.zattoo.com in Deinem Land verfügbar ist.</disclaimer>
-    <assets>
-        <icon>resources/icon.png</icon>
-        <fanart>resources/fanart.jpg</fanart>
-    </assets>
-  </extension>
 </addon>
 
 <addon id="plugin.video.tyl0re.spiegeltv" name="SPIEGEL.TV [COLOR FF00EE00](neu)[/COLOR]" version="2.0.3" provider-name="L0RE, realvito">
@@ -3820,7 +3739,7 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ" version="1.7.10" name="Zattoo HiQ" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ" version="1.7.12" name="Zattoo HiQ" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
@@ -3833,38 +3752,19 @@ oder online unter https://goo.gl/GtK41L nachlesen.
   <extension point="xbmc.addon.metadata">
     <summary lang="en">Play Live TV and recorded shows from Zattoo.</summary>
     <summary lang="de">Zattoo Live TV, Aufnahmen und EPG</summary>
-    <description lang="en">ZattooHiQ is based on ZattooBox form Pascal Nançoz and ZattooBox Extended from Daniel Griner modify by L0RE
-
-Play Live TV and recorded shows from Zattoo.
-- switch between favourites/all channels
-- channels preview
-- EPG: live/setup recording/recall (for paying Zattoo customers)
-- search shows
-- teletext
-- settings: stream quality, default language
-- touchscreen support
-    </description>
-    <description lang="de">ZattooHiQ basiert auf ZattooBox von Pascal Nançoz und ZattooBox Extended von Daniel Griner verbessert von L0RE
-
-Zattoo Live TV, Aufnahmen und EPG
-- wechsel zwischen Favoriten/Allen Kanälen
-- Kanalvorschau
-- EPG: Live/Aufnahmen programieren/Recall (mit Zattoo Abo)
-- Sendungen suchen
-- Teletext
-- Einstellungen: Stream Qulität, Standart Sprache (Zweikanalton)
-- Touchscreen Unterstützung
-    </description>
+		<description lang="de_DE">[COLOR red]- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.2 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No. 1.7.10 DEINSTALLIEREN.[/COLOR]</description>
+		<description lang="en_GB">[COLOR red]- This Addon gets a new path in the KODI directory ![CR]- This restores the compatibility and the call by other addons.[CR][CR]- Please ACTIVATE the new Addon with the Version-No. 2.0.2.[CR]- After that UNINSTALL this Addon with the Version-No. 1.7.10.[/COLOR]</description>
+		
    <platform>all</platform>
     <language></language>
+<!--
+    <broken>
+- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.2 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No.  DEINSTALLIEREN.
+    </broken>
+-->
     <news>
-- Kodi Player OSD über Longpress Return zu erreichen
-- WidgetProblem bei Aeon Silvo behoben
-- EPG Datums Eingabe exit wenn heute
-- Settings können im Hauptmenu angezeigt werden
-- Aufnahmen nur wenn im Abo
-- 1und1 als Reseller hinzugefügt
-- EPG überarbeitet</news>
+- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.2 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No.  DEINSTALLIEREN.
+    </news>
     <license>GNU GENERAL PUBLIC LICENSEVersion 3, 29 June 2007</license>
     <source>https://github.com/rolapp/plugin.video.zattooHiQ</source>
     <website>https://github.com/rolapp/plugin.video.zattooHiQ/wiki/ZattooHiQ-Wiki</website>
@@ -5133,7 +5033,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattoo_hiq" version="2.0" name="Zattoo HiQ" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattoo_hiq" version="2.0.4" name="Zattoo HiQ [COLOR FF00EE00](neu)[/COLOR]" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.25.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
