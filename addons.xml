@@ -1312,29 +1312,6 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="service.iptv.ewe" name="EWE IPTV" version="0.0.3" provider-name="frankr612">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.requests" version="2.9.1"/>
-    <import addon="script.module.routing" version="0.2.0"></import>
-  </requires>
-  <extension point="xbmc.service" library="service.py">
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en_gb">Plugin for EWE IPTV</summary>
-    <description lang="en_gb">Wrapper Service for EWE IPTV Channels 
-    ***Attention: Addon is unofficial and not related to or supported by EWE AG***</description>
-    <disclaimer lang="en_gb"></disclaimer>
-    <language></language>
-    <platform>all</platform>
-    <license></license>
-    <forum></forum>
-    <website></website>
-    <email></email>
-    <source></source>
-  </extension>
-</addon>
-
 <addon id="skin.horizonzv" name="Horizonz V (Kodi 17)" version="0.9.0.71" provider-name="blauesgruen">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
@@ -4838,7 +4815,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattoo_hiq" version="2.0.5" name="Zattoo HiQ [COLOR FF00EE00](neu)[/COLOR]" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattoo_hiq" version="2.0.6" name="Zattoo HiQ [COLOR FF00EE00](neu)[/COLOR]" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.25.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
