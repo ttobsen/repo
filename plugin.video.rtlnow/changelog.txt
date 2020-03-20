@@ -33,3 +33,6 @@
 [B]Version 2.0.8  (02.03.2020)[/B] by realvito
 - fixed: Rubrik = Neue Sendungen werden nicht angezeigt
 - fixed: Letzter Ordner unter Rubrik = Themen wird nicht geöffnet
+
+[B]Version 2.0.9  (20.03.2020)[/B] by realvito
+- fixed: Wenn in einer Episode einer Jahresrubrik kein Plot enthalten ist wird die Übersicht nicht geöffnet und ein Fehler wird angezeigt

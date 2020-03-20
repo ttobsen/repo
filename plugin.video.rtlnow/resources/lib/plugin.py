@@ -41,8 +41,8 @@ addon = xbmcaddon.Addon()
 socket.setdefaulttimeout(40)
 addonPath = xbmc.translatePath(addon.getAddonInfo('path')).encode('utf-8').decode('utf-8')
 dataPath    = xbmc.translatePath(addon.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
-defaultFanart = os.path.join(addonPath, 'fanart.jpg')
-icon = os.path.join(addonPath, 'icon.png')
+defaultFanart = os.path.join(addonPath, 'fanart.jpg') or os.path.join(addonPath, 'resources', 'fanart.jpg')
+icon = os.path.join(addonPath, 'icon.png') or os.path.join(addonPath, 'resources', 'icon.png')
 artpic = os.path.join(addonPath, 'resources', 'media', '').encode('utf-8').decode('utf-8')
 WORKFILE = os.path.join(dataPath, 'episode_data.txt')
 channelFavsFile = os.path.join(dataPath, 'my_TVNOW_favourites.txt').encode('utf-8').decode('utf-8')
@@ -341,10 +341,10 @@ def listEpisodes(Xidd):
 		tagline = None
 		if 'teaserText' in folge and folge['teaserText'] !="" and folge['teaserText'] != None:
 			tagline = py2_enc(folge['teaserText']).strip()
-		plot = None
+		plot = ""
 		if 'articleLong' in folge and folge['articleLong'] !="" and folge['articleLong'] != None:
 			plot = py2_enc(folge['articleLong']).strip()
-		if plot == None and 'articleShort' in folge and folge['articleShort'] !="" and folge['articleShort'] != None:
+		if plot == "" and 'articleShort' in folge and folge['articleShort'] !="" and folge['articleShort'] != None:
 			plot = py2_enc(folge['articleShort']).strip()
 		Note_1 =""
 		Note_2 =""
