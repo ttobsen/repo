@@ -48,3 +48,6 @@
 
 [B]Version 1.0.1  (03.02.2020)[/B] by realvito
 - Pluginname changed for KODI-compatibility (old=plugin.video.L0RE.arte -> new=plugin.video.tyl0re.arte)
+
+[B]Version 1.0.2  (20.03.2020)[/B] by realvito
+- fixed: Einzelne Filmbeiträge in der Rubrik = Besondere Highlights lassen sich nicht abspielen

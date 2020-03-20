@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<addon id="plugin.video.tyl0re.arte" name="ARTE.TV [COLOR FF00EE00](neu)[/COLOR]" version="1.0.1" provider-name="L0RE, realvito">
+<addon id="plugin.video.tyl0re.arte" name="ARTE.TV [COLOR FF00EE00](neu)[/COLOR]" version="1.0.2" provider-name="L0RE, realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="script.module.requests" version="2.20.0"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
@@ -24,7 +25,10 @@
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.0.1  (03.02.2020)[/COLOR][/B] by realvito[CR]
+		<news>[B][COLOR orangered]Version 1.0.2  (20.03.2020)[/COLOR][/B] by realvito[CR]
+- fixed: Einzelne Filmbeiträge in der Rubrik = Besondere Highlights lassen sich nicht abspielen
+------------------------------------------------------------------------------------------------------------------------------------
+[B][COLOR orangered]Version 1.0.1  (03.02.2020)[/COLOR][/B] by realvito[CR]
 - Pluginname changed for KODI-compatibility (old=plugin.video.L0RE.arte -> new=plugin.video.tyl0re.arte)
 		</news>
 	</extension>

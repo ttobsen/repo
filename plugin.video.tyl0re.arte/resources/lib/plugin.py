@@ -12,19 +12,19 @@ PY2 = sys.version_info[0] == 2
 PY3 = sys.version_info[0] == 3
 if PY2:
 	from urllib import quote, unquote, quote_plus, unquote_plus, urlencode  # Python 2.X
-	from urllib2 import build_opener, HTTPCookieProcessor, Request, urlopen  # Python 2.X
-	from cookielib import LWPCookieJar  # Python 2.X
-	from urlparse import urljoin, urlparse, urlunparse  # Python 2.X
 elif PY3:
-	from urllib.parse import quote, unquote, quote_plus, unquote_plus, urlencode, urljoin, urlparse, urlunparse  # Python 3+
-	from urllib.request import build_opener, HTTPCookieProcessor, Request, urlopen  # Python 3+
-	from http.cookiejar import LWPCookieJar  # Python 3+
+	from urllib.parse import quote, unquote, quote_plus, unquote_plus, urlencode  # Python 3+
 import json
 import xbmcvfs
 import shutil
 import socket
 import time
 from datetime import datetime, timedelta
+import requests
+try:
+	from requests.packages.urllib3.exceptions import InsecureRequestWarning
+	requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+except: pass
 
 
 global debuging
@@ -32,32 +32,21 @@ pluginhandle = int(sys.argv[1])
 addon = xbmcaddon.Addon()
 addonPath = xbmc.translatePath(addon.getAddonInfo('path')).encode('utf-8').decode('utf-8')
 dataPath    = xbmc.translatePath(addon.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
-temp           = xbmc.translatePath(os.path.join(dataPath, 'temp', '')).encode('utf-8').decode('utf-8')
-defaultFanart = os.path.join(addonPath, 'fanart.jpg')
-icon = os.path.join(addonPath, 'icon.png')
+defaultFanart = os.path.join(addonPath, 'fanart.jpg') or os.path.join(addonPath, 'resources', 'fanart.jpg')
+icon = os.path.join(addonPath, 'icon.png') or os.path.join(addonPath, 'resources', 'icon.png')
 COUNTRY = addon.getSetting('sprache')
 prefQUALITY = {'1280x720':720, '720x406':406, '640x360':360, '384x216':216}[addon.getSetting('prefVideoQuality')]
 baseURL = "https://www.arte.tv/"
 apiURL = "https://api-cdn.arte.tv/api/emac/v3/"+COUNTRY+"/web/"
 OPA_token = "AOwImM4EGZ2gjYjRGZzEzYxMTNxMWOjJDO4gDO3UWN3UmN5IjNzAzMlRmMwEWM2I2NhFWN1kjYkJjZ1cjY1czN reraeB"
 EMAC_token = "wYxYGNiBjNwQjZzIjMhRDOllDMwEjM2MDN3MjY4U2M1ATYkVWOkZTM5QzM4YzN2ITM0E2MxgDO1EjN5kjZmZWM reraeB"
-headerOPA = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0'), ('Authorization', OPA_token[::-1])]
-headerEMAC = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0'), ('Authorization', EMAC_token[::-1])]
+headerOPA = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0', 'Accept-Encoding': 'gzip, deflate', 'Authorization': '{}'.format(OPA_token[::-1])}
+headerEMAC = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0', 'Accept-Encoding': 'gzip, deflate', 'Authorization': '{}'.format(EMAC_token[::-1])}
+__HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0', 'Accept-Encoding': 'gzip, deflate'}
 
 xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_UNSORTED)
 xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
-
 xbmcplugin.setContent(int(sys.argv[1]), 'movies')
-
-if xbmcvfs.exists(temp) and os.path.isdir(temp):
-	shutil.rmtree(temp, ignore_errors=True)
-	xbmc.sleep(500)
-xbmcvfs.mkdirs(temp)
-cookie = os.path.join(temp, 'cookie.lwp')
-cj = LWPCookieJar()
-
-if xbmcvfs.exists(cookie):
-	cj.load(cookie, ignore_discard=True, ignore_expires=True)
 
 starting = {
     'highlights': apiURL+'data/MANUAL_TEASERS/?code=playlists_HOME&limit=50',
@@ -69,6 +58,9 @@ starting = {
     'chance': apiURL+'data/VIDEO_LISTING/?videoType=LAST_CHANCE',
     'search': apiURL+'data/SEARCH_LISTING/?'
 }
+
+if not xbmcvfs.exists(dataPath):
+	xbmcvfs.mkdirs(dataPath)
 
 def py2_enc(s, encoding='utf-8'):
 	if PY2:
@@ -92,26 +84,15 @@ def debug(content):
 	log(content, xbmc.LOGDEBUG)
 
 def log(msg, level=xbmc.LOGNOTICE):
-	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+py2_enc(msg), level)
+	xbmc.log('[{0} v.{1}]{2}'.format(addon.getAddonInfo('id'), addon.getAddonInfo('version'), py2_enc(msg)), level)
 
-def getUrl(url, header=None, agent='Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0'):
-	global cj
-	for cook in cj:
-		debug("(getUrl) Cookie : {0}".format(str(cook)))
-	opener = build_opener(HTTPCookieProcessor(cj))
-	opener.addheaders = [('User-Agent', agent)]
-	try:
-		if header: opener.addheaders = header
-		response = opener.open(url, timeout=30)
-		content = py3_dec(response.read())
-	except Exception as e:
-		failure = str(e)
-		failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
-		content = ""
-		return sys.exit(0)
-	opener.close()
-	try: cj.save(cookie, ignore_discard=True, ignore_expires=True)
-	except: pass
+def getUrl(url, method, allow_redirects=False, verify=False, stream=False, headers="", data="", timeout=30):
+	response = requests.Session()
+	if method == 'GET':
+		content = response.get(url, allow_redirects=allow_redirects, verify=verify, stream=stream, headers=headers, data=data, timeout=timeout).text
+	elif method == 'POST':
+		content = response.post(url, data=data, allow_redirects=allow_redirects, verify=verify).text
+	content = py2_enc(content)
 	return content
 
 def index():
@@ -142,7 +123,7 @@ def index():
 
 def listThemes(url):
 	debug("(listThemes) ------------------------------------------------ START = listThemes -----------------------------------------------")
-	result = getUrl(url+'categories?language='+COUNTRY+'&limit=50', header=headerOPA)
+	result = getUrl(url+'categories?language='+COUNTRY+'&limit=50', 'GET', False, False, False, headerOPA)
 	debug("++++++++++++++++++++++++")
 	debug("(listThemes) RESULT : {0}".format(str(result)))
 	debug("++++++++++++++++++++++++")
@@ -180,31 +161,37 @@ def listSubThemes(Xurl, nomCat):
 
 def listMagazines(url):
 	debug("(listMagazines) ------------------------------------------------ START = listMagazines -----------------------------------------------")
-	result = getUrl(url, header=headerEMAC)
+	result = getUrl(url, 'GET', False, False, False, headerEMAC)
 	debug("++++++++++++++++++++++++")
 	debug("(listMagazines) RESULT : {0}".format(str(result)))
 	debug("++++++++++++++++++++++++")
 	DATA = json.loads(result)
 	for magITEM in DATA['data']:
-		idd = str(magITEM['programId'])
-		title = py2_enc(magITEM['title']).strip()
-		plot = str(get_desc(magITEM))
-		max_res = max(magITEM['images']['landscape']['resolutions'], key=lambda item: item['w'])
-		thumb = max_res['url']
-		newURL = magITEM['url']
-		addDir(title, url, 'listCollections', thumb, plot=plot, query=idd)
-		debug("(listMagazines) ready ### NAME = {0} || IDD = {1} ###".format(title, idd))
+		if 'kind' in magITEM and 'isCollection' in magITEM['kind'] and magITEM['kind']['isCollection'] == False:
+			duration = magITEM['duration']
+			if duration and duration != "" and duration != "0":
+				listVideo(magITEM, "", nosub='(listMagazines)')
+		else:
+			idd = str(magITEM['programId'])
+			title = py2_enc(magITEM['title']).strip()
+			plot = str(get_desc(magITEM))
+			max_res = max(magITEM['images']['landscape']['resolutions'], key=lambda item: item['w'])
+			thumb = max_res['url']
+			newURL = magITEM['url']
+			addDir(title, url, 'listCollections', thumb, plot=plot, query=idd)
+			debug("(listMagazines) ready ### NAME = {0} || IDD = {1} ###".format(title, idd))
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def listCollections(Xurl, query, photo):
 	COMBI = []
-	content = getUrl(apiURL+query, header=headerEMAC)
+	prefer = ['collection_videos', 'collection_subcollection']
+	result = getUrl(apiURL+query, 'GET', False, False, False, headerEMAC)
 	debug("++++++++++++++++++++++++")
-	debug("(listCollections) CONTENT : {0}".format(str(content)))
+	debug("(listCollections) CONTENT : {0}".format(str(result)))
 	debug("++++++++++++++++++++++++")
-	DATA = json.loads(content)
+	DATA = json.loads(result)
 	FOUND = 0
-	FILTER = filter(lambda item: item['data'] and item['title'] != None and (item['code']['name'].lower() == 'collection_videos' or item['code']['name'].lower() == 'collection_subcollection'), DATA['zones'])
+	FILTER = filter(lambda item: item['data'] and item['title'] != None and any(x in item['code']['name'].lower() for x in prefer), DATA['zones'])
 	for zone in FILTER:
 		title = py2_enc(zone['title']).strip()
 		collection = zone['code']['name'].upper()
@@ -231,7 +218,7 @@ def videos_Themes(url, query, page="1"):
 		url = apiURL+'data/'+query.replace('@', '&')
 	js_URL = url+'&page='+page+'&limit=50'
 	debug("(videos_Themes) complete JSON-URL : {0}".format(js_URL))
-	result = getUrl(js_URL, header=headerEMAC)
+	result = getUrl(js_URL, 'GET', False, False, False, headerEMAC)
 	DATA = json.loads(result)
 	for movie in DATA['data']:
 		duration = movie['duration']
@@ -262,7 +249,7 @@ def videos_Datum(tag):
 	debug("(videos_Datum) ------------------------------------------------ START = videos_Datum -----------------------------------------------")
 	url = starting['byDate']+tag # URL-Tag = https://api-cdn.arte.tv/api/emac/v3/de/web/pages/TV_GUIDE/?day=2019-12-08
 	debug("(videos_Datum) URL : {0}".format(url))
-	result = getUrl(url, header=headerEMAC)
+	result = getUrl(url, 'GET', False, False, False, headerEMAC)
 	DATA = json.loads(result)
 	for movie in DATA['zones'][-1]['data']:
 		stickers = str(movie['stickers'])
@@ -301,7 +288,7 @@ def videos_AbisZ(url, query, page="1"):
 	# DURATION = https://api-cdn.arte.tv/api/emac/v3/de/web/data/VIDEO_LISTING/?videoType=LONGER_DURATION&page=2&limit=20 || SEARCH = https://api-cdn.arte.tv/api/emac/v3/de/web/data/SEARCH_LISTING/?query=europe&page=2&limit=20
 	# STANDARD =  https://api-cdn.arte.tv/api/emac/v3/de/web/data/VIDEO_LISTING/?videoType=MOST_VIEWED&page=1&limit=20
 	debug("(videos_AbisZ) complete JSON-URL : {0}".format(url))
-	result = getUrl(url, header=headerEMAC)
+	result = getUrl(url, 'GET', False, False, False, headerEMAC)
 	DATA = json.loads(result)
 	for movie in DATA['data']:
 		duration = movie['duration']
@@ -319,7 +306,7 @@ def videos_AbisZ(url, query, page="1"):
 
 def playVideo(url):
 	debug("(playVideo) ------------------------------------------------ START = playVideo -----------------------------------------------")
-	# Übergabe des Abspiellinks von anderem Video-ADDON: plugin://plugin.video.L0RE.arte/?mode=playVideo&url=048256-000-A oder: plugin://plugin.video.L0RE.arte/?mode=playVideo&url=https://www.arte.tv/de/videos/048256-000-A/wir-waren-koenige/
+	# Übergabe des Abspiellinks von anderem Video-ADDON: plugin://plugin.video.tyl0re.arte/?mode=playVideo&url=048256-000-A oder: plugin://plugin.video.tyl0re.arte/?mode=playVideo&url=https://www.arte.tv/de/videos/048256-000-A/wir-waren-koenige/
 	DATA = {}
 	DATA['media'] = []
 	finalURL = False
@@ -332,7 +319,7 @@ def playVideo(url):
 			SHORTCUTS = ['DE', 'OmU', 'OV', 'VO'] # "DE" = Original deutsch | "OmU" = Original mit deutschen Untertiteln | "OV" = Stumm oder Originalversion
 		elif COUNTRY=="fr":
 			SHORTCUTS = ['VOF', 'VF', 'VOSTF', 'VO'] # "VOF" = Original französisch | "VF" = französisch vertont | "VOSTF" = Stumm oder Original mit französischen Untertiteln
-		content = getUrl("https://api.arte.tv/api/player/v1/config/"+COUNTRY+"/"+str(idd)+"?autostart=0&lifeCycle=1")
+		content = getUrl('https://api.arte.tv/api/player/v1/config/'+COUNTRY+'/'+str(idd)+'?autostart=0&lifeCycle=1', 'GET', False, False, False, __HEADERS)
 		stream = json.loads(content)['videoJsonPlayer']
 		stream_offer = stream['VSR']
 		for element in stream_offer:
@@ -402,17 +389,17 @@ def get_ListItem(info, nosub):
 	max_res = max(info['images']['landscape']['resolutions'], key=lambda item: item['w'])
 	thumb = max_res['url']
 	duration = info['duration']
-	if 'broadcastDates' in info and info['broadcastDates'][0] != None:
+	if 'broadcastDates' in info and info['broadcastDates']:
 		airedtime = datetime(*(time.strptime(info['broadcastDates'][0], '%Y{0}%m{0}%dT%H{1}%M{1}%SZ'.format('-', ':'))[0:6])) # 2019-06-13T13:30:00Z
 		LOCALTIME = utc_to_local(airedtime)
 		title = "[COLOR orangered]{0}[/COLOR]  {1}".format(LOCALTIME.strftime('%H:%M'), title)
 	if 'availability' in info and info['availability'] != None:
-		if 'start' in info['availability'] and info['availability']['start'] != None:
+		if 'start' in info['availability'] and info['availability']['start']:
 			startDates = datetime(*(time.strptime(info['availability']['start'][:19], '%Y{0}%m{0}%dT%H{1}%M{1}%S'.format('-', ':'))[0:6])) # 2019-06-13T13:30:00Z
 			LOCALstart = utc_to_local(startDates)
 			startTIMES = LOCALstart.strftime('%d{0}%m{0}%y {1} %H{2}%M').format('.', '•', ':')
 			begins =  LOCALstart.strftime('%d{0}%m{0}%Y').format('.')
-		if 'end' in info['availability'] and info['availability']['end'] != None:
+		if 'end' in info['availability'] and info['availability']['end']:
 			endDates = datetime(*(time.strptime(info['availability']['end'][:19], '%Y{0}%m{0}%dT%H{1}%M{1}%S'.format('-', ':'))[0:6])) # 2020-05-30T21:59:00Z
 			LOCALend = utc_to_local(endDates)
 			endTIMES =  LOCALend.strftime('%d{0}%m{0}%y {1} %H{2}%M').format('.', '•', ':')
