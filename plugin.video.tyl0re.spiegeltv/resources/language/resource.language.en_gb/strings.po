@@ -1,0 +1,237 @@
+﻿# Kodi Media Center language file
+# Addon Name: SPIEGEL.TV
+# Addon id: plugin.video.tyl0re.spiegeltv
+# Addon Provider: L0RE, realvito
+msgid ""
+msgstr ""
+"Project-Id-Version: KODI-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
+"POT-Creation-Date: 2020-03-07 18:15+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: realvito\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Online News - 'DER SPIEGEL'"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "'DER SPIEGEL' is characterized by fast reaction to current events as well as carefully researched background stories. The topics include current German and international politics, business and society.[CR]Here are reports and documentaries by 'DER SPIEGEL' in the fields of politics, economics, society, culture, sports, technology and science."
+msgstr ""
+
+# strings start
+# SETTINGS-CATEGORIES
+
+msgctxt "#30000"
+msgid "General"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Advanced"
+msgstr ""
+
+# empty strings from id 30002 to 30109
+# SETTINGS-BUTTONS
+
+msgctxt "#30110"
+msgid "     Max. listed pages of a Category [COLOR yellow](time consuming)[/COLOR]"
+msgstr ""
+
+msgctxt "#30111"
+msgid "     Play HLS-Videos with [COLOR yellow]*Inputstream.Adaptive*[/COLOR] (since KODI-17+ possible)"
+msgstr ""
+
+msgctxt "#30112"
+msgid "     Preferred video file format  [COLOR yellow](m3u8|mp4)[/COLOR]"
+msgstr ""
+
+msgctxt "#30113"
+msgid "     Preferred quality  (only if [COLOR yellow]*mp4*[/COLOR] active)"
+msgstr ""
+
+msgctxt "#30114"
+msgid "     Use Thumb as Background-Fanart"
+msgstr ""
+
+msgctxt "#30115"
+msgid "     Show Addon-Settings in the overview"
+msgstr ""
+
+msgctxt "#30116"
+msgid "     Detailed Addon-Debug (otherwise only Minimal-Log)"
+msgstr ""
+
+# empty strings from id 30117 to 30154
+
+msgctxt "#30155"
+msgid "HD Quality - 1080p"
+msgstr ""
+
+msgctxt "#30156"
+msgid "HD Quality - 720p"
+msgstr ""
+
+msgctxt "#30157"
+msgid "Good Quality - 576p"
+msgstr ""
+
+msgctxt "#30158"
+msgid "Quality - 360p"
+msgstr ""
+
+# empty strings from id 30159 to 30229
+
+# SETTINGS-TITLES
+
+msgctxt "#30230"
+msgid "[B][COLOR ff0099ff]CATEGORIES[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30231"
+msgid "[B][COLOR ff0099ff]PLAY[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30232"
+msgid "[B][COLOR ff0099ff]FANART[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30233"
+msgid "[B][COLOR ff0099ff]SETTINGS[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30234"
+msgid "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
+msgstr ""
+
+# empty strings from id 30235 to 30349
+# SETTINGS-DESCRIPTIONS
+
+msgctxt "#30350"
+msgid "     * [COLOR yellow]For playback problems (audio interruptions,artifacts ...) probably an update to KODI-18 (Leia) is needed ![/COLOR] *"
+msgstr ""
+
+#empty strings from id 30351 to 30500
+# WARNING/INFORMATION-MESSAGES-OK
+
+msgctxt "#30501"
+msgid "[COLOR orangered]ATTENTION : ... the required addon *[/COLOR][COLOR yellow]{0:s}[/COLOR][COLOR orangered]* is NOT installed !!![/COLOR]"
+msgstr ""
+
+# empty strings from id 30502 to 30520
+# WARNING/INFORMATION-MESSAGES-NOTIFICATION
+
+msgctxt "#30521"
+msgid "SPIEGEL.TV : [COLOR red]!!! {0:s} - ERROR !!![/COLOR]"
+msgstr ""
+
+msgctxt "#30522"
+msgid "[COLOR red]Unfortunately there are NO {0:s} :[/COLOR]"
+msgstr ""
+
+msgctxt "#30523"
+msgid "[COLOR red]An error has occured, please check *LOG* ![/COLOR]"
+msgstr ""
+
+msgctxt "#30524"
+msgid "* [COLOR blue]To the respective search term[/COLOR] * at SPIEGEL.TV"
+msgstr ""
+
+msgctxt "#30525"
+msgid "* [COLOR blue]In the Category: {0:s}[/COLOR] * at SPIEGEL.TV"
+msgstr ""
+
+msgctxt "#30526"
+msgid "[COLOR red]Unfortunately NO suitable Video-Url found ![/COLOR]"
+msgstr ""
+
+# empty strings from id 30527 to 30600
+# PLUGIN-MAIN and SIDEMENU
+
+msgctxt "#30601"
+msgid "Overview Videos"
+msgstr ""
+
+msgctxt "#30602"
+msgid "Theme Spiegel TV"
+msgstr ""
+
+msgctxt "#30603"
+msgid "Panorama"
+msgstr ""
+
+msgctxt "#30604"
+msgid "Politics abroad"
+msgstr ""
+
+msgctxt "#30605"
+msgid "Politics Germany"
+msgstr ""
+
+msgctxt "#30606"
+msgid "YT [COLOR deepskyblue]•[/COLOR] Uploads"
+msgstr ""
+
+msgctxt "#30607"
+msgid "YT [COLOR deepskyblue]•[/COLOR] Spiegel TV"
+msgstr ""
+
+msgctxt "#30608"
+msgid "YT [COLOR deepskyblue]•[/COLOR] Spiegel TV Reports"
+msgstr ""
+
+msgctxt "#30609"
+msgid "YT [COLOR deepskyblue]•[/COLOR] News"
+msgstr ""
+
+msgctxt "#30610"
+msgid "YT [COLOR deepskyblue]•[/COLOR] SPIEGEL TV for ARTE Re:"
+msgstr ""
+
+msgctxt "#30611"
+msgid "YT [COLOR deepskyblue]•[/COLOR] SPIEGEL TV Docu"
+msgstr ""
+
+msgctxt "#30612"
+msgid "YT [COLOR deepskyblue]•[/COLOR] Popular Videos"
+msgstr ""
+
+msgctxt "#30613"
+msgid "YT [COLOR deepskyblue]•[/COLOR] Top Videos"
+msgstr ""
+
+msgctxt "#30614"
+msgid "YT [COLOR deepskyblue]•[/COLOR] Entertainment"
+msgstr ""
+
+msgctxt "#30615"
+msgid "YT [COLOR deepskyblue]•[/COLOR] US Politics"
+msgstr ""
+
+msgctxt "#30616"
+msgid "YT [COLOR deepskyblue]•[/COLOR] SPIEGEL TV 20 years ago"
+msgstr ""
+
+msgctxt "#30617"
+msgid "SPIEGEL.TV Settings"
+msgstr ""
+
+msgctxt "#30618"
+msgid "Inputstream Settings"
+msgstr ""
+
+msgctxt "#30620"
+msgid "[COLOR yellow]{0:s}[/COLOR][CR]"
+msgstr ""
+
+msgctxt "#30621"
+msgid "From [COLOR chartreuse]{0:s}[/COLOR] o'clock[CR][CR]"
+msgstr ""
+
+msgctxt "#30654"
+msgid "[COLOR yellow]Add to SPIEGEL.TV-Playlist[/COLOR]"
+msgstr ""
