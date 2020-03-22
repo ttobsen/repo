@@ -228,8 +228,9 @@ def listYTcategories(url, filter):
 			begins =  startDATES.strftime('%d{0}%m{0}%Y').format('.')
 		if startTIMES: Note_1 = translation(30621).format(str(startTIMES))
 		if 'description' in item and item['description'] !="" and item['description'] != None:
-			if 'Mehr Infos über' in item['description']: item['description'] = item['description'].split('Mehr Infos über')[0].strip()
 			Note_2 = _clean(item['description'])
+			if 'Mehr Infos' in Note_2: 
+				Note_2 = Note_2.split('Mehr Infos')[0].strip()
 		plot = Note_1+Note_2
 		if begins: xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_DATE)
 		try: 

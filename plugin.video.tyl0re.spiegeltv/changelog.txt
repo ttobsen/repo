@@ -17,6 +17,7 @@
 - fixed: Fehler der Webseite beseitigt = doppelte Videoeinträge herausgefiltert
 - added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19+) :-)
 
-[B]Version 2.0.4  (20.03.2020)[/B] by realvito
+[B]Version 2.0.4+2.0.5  (22.03.2020)[/B] by realvito
 - fixed: Addon neu aufgesetzt nach Webseiten -veränderung/-einstellung = jetzt 'DER SPIEGEL'
 - added: YouTube Playlisten von 'DER SPIEGEL'
+- fixed: fehlerhaften Umlaut entfernt - YT-Playlisten können nicht geöffnet werden
