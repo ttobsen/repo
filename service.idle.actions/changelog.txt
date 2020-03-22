@@ -1,3 +1,8 @@
+﻿
+Version 1.1.0  (22.03.2020)
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.
+- Updates für dieses Addon vorerst eingestellt !
+
 v1.0.1 (Nov 19, 2013):
 - Bug corrections and optimizations
 - Icon & Fanart added
