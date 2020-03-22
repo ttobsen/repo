@@ -1,19 +1,33 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.audio.radioteddy_de" name="RadioTeddy.de" version="1.0.0" provider-name="Tombstone">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>audio</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="de">Radio Teddy, macht Spass! macht Schlau! - Das Radio für Eltern und Kids stream</summary>
-        <language>de</language>
-        <description lang="de">Made in Germany, Kinder Disco, Soft Mix, Gute Nacht Musik, Weihnachtslieder, Kinderlieder, TEDDY Cool und Livestream</description>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.audio.radioteddy_de</source>
-        <forum>http://forum.xbmc.org/showthread.php?</forum>
-        <website>http://www.radioteddy.de/</website>
-    </extension>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<addon id="plugin.audio.radioteddy_de" name="RadioTeddy.de" version="1.1.0" provider-name="Tombstone">
+	<requires>
+		<import addon="xbmc.python" version="2.14.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>audio</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Das Radio für Eltern und Kids</summary>
+		<summary lang="en">Das Radio für Eltern und Kids</summary>
+		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
+		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum></forum>
+		<website>http://www.radioteddy.de/</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.audio.radioteddy_de</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<broken>
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</broken>
+		<news>[B][COLOR orangered]Version 1.1.0 (22.03.2020)[/COLOR][/B] by realvito[CR]
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</news>
+	</extension>
 </addon>
