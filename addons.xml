@@ -175,34 +175,39 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="plugin.video.wtatv" version="0.1.0" name="WTA TV" provider-name="Jin">
-    <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
-        <import addon="script.module.pydes" version="2.0.1"/>
-        <import addon="script.module.xmltodict" version="0.9.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="addon.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <news>
-- initial release
-- supports live, on demand and feature coverage
-        </news>
-        <summary>Watch Live Stream WTA Women's Tennis Matches Online</summary>
-        <description>
-WTA TV provides live stream complete women's tennis matches from around the world and bonus feature videos
-including match highlights, interviews, exclusive content and more.
-
-NOTE: Streams are available in SD only
-        </description>
-        <disclaimer>Unofficial Addon - Use at your own risk</disclaimer>
-        <platform>all</platform>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <website>https://www.wtatv.com</website>
-        <email>[jin] at [xyz] dot [de]</email>
-        <source>https://github.com/kodinerds/repo/tree/master/plugin.video.wtatv</source>
-    </extension>
+<addon id="plugin.video.wtatv" name="WTA TV" version="0.2.0" provider-name="Jin">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="script.module.pydes" version="2.0.1"/>
+		<import addon="script.module.xmltodict" version="0.9.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Watch Live Stream WTA Women's Tennis Matches Online.</summary>
+		<summary lang="en">Watch Live Stream WTA Women's Tennis Matches Online.</summary>
+		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
+		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum></forum>
+		<website>https://www.wtatv.com</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.wtatv</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<broken>
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</broken>
+		<news>[B][COLOR orangered]Version 0.2.0 (22.03.2020)[/COLOR][/B] by realvito[CR]
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</news>
+	</extension>
 </addon>
 
 <addon id="plugin.video.L0RE.bvbtotal" name="Borussia Dortmund Mediathek" version="0.1.2" provider-name="L0RE">
@@ -1176,30 +1181,41 @@ NOTE: Streams are available in SD only
     </extension>
 </addon>
 
-<addon id="plugin.video.sport1de" version="2.1.1" name="Sport1" provider-name="Jin">
-    <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
-        <import addon="script.module.requests" version="2.12.4"/>
-        <import addon="script.module.pydes" version="2.0.1"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="addon.py">
-        <provides>video</provides>
-    </extension>
+<addon id="plugin.video.sport1de" name="Sport1" version="2.1.2" provider-name="Jin">
+	<requires>
+		<import addon="xbmc.python" version="2.14.0"/>
+		<import addon="script.module.requests" version="2.12.4"/>
+		<import addon="script.module.pydes" version="2.0.1"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>video</provides>
+	</extension>
 	<extension point="xbmc.service" library="startup.py" start="startup"/>
-    <extension point="xbmc.addon.metadata">
-        <reuselanguageinvoker>false</reuselanguageinvoker>
-        <news>
-- adjust api base url
-        </news>
-        <summary>Sportnachrichten - aktuelle News und Livestreams</summary>
-        <description>Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.</description>
-        <disclaimer>Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
-        <platform>all</platform>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <website>https://www.sport1.de</website>
-        <email>[jin] at [xyz] dot [de]</email>
-        <source>https://github.com/kodinerds/repo/tree/master/plugin.video.sport1de</source>
-    </extension>
+	<extension point="xbmc.addon.metadata">
+		<reuselanguageinvoker>false</reuselanguageinvoker>
+		<summary lang="de">Sportnachrichten - aktuelle News und Livestreams</summary>
+		<summary lang="en">Sportnachrichten - aktuelle News und Livestreams</summary>
+		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
+		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum></forum>
+		<website>https://www.sport1.de</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.sport1de</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<broken>
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</broken>
+		<news>[B][COLOR orangered]Version 2.1.2 (22.03.2020)[/COLOR][/B] by realvito[CR]
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</news>
+	</extension>
 </addon>
 
 <addon id="plugin.video.fernsehkritik_tv" name="Massengeschmack [COLOR FF00EE00](light)[/COLOR]" version="2.2.0" provider-name="L0RE">
@@ -1319,31 +1335,37 @@ NOTE: Streams are available in SD only
 	</extension>
 </addon>
 
-<addon id="service.nfo.watchedstate.updater" name="NFO Watchedstate Updater" version="1.1.4" provider-name="4lb3rtO">
-  <requires>
-    <!-- Those are the version on final release. Just depend on the python version for Betas/RCs -->
-    <import addon="xbmc.python" version="2.19.0"/>	  
-    <import addon="xbmc.json"   version="6.20.0"/>
-    <import addon="xbmc.addon"  version="14.0.0"/>
-  </requires>
-  <extension 
-    point="xbmc.service" 
-    library="default.py" 
-    start="login"/>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Renewed your watchedstate in nfo files</summary>
-    <summary lang="de">Erneuert deinen watchedstate in den nfo Dateien</summary>
-    <description lang="en">Update your watchedstate in the nfo files as soon as this happens in the XBMC library.</description>
-    <description lang="de">Aktualisiert deinen watchedstate in den nfo Dateien, sobald dies in der XBMC Bibliothek geschieht.</description>
-    <platform>all</platform>
-    <language>en</language>
-    <language>de</language>
-    <license>Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)</license>
-    <forum><!-- http://www.kodinerds.net/index.php/Thread/36207 --></forum>
-    <website></website>
-    <email>4lb3rtO@gmx.de</email>
-    <source><!-- https://github.com/4lb3rtO/service.nfo.watchedstate.updater.git --></source>
-  </extension>
+<addon id="service.nfo.watchedstate.updater" name="NFO Watchedstate Updater" version="1.2.0" provider-name="4lb3rtO">
+	<requires>
+		<import addon="xbmc.python" version="2.20.0"/>
+		<import addon="xbmc.json" version="6.20.0"/>
+		<import addon="xbmc.addon" version="14.0.0"/>
+	</requires>
+	<extension point="xbmc.service" library="default.py" start="login"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Erneuert deinen watchedstate in den nfo Dateien.</summary>
+		<summary lang="en">Renewed your watchedstate in nfo files.</summary>
+		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
+		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum></forum>
+		<website></website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/service.nfo.watchedstate.updater</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<broken>
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</broken>
+		<news>[B][COLOR orangered]Version 1.2.0 (22.03.2020)[/COLOR][/B] by realvito[CR]
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</news>
+	</extension>
 </addon>
 
 <addon id="plugin.video.L0RE.aftv" name="1. FC Union Berlin Mediathek" version="0.1.2" provider-name="L0RE">
@@ -1447,26 +1469,39 @@ NOTE: Streams are available in SD only
 	</extension>
 </addon>
 
-<addon id="plugin.video.vodster" name="Vodster (dev)" version="0.1.1" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
-        <import addon="script.module.requests" version="2.9.1"/>
-        <import addon="script.module.youtube.dl" version="14.810.0"/>        
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-  <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="en">Seearch over Multible Germen VIdeo on Demand Pages, Inofficial Plugin</summary>
-        <language></language>
-        <description lang="en">Seearch over Multible Germen VIdeo on Demand Pages, Inofficial Plugi</description>
-        <disclaimer lang="en">-</disclaimer>
-        <website>http://www.vodster.de</website>
-        <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.vodster</source>
-        <forum>http://www.kodinerds.net/</forum>
-        <email>Andreas at vogler dot name</email>
-  </extension>
+<addon id="plugin.video.vodster" name="Vodster (dev)" version="0.2.0" provider-name="L0RE">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="script.module.requests" version="2.9.1"/>
+		<import addon="script.module.youtube.dl" version="14.810.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Seearch over Multible Germen VIdeo on Demand Pages</summary>
+		<summary lang="en">Seearch over Multible Germen VIdeo on Demand Pages</summary>
+		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
+		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum></forum>
+		<website>http://www.vodster.de</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.vodster</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<broken>
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</broken>
+		<news>[B][COLOR orangered]Version 0.2.0 (22.03.2020)[/COLOR][/B] by realvito[CR]
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</news>
+	</extension>
 </addon>
 
 <addon id="script.module.cryptopy" name="CryptoPy" version="1.2.7" provider-name="cryptopy.sourceforge.net">
@@ -1695,24 +1730,37 @@ NOTE: Streams are available in SD only
 	</extension>
 </addon>
 
-<addon id="script.fritz.anaus" name="FritzPower Adapter An/Aus" version="0.2.1" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.20.0"/>
-    </requires>
+<addon id="script.fritz.anaus" name="FritzPower Adapter An/Aus" version="0.4.0" provider-name="L0RE">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py" >
-	    <provides>executable</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-    <summary lang="en">Stom von einer FritzSteckdose über die Fritzbox ab/an schalten</summary>
-    <summary lang="de">Stom von einer FritzSteckdose über die Fritzbox ab/an schalten </summary>
-    <description lang="en">Stom von einer FritzSteckdose über die Fritzbox ab/an</description>
-    <description lang="de">Stom von einer FritzSteckdose über die Fritzbox ab/an</description>
-    <website></website>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/script.fritz.anaus</source>
-    <forum>http://www.kodinerds.net/index.php/Thread/46939-Repo-Lost-Found/</forum>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Stom von einer FritzSteckdose über die Fritzbox ab/an schalten.</summary>
+		<summary lang="en">Stom von einer FritzSteckdose über die Fritzbox ab/an schalten.</summary>
+		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
+		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum></forum>
+		<website></website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/script.fritz.anaus</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<broken>
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</broken>
+		<news>[B][COLOR orangered]Version 0.4.0 (22.03.2020)[/COLOR][/B] by realvito[CR]
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</news>
+	</extension>
 </addon>
 
 <addon id="repository.sandmann79.plugins" name="Sandmann79s Repository" version="1.0.2" provider-name="Sandmann79">
@@ -2593,27 +2641,37 @@ NOTE: Streams are available in SD only
 	</extension>
 </addon>
 
-<addon id="plugin.audio.einslive_de" name="1LIVE.de" version="1.0.7" provider-name="AddonScriptorDE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>audio</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="de">O-Ton-Charts, Comedy, Reportagen, Talks, Klubbing, letzte Sendungen und Livestream</summary>
-        <summary lang="en">O-Ton-Charts, Comedy, reports, talks, clubbing, last shows and livestream</summary>
-        <language>de</language>
-        <description lang="de">O-Ton-Charts, Comedy, Reportagen, Talks, Klubbing, letzte Sendungen und Livestream</description>
-        <description lang="en">O-Ton-Charts, Comedy, reports, talks, clubbing, last shows and livestream</description>
-        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.audio.einslive_de</source>
-        <forum>http://forum.xbmc.org/showthread.php?tid=132769</forum>
-        <email>AddonScriptorDE at yahoo dot de</email>
-        <website>http://www.einslive.de</website>
-    </extension>
+<addon id="plugin.audio.einslive_de" name="1LIVE.de" version="1.1.0" provider-name="AddonScriptorDE">
+	<requires>
+		<import addon="xbmc.python" version="2.14.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>audio</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">O-Ton-Charts, Comedy, Reportagen, Talks.</summary>
+		<summary lang="en">O-Ton-Charts, Comedy, Reportagen, Talks.</summary>
+		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
+		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum></forum>
+		<website>http://www.einslive.de</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.audio.einslive_de</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<broken>
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</broken>
+		<news>[B][COLOR orangered]Version 1.1.0 (22.03.2020)[/COLOR][/B] by realvito[CR]
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</news>
+	</extension>
 </addon>
 
 <addon id="plugin.video.galileo" name="Galileo" version="0.3.0" provider-name="dh4rry">
@@ -2691,23 +2749,37 @@ NOTE: Streams are available in SD only
     </extension>
 </addon>
 
-<addon id="plugin.audio.radioteddy_de" name="RadioTeddy.de" version="1.0.0" provider-name="Tombstone">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>audio</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="de">Radio Teddy, macht Spass! macht Schlau! - Das Radio für Eltern und Kids stream</summary>
-        <language>de</language>
-        <description lang="de">Made in Germany, Kinder Disco, Soft Mix, Gute Nacht Musik, Weihnachtslieder, Kinderlieder, TEDDY Cool und Livestream</description>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.audio.radioteddy_de</source>
-        <forum>http://forum.xbmc.org/showthread.php?</forum>
-        <website>http://www.radioteddy.de/</website>
-    </extension>
+<addon id="plugin.audio.radioteddy_de" name="RadioTeddy.de" version="1.1.0" provider-name="Tombstone">
+	<requires>
+		<import addon="xbmc.python" version="2.14.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>audio</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Das Radio für Eltern und Kids</summary>
+		<summary lang="en">Das Radio für Eltern und Kids</summary>
+		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
+		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum></forum>
+		<website>http://www.radioteddy.de/</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.audio.radioteddy_de</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<broken>
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</broken>
+		<news>[B][COLOR orangered]Version 1.1.0 (22.03.2020)[/COLOR][/B] by realvito[CR]
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</news>
+	</extension>
 </addon>
 
 <addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.5.4" provider-name="realvito">
@@ -3077,45 +3149,71 @@ NOTE: Streams are available in SD only
   </extension>
 </addon>
 
-<addon id="plugin.video.rocketbeanstvlive" version="2.1.3" name="Rocket Beans TV" provider-name="Jin, Ulukai">
-  <requires>
-    <import addon="xbmc.python" version="2.14.0"/>
-    <import addon="plugin.video.youtube" version="5.2.1"/>
-  </requires>
-  <extension
-    point="xbmc.python.pluginsource"
-    library="addon.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="de_de">Rocket Beans TV | 24/7 Entertainment</summary>
-    <description lang="de_de">Rocket Beans TV ist Entertainment 24/7 zu digitalen Themen wie Filme, Games und Comedy.</description>
-    <language>de</language>
-    <platform>all</platform>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-  </extension>
+<addon id="plugin.video.rocketbeanstvlive" version="2.1.5" name="Rocket Beans TV" provider-name="Jin, Ulukai">
+	<requires>
+		<import addon="xbmc.python" version="2.14.0"/>
+		<import addon="plugin.video.youtube" version="6.3.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Rocket Beans TV | 24/7 Entertainment.</summary>
+		<summary lang="en">Rocket Beans TV | 24/7 Entertainment.</summary>
+		<description lang="de">[COLOR red]- Es existiert eine aktuellere Version.[CR]- Siehe: https://mirrors.kodi.tv/addons/leia/plugin.video.rocketbeans/ [CR]- Updates hier eingestellt ![/COLOR]</description>
+		<description lang="en">[COLOR red]- A more recent version exists.[CR]- See: https://mirrors.kodi.tv/addons/leia/plugin.video.rocketbeans/ [CR]- Updates here discontinued ![/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://forum.rocketbeans.tv/t/release-neues-kodi-addon-fuer-rbtv-youtube/9436/27</forum>
+		<website>www.rocketbeans.tv</website>
+		<email></email>
+		<source>https://mirrors.kodi.tv/addons/leia/plugin.video.rocketbeans/</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<broken>
+- Es existiert eine aktuellere Version.[CR]- Siehe: https://mirrors.kodi.tv/addons/leia/plugin.video.rocketbeans/ [CR]- Updates hier eingestellt !
+		</broken>
+		<news>[B][COLOR orangered]Version 2.0.7 (22.03.2020)[/COLOR][/B] by realvito[CR]
+- Es existiert eine aktuellere Version.[CR]- Siehe: https://mirrors.kodi.tv/addons/leia/plugin.video.rocketbeans/ [CR]- Updates hier eingestellt !
+		</news>
+	</extension>
 </addon>
 
-<addon id="plugin.video.sesamstrasse_de" name="Sesamstrasse.de" version="1.0.8" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="de">Sesamstrasse Mediathek</summary>
-        <summary lang="en">Sesamstrasse media library</summary>
-        <language>de</language>
-        <description lang="de">Ganze Folgen Sesamstrasse ansehen</description>
-        <description lang="en">Watch full episodes of Sesamstrasse</description>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.sesamstrasse_de</source>
-        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
-        <email>andreas at vogler dot name</email>
-        <website>http://www.sesamstrasse.de</website>
-    </extension>
+<addon id="plugin.video.sesamstrasse_de" name="Sesamstrasse.de" version="1.1.0" provider-name="L0RE">
+	<requires>
+		<import addon="xbmc.python" version="2.14.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Sesamstrasse Mediathek</summary>
+		<summary lang="en">Sesamstrasse Mediathek</summary>
+		<description lang="de">[COLOR red]- Kaum noch Videos auf der Original-Webseite vorhanden.[CR]- Videos der Seamstrasse sind auch in versch. Addons von KiKA enthalten ![CR]- Daher Updates für dieses Addon eingestellt ![/COLOR]</description>
+		<description lang="en">[COLOR red]- There are hardly any videos left on the original website.[CR]- Videos of the Seamstrasse are also included in various KiKA addons ![CR]- Therefore updates for this addon are discontinued ![/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum></forum>
+		<website></website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.sesamstrasse_de</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<broken>
+- Kaum noch Videos auf der Original-Webseite vorhanden.[CR]- Videos der Seamstrasse sind auch in versch. Addons von KiKA enthalten ![CR]- Daher Updates für dieses Addon eingestellt !
+		</broken>
+		<news>[B][COLOR orangered]Version 1.1.0 (22.03.2020)[/COLOR][/B] by realvito[CR]
+- Kaum noch Videos auf der Original-Webseite vorhanden.[CR]- Videos der Seamstrasse sind auch in versch. Addons von KiKA enthalten ![CR]- Daher Updates für dieses Addon eingestellt !
+		</news>
+	</extension>
 </addon>
 
 <addon id="plugin.audio.prime_music" name="Amazon Prime Music" version="0.10.6" provider-name="piet">
@@ -3142,25 +3240,38 @@ NOTE: Streams are available in SD only
     </extension>
 </addon>
 
-<addon id="service.fritz.automation" name="Fritz Automation" version="0.2.1" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.20.0"/>
-    </requires>
-    <extension point="xbmc.service" library="service.py" start="login" />
+<addon id="service.fritz.automation" name="Fritz Automation" version="0.3.0" provider-name="L0RE">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+	</requires>
+	<extension point="xbmc.service" library="service.py" start="login" />
 	<extension point="xbmc.python.pluginsource" library="service.py" >
-	    <provides>executable</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-    <summary lang="en">Stom von einer FritzSteckdose über die Fritzbox ab/an schalten unter bestimmten bedinungen</summary>
-    <summary lang="de">Stom von einer FritzSteckdose über die Fritzbox ab/an schalten unter bestimmten bedinungen</summary>
-    <description lang="en">Stom von einer FritzSteckdose über die Fritzbox ab/an schalten unter bestimmten bedinungen</description>
-    <description lang="de">Stom von einer FritzSteckdose über die Fritzbox ab/an schalten unter bestimmten bedinungen</description>
-    <website></website>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/service.fritz.automation</source>
-    <forum>http://www.kodinerds.net/index.php/Thread/46939-Repo-Lost-Found/</forum>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Stom von einer FritzSteckdose über die Fritzbox ab/an.</summary>
+		<summary lang="en">Stom von einer FritzSteckdose über die Fritzbox ab/an.</summary>
+		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
+		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum></forum>
+		<website></website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/service.fritz.automation</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<broken>
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</broken>
+		<news>[B][COLOR orangered]Version 0.3.0 (22.03.2020)[/COLOR][/B] by realvito[CR]
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</news>
+	</extension>
 </addon>
 
 <addon id="service.cron.autobiblio" name="Crontab für andere Addons [COLOR FF00EE00](neu)[/COLOR]" version="2.0.5" provider-name="L0RE, realvito">
@@ -3359,23 +3470,35 @@ NOTE: Streams are available in SD only
   </extension>
 </addon>
 
-<addon id="service.idle.actions" name="IDLE actions" version="1.0.4" provider-name="4lb3rtO">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-	<import addon="xbmc.addon" version="12.0.0"/>
-  </requires>
-  <extension point="xbmc.service" library="default.py" start="login"/>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Launch different actions when xbmc isn't busy</summary>
-    <description lang="en">Service to launch actions when XBMC is in IDLE-State.[CR]You can define different actions for the on-IDLE and after-IDLE event.[CR][CR]Available actions:[CR]-Minimize[CR]-Quit[CR]-Powerdown[CR]-Hibernate[CR]-Suspend[CR]-RunScript[CR]-RunAppleScript[CR]-PlayMedia[CR]-SlideShow[CR]-RecursiveSlideShow[CR]-PlayDVD[CR]-System.Exec[CR]-System.ExecWait[CR]-UpdateLibrary[CR]-CleanLibrary[CR]-ActivateScreensaver (Future XBMC Gotham(v13) addition)</description>
-    <platform>all</platform>
-	<language>en</language>
-	<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-	<forum><!--  http://www.xbmcnerds.com/index.php?page=Thread&threadID=31418  --></forum>
-    <website></website>
-    <email>4lb3rtO@gmx.de</email>
-    <source></source>
-  </extension>
+<addon id="service.idle.actions" name="IDLE actions" version="1.1.0" provider-name="4lb3rtO">
+	<requires>
+		<import addon="xbmc.python" version="2.20.0"/>
+	</requires>
+	<extension point="xbmc.service" library="default.py" start="login"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Launch different actions when xbmc isn't busy.</summary>
+		<summary lang="en">Launch different actions when xbmc isn't busy.</summary>
+		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
+		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language>en</language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum></forum>
+		<website></website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/service.idle.actions</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<broken>
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</broken>
+		<news>[B][COLOR orangered]Version 1.1.0 (22.03.2020)[/COLOR][/B] by realvito[CR]
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</news>
+	</extension>
 </addon>
 
 <addon id="script.embuary.helper" name="Embuary Helper" version="0.1.7" provider-name="sualfred">
@@ -4042,7 +4165,7 @@ NOTE: Streams are available in SD only
 	</extension>
 </addon>
 
-<addon id="plugin.audio.soundcloud" name="SoundCloud" version="2.0.6" provider-name="bromix">
+<addon id="plugin.audio.soundcloud" name="SoundCloud" version="2.0.7" provider-name="bromix">
 	<requires>
 		<import addon="xbmc.python" version="2.14.0"/>
 	</requires>
@@ -4050,26 +4173,28 @@ NOTE: Streams are available in SD only
 		<provides>audio</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary lang="bg">SoundCloud е платформа за разпространяване на аудио.</summary>
-		<summary lang="en">SoundCloud is an online audio distribution platform.</summary>
 		<summary lang="de">Soundcloud ist ein Online-Audio-Vertriebsplattform.</summary>
-		<summary lang="fr">SoundCloud est une plateforme de streaming audio en ligne.</summary>
-		<summary lang="he">סאונדקלאוד הוא פלטפורמת הפצת אודיו באינטרנט.</summary>
-		<summary lang="nl">SoundCloud is een online audio distributie platform.</summary>
-		<description lang="bg">SoundCloud е платформа за разпространение на аудио, която позволява на потребителите да качват, записват, представят и споделят звуците създадени от тях.</description>
-		<description lang="en">SoundCloud is an online audio distribution platform that enables its users to upload, record, promote and share their originally-created sounds.</description>
-		<description lang="de">Soundcloud ist ein Online-Audio-Vertriebsplattform. Benutzer können ihre ursprünglich erstelle Music hochladen, aufnehmen und unter weiteren Benutzern teilen.</description>
-		<description lang="fr">SoundCloud est une plateforme de streaming audio en ligne qui permet aux utilisateurs d'envoyer, d'enregistrer, de promouvoir et partager leurs créations audio originales.</description>
-		<description lang="he">סאונדקלאוד הוא פלטפורמה הפצת אודיו מקוונת המאפשרת למשתמשים שלה להעלות, להקליט, לקדם ולשתף את היצירות שלהם.</description>
-		<description lang="nl">SoundCloud is een online audio distributie platform dat gebruikers in staat stelt om hun eigen muziekcreaties te uploaden, opnemen, promoten en te delen.</description>
-		<disclaimer lang="en"></disclaimer>
+		<summary lang="en">SoundCloud is an online audio distribution platform.</summary>
+		<description lang="de">[COLOR red]- Es existiert eine aktuellere Version.[CR]- Siehe: http://mirrors.kodi.tv/addons/leia/plugin.audio.soundcloud/ [CR]- Updates hier eingestellt ![/COLOR]</description>
+		<description lang="en">[COLOR red]- A more recent version exists.[CR]- See: http://mirrors.kodi.tv/addons/leia/plugin.audio.soundcloud/ [CR]- Updates here discontinued ![/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
 		<language></language>
 		<platform>all</platform>
-		<license>GNU General Public License v2.0</license>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
 		<forum>http://forum.kodi.tv/showthread.php?tid=206635</forum>
 		<website>www.soundcloud.com</website>
-		<email>kodi at bromix dot org</email>
-		<source>https://github.com/bromix/plugin.audio.soundcloud</source>
+		<email></email>
+		<source>http://mirrors.kodi.tv/addons/leia/plugin.audio.soundcloud/</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<broken>
+- Es existiert eine aktuellere Version.[CR]- Siehe: http://mirrors.kodi.tv/addons/leia/plugin.audio.soundcloud/ [CR]- Updates hier eingestellt !
+		</broken>
+		<news>[B][COLOR orangered]Version 2.0.7 (22.03.2020)[/COLOR][/B] by realvito[CR]
+- Es existiert eine aktuellere Version.[CR]- Siehe: http://mirrors.kodi.tv/addons/leia/plugin.audio.soundcloud/ [CR]- Updates hier eingestellt !
+		</news>
 	</extension>
 </addon>
 
@@ -4483,25 +4608,38 @@ Zattoo Live TV, Aufnahmen und EPG
   </extension>
 </addon>
 
-<addon id="service.iptv.proxy" name="IPTV Proxy" version="1.0.2" provider-name="frankr612">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.requests" version="2.9.1"/>
-    <import addon="script.module.routing" version="0.2.0"></import>
-  </requires>
-  <extension point="xbmc.service" library="service.py" />
-  <extension point="xbmc.python.script" library="pluginplayer.py" />
-  <extension point="xbmc.addon.metadata">
-    <summary lang="de">IPTV Service Proxy</summary>
-    <description lang="de">Service Addon zur Einbindung von Zattoo/EWETV IPTV Sendern in Kodi via Simple IPTV Client</description>
-    <language></language>
-    <platform>all</platform>
-    <license></license>
-    <forum></forum>
-    <website></website>
-    <email></email>
-    <source></source>
-  </extension>
+<addon id="service.iptv.proxy" name="IPTV Proxy" version="1.1.0" provider-name="frankr612">
+	<requires>
+		<import addon="xbmc.python" version="2.20.0"/>
+		<import addon="script.module.requests" version="2.9.1"/>
+		<import addon="script.module.routing" version="0.2.0"/>
+	</requires>
+	<extension point="xbmc.service" library="service.py"/>
+	<extension point="xbmc.python.script" library="pluginplayer.py"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">IPTV Service Proxy.</summary>
+		<summary lang="en">IPTV Service Proxy.</summary>
+		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
+		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum></forum>
+		<website></website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/service.iptv.proxy</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<broken>
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</broken>
+		<news>[B][COLOR orangered]Version 1.1.0 (22.03.2020)[/COLOR][/B] by realvito[CR]
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</news>
+	</extension>
 </addon>
 
 </addons>
