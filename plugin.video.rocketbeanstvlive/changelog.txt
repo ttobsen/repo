@@ -1,3 +1,9 @@
+﻿
+Version 2.1.5  (22.03.2020)
+- Es existiert eine aktuellere Version.
+- Siehe: https://mirrors.kodi.tv/addons/leia/plugin.video.rocketbeans/
+- Updates hier eingestellt !
+
 v2.1.3 (2016-09-01)
 -fix: unsupported locale setting
 
