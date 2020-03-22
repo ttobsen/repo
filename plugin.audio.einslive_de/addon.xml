@@ -1,23 +1,33 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.audio.einslive_de" name="1LIVE.de" version="1.0.7" provider-name="AddonScriptorDE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>audio</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="de">O-Ton-Charts, Comedy, Reportagen, Talks, Klubbing, letzte Sendungen und Livestream</summary>
-        <summary lang="en">O-Ton-Charts, Comedy, reports, talks, clubbing, last shows and livestream</summary>
-        <language>de</language>
-        <description lang="de">O-Ton-Charts, Comedy, Reportagen, Talks, Klubbing, letzte Sendungen und Livestream</description>
-        <description lang="en">O-Ton-Charts, Comedy, reports, talks, clubbing, last shows and livestream</description>
-        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.audio.einslive_de</source>
-        <forum>http://forum.xbmc.org/showthread.php?tid=132769</forum>
-        <email>AddonScriptorDE at yahoo dot de</email>
-        <website>http://www.einslive.de</website>
-    </extension>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<addon id="plugin.audio.einslive_de" name="1LIVE.de" version="1.1.0" provider-name="AddonScriptorDE">
+	<requires>
+		<import addon="xbmc.python" version="2.14.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>audio</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">O-Ton-Charts, Comedy, Reportagen, Talks.</summary>
+		<summary lang="en">O-Ton-Charts, Comedy, Reportagen, Talks.</summary>
+		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
+		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum></forum>
+		<website>http://www.einslive.de</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.audio.einslive_de</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<broken>
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</broken>
+		<news>[B][COLOR orangered]Version 1.1.0 (22.03.2020)[/COLOR][/B] by realvito[CR]
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</news>
+	</extension>
 </addon>
