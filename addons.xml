@@ -2099,7 +2099,7 @@ NOTE: Streams are available in SD only
 	</extension>
 </addon>
 
-<addon id="plugin.video.tyl0re.spiegeltv" name="SPIEGEL.TV [COLOR FF00EE00](neu)[/COLOR]" version="2.0.4" provider-name="L0RE, realvito">
+<addon id="plugin.video.tyl0re.spiegeltv" name="SPIEGEL.TV [COLOR FF00EE00](neu)[/COLOR]" version="2.0.5" provider-name="L0RE, realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="plugin.video.youtube" version="6.3.0"/>
@@ -2125,9 +2125,10 @@ NOTE: Streams are available in SD only
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 2.0.4  (20.03.2020)[/COLOR][/B] by realvito[CR]
+		<news>[B][COLOR orangered]Version 2.0.4+2.0.5  (22.03.2020)[/COLOR][/B] by realvito[CR]
 - fixed: Addon neu aufgesetzt nach Webseiten -veränderung/-einstellung = jetzt 'DER SPIEGEL'
 - added: YouTube Playlisten von 'DER SPIEGEL'
+- fixed: fehlerhaften Umlaut entfernt - YT-Playlisten können nicht geöffnet werden
 -------------------------------------------------------------------------------------------------------------------------------------
 [B][COLOR orangered]Version 2.0.3  (03.02.2020)[/COLOR][/B] by realvito[CR]
 - Pluginname changed for KODI-compatibility (old=plugin.video.L0RE.spiegeltv -> new=plugin.video.tyl0re.spiegeltv)
