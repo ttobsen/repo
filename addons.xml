@@ -4554,7 +4554,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattoo_hiq" version="2.0.6" name="Zattoo HiQ [COLOR FF00EE00](neu)[/COLOR]" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattoo_hiq" version="2.0.7" name="Zattoo HiQ [COLOR FF00EE00](neu)[/COLOR]" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.25.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
