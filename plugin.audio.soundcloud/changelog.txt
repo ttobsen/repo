@@ -1,3 +1,9 @@
+﻿
+2.0.7 (22.03.2020)
+- Es existiert eine aktuellere Version.
+- Siehe: http://mirrors.kodi.tv/addons/leia/plugin.audio.soundcloud/
+- Updates hier eingestellt !
+
 2.0.6 (2016-09-08)
 [fix] Cover (thumbs) missing (done by SLiX, bromix still 'afk')
 
