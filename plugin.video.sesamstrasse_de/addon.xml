@@ -1,22 +1,33 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.video.sesamstrasse_de" name="Sesamstrasse.de" version="1.0.8" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="de">Sesamstrasse Mediathek</summary>
-        <summary lang="en">Sesamstrasse media library</summary>
-        <language>de</language>
-        <description lang="de">Ganze Folgen Sesamstrasse ansehen</description>
-        <description lang="en">Watch full episodes of Sesamstrasse</description>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.sesamstrasse_de</source>
-        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
-        <email>andreas at vogler dot name</email>
-        <website>http://www.sesamstrasse.de</website>
-    </extension>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<addon id="plugin.video.sesamstrasse_de" name="Sesamstrasse.de" version="1.1.0" provider-name="L0RE">
+	<requires>
+		<import addon="xbmc.python" version="2.14.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Sesamstrasse Mediathek</summary>
+		<summary lang="en">Sesamstrasse Mediathek</summary>
+		<description lang="de">[COLOR red]- Kaum noch Videos auf der Original-Webseite vorhanden.[CR]- Videos der Seamstrasse sind auch in versch. Addons von KiKA enthalten ![CR]- Daher Updates für dieses Addon eingestellt ![/COLOR]</description>
+		<description lang="en">[COLOR red]- There are hardly any videos left on the original website.[CR]- Videos of the Seamstrasse are also included in various KiKA addons ![CR]- Therefore updates for this addon are discontinued ![/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum></forum>
+		<website></website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.sesamstrasse_de</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<broken>
+- Kaum noch Videos auf der Original-Webseite vorhanden.[CR]- Videos der Seamstrasse sind auch in versch. Addons von KiKA enthalten ![CR]- Daher Updates für dieses Addon eingestellt !
+		</broken>
+		<news>[B][COLOR orangered]Version 1.1.0 (22.03.2020)[/COLOR][/B] by realvito[CR]
+- Kaum noch Videos auf der Original-Webseite vorhanden.[CR]- Videos der Seamstrasse sind auch in versch. Addons von KiKA enthalten ![CR]- Daher Updates für dieses Addon eingestellt !
+		</news>
+	</extension>
 </addon>
