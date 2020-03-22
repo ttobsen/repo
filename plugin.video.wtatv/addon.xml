@@ -1,30 +1,35 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.wtatv" version="0.1.0" name="WTA TV" provider-name="Jin">
-    <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
-        <import addon="script.module.pydes" version="2.0.1"/>
-        <import addon="script.module.xmltodict" version="0.9.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="addon.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <news>
-- initial release
-- supports live, on demand and feature coverage
-        </news>
-        <summary>Watch Live Stream WTA Women's Tennis Matches Online</summary>
-        <description>
-WTA TV provides live stream complete women's tennis matches from around the world and bonus feature videos
-including match highlights, interviews, exclusive content and more.
-
-NOTE: Streams are available in SD only
-        </description>
-        <disclaimer>Unofficial Addon - Use at your own risk</disclaimer>
-        <platform>all</platform>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <website>https://www.wtatv.com</website>
-        <email>[jin] at [xyz] dot [de]</email>
-        <source>https://github.com/kodinerds/repo/tree/master/plugin.video.wtatv</source>
-    </extension>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<addon id="plugin.video.wtatv" name="WTA TV" version="0.2.0" provider-name="Jin">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="script.module.pydes" version="2.0.1"/>
+		<import addon="script.module.xmltodict" version="0.9.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Watch Live Stream WTA Women's Tennis Matches Online.</summary>
+		<summary lang="en">Watch Live Stream WTA Women's Tennis Matches Online.</summary>
+		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
+		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum></forum>
+		<website>https://www.wtatv.com</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.wtatv</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<broken>
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</broken>
+		<news>[B][COLOR orangered]Version 0.2.0 (22.03.2020)[/COLOR][/B] by realvito[CR]
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</news>
+	</extension>
 </addon>
