@@ -1,2 +1,8 @@
 ﻿0.1.8
 - Release
+
+...
+
+Version 0.2.0  (22.03.2020)
+- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.
+- Updates für dieses Addon vorerst eingestellt !
