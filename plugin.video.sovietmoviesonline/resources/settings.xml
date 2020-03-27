@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<settings>
-	<setting label="30110" type="select" id="language" values="EN|RU" default="EN"/>
-	<setting type="sep"/>
-	<setting label="30111" type="bool" id="useThumbAsFanart" default="true"/>
-	<setting type="sep"/>
-</settings>
