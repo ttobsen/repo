@@ -40,7 +40,7 @@ def get_session_cookie():
     post_data = ('lang=en&client_app_token=%s&uuid=d7512e98-38a0-4f01-b820-5a5cf98141fe&format=json' % get_app_token()).encode('utf-8')
     req = Request('https://zattoo.com/zapi/session/hello', post_data, standard_header)
     response = urlopen(req)
-    return extract_session_id([value for key, value in response.headers.items() if key == 'Set-cookie'])
+    return extract_session_id([value for key, value in response.headers.items() if key.lower() == 'set-cookie'])
 
 
 def update_pg_hash(hash):
@@ -58,7 +58,7 @@ def get_json_data(api_url, cookie, post_data=None):
         post_data = urlencode(post_data).encode('utf-8')
     req = Request(api_url, post_data, header)
     response = urlopen(req)
-    new_cookie = extract_session_id([value for key, value in response.headers.items() if key == 'Set-cookie'])
+    new_cookie = extract_session_id([value for key, value in response.headers.items() if key.lower() == 'set-cookie'])
     if new_cookie:
         update_session(new_cookie)
     return response.read()

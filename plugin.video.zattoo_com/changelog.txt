@@ -1,2 +1,5 @@
+1.2.1
+- fixed login
+- changed version of the Python ABI
 1.2.0
 - Python 3 compability
