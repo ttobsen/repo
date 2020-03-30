@@ -53,6 +53,8 @@ v1.3.1:
 v1.3.2:
 - add livestreams for ORF III and ORF Sport+
 - alternative DRM format for widevine is now disabled by default, because it seems like it is not available any more.
-   If it is still activated, a request is attempted, if failed the default format is used instead.
+  If it is still activated, a request is attempted, if failed the default format is used instead.
 - try to fix Playready support
 - choose between DASH and SmoothStreaming. SmoothStreaming should give better quality, but doesn't work currently.
+v1.3.3:
+- fix start/availability dates if there were multiple air dates
