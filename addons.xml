@@ -35,9 +35,9 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.ran_de" name="ran" version="2.3.7" provider-name="PUR3, L0RE, Linkinsoldier">
+<addon id="plugin.video.ran_de" name="ran" version="2.3.8" provider-name="PUR3, L0RE, Linkinsoldier">
     <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="xbmc.python" version="2.24.0"/>
 		<import addon="script.module.kodi-six" version="0.1.0"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
@@ -948,9 +948,9 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
-<addon id="plugin.video.magenta-sport" version="1.2.9" name="Magenta Sport" provider-name="Maven">
+<addon id="plugin.video.magenta-sport" version="1.2.10" name="Magenta Sport" provider-name="Maven">
     <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.pydes" version="2.0.1"/>
         <import addon="script.module.beautifulsoup4" version="4.3.2"/>
         <import addon="script.module.requests" version="2.12.4"/>
@@ -1162,9 +1162,9 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattoo_com" name="Zattoo Live TV" version="1.2.0" provider-name="PUR3">
+<addon id="plugin.video.zattoo_com" name="Zattoo Live TV" version="1.2.1" provider-name="PUR3, Maven">
     <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.kodi-six" version="0.1.0"/>
         <import addon="script.module.pyxbmct" version="1.2.0"/>
     </requires>
@@ -1177,7 +1177,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
         <description lang="de_DE">Fußball, Serien, Filme, Dokus und Reportagen laufen mit Zattoo im Livestream. Alles was du brauchst, ist eine Internetverbindung und schon läuft das Fernsehprogramm mit mehr als 75-TV-Sendern kostenlos auf dem Gerät deiner Wahl.</description>
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
         <website>http://www.zattoo.com</website>
-        <news>1.2.0[CR]- Python 3 compability</news>
+        <news>1.2.0[CR]- Python 3 compability[CR][CR]1.2.1[CR]- fixed login[CR]- changed version of the Python ABI</news>
     </extension>
 </addon>
 
@@ -1504,9 +1504,9 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="script.module.cryptopy" name="CryptoPy" version="1.2.7" provider-name="cryptopy.sourceforge.net">
+<addon id="script.module.cryptopy" name="CryptoPy" version="1.2.8" provider-name="cryptopy.sourceforge.net">
   <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="xbmc.python" version="2.24.0"/>
   </requires>
   <extension point="xbmc.python.module" library="lib"/>
   <extension point="xbmc.addon.metadata">
@@ -1652,9 +1652,9 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
-<addon id="plugin.video.skygo.de" name="Sky Go" version="1.13.19" provider-name="jojo, frankr612, Maven, Linkinsoldier">
+<addon id="plugin.video.skygo.de" name="Sky Go" version="1.13.20" provider-name="jojo, frankr612, Maven, Linkinsoldier">
     <requires>
-        <import addon="xbmc.python" version="2.3.0"/>
+        <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.requests" version="2.9.1"/>
         <import addon="script.module.routing" version="0.2.0"/>
         <import addon="script.module.cryptopy" version="1.2.6"/>
@@ -1682,11 +1682,8 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
         <email></email>
         <source></source>
         <news>
-1.13.19[CR]- Einstiegspunkt cachen[CR]- Auflistung nach Anfangsbuchstaben behoben[CR][CR]
-1.13.18[CR]- Fehlerbehebung[CR]- Anzeige des Channellogos im OSD bei Livesport[CR]- Ordner mit dem Titel 'Meistgesehen' ausblenden[CR][CR]
-1.13.17[CR]- API-Anpassungen[CR][CR]
-1.13.16[CR]- Fehler beim Abspielen von Livestreams behoben[CR][CR]
-1.13.15[CR]- Suche: Nur Inhalte anzeigen, die der Inhaltskatalog bietet[CR][CR]
+1.13.20[CR]- Änderung der Python-ABI-Version[CR][CR]
+1.13.19[CR]- Einstiegspunkt cachen[CR]- Auflistung nach Anfangsbuchstaben behoben
         </news>
         <reuselanguageinvoker>true</reuselanguageinvoker>
 	</extension>
@@ -2167,7 +2164,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
-<addon id="plugin.video.zappntv" name="Zappn TV" version="1.3.2" provider-name="fayer3">
+<addon id="plugin.video.zappntv" name="Zappn TV" version="1.3.3" provider-name="fayer3">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.routing" version="0.2.0"/>
@@ -2201,10 +2198,12 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 - Abhängigkeiten minimum Version hinzugefügt, behebt vielleicht automatische Installation
 1.3.2:
 - Livestreams von ORF III und ORF Sport+ hinzugefügt
-- Alternatives DRM Format für widevine ist nun standardmäßig deaktiviert, weil es scheinbar nicht mehr verfügbar ist.
-   Ist es dennoch aktiviert, wird versucht es abzurufen, bei Fehlschlag wird auf das standard Format zurrückgegriffen.
+- alternatives DRM Format für widevine ist nun standardmäßig deaktiviert, weil es scheinbar nicht mehr verfügbar ist.
+  Ist es dennoch aktiviert, wird versucht es abzurufen, bei Fehlschlag wird auf das standard Format zurrückgegriffen.
 - Versuch Playready support zu repariert.
-- Auswahl zwischen DASH und SmoothStreaming. SmoothStreaming hat zwar die bessere Qualität, funktioniert momentan aber nicht.
+- Auswahl zwishen DASH und SmoothStreaming. SmoothStreaming hat zwar die bessere Qualität, funktioniert momentan aber nicht.
+1.3.3:
+- Start/Verfügbarkeitsdatum repariert, wenn es mehrere Ausstrahlungen gab
         </news>
         <assets>
             <icon>resources/icon.png</icon>
@@ -2667,6 +2666,40 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 		</broken>
 		<news>[B][COLOR orangered]Version 0.3.0 (16.03.2020)[/COLOR][/B] by realvito[CR]
 - Addon DEFEKT.[CR]- Updates für dieses Addon vorerst eingestellt !
+		</news>
+	</extension>
+</addon>
+
+<addon id="plugin.video.tyl0re.bollythek" name="BollyThek [COLOR FF00EE00](neu)[/COLOR]" version="3.2.3" provider-name="L0RE, realvito">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="script.module.requests" version="2.20.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de_DE">Bollywood Mediathek</summary>
+		<summary lang="en_GB">Bollywood Mediathek</summary>
+		<description lang="de_DE">Zee.One versorgt Bollywood-Fans seit Mitte 2016 mit Herzschmerz, Tanzeinlagen, indischem Actionkino sowie der Musik und dem Lifestyle Südasiens.[CR]Erlebe pure Emotionen auf zeeone.de.</description>
+		<description lang="en_GB">Zee.One has been providing Bollywood fans with heartache, dancing, Indian action cinema as well as the music and lifestyle of South Asia since mid-2016.[CR]Experience pure emotions on zeeone.de.</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+		<website>http://www.zeeone.de</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.tyl0re.bollythek</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 3.2.3  (30.03.2020)[/COLOR][/B] by realvito[CR]
+- Pluginname changed for KODI-compatibility (old=plugin.video.L0RE.Bollywood -> new=plugin.video.tyl0re.bollythek)
+- optimized: URL-Abfrage jetzt umgestellt auf das etwas schnellere requests-modul
+- optimized: Doppelte Einträge werden herausgefiltert
 		</news>
 	</extension>
 </addon>
@@ -3491,6 +3524,40 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
+<addon id="plugin.video.tyl0re.mtv" name="MTV Mediathek [COLOR FF00EE00](neu)[/COLOR]" version="1.2.4" provider-name="L0RE, realvito">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
+		<import addon="script.common.plugin.cache" version="2.6.0" optional="true"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de_DE">MTV Musik</summary>
+		<summary lang="en_GB">MTV Music</summary>
+		<description lang="de_DE">Hört euch die neuesten Songs eurer Lieblingsacts an und checkt deren Musikvideos.[CR]MTV ist die ultimative Quelle für Musik, Lifestyle, Popkultur, Entertainment, Filme und vieles mehr...</description>
+		<description lang="en_GB">Listen to the latest songs from your favorite acts and check out their music videos.[CR]MTV is the ultimate source for music, lifestyle, pop culture, entertainment, movies and much more...</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+		<website>http://www.mtv.de</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.tyl0re.mtv</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 1.2.4  (30.03.2020)[/COLOR][/B] by realvito[CR]
+- Pluginname changed for KODI-compatibility (old=plugin.video.L0RE.mtv -> new=plugin.video.tyl0re.mtv)
+- added: Rubrik = Musik
+		</news>
+	</extension>
+</addon>
+
 <addon id="plugin.video.L0RE.comedycentral" name="Comedycentral" version="0.2.0" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
@@ -3625,9 +3692,9 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
         </extension>
 </addon>
 
-<addon id="plugin.video.skysport.de" name="Sky Sport Mediathek" version="1.1.5" provider-name="Maven">
+<addon id="plugin.video.skysport.de" name="Sky Sport Mediathek" version="1.1.6" provider-name="Maven">
 	<requires>
-		<import addon="xbmc.python" version="2.1.0"/>
+		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="script.module.beautifulsoup4" version="4.5.3" />
 		<import addon="script.module.requests" version="2.18.4" />
 		<import addon="script.common.plugin.cache" version="2.5.8"/>
@@ -3705,9 +3772,9 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
   </extension>
 </addon>
 
-<addon id="script.module.pydes" name="pyDes" version="2.0.1" provider-name="Todd Whiteman">
+<addon id="script.module.pydes" name="pyDes" version="2.0.2" provider-name="Todd Whiteman">
   <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="xbmc.python" version="2.24.0"/>
   </requires>
   <extension point="xbmc.python.module"
              library="lib" />
@@ -4160,9 +4227,9 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="plugin.video.skysport.at" name="Sky Sport Austria Mediathek" version="1.1.0" provider-name="Maven">
+<addon id="plugin.video.skysport.at" name="Sky Sport Austria Mediathek" version="1.1.1" provider-name="Maven">
 	<requires>
-		<import addon="xbmc.python" version="2.1.0"/>
+		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="script.module.beautifulsoup4" version="4.5.3" />
 		<import addon="script.module.requests" version="2.18.4" />
 		<import addon="script.common.plugin.cache" version="2.5.8"/>
