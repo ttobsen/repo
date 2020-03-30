@@ -1,0 +1,13 @@
+﻿0.1 - Initial Source by L0RE
+
+...
+
+[B]Version 2.2.2  (30.03.2020)[/B] by realvito
+- last OLDVERSION with Path = plugin.video.L0RE.Bollywood
+
+================================================================
+
+[B]Version 3.2.3  (30.03.2020)[/B] by realvito
+- Pluginname changed for KODI-compatibility (old=plugin.video.L0RE.Bollywood -> new=plugin.video.tyl0re.bollythek)
+- optimized: URL-Abfrage jetzt umgestellt auf das etwas schnellere requests-modul
+- optimized: Doppelte Einträge werden herausgefiltert
