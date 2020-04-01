@@ -1,2 +1,7 @@
-0.l
-- Initial release
+﻿0.1.1 - Initial Source
+
+...
+
+[B]Version 2.2.2  (30.03.2020)[/B] by realvito
+- last OLDVERSION with Path = plugin.video.L0RE.Bollywood
+- Please use the New Version (3.2.3) with Path = plugin.video.tyl0re.bollythek

@@ -1,24 +1,36 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.L0RE.mtv" name="MTV Mediathek" version="0.2.2" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
-        <import addon="script.module.requests" version="2.12.4"/>
-        <import addon="script.module.beautifulsoup4" version="4.3.2"/>       
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="de">MTV Mediathek</summary>
-    <summary lang="en">MTV Mediathek</summary>
-    <description lang="en">MTV Mediathek</description>
-    <description lang="de">MTV Mediathek</description>
-    <website></website>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.L0RE.hsv</source>
-    <forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
-    <email>andreas at vogler dot name</email>
-    <news> v0.1.9 Patch der Playlisten (Dank an ClaudiaF)</news>
-    <platform>all</platform>
-  </extension>
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<addon id="plugin.video.L0RE.mtv" name="MTV Mediathek" version="0.2.3" provider-name="L0RE">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
+		<import addon="script.module.requests" version="2.12.4"/>
+		<import addon="plugin.video.tyl0re.mtv" version="1.2.4"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de_DE">MTV Mediathek</summary>
+		<summary lang="en_GB">MTV Mediathek</summary>
+		<description lang="de_DE">[COLOR red]- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 1.2.4 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No. 0.2.3 DEINSTALLIEREN.[/COLOR]</description>
+		<description lang="en_GB">[COLOR red]- This Addon gets a new path in the KODI directory ![CR]- This restores the compatibility and the call by other addons.[CR][CR]- Please ACTIVATE the new Addon with the Version-No. 1.2.4.[CR]- After that UNINSTALL this Addon with the Version-No. 0.2.3.[/COLOR]</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+		<website>http://www.mtv.de</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.L0RE.mtv</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<broken>
+- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 1.2.4 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No. 0.2.3 DEINSTALLIEREN.
+		</broken>
+		<news>[B][COLOR orangered]Version 0.2.3 (30.03.2020)[/COLOR][/B] by realvito[CR]
+- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 1.2.4 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No. 0.2.3 DEINSTALLIEREN.
+		</news>
+	</extension>
 </addon>
