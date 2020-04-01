@@ -1,3 +1,5 @@
+1.3.12
+  Maven85  Changed version of the Python ABI
 1.3.11
   Maven85  Fixed creating movie streams when streamref is original plugin
 1.3.10
