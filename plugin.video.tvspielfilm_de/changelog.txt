@@ -95,3 +95,6 @@
 
 [B]Version 1.2.4  (25.02.2020)[/B]
 - optimized: Jetzt auch HD-Qualität (wenn TVNOW-Premiumuser) über "plugin.video.rtlnow" abspielen (Code verändert)
+
+[B]Version 1.2.5  (01.04.2020)[/B]
+- optimized: Wiedergabequalität-Aufbereitung von ZDF-Links (mp4) - neue Codes hinzugefügt

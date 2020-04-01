@@ -477,13 +477,16 @@ def ZdfExtractQuality(thirdURL):
 
 def VideoBEST(best_url, improve=False):
 	# *mp4URL* Qualität nachbessern, überprüfen, danach abspielen
-	standards = [best_url,"",""]
+	standards = [best_url, "", ""]
 	if improve == "ard-YES":
-		standards[1] = standards[0].replace('/960', '/1280').replace('.hq.mp4', '.hd.mp4').replace('.l.mp4', '.xl.mp4').replace('_C.mp4', '_X.mp4')
-		standards[2] = standards[1].replace('/1280', '/1920').replace('.xl.mp4', '.xxl.mp4')
+		first_repls = (('/960', '/1280'), ('.hq.mp4', '.hd.mp4'), ('.l.mp4', '.xl.mp4'), ('_C.mp4', '_X.mp4'))
+		second_repls = (('/1280', '/1920'), ('.xl.mp4', '.xxl.mp4'))
 	elif improve == "zdf-YES":
-		standards[1] = standards[0].replace('1456k_p13v11', '2328k_p35v11').replace('1456k_p13v12', '2328k_p35v12').replace('1496k_p13v13', '2328k_p35v13').replace('1496k_p13v14', '2328k_p35v14').replace('2256k_p14v11', '2328k_p35v11').replace('2256k_p14v12', '2328k_p35v12').replace('2296k_p14v13', '2328k_p35v13').replace('2296k_p14v14', '2328k_p35v14')
-		standards[2] = standards[1].replace('2328k_p35v12', '3328k_p36v12').replace('2328k_p35v13', '3328k_p36v13').replace('2328k_p35v14', '3328k_p36v14')
+		first_repls = (('808k_p11v15', '2360k_p35v15'), ('1628k_p13v15', '2360k_p35v15'), ('1456k_p13v12', '2328k_p35v12'), ('1496k_p13v13', '2328k_p35v13'), ('1496k_p13v14', '2328k_p35v14'),
+								('2256k_p14v11', '2328k_p35v11'), ('2256k_p14v12', '2328k_p35v12'), ('2296k_p14v13', '2328k_p35v13'), ('2296k_p14v14', '2328k_p35v14'))
+		second_repls = (('2328k_p35v12', '3328k_p36v12'), ('2328k_p35v13', '3328k_p36v13'), ('2328k_p35v14', '3328k_p36v14'), ('2360k_p35v15', '3360k_p36v15'))
+	standards[1] = reduce(lambda a, kv: a.replace(*kv), first_repls, standards[0])
+	standards[2] = reduce(lambda b, kv: b.replace(*kv), second_repls, standards[1])
 	for element in reversed(standards):
 		if len(element) > 0:
 			try:
@@ -495,13 +498,13 @@ def VideoBEST(best_url, improve=False):
 
 def _clean(text):
 	text = py2_enc(text)
-	for n in (('&lt;', '<'), ('&gt;', '>'), ('&amp;', '&'), ('&apos;', "'"), ("&#x27;", "'"), ('&#34;', '"'), ('&#39;', '\''), ('&#039;', '\''), ('►', '>')
-		, ('&#x00c4', 'Ä'), ('&#x00e4', 'ä'), ('&#x00d6', 'Ö'), ('&#x00f6', 'ö'), ('&#x00dc', 'Ü'), ('&#x00fc', 'ü'), ('&#x00df', 'ß'), ('&#xD;', ''), ('\xc2\xb7', '-')
-		, ('&quot;', '"'), ('&szlig;', 'ß'), ('&ndash;', '-'), ('&Auml;', 'Ä'), ('&Ouml;', 'Ö'), ('&Uuml;', 'Ü'), ('&auml;', 'ä'), ('&ouml;', 'ö'), ('&uuml;', 'ü')
-		, ('&agrave;', 'à'), ('&aacute;', 'á'), ('&acirc;', 'â'), ('&egrave;', 'è'), ('&eacute;', 'é'), ('&ecirc;', 'ê'), ('&igrave;', 'ì'), ('&iacute;', 'í'), ('&icirc;', 'î')
-		, ('&ograve;', 'ò'), ('&oacute;', 'ó'), ('&ocirc;', 'ô'), ('&ugrave;', 'ù'), ('&uacute;', 'ú'), ('&ucirc;', 'û')
-		, ("\\'", "'"), ('<wbr/>', ''), ('<br />', ' -'), ('Ã¶', 'ö')):
-		text = text.replace(*n)
+	repls = (('&lt;', '<'), ('&gt;', '>'), ('&amp;', '&'), ('&apos;', "'"), ("&#x27;", "'"), ('&#34;', '"'), ('&#39;', '\''), ('&#039;', '\''), ('►', '>'),
+				('&#x00c4', 'Ä'), ('&#x00e4', 'ä'), ('&#x00d6', 'Ö'), ('&#x00f6', 'ö'), ('&#x00dc', 'Ü'), ('&#x00fc', 'ü'), ('&#x00df', 'ß'), ('&#xD;', ''), ('\xc2\xb7', '-'),
+				('&quot;', '"'), ('&szlig;', 'ß'), ('&ndash;', '-'), ('&Auml;', 'Ä'), ('&Ouml;', 'Ö'), ('&Uuml;', 'Ü'), ('&auml;', 'ä'), ('&ouml;', 'ö'), ('&uuml;', 'ü'),
+				('&agrave;', 'à'), ('&aacute;', 'á'), ('&acirc;', 'â'), ('&egrave;', 'è'), ('&eacute;', 'é'), ('&ecirc;', 'ê'), ('&igrave;', 'ì'), ('&iacute;', 'í'), ('&icirc;', 'î'),
+				('&ograve;', 'ò'), ('&oacute;', 'ó'), ('&ocirc;', 'ô'), ('&ugrave;', 'ù'), ('&uacute;', 'ú'), ('&ucirc;', 'û'),
+				("\\'", "'"), ('<wbr/>', ''), ('<br />', ' -'), ('Ã¶', 'ö'))
+	text = reduce(lambda a, kv: a.replace(*kv), repls, text)
 	return text.strip()
 
 def cleanStation(channelID):
