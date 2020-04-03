@@ -1504,12 +1504,14 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="script.module.cryptopy" name="CryptoPy" version="1.2.8" provider-name="cryptopy.sourceforge.net">
+<addon id="script.module.cryptopy" name="CryptoPy" version="1.2.9" provider-name="cryptopy.sourceforge.net">
   <requires>
     <import addon="xbmc.python" version="2.24.0"/>
   </requires>
   <extension point="xbmc.python.module" library="lib"/>
   <extension point="xbmc.addon.metadata">
+    <summary lang="en">CryptoPy is a pure python implmentation of cryptographic algorithms and applications.</summary>
+    <description lang="en">CryptoPy is a pure python implmentation of cryptographic algorithms and applications. The algorithms are developed for readability more than speed. The collection now includes IEEE 802.11i specific algorithms that generated the test vectors for 802.11i.</description>
     <platform>all</platform>
   </extension>
 </addon>
@@ -3798,14 +3800,15 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
   </extension>
 </addon>
 
-<addon id="script.module.pydes" name="pyDes" version="2.0.2" provider-name="Todd Whiteman">
+<addon id="script.module.pydes" name="pyDes" version="2.0.3" provider-name="Todd Whiteman">
   <requires>
     <import addon="xbmc.python" version="2.24.0"/>
   </requires>
   <extension point="xbmc.python.module"
              library="lib" />
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">A pure python module which implements the DES and Triple-DES encryption algorithms.</summary>
+    <summary lang="en">This is a pure python implementation of the DES encryption algorithm.</summary>
+    <description lang="en">This is a pure python implementation of the DES encryption algorithm. It's pure python to avoid portability issues, since most DES implementations are programmed in C (for performance reasons).</description>
     <website>http://twhiteman.netfirms.com/des.html</website> 
     <license>Public Domain</license> 
     <platform>all</platform> 
