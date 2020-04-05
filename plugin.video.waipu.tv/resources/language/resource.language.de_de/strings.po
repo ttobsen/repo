@@ -1,0 +1,115 @@
+# Kodi Media Center language file
+# Addon Name: Waipu.tv
+# Addon id: plugin.video.waipu.tv
+# Addon Provider: flubshi, MiRo
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Account"
+msgstr "Account"
+
+msgctxt "#32002"
+msgid "Mail"
+msgstr "E-Mail"
+
+msgctxt "#32003"
+msgid "Password"
+msgstr "Passwort"
+
+msgctxt "#32004"
+msgid "Misc"
+msgstr "Sonstiges"
+
+msgctxt "#32005"
+msgid "Show current epg in channel name"
+msgstr "Zeige aktuellen EPG Eintrag im Kanalnamen"
+
+msgctxt "#32006"
+msgid "Show epg in plot"
+msgstr "Zeige EPG in Plot"
+
+msgctxt "#32007"
+msgid "EPG for next hours"
+msgstr "EPG für die nächsten Stunden"
+
+msgctxt "#32008"
+msgid "Stream to play"
+msgstr "Abzuspielender Stream"
+
+msgctxt "#32009"
+msgid "Fetch metadata on channel start"
+msgstr "Hole Metadaten bei Kanal-Start"
+
+msgctxt "#32010"
+msgid "Filter pictograms in titles"
+msgstr "Piktogramme in Titel filtern"
+
+msgctxt "#32011"
+msgid "Recording settings"
+msgstr "Aufnahmen"
+
+msgctxt "#32012"
+msgid "Show episode number"
+msgstr "Zeige Episodennnummer"
+
+msgctxt "#32013"
+msgid "Show recording date"
+msgstr "Zeige Aufnahmedatum"
+
+msgctxt "#32014"
+msgid "EPG settings"
+msgstr "EPG-Einstellungen"
+
+msgctxt "#32015"
+msgid "Account details"
+msgstr "Account Informationen"
+
+msgctxt "#32016"
+msgid "Status"
+msgstr "Status"
+
+msgctxt "#32017"
+msgid "Account"
+msgstr "Account"
+
+msgctxt "#32018"
+msgid "Subscription"
+msgstr "Paket"
+
+msgctxt "#32019"
+msgid "Network IP"
+msgstr "Netzwerk-IP"
+
+msgctxt "#32020"
+msgid "Network status"
+msgstr "Netzwerkstatus"
+
+msgctxt "#32030"
+msgid "Live TV"
+msgstr "Live TV"
+
+msgctxt "#32031"
+msgid "Recordings"
+msgstr "Aufnahmen"
+
+msgctxt "#32032"
+msgid "VoD"
+msgstr "VoD"
+
+msgctxt "#32025"
+msgid "Provider"
+msgstr "Anbieter"
+
+msgctxt "#32026"
+msgid "Waipu.tv"
+msgstr "Waipu.tv"
+
+msgctxt "#32027"
+msgid "O2 TV"
+msgstr "O2 TV"
