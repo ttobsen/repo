@@ -455,7 +455,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
-<addon id="plugin.video.dokustreams.de" name="Dokustreams.de" version="1.1.0" provider-name="itouch5000">
+<addon id="plugin.video.dokustreams.de" name="Dokustreams.de" version="1.1.1" provider-name="itouch5000">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.requests" version="2.7.0"/>
@@ -815,7 +815,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="plugin.video.ardundzdf" name="ARDundZDF" version="2.8.3" provider-name="rols1 (rols1@gmx.de)">
+<addon id="plugin.video.ardundzdf" name="ARDundZDF" version="2.8.4" provider-name="rols1 (rols1@gmx.de)">
   <requires>
    <import addon="xbmc.python" version="2.25.0"/>
    <import addon="script.module.kodi-six" />
