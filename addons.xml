@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id="plugin.video.ardundzdf" name="ARDundZDF" version="2.8.3" provider-name="rols1 (rols1@gmx.de)">
+<addon id="plugin.video.dokustreams.de" name="Dokustreams.de" version="1.1.1" provider-name="itouch5000">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="script.module.requests" version="2.7.0"/>
+        <import addon="script.module.beautifulsoup4" version="4.6.2"/>
+        <import addon="script.module.html5lib" version="0.999.0"/>
+        <import addon="plugin.video.youtube" version="5.1.20.6"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">View documentation and reports online</summary>
+        <description lang="en">Watch documentaries, reports, interviews and discussion programmes online for free.</description>
+        <summary lang="de">Dokumentationen und Reportagen online schauen</summary>
+		<description lang="de">Dokumentationen, Reportagen, Interviews und Diskussionssendungen kostenlos online schauen.</description>
+        <license>GPL 2.0</license>
+    </extension>
+</addon>
+
+
+<addon id="plugin.video.ardundzdf" name="ARDundZDF" version="2.8.4" provider-name="rols1 (rols1@gmx.de)">
   <requires>
    <import addon="xbmc.python" version="3.0.0"/>
    <import addon="script.module.kodi-six" />
@@ -240,222 +262,6 @@ Zattoo Live TV, Aufnahmen und EPG
     <disclaimer lang="en">Check http://www.zattoo.com for availability in your country.</disclaimer>
     <disclaimer lang="de">Überprüfe ob http://www.zattoo.com in Deinem Land verfügbar ist.</disclaimer>
     <assets>
-        <icon>resources/icon.png</icon>
-        <fanart>resources/fanart.jpg</fanart>
-    </assets>
-  </extension>
-</addon>
-
-</addons>
-
-<addon id="plugin.video.ardundzdf" name="ARDundZDF" version="2.8.3" provider-name="rols1 (rols1@gmx.de)">
-  <requires>
-   <import addon="xbmc.python" version="3.0.0"/>
-   <import addon="script.module.kodi-six" />
-</requires>
-  <extension point="xbmc.python.pluginsource" library="ardundzdf.py">
-        <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-	<summary lang="de">ARD- und ZDF-Mediathek</summary>
-	<description lang="de">ARD- und ZDF-Mediathek, einschließlich Live-TV mit Aufnahmefunktion, Merkliste, Live-Radio, Podcasts. Screenshots siehe https://github.com/rols1/PluginPictures/tree/master/Kodi/ARDundZDF. Wicki zu den Settings siehe https://github.com/rols1/Kodi-Addon-ARDundZDF/wiki.
-	</description>
-	<platform>all</platform>
-         <source>https://github.com/rols1/Kodi-Addon-ARDundZDF</source>
-        <forum>https://www.kodinerds.net/index.php/Thread/64244-RELEASE-Kodi-Addon-ARDundZDF/</forum>
-	<license>The MIT License (MIT)</license>
-	<language>"de_DE"</language>
- 	<email>rols1@gmx.de</email>
-        <assets>
-             <icon>icon.png</icon>
-            <fanart>fanart.png</fanart>           
-     </assets>
-   </extension>
-</addon>
-
-<addon id="plugin.video.waipu.tv" name="Waipu.tv / O2 TV" version="0.3.1" provider-name="flubshi, MiRo">
-<requires>
-  <import addon="xbmc.python" version="2.25.0"/>
-  <import addon="script.module.requests" version="2.12.4"/>
-  <import addon="script.module.inputstreamhelper" version="0.3.3"/>
-  <import addon="script.module.dateutil" version="2.7.3" />
-  <import addon="script.module.mechanize" version="0.2.6" />
-</requires>
-<extension point="xbmc.python.pluginsource" library="main.py">
-  <provides>video</provides>
-</extension>
-<extension point="xbmc.addon.metadata">
-  <summary lang="de">waipu.tv und O2 TV Kodi Video Plugin</summary>
-  <summary lang="en">waipu.tv and O2 TV Kodi Video Plugin</summary>
-  <description lang="en">An waipu.tv and O2 TV video plugin for Kodi mediacenter. Note: This is not an official waipu plugin and not related to Exaring AG or waipu.tv. It was developed by volunteers.</description>
-  <description lang="de">Genießen Sie über 100 TV-Sender von Waipu.tv oder O2 TV im Live-Stream. Hinweis: Dies ist kein offizielles Waipu-Plugin und steht nicht in Verbindung zur Exaring AG oder zu waipu.tv. Es wurde von Freiwilligen entwickelt.</description>
-  <language></language>
-  <platform>all</platform>
-  <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
-  <forum>https://www.kodinerds.net/index.php/Thread/64586-PreRelease-Video-Plugin-Waipu-tv/</forum>
-  <website>https://www.waipu.tv/</website>
-  <email></email>
-  <source>https://github.com/flubshi/plugin.video.waipu.tv</source>
-  <assets>
-    <icon>icon.png</icon>
-    <fanart>fanart.jpg</fanart>
-    <screenshot>resources/screenshots/screenshot-01.jpg</screenshot>
-    <screenshot>resources/screenshots/screenshot-02.jpg</screenshot>
-    <screenshot>resources/screenshots/screenshot-03.jpg</screenshot>
-  </assets>
-  <news>
-- 0.3.1 Adjust mechanize dependency to keep Leia compatible
-- 0.3.0 Add python3 support
-- 0.2.9 Display and play active recordings
-- 0.2.8 Add O2 Branding and smaller improvements
-- 0.2.7 Improve O2 error handling (encoding of plus) [thx user alexxx]
-- 0.2.6 Improve O2 error handling (encoding of underscore)
-- 0.2.5 Improve O2 error handling
-- 0.2.4 Implement O2 Authentication [thx user DjLeXuS06]
-- 0.2.3 Fix: recordings are not displayed
-- 0.2.2 rework settings; display account/network status; add metadata; hide locked recordings
-- 0.2.1 improve pictogram filtering; set python krypton compatible; use program order
-- 0.2.0 Add options to remove pictograms, update disclaimer, change user_agent
-- 0.1.3 Provide metadata on channel playback
-- 0.1.2 Show only channels an account can play; code cleanup
-- 0.1.1 Fix: settings option for slider (int)
-- 0.1.0 Fix strings/translations; add stream type selection
-- 0.0.12 Add settings, language support
-- 0.0.11 fix: script.module.dateutil dependency
-- 0.0.10 Add simple epg
-- 0.0.9 TV channels: use sd logos. Recordings: add metadata
-- 0.0.8 Add recordings
-- 0.0.7 Changes from user realvito integrated
-- 0.0.6 Inputstreamhelper support
-- 0.0.5 Bugfix: base64decode padding
-- 0.0.4 Ask for login credentials; Add DRM channels (experimental)
-- 0.0.3 First implemantation of DRM (not working)
-- 0.0.2 Show Channel Logos
-- 0.0.1 Initial alpha version
-  </news>
-</extension>
-</addon>
-
-<addon id="plugin.video.joyn" name="Joyn" version="2.3.1.3" provider-name="knaerzche">
-	<requires>
-		<import addon="inputstream.adaptive" version="2.2.21"/>
-		<import addon="script.module.inputstreamhelper" version="0.3.5"/>
-		<import addon="script.module.pydes" version="2.0.1" optional="true"/>
-		<import addon="script.module.simplejson" version="3.3.0" optional="true"/>
-		<import addon="script.module.uepg" version="1.0.5" optional="true"/>
-		<import addon="xbmc.python" version="2.26.0"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.service" library="service.py" start="login"/>
-	<extension point="xbmc.addon.metadata">
-		<reuselanguageinvoker>true</reuselanguageinvoker>
-		<summary lang="en_GB">Joyn Video On Demand  and Live TV</summary>
-		<summary lang="de_DE">Joyn Video On Demand and Live TV</summary>
-		<description lang="en_GB">Watch VOD content und Live TV provided by Joyn</description>
-		<description lang="de_DE">Video On Demand und Live TV von Joyn</description>
-		<disclaimer lang="en_GB">The use of this addon may violate the terms and conditions of Joyn GmbH - especially, but not exclusively, if it is used outside of Germany.</disclaimer>
-		<disclaimer lang="de_DE">Die Nutzung dieses Addon verstösst eventuell gegen die AGB der Joyn GmbH - insbesondere, aber nicht ausschliesslich, wenn es außerhalb von Deutschland verwendet wird</disclaimer>
-		<platform>all</platform>
-		<license>GPL-2.0-only</license>
-		<forum>https://www.kodinerds.net/index.php/Thread/66679-Pre-Release-Joyn-VOD-Live/?postID=537817</forum>
-		<website>https://www.joyn.de/</website>
-		<email>knaerzche at gmail dot com</email>
-		<source>https://github.com/knaerzche/plugin.video.joyn</source>
-		<assets>
-			<icon>resources/media/icon.png</icon>
-			<fanart>resources/media/fanart.jpg</fanart>
-			<clearlogo>resources/media/logo.gif</clearlogo>
-			<screenshot>resources/media/screenshot01.jpg</screenshot>
-			<screenshot>resources/media/screenshot02.jpg</screenshot>
-			<screenshot>resources/media/screenshot03.jpg</screenshot>
-		</assets>
-		<news>
-v2.3.1.3
-fix DST bug
-implement xbmc.python 3.0.0 api changes
-v2.3.1.2
-fix license based display for tvshows, season, epsiodes
-add license based display for complation/-items
-make installation of script.module.uepg optional / on demand
-minor other bugfixes
-v2.3.1.1
-Hotfix: Website changed again
-v2.3.1
-improve addon overall addon performance by reusing languageinvoker/splitting into submodules/logging on demand only
-create singleton-instances on per addon-handle basis
-cache epg/landing-page in libjoyn-instance
-fix playback on OSX
-create fake-uuid for allwinner android sdk level 24 (importing uuid module crashes kodi)
-implement own get_node() and make it more unique (espacially on android)
-fix set sort as per settings on matrix
-use window.setProperty for asset_id instead of 'hiding' in it imdb-infolabel
-make sure only playback for this addon is tracked in service.py
-fix relogin issue, when decrypting username/password fails
-fix language files
-v2.3.0
-add api-based resume postions
-partly fixed live stream audio sync issue
-add save username/password option
-add option to show categories in main menu
-add ask-for-login dialog on first addon start
-show content based on current subscription
-add option to hightlight premium content
-rework some stuff
-
-		</news>
-	</extension>
-</addon>
-
-<addon id="plugin.video.zattoo_hiq" version="2.0.11" name="Zattoo HiQ" provider-name="Steffen Rolapp">
-  <requires>
-    <import addon="xbmc.python" version="2.25.0"/>
-    <import addon="xbmc.addon" version="13.0.0" />
-    <import addon="inputstream.adaptive" />
-    <import addon="script.module.tzlocal" />
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="plugin.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.service" library="start.py"  />
-
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Play Live TV and recorded shows from Zattoo.</summary>
-    <summary lang="de">Zattoo Live TV, Aufnahmen und EPG</summary>
-    <description lang="en">ZattooHiQ is based on ZattooBox form Pascal Nançoz and ZattooBox Extended from Daniel Griner modify by L0RE
-
-Play Live TV and recorded shows from Zattoo.
-- switch between favourites/all channels
-- channels preview
-- EPG: live/setup recording/recall (for paying Zattoo customers)
-- search shows
-- teletext
-- settings: stream quality, default language
-- touchscreen support
-    </description>
-    <description lang="de">ZattooHiQ basiert auf ZattooBox von Pascal Nançoz und ZattooBox Extended von Daniel Griner verbessert von L0RE
-
-Zattoo Live TV, Aufnahmen und EPG
-- wechsel zwischen Favoriten/Allen Kanälen
-- Kanalvorschau
-- EPG: Live/Aufnahmen programieren/Recall (mit Zattoo Abo)
-- Sendungen suchen
-- Teletext
-- Einstellungen: Stream Qulität, Standart Sprache (Zweikanalton)
-- Touchscreen Unterstützung
-    </description>
-   <platform>all</platform>
-    <language></language>
-    <news>
-        Zattoo Video on Demand hinzugefügt
-    </news>
-    <license>GNU GENERAL PUBLIC LICENSEVersion 3, 29 June 2007</license>
-    <source>https://github.com/rolapp/plugin.video.zattoo_hiq</source>
-    <email>kodi@rolapp.de</email>
-    <disclaimer lang="en">Check http://www.zattoo.com for availability in your country.</disclaimer>
-    <disclaimer lang="de">Überprüfe ob http://www.zattoo.com in Deinem Land verfügbar ist.</disclaimer>
-      <assets>
         <icon>resources/icon.png</icon>
         <fanart>resources/fanart.jpg</fanart>
     </assets>
