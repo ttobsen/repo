@@ -988,8 +988,8 @@ msgid "Information like chapter, subtitle, current time bar etc. are not display
 msgstr "Es werden keine Infos wie Kapitel, Untertitel, Laufzeitbalken etc. angezeigt.[CR][COLOR=grey]Auch Studiologos und Extra Arts werden ausgeblendet.[/COLOR]"
 
 msgctxt "#51125"
-msgid "This downloads all available artwork that has been enable in the add-on settings.[CR][COLOR=white]"Artwork Downloader" is required.[/COLOR]"
-msgstr "Lade alle verfügbaren Extra Arts, welche in den ADDON Einstellungen gewählt sind, herunter.[CR][COLOR=white]"Artwork Downloader" wird benötigt.[/COLOR]"
+msgid "This downloads all Video & TVShow available artwork.[CR][COLOR=white]"Artwork Beef" or a comparable addon is required.[/COLOR]"
+msgstr "Lade alle verfügbaren Film & Serien Artwork.[CR][COLOR=white]"Skin Helper Service" oder ein vergleichbares Addon wird benötigt.[/COLOR]"
 
 msgctxt "#51126"
 msgid "Enables all movie extra arts below.[CR][COLOR=white]"Artwork Downloader" is required.[/COLOR]"
@@ -1657,13 +1657,13 @@ msgctxt "#51518"
 msgid "Science"
 msgstr "Wissenschaft"
 
+msgctxt "#51519"
+msgid "Special"
+msgstr "Spezial"
+
 msgctxt "#51520"
 msgid "Hobby"
 msgstr "Hobby"
-
-msgctxt "#51522"
-msgid "Special"
-msgstr "Spezial"
 
 msgctxt "#51413"
 msgid "download all"

@@ -196,7 +196,7 @@
                             <aligny>center</aligny>
                             <scroll>true</scroll>
                         </control>
-                        <control type="label">
+                        <!-- <control type="label">
                             <description>Rating txt</description>
                             <left>0</left>
                             <top>60</top>
@@ -215,7 +215,7 @@
                             <height>39</height>
                             <aspectratio align="left">keep</aspectratio>
                             <texture fallback="LeftRating/rating0.png">$INFO[ListItem.Property(Addon.StarRating),LeftRating/,.png]</texture>
-                        </control>
+                        </control> -->
                         <control type="image">
                             <left>0</left>
                             <top>105</top>
@@ -479,7 +479,7 @@
                             <aligny>center</aligny>
                             <scroll>true</scroll>
                         </control>
-                        <control type="label">
+                        <!-- <control type="label">
                             <description>Rating txt</description>
                             <left>0</left>
                             <top>90</top>
@@ -499,7 +499,7 @@
                             <height>45</height>
                             <aspectratio align="left">keep</aspectratio>
                             <texture fallback="LeftRating/rating0.png">$INFO[ListItem.Property(Addon.StarRating),LeftRating/,.png]</texture>
-                        </control>
+                        </control> -->
                         <control type="image">
                             <left>600</left>
                             <top>-114</top>

@@ -160,7 +160,7 @@ id      | description
 -->
 <window>
     <defaultcontrol>9000</defaultcontrol>
-	<backgroundcolor>$VAR[BackgroundOverlayTransition]</backgroundcolor>
+	<backgroundcolor>grey3</backgroundcolor>
     <!--
     <animation effect="fade" time="250">WindowOpen</animation>
     <animation effect="fade" time="250">WindowClose</animation>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window id="1501" type="dialog">
     <defaultcontrol always="true">36100</defaultcontrol>
-	<backgroundcolor>$VAR[BackgroundOverlayTransition]</backgroundcolor>
+	<backgroundcolor>grey3</backgroundcolor>
     <onunload>ClearProperty(HomeButton)</onunload>
     <controls>
         <!-- <include>BlackBack</include> -->
@@ -69,7 +69,7 @@
                     <width>450</width>
                     <height>450</height>
                     <aspectratio align="left">keep</aspectratio>
-                    <colordiffuse>grey1</colordiffuse>
+                    <colordiffuse>grey</colordiffuse>
                     <texture border="1">Design-Scripticon.png</texture>
                 </control>
             </control>

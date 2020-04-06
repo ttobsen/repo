@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
     <defaultcontrol always="true">777</defaultcontrol>
-	<backgroundcolor>$VAR[BackgroundOverlayTransition]</backgroundcolor>
+	<backgroundcolor>grey3</backgroundcolor>
     <menucontrol>9000</menucontrol>
     <include>ViewsidRecordings</include>
     <controls>

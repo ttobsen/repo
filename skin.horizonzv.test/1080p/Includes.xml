@@ -3178,26 +3178,8 @@
 				|[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)+Library.HasContent(Music)]</visible>
 				<visible>Skin.HasSetting(HomeFanartDiashow)+Skin.HasSetting(fanart)+Window.IsVisible(home)</visible>
 				<itemlayout width="1000" height="45">
-					<!-- <control type="label">
-						<width>1000</width>
-						<height>18</height>
-						<font>font12</font>
-						<align>left</align>
-						<textcolor>red</textcolor>
-						<shadowcolor>black</shadowcolor>
-						<label>$INFO[ListItem.Label]</label>
-					</control> -->
 				</itemlayout>
 				<focusedlayout width="1000" height="45">
-					<!-- <control type="label">
-						<width>1000</width>
-						<height>18</height>
-						<font>font12</font>
-						<align>left</align>
-						<textcolor>white</textcolor>
-						<shadowcolor>black</shadowcolor>
-						<label>$INFO[ListItem.Label]</label>
-					</control> -->
 				</focusedlayout>
 				<content sortby="random">$VAR[HomemenuDiashow]</content>
 			</control>

@@ -979,27 +979,17 @@ msgctxt "#51122"
 msgid "Displays a discreet narrow variation of the screen in "pause"."
 msgstr "Zeigt eine dezente, schmale Variante des Pausebildschirms an."
 
-msgctxt "#51123"
-msgid "When updating via the submenu the database are then automatically set all extra arts loaded.[CR]The automatic one can disable here."
-msgstr "Wenn über das Untermenü die Datenbank aktualisiert wird, werden danach automatisch alle eingestellten Extra Arts geladen.[CR]Die Automatik kann man hier deaktivieren."
-
 msgctxt "#51124"
 msgid "Information like chapter, subtitle, current time bar etc. are not displayed.[CR][COLOR=grey]Studio logos and extra arts are faded out.[/COLOR]"
 msgstr "Es werden keine Infos wie Kapitel, Untertitel, Laufzeitbalken etc. angezeigt.[CR][COLOR=grey]Auch Studiologos und Extra Arts werden ausgeblendet.[/COLOR]"
 
 msgctxt "#51125"
-msgid "This downloads all available artwork that has been enable in the add-on settings.[CR][COLOR=white]"Artwork Downloader" is required.[/COLOR]"
-msgstr "Lade alle verfügbaren Extra Arts, welche in den ADDON Einstellungen gewählt sind, herunter.[CR][COLOR=white]"Artwork Downloader" wird benötigt.[/COLOR]"
-
-msgctxt "#51126"
-msgid "Enables all movie extra arts below.[CR][COLOR=white]"Artwork Downloader" is required.[/COLOR]"
-msgstr "Aktiviert alle unten stehenden Film Extra Arts.[CR][COLOR=white]"Artwork Downloader" wird benötigt.[/COLOR]"
-
-# empty #51128
+msgid "This downloads all Video & TVShow available artwork.[CR][COLOR=white]"Artwork Beef" or a comparable addon is required.[/COLOR]"
+msgstr "Lade alle verfügbaren Film & Serien Artwork.[CR][COLOR=white]"Skin Helper Service" oder ein vergleichbares Addon wird benötigt.[/COLOR]"
 
 msgctxt "#51130"
-msgid "Enables all tvshows extra arts below.[CR][COLOR=white]"Artwork Downloader" is required.[/COLOR]"
-msgstr "Aktiviert alle unten stehenden TV Serien Extra Arts.[CR][COLOR=white]"Artwork Downloader" wird benötigt.[/COLOR]"
+msgid "Enables all PVR available artwork.[CR][COLOR=white]"Skin Helper Service" is required.[/COLOR]"
+msgstr "Aktiviert alle verfügbaren PVR Artwork.[CR][COLOR=white]"Skin Helper Service" wird benötigt.[/COLOR]"
 
 msgctxt "#51132"
 msgid "Enables music extra arts. (Band logos, CD Arts).[CR][COLOR=grey]"CD Art Manager" is required.[/COLOR][CR][COLOR=white]The music folder must be indicated.[CR]The indication is not required for the current played title.[CR]The album and artist folder must correspond to the XBMC data.[/COLOR]"
@@ -1657,21 +1647,21 @@ msgctxt "#51518"
 msgid "Science"
 msgstr "Wissenschaft"
 
+msgctxt "#51519"
+msgid "Special"
+msgstr "Spezial"
+
 msgctxt "#51520"
 msgid "Hobby"
 msgstr "Hobby"
-
-msgctxt "#51522"
-msgid "Special"
-msgstr "Spezial"
 
 msgctxt "#51413"
 msgid "download all"
 msgstr "alle laden"
 
 msgctxt "#51414"
-msgid "download all extra arts"
-msgstr "alle extra Arts laden"
+msgid "download artwork"
+msgstr "lade Artworks"
 
 msgctxt "#51415"
 msgid "off"

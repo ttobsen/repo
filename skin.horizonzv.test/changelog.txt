@@ -1,4 +1,8 @@
-﻿v 1.18.0.43
+﻿v 1.18.0.44
+- Code aufgeräumt
+- Bugfix Fanart Diashow (Musik, Filme, Serien)
+
+v 1.18.0.43
 - Sortierreihenfolge in den Widgets korrigiert
 
 v 1.18.0.42

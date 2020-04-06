@@ -500,7 +500,7 @@
         <value condition="String.IsEqual(ListItem.Property(GenreType),128)">$LOCALIZE[51516]</value>
         <value condition="String.IsEqual(ListItem.Property(GenreType),144)">$LOCALIZE[51518]</value>
         <value condition="String.IsEqual(ListItem.Property(GenreType),160)">$LOCALIZE[51520]</value>
-        <value condition="String.IsEqual(ListItem.Property(GenreType),176)">$LOCALIZE[51522]</value>
+        <value condition="String.IsEqual(ListItem.Property(GenreType),176)">$LOCALIZE[51519]</value>
         <value>$INFO[ListItem.Property(GenreType)]</value>
     </variable>
     <variable name="DashboardOnclicksettings_Label">

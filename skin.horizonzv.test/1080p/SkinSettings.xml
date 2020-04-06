@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window id="56">
     <defaultcontrol always="true">8000</defaultcontrol>
-	<backgroundcolor>$VAR[BackgroundOverlayTransition]</backgroundcolor>
+	<backgroundcolor>grey3</backgroundcolor>
     <controls>
         <control type="group">
             <include>Multiimage</include>

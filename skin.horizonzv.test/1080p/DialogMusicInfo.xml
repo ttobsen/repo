@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <window>
 	<defaultcontrol always="true">9000</defaultcontrol>
-	<backgroundcolor>$VAR[BackgroundOverlayTransition]</backgroundcolor>
+	<backgroundcolor>grey3</backgroundcolor>
 	<controls>
 		<control type="image">
 			<include>openclosefanart</include>

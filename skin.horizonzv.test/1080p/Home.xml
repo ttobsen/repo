@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window id="0">
     <defaultcontrol always="true">9000</defaultcontrol>
-	<backgroundcolor>$VAR[BackgroundOverlayTransition]</backgroundcolor>
+	<backgroundcolor>grey3</backgroundcolor>
     <menucontrol>200</menucontrol>
 	<onload condition="System.HasAddon(script.skinhelper.ping)">RunScript(script.skinhelper.ping)</onload>
 	<!-- <onload condition="!System.HasAddon(script.image.resource.select)">InstallAddon(script.image.resource.select)</onload>
@@ -538,8 +538,8 @@
 				<include>HomeMenu</include>
 			</control>
 		</control>
-        <include>DebugInfo</include>
-        <include>HomemenuDiashowInclude</include>
+        <include condition="Skin.HasSetting(DebugInfo)">DebugInfo</include>
+        <include condition="Skin.HasSetting(HomeFanartDiashow)">HomemenuDiashowInclude</include>
 		<!-- <control type="list" id="784512">
             <left>30</left>
             <top>60r</top>
