@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+   <setting id="maxQuality" label="30101" type="enum" values="288p@0.6mbps|288p@0.9mbps|432p@1.5mbps|720p@3.0mbps" default="3"/>
+   <setting id="username" label="30102" type="text" default=""/>
+   <setting id="password" label="30103" type="text" option="hidden" enable="!eq(-1,)" default=""/>
+   <setting id="showFanart" label="30104" type="bool" default="false"/>
+   <setting id="pg_hash" label="30105" type="text" default="" visible="false"/>
+   <setting id="session" label="30106" type="text" default="" visible="false"/>
+</settings>
