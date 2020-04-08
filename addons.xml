@@ -91,6 +91,18 @@
     </extension>
 </addon>
 
+<addon id="script.module.cryptopy" name="CryptoPy" version="1.2.9+matrix.1" provider-name="cryptopy.sourceforge.net">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">CryptoPy is a pure python implmentation of cryptographic algorithms and applications.</summary>
+    <description lang="en">CryptoPy is a pure python implmentation of cryptographic algorithms and applications. The algorithms are developed for readability more than speed. The collection now includes IEEE 802.11i specific algorithms that generated the test vectors for 802.11i.</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.video.skygo.de" name="Sky Go" version="1.13.20+matrix.1" provider-name="jojo, frankr612, Maven, Linkinsoldier">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
@@ -247,6 +259,22 @@
 		<source>https://github.com/Maven85/plugin.video.skysport.de.git</source>
 		<reuselanguageinvoker>true</reuselanguageinvoker>		
     </extension>
+</addon>
+
+<addon id="script.module.pydes" name="pyDes" version="2.0.3+matrix.1" provider-name="Todd Whiteman">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">This is a pure python implementation of the DES encryption algorithm.</summary>
+    <description lang="en">This is a pure python implementation of the DES encryption algorithm. It's pure python to avoid portability issues, since most DES implementations are programmed in C (for performance reasons).</description>
+    <website>http://twhiteman.netfirms.com/des.html</website> 
+    <license>Public Domain</license> 
+    <platform>all</platform> 
+    <source>http://sourceforge.net/projects/pydes/</source> 
+  </extension>
 </addon>
 
 <addon id="plugin.video.skysport.at" name="Sky Sport Austria Mediathek" version="1.1.1+matrix.1" provider-name="Maven">
