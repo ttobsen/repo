@@ -21,6 +21,25 @@
     </extension>
 </addon>
 
+<addon id="plugin.video.zattoo_com" name="Zattoo Live TV" version="1.2.1+matrix.1" provider-name="PUR3, Maven">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="script.module.kodi-six" version="0.1.3.1"/>
+        <import addon="script.module.pyxbmct" version="1.2.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de_DE">Über 75 TV-Sender als Livestreams auf dem Gerät deiner Wahl ansehen.</summary>
+        <description lang="de_DE">Fußball, Serien, Filme, Dokus und Reportagen laufen mit Zattoo im Livestream. Alles was du brauchst, ist eine Internetverbindung und schon läuft das Fernsehprogramm mit mehr als 75-TV-Sendern kostenlos auf dem Gerät deiner Wahl.</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <website>http://www.zattoo.com</website>
+        <news>1.2.1[CR]- fixed login[CR]- changed version of the Python ABI[CR][CR]1.2.0[CR]- Python 3 compability</news>
+    </extension>
+</addon>
+
 <addon id="plugin.video.waipu.tv" name="Waipu.tv / O2 TV" version="0.8.0" provider-name="flubshi, MiRo">
 <requires>
   <import addon="xbmc.python" version="3.0.0"/>
