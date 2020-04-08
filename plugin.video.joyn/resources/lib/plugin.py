@@ -178,18 +178,6 @@ def get_list_items(response_items,
 
 def index():
 
-	if not xbmc_helper().addon_enabled(CONST['INPUTSTREAM_ADDON']):
-		xbmc_helper().dialog_id('MSG_INPUSTREAM_NOT_ENABLED')
-		exit(0)
-
-	from inputstreamhelper import Helper
-	is_helper = Helper('mpd', drm='com.widevine.alpha')
-	if not is_helper.check_inputstream():
-		xbmc_helper().dialog_id('MSG_WIDEVINE_NOT_FOUND')
-		exit(0)
-
-	from xbmc import getCondVisibility
-
 	request_helper.purge_etags_cache(ttl=CONST['ETAGS_TTL'])
 	from .submodules.plugin_lastseen import show_lastseen
 	list_items = show_lastseen(xbmc_helper().get_int_setting('max_lastseen'), default_fanart)
@@ -362,9 +350,9 @@ def seasons(tv_show_id, title):
 
 	from .submodules.plugin_favorites import get_favorite_entry
 	list_items = []
-	seasons = lib_joyn().get_graphql_response('SEASONS', {
+
+	seasons = lib_joyn().get_graphql_response('SEASONS_NOLICENSEFILTER', {
 	        'seriesId': tv_show_id,
-	        'seasonLicenseFilter': lib_joyn().get_license_filter()
 	})
 
 	if seasons is not None and seasons.get('series', None) is not None:
@@ -378,6 +366,9 @@ def seasons(tv_show_id, title):
 				season_number = season['number']
 			else:
 				season_number = counter
+
+			if isinstance(season.get('licenseTypes', None), list) and lib_joyn().check_license(season) is False:
+				continue
 
 			if xbmc_helper().get_bool_setting('show_episodes_immediately') and len(seasons['series']['seasons']) == 1:
 				return season_episodes(
@@ -416,9 +407,9 @@ def season_episodes(season_id, title):
 
 	from .submodules.plugin_favorites import get_favorite_entry
 	list_items = []
-	episodes = lib_joyn().get_graphql_response('EPISODES', {
+
+	episodes = lib_joyn().get_graphql_response('EPISODES_NOLICENSEFILTER', {
 	        'seasonId': season_id,
-	        'episodeLicenseFilter': lib_joyn().get_license_filter()
 	})
 	override_fanart = default_fanart
 	if episodes is not None and episodes.get('season', None) is not None and isinstance(
@@ -430,7 +421,7 @@ def season_episodes(season_id, title):
 			if 'fanart' in tvshow_meta['art']:
 				override_fanart = tvshow_meta['art']['fanart']
 
-		list_items = get_list_items(episodes.get('season').get('episodes'), override_fanart=override_fanart, check_license_type=False)
+		list_items = get_list_items(episodes.get('season').get('episodes'), override_fanart=override_fanart, check_license_type=True)
 
 	if len(list_items) == 0:
 		from xbmcplugin import endOfDirectory
@@ -569,6 +560,16 @@ def play_video(video_id, client_data, stream_type, season_id=None, compilation_i
 	succeeded = False
 	list_item = ListItem()
 
+	if not xbmc_helper().addon_enabled(CONST['INPUTSTREAM_ADDON']):
+		xbmc_helper().dialog_id('MSG_INPUSTREAM_NOT_ENABLED')
+		exit(0)
+
+	if not getCondVisibility('System.Platform.Android'):
+		from inputstreamhelper import Helper
+		is_helper = Helper('mpd', drm='com.widevine.alpha')
+		if not is_helper.check_inputstream():
+			xbmc_helper().dialog_id('MSG_WIDEVINE_NOT_FOUND')
+			exit(0)
 	try:
 		from .submodules.libjoyn_video import get_video_data
 		video_data = get_video_data(video_id, loads(client_data), stream_type, season_id, compilation_id)
@@ -577,6 +578,7 @@ def play_video(video_id, client_data, stream_type, season_id=None, compilation_i
 
 		parser = video_data.get('parser', None)
 		if parser is not None:
+
 			list_item.setProperty('inputstreamaddon', CONST['INPUTSTREAM_ADDON'])
 			# DASH
 			if isinstance(parser, mpd_parser):
@@ -598,6 +600,7 @@ def play_video(video_id, client_data, stream_type, season_id=None, compilation_i
 				if license_key is not None:
 					if drm.lower() == 'widevine':
 						xbmc_helper().log_notice('Using Widevine as DRM')
+
 						list_item.setProperty(compat._format('{}.license_type', CONST['INPUTSTREAM_ADDON']), 'com.widevine.alpha')
 						list_item.setProperty(
 						        compat._format('{}.license_key', CONST['INPUTSTREAM_ADDON']),
@@ -743,7 +746,7 @@ def get_dir_entry(mode,
 
 	list_item.setArt(metadata['art'])
 
-	if mode == 'play_video' and video_id is not '' and client_data is not '':
+	if mode == 'play_video' and video_id != '' and client_data != '':
 		list_item.setProperty('IsPlayable', 'True')
 
 		if 'resume_pos' in metadata.keys() and 'duration' in metadata['infoLabels'].keys():
@@ -755,11 +758,11 @@ def get_dir_entry(mode,
 	if metadata.get('is_bookmarked', None) is not None and lib_joyn().get_auth_token().get('has_account', False) is True:
 		asset_id = None
 
-		if mode == 'season' and tv_show_id is not '':
+		if mode == 'season' and tv_show_id != '':
 			asset_id = tv_show_id
-		elif mode == 'play_video' and movie_id is not '':
+		elif mode == 'play_video' and movie_id != '':
 			asset_id = movie_id
-		elif mode == 'compilation_items' and compilation_id is not '':
+		elif mode == 'compilation_items' and compilation_id != '':
 			asset_id = compilation_id
 
 		if asset_id is not None:
