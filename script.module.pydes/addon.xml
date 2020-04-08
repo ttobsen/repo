@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.pydes" name="pyDes" version="2.0.3+matrix.1" provider-name="Todd Whiteman">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">This is a pure python implementation of the DES encryption algorithm.</summary>
+    <description lang="en">This is a pure python implementation of the DES encryption algorithm. It's pure python to avoid portability issues, since most DES implementations are programmed in C (for performance reasons).</description>
+    <website>http://twhiteman.netfirms.com/des.html</website> 
+    <license>Public Domain</license> 
+    <platform>all</platform> 
+    <source>http://sourceforge.net/projects/pydes/</source> 
+  </extension>
+</addon>
