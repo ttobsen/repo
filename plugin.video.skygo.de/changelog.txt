@@ -1,0 +1,152 @@
+1.13.20
+- Änderung der Python-ABI-Version
+1.13.19
+- Einstiegspunkt cachen
+- Auflistung nach Anfangsbuchstaben behoben
+1.13.18
+- Fehlerbehebung
+- Anzeige des Channellogos im OSD bei Livesport
+- Ordner mit dem Titel 'Meistgesehen' ausblenden
+1.13.17
+- API-Anpassungen
+1.13.16
+- Fehler beim Abspielen von Livestreams behoben
+1.13.15
+- Suche: Nur Inhalte anzeigen, die der Inhaltskatalog bietet
+1.13.14
+- Fehler in Suche behoben
+1.13.13
+- Suche: Kontextmenüitem 'Zur Serie wechseln', wenn Itemtyp = Episode ist
+1.13.12
+- Encoding-Fehler behoben
+1.13.11
+- Fehler beim Leeren des Caches behoben
+1.13.10
+- Fehler mit dem Asset-Caching behoben
+1.13.9
+- Refactoring
+- Weitere Encoding-/Decoding-Fehler behoben
+1.13.8
+- Encoding-/Decoding-Fehler behoben
+1.13.7
+- Caching-Fehler behoben, wenn keine Daten von der API abgerufen werden konnten
+- Kompabilität zu Python 3
+1.13.6
+- Live Planer: Alte Kategorien ausgeblendet
+- Android: Einstellung zum Erzwingen von Widevine
+- Überprüfung, ob abgerufene Daten JSON sind
+1.13.5
+- LiveTV: Überprüfung auf Manifest-Url = None
+- Wiederholungen aus Sportsektion entfernt
+- Watchlist: Einträge überspringen, für die keine Details abrufbar sind
+1.13.4
+- Wechsel der API
+1.13.3
+- Fix für die Anzeige von Episoden
+1.13.2
+- Widgets: Fix für die Anzeige von Arts im Video OSD
+- 1. Ebene unter Livesender auf statische Liste geändert 
+1.13.1
+- Fix für Widgets
+- LiveTV: Streams ohne Manifest herausfiltern
+1.13.0
+- Fix für Änderungen seitens SkyGo
+1.12.4
+- Fix für das Abrufen der LiveTV-Daten
+1.12.2
+- Fix für das Abrufen der LiveTV-Daten
+1.12.1
+- "inputstream.adaptive" V2.2.27 ist erforderlich
+- Property "inputstream.adaptive.license_flags=persistent_storage" gesetzt
+1.12.0
+- Aktivieren des Python-Cachings
+- Widgets: Anzeige von Arts
+- LiveTV: Option, um den Listeneintrag 'Aktualisieren' auszublenden
+1.11.0
+- Vorbereitende Änderung für Python-Caching
+1.10.10.2
+- Fix für die Anzeige der TMDb-Poster
+1.10.10.1
+- Fix Unicode Error
+1.10.10
+- LiveTV
+  - Item zum Aktualisieren der Liste
+  - Liste wird nicht mehr gecachet
+  - Überarbeitung der Titelanzeige
+  - Bugfix für die Anzeige von TMDb-Inhalten
+  - Anzeige von Start- und Endezeiten
+1.10.9
+- Fix Encoding
+- Option zum Leeren des Caches
+1.10.8
+- Fix für das Herunterladen von der "widevine lib" unter 64-bit Kodi
+- Anzeige vom Verfügbarkeitsdatum
+1.10.7
+- Hinzufügen von Thumbs zu den Listitems
+- Abhängigkeit zu "inputstream adaptive" und "inputstreamhelper"
+- Mediathek aus Sportsektion entfernt
+1.10.6
+- Unterstützung für "Staffelstarts"
+1.10.5
+- Anzeige von Streaminfos
+- Hinzufügen von Episoden einer Staffel zur Merkliste
+1.10.4
+- Berücksichtigung der FSK-Angaben bei Streamstart
+1.10.3
+- Fix für Jugendschutzeinstellung
+1.10.2
+- Fix für Log-Warnhinweise
+1.10.1
+- Bugfix für Suche, wenn zusätzliche Medieninformation aktiviert sind
+1.10.0
+- Passwortverschlüsselung
+1.9.9
+- Infolabels als URL-Parameter
+1.9.8
+- LiveTV: Sportsender zeigen wieder Livestream; Anzeige aller verfügbaren Sportsender
+1.9.7
+- Hinweis eingebaut, dass die User-Ratings und Poster von TMDb bezogen werden.
+- Smoothstream Addon entfernt
+1.9.6
+- Um Trefferwahrscheinlichkeit auf TMDB zu erhöhen, wird - sofern vorhanden - zunächst nach dem Titel inkl. Releasejahr gesucht und erst wenn kein Result kommt (weil Sky die falsche Info gibt), so wird ohne der Titel nochmal ohne Jahr gesucht + Error Handling verbessert
+- Anzeige Live-TV Übersicht verbessert
+1.9.5
+- Anzeige von allen Bundesliga- und Sport-Optionskanälen
+- TMDb-Poster für Cinema-Kanäle (LiveTV) nutzen
+1.9.4
+- Anstatt Sky Poster wird nun das Poster von TMDb verwendet, wenn die Option in den Einstellungen aktiviert ist - wegen schlechter Qualität Sky Poster
+1.9.3
+- Codeoptimierung
+1.9.2
+- Fix LiveTV-Bug: No longer set "LiveTV" in Content since it doesnt seem to be supported
+- Create Setting Option to choose LiveTV Display Option: Channel name or Title first
+1.9.1
+- Unterstützung für Playready unter Android
+  -> DeviceId in die Usersettings verschoben. Die ID ist dabei eine zufällige Uuid, die beim ersten Start von Sky Go generiert wird. Das bedeutet für diejenigen, die die erste Version nutzen und dann updaten, dass eine neue Geräteregistrierung erfolgen wird. 
+- Mehr Medieninformationen + Cachen der Informationen
+- Mehr Sortieroptionen
+- Anzeige von allen Livessendern, wie auf skygo.sky.de + Gruppierung nach Paketen (Bundesliga/Cinema/Entertainment/Sport)
+- Automatisches Scrapen und Cachen von TMDb Filmen in den Settings - Option in den Settings deaktivierbar
+1.0.8.1
+- Anpassung für xbmc.gui 5.13.0
+1.0.8
+- Anpassung für inputstream.adaptive Addon
+1.0.7
+- Jungendschutz Einstellungen hinzugefügt
+1.0.3
+1.0.2
+- Ausblenden von doppelten Einträgen mit gleichen Streams bei den Livesendern
+1.0.1
+- Zeitangabe bei LivePlaner Events hinzugefügt (thx @ eric1905)
+1.0.0
+- Unterstützung für Sport Wiederholungen und Mediatheken
+- Livesender auch bei nicht Live-Events (derzeit werden von Sky nur Sportsender angeboten)
+- Mehr Inhalte werden angezeigt
+- Unterstützung der Merkliste
+- Suchfunktion
+- Anzeige der Medieninformationen auch im OSD
+- Umstellung der Menüstruktur (z.B. Serie->Staffeln->Episoden)
+- Option um eigene Logos für die Livesender zu verwenden
+- Unterstützung für Sky Go Extra
+0.0.2
+- Initial release forked from https://github.com/trummerjo/plugin.video.skygo/tree/develop
