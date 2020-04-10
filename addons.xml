@@ -35,7 +35,7 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.ran_de" name="ran" version="2.3.8" provider-name="PUR3, L0RE, Linkinsoldier">
+<addon id="plugin.video.ran_de" name="ran" version="2.3.9" provider-name="PUR3, L0RE, Linkinsoldier">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
 		<import addon="script.module.kodi-six" version="0.1.0"/>
@@ -49,6 +49,9 @@
         <summary lang="en">Livestreams and videos from ran.de</summary>
         <description lang="de">Dieses inoffizielle Addon ermöglicht es euch, die neusten Videos und Livestreams von ran.de in Kodi zu streamen.[CR][CR]Vielen Dank an dieser Stelle an ran.de für den guten Service, insb. ranNFL mit ReLive in HD mit raus geschnittener Werbung!</description>
         <description lang="en">This is an inofficial Addon and gives you the chance to stream livestreams and the latest videos from ran.de directly in Kodi.[CR][CR]Thank you ran.de for your great service, especially for providing ranNFL reLives with removed commercials in HD!</description>
+        <assets>
+            <icon>icon.png</icon>
+		</assets>
     </extension>
 </addon>
 
@@ -1162,7 +1165,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattoo_com" name="Zattoo Live TV" version="1.2.1" provider-name="PUR3, Maven">
+<addon id="plugin.video.zattoo_com" name="Zattoo Live TV" version="1.2.2" provider-name="PUR3, Maven">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.kodi-six" version="0.1.0"/>
@@ -1177,7 +1180,10 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
         <description lang="de_DE">Fußball, Serien, Filme, Dokus und Reportagen laufen mit Zattoo im Livestream. Alles was du brauchst, ist eine Internetverbindung und schon läuft das Fernsehprogramm mit mehr als 75-TV-Sendern kostenlos auf dem Gerät deiner Wahl.</description>
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
         <website>http://www.zattoo.com</website>
-        <news>1.2.0[CR]- Python 3 compability[CR][CR]1.2.1[CR]- fixed login[CR]- changed version of the Python ABI</news>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
+        <news>1.2.1[CR]- fixed login[CR]- changed version of the Python ABI[CR][CR]1.2.0[CR]- Python 3 compability</news>
     </extension>
 </addon>
 
@@ -1504,7 +1510,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="script.module.cryptopy" name="CryptoPy" version="1.2.9" provider-name="cryptopy.sourceforge.net">
+<addon id="script.module.cryptopy" name="CryptoPy" version="1.2.10" provider-name="cryptopy.sourceforge.net">
   <requires>
     <import addon="xbmc.python" version="2.24.0"/>
   </requires>
@@ -1513,6 +1519,9 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     <summary lang="en">CryptoPy is a pure python implmentation of cryptographic algorithms and applications.</summary>
     <description lang="en">CryptoPy is a pure python implmentation of cryptographic algorithms and applications. The algorithms are developed for readability more than speed. The collection now includes IEEE 802.11i specific algorithms that generated the test vectors for 802.11i.</description>
     <platform>all</platform>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
   </extension>
 </addon>
 
@@ -1654,7 +1663,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
-<addon id="plugin.video.skygo.de" name="Sky Go" version="1.13.20" provider-name="jojo, frankr612, Maven, Linkinsoldier">
+<addon id="plugin.video.skygo.de" name="Sky Go" version="1.13.21" provider-name="jojo, frankr612, Maven, Linkinsoldier">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.requests" version="2.9.1"/>
@@ -1683,6 +1692,9 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
         <website></website>
         <email></email>
         <source></source>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
         <news>
 1.13.20[CR]- Änderung der Python-ABI-Version[CR][CR]
 1.13.19[CR]- Einstiegspunkt cachen[CR]- Auflistung nach Anfangsbuchstaben behoben
@@ -3720,7 +3732,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
         </extension>
 </addon>
 
-<addon id="plugin.video.skysport.de" name="Sky Sport Mediathek" version="1.1.6" provider-name="Maven">
+<addon id="plugin.video.skysport.de" name="Sky Sport Mediathek" version="1.1.7" provider-name="Maven">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="script.module.beautifulsoup4" version="4.5.3" />
@@ -3735,11 +3747,13 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 		<summary lang="de_DE">Videos aus der ganzen Welt des Sports.</summary>
 		<description lang="de_DE">Dieses Plugin stellt Videos von https://sport.sky.de bereit.</description>
 		<disclaimer lang="de_DE">Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
-		
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
 		<website>https://sport.sky.de</website>
 		<source>https://github.com/Maven85/plugin.video.skysport.de.git</source>
+		<assets>
+            <icon>icon.png</icon>
+        </assets>
 		<reuselanguageinvoker>true</reuselanguageinvoker>		
     </extension>
 </addon>
@@ -3800,7 +3814,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
   </extension>
 </addon>
 
-<addon id="script.module.pydes" name="pyDes" version="2.0.3" provider-name="Todd Whiteman">
+<addon id="script.module.pydes" name="pyDes" version="2.0.4" provider-name="Todd Whiteman">
   <requires>
     <import addon="xbmc.python" version="2.24.0"/>
   </requires>
@@ -3812,7 +3826,10 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     <website>http://twhiteman.netfirms.com/des.html</website> 
     <license>Public Domain</license> 
     <platform>all</platform> 
-    <source>http://sourceforge.net/projects/pydes/</source> 
+    <source>http://sourceforge.net/projects/pydes/</source>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
   </extension>
 </addon>
 
@@ -4252,7 +4269,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="plugin.video.skysport.at" name="Sky Sport Austria Mediathek" version="1.1.1" provider-name="Maven">
+<addon id="plugin.video.skysport.at" name="Sky Sport Austria Mediathek" version="1.1.2" provider-name="Maven">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="script.module.beautifulsoup4" version="4.5.3" />
@@ -4266,12 +4283,14 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	<extension point="xbmc.addon.metadata">
 		<summary lang="de_DE">Videos aus der ganzen Welt des Sports.</summary>
 		<description lang="de_DE">Dieses Plugin stellt Videos von https://www.skysportaustria.at bereit.</description>
-		<disclaimer lang="de_DE">Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
-		
+		<disclaimer lang="de_DE">Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>		
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
 		<website>https://www.skysportaustria.at/</website>
 		<source>https://github.com/Maven85/plugin.video.skysport.at.git</source>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
 		<reuselanguageinvoker>true</reuselanguageinvoker>		
     </extension>
 </addon>
