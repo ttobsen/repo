@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.ran_de" name="ran" version="2.3.8+matrix.1" provider-name="PUR3, L0RE, Linkinsoldier, Maven">
+<addon id="plugin.video.ran_de" name="ran" version="2.3.9+matrix.1" provider-name="PUR3, L0RE, Linkinsoldier, Maven">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.kodi-six" version="0.1.3.1"/>
@@ -13,5 +13,8 @@
         <summary lang="en">Livestreams and videos from ran.de</summary>
         <description lang="de">Dieses inoffizielle Addon ermöglicht es euch, die neusten Videos und Livestreams von ran.de in Kodi zu streamen.[CR][CR]Vielen Dank an dieser Stelle an ran.de für den guten Service, insb. ranNFL mit ReLive in HD mit raus geschnittener Werbung!</description>
         <description lang="en">This is an inofficial Addon and gives you the chance to stream livestreams and the latest videos from ran.de directly in Kodi.[CR][CR]Thank you ran.de for your great service, especially for providing ranNFL reLives with removed commercials in HD!</description>
+        <assets>
+            <icon>icon.png</icon>
+		</assets>
     </extension>
 </addon>
