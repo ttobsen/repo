@@ -1,3 +1,5 @@
+1.2.2
+- added assets tag in addon.xml
 1.2.1
 - fixed login
 - changed version of the Python ABI
