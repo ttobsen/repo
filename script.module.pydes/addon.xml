@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.pydes" name="pyDes" version="2.0.3" provider-name="Todd Whiteman">
+<addon id="script.module.pydes" name="pyDes" version="2.0.4" provider-name="Todd Whiteman">
   <requires>
     <import addon="xbmc.python" version="2.24.0"/>
   </requires>
@@ -11,6 +11,9 @@
     <website>http://twhiteman.netfirms.com/des.html</website> 
     <license>Public Domain</license> 
     <platform>all</platform> 
-    <source>http://sourceforge.net/projects/pydes/</source> 
+    <source>http://sourceforge.net/projects/pydes/</source>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
   </extension>
 </addon>
