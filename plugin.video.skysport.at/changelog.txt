@@ -1,3 +1,4 @@
+1.1.2 added assets tag in addon.xml
 1.1.1 changed version of the Python ABI
 1.1.0 Python 3 compability
 1.0.0 initial commit
