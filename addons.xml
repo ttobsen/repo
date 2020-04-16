@@ -818,7 +818,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="plugin.video.ardundzdf" name="ARDundZDF" version="2.8.5" provider-name="rols1 (rols1@gmx.de)">
+<addon id="plugin.video.ardundzdf" name="ARDundZDF" version="2.8.7" provider-name="rols1 (rols1@gmx.de)">
   <requires>
    <import addon="xbmc.python" version="2.25.0"/>
    <import addon="script.module.kodi-six" />
@@ -4128,43 +4128,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 - z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
 		</news>
 	</extension>
-</addon>
-
-<addon id="plugin.video.L0RE.cinetrailer" name="CineTrailer" version="0.8.1" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.25.0"/>
-        <import addon="script.module.requests" version="2.12.4"/>
-        <import addon="script.common.plugin.cache" version="2.6.0"/>
-        <import addon="script.module.kodi-six" />
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="de_DE">Trailer von CineTrailer.tv</summary>
-        <summary lang="en_GB">Trailer from CineTrailer.tv</summary>
-        <language></language>
-        <platform>all</platform>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
-        <website></website>
-        <email></email>
-        <source>https://github.com/kodinerds/repo/tree/master/plugin.video.L0RE.cinetrailer</source>
-        <assets>
-            <icon>icon.png</icon>
-            <fanart>fanart.jpg</fanart>
-        </assets>
-        <news>
-[B][COLOR orangered]0.8.1 (14.01.2020)[/COLOR][/B][CR]- CineTrailer is no longer available[CR]
-[B][COLOR orangered]0.8.0 (09.01.2020)[/COLOR][/B][CR]- Repair Combatibility with KODI-Krypton[CR]
-[B][COLOR orangered]0.7.0 (07.01.2020)[/COLOR][/B][CR]- Fixed 'Genre' area[CR]
-[B][COLOR orangered]0.6.0 (19.12.2019)[/COLOR][/B][CR]- Select trailer if there are more than 1[CR]
-[B][COLOR orangered]0.5.0 (18.12.2019)[/COLOR][/B][CR]- Refactoring[CR]- Added movie information[CR]- Added cache clearing setting[CR]
-[B][COLOR orangered]0.4.0 (17.12.2019)[/COLOR][/B][CR]- Python 3 compability
-        </news>
-        <broken>CineTrailer is no longer available</broken>
-    </extension>
 </addon>
 
 <addon id="plugin.video.laola1tv" version="2.2.0" name="Laola1 TV" provider-name="Jin">
