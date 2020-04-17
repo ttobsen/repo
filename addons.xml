@@ -2259,6 +2259,24 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
   	</extension>
 </addon>
 
+<addon id="repository.castagnait" name="CastagnaIT Repository for Kodi 18.x (LEIA)" version="1.0.1.1" provider-name="castagnait">
+	<extension point="xbmc.addon.repository" name="CastagnaIT Repository">
+		<dir>
+			<info>https://github.com/CastagnaIT/repository.castagnait/raw/master/addons.xml</info>
+			<checksum>https://github.com/CastagnaIT/repository.castagnait/raw/master/addons.xml.md5</checksum>
+			<datadir zip="true">https://github.com/CastagnaIT/repository.castagnait/raw/master/zip</datadir>
+		</dir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>CastagnaIT Repository for Kodi 18.x (LEIA)</summary>
+		<description>Castagna IT repository for Kodi 18.x add-ons</description>
+		<platform>all</platform>
+		<assets>
+			<icon>icon.jpg</icon>
+		</assets>
+	</extension>
+</addon>
+
 <addon id="script.screensaver.fTVscreensaver" name="fTV Screensaver" version="0.1.3" provider-name="Sualfred">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -3714,22 +3732,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 			<fanart>resources/fanart.jpg</fanart>
 		</assets>
 	</extension>
-</addon>
-
-<addon id="repository.netflix" name="Netflix Addon Repository" version="1.0.1" provider-name="libdev + jojo + asciidisco">
-        <extension point="xbmc.addon.repository" name="Netflix Addon Repository">
-                <info compressed="false">https://johtru.com/repo/repo.php</info>
-                <checksum>https://johtru.com/repo/repo.php?md5=true</checksum>
-                <datadir zip="true">https://johtru.com/repo/repo_files</datadir>
-        </extension>
-        <extension point="xbmc.addon.metadata">
-                <summary>The Repository for the Kodi Netflix Addon</summary>
-                <summary lang="de">Das Repository für das Kodi Netflix Addon</summary>
-                <description>Provides the Netflix Addons for kodi.</description>
-                <description lang="de">Stellt das Kodi Netflix Addon bereit</description>
-                <disclaimer>Some parts of this Repository may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
-                <platform>all</platform>
-        </extension>
 </addon>
 
 <addon id="plugin.video.skysport.de" name="Sky Sport Mediathek" version="1.1.7" provider-name="Maven">
