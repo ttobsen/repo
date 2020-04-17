@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.video.zattoo_com" name="Zattoo Live TV" version="1.2.1" provider-name="PUR3, Maven">
+<addon id="plugin.video.zattoo_com" name="Zattoo Live TV" version="1.2.2" provider-name="PUR3, Maven">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.kodi-six" version="0.1.0"/>
@@ -14,6 +14,9 @@
         <description lang="de_DE">Fußball, Serien, Filme, Dokus und Reportagen laufen mit Zattoo im Livestream. Alles was du brauchst, ist eine Internetverbindung und schon läuft das Fernsehprogramm mit mehr als 75-TV-Sendern kostenlos auf dem Gerät deiner Wahl.</description>
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
         <website>http://www.zattoo.com</website>
-        <news>1.2.0[CR]- Python 3 compability[CR][CR]1.2.1[CR]- fixed login[CR]- changed version of the Python ABI</news>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
+        <news>1.2.1[CR]- fixed login[CR]- changed version of the Python ABI[CR][CR]1.2.0[CR]- Python 3 compability</news>
     </extension>
 </addon>
