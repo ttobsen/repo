@@ -3429,41 +3429,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ" version="1.7.13" name="Zattoo HiQ" provider-name="Steffen Rolapp">
-  <requires>
-    <import addon="xbmc.python" version="2.14.0"/>
-    <import addon="xbmc.addon" version="13.0.0" />
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="plugin.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.service" library="service.py" start="login" />
-
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Play Live TV and recorded shows from Zattoo.</summary>
-    <summary lang="de">Zattoo Live TV, Aufnahmen und EPG</summary>
-		<description lang="de_DE">[COLOR red]- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.2 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No. 1.7.10 DEINSTALLIEREN.[/COLOR]</description>
-		<description lang="en_GB">[COLOR red]- This Addon gets a new path in the KODI directory ![CR]- This restores the compatibility and the call by other addons.[CR][CR]- Please ACTIVATE the new Addon with the Version-No. 2.0.2.[CR]- After that UNINSTALL this Addon with the Version-No. 1.7.10.[/COLOR]</description>
-		
-   <platform>all</platform>
-    <language></language>
-
-    <broken>
-- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.2 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No.  DEINSTALLIEREN.
-    </broken>
-
-    <news>
-- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 2.0.2 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No.  DEINSTALLIEREN.
-    </news>
-    <license>GNU GENERAL PUBLIC LICENSEVersion 3, 29 June 2007</license>
-    <source>https://github.com/rolapp/plugin.video.zattooHiQ</source>
-    <website>https://github.com/rolapp/plugin.video.zattooHiQ/wiki/ZattooHiQ-Wiki</website>
-    <email>kodi@rolapp.de</email>
-    <disclaimer lang="en">Check http://www.zattoo.com for availability in your country.</disclaimer>
-    <disclaimer lang="de">Überprüfe ob http://www.zattoo.com in Deinem Land verfügbar ist.</disclaimer>
-  </extension>
-</addon>
-
 <addon id="plugin.video.L0RE.kividoo" name="Kividoo" version="0.1.2" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
