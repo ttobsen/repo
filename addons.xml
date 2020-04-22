@@ -55,41 +55,6 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.L0RE.hsv" name="Hamburger SV Mediathek" version="0.2" provider-name="L0RE">
-	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="script.module.requests" version="2.12.4"/>
-		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="de">Hamburger SV Mediathek</summary>
-		<summary lang="en">Hamburger SV Mediathek</summary>
-		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
-		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
-		<website></website>
-		<email></email>
-		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.L0RE.hsv</source>
-		<assets>
-			<icon>icon.png</icon>
-		</assets>
-		<broken>
-- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
-		</broken>
-		<news>[B][COLOR orangered]Version 0.2 (19.01.2020)[/COLOR][/B] by realvito[CR]
-- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
-		</news>
-	</extension>
-</addon>
-
 <addon id="script.service.gto" name="German Telecast Offers" version="2.1.9" provider-name="Birger Jesch">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
@@ -208,41 +173,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 - z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
 		</broken>
 		<news>[B][COLOR orangered]Version 0.2.0 (22.03.2020)[/COLOR][/B] by realvito[CR]
-- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
-		</news>
-	</extension>
-</addon>
-
-<addon id="plugin.video.L0RE.bvbtotal" name="Borussia Dortmund Mediathek" version="0.1.2" provider-name="L0RE">
-	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="script.module.requests" version="2.12.4"/>
-		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="de">Videoportal rund um Borussia</summary>
-		<summary lang="en">Videoportal rund um Borussia</summary>
-		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
-		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
-		<website></website>
-		<email></email>
-		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.L0RE.bvbtotal</source>
-		<assets>
-			<icon>icon.png</icon>
-		</assets>
-		<broken>
-- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
-		</broken>
-		<news>[B][COLOR orangered]Version 0.1.2 (19.01.2020)[/COLOR][/B] by realvito[CR]
 - z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
 		</news>
 	</extension>
@@ -657,41 +587,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
   </extension>
 </addon>
 
-<addon id="plugin.video.L0RE.premiershiprugby" name="Premiership Rugby" version="0.3.0" provider-name="L0RE">
-	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="script.module.requests" version="2.12.4"/>
-		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="de">Premiership Rugby Full Match Video</summary>
-		<summary lang="en">Premiership Rugby Full Match Video</summary>
-		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
-		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
-		<website></website>
-		<email></email>
-		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.L0RE.premiershiprugby</source>
-		<assets>
-			<icon>icon.png</icon>
-		</assets>
-		<broken>
-- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
-		</broken>
-		<news>[B][COLOR orangered]Version 0.3.0 (19.01.2020)[/COLOR][/B] by realvito[CR]
-- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
-		</news>
-	</extension>
-</addon>
-
 <addon id="resource.uisounds.destiny" version="1.0.3" name="Destiny UI Sounds (Normal)" provider-name="Jugger">
   <requires>
     <import addon="kodi.resource" version="1.0.0"/>
@@ -754,39 +649,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="plugin.video.giga_de" name="GIGA.de" version="2.2.2" provider-name="L0RE">
-	<requires>
-		<import addon="xbmc.python" version="2.14.0"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="de">Technik, Games und Entertainment Videos</summary>
-		<summary lang="en">Technical, Games and Entertainment Videos</summary>
-		<description lang="de">[COLOR red]- Kaum noch Videos auf der Webseite vorhanden.[CR]- Daher Updates für dieses Addon eingestellt ![/COLOR]</description>
-		<description lang="en">[COLOR red]- There are hardly any videos left on the website.[CR]- Therefore updates for this addon are discontinued ![/COLOR]</description>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum></forum>
-		<website></website>
-		<email></email>
-		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.giga_de</source>
-		<assets>
-			<icon>icon.png</icon>
-		</assets>
-		<broken>
-- Kaum noch Videos auf der Webseite vorhanden.[CR]- Daher Updates für dieses Addon eingestellt !
-		</broken>
-		<news>[B][COLOR orangered]Version 2.2.2 (18.01.2020)[/COLOR][/B] by realvito[CR]
-- Kaum noch Videos auf der Webseite vorhanden.[CR]- Daher Updates für dieses Addon eingestellt !
-		</news>
-	</extension>
-</addon>
-
 <addon id="skin.moddedconfluence.4" name="Confluence-MOD Vol. 4.2 (Beta)" provider-name="mad-max / blauesgruen (credits Team-XBMC)" version="1.3.5">
 	<requires>
 		<import addon="xbmc.gui" version="5.10.0" />
@@ -818,7 +680,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="plugin.video.ardundzdf" name="ARDundZDF" version="2.8.7" provider-name="rols1 (rols1@gmx.de)">
+<addon id="plugin.video.ardundzdf" name="ARDundZDF" version="2.8.8" provider-name="rols1 (rols1@gmx.de)">
   <requires>
    <import addon="xbmc.python" version="2.25.0"/>
    <import addon="script.module.kodi-six" />
@@ -1036,41 +898,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 		</broken>
 		<news>[B][COLOR orangered]Version 1.2.0 (16.03.2020)[/COLOR][/B] by realvito[CR]
 - z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
-		</news>
-	</extension>
-</addon>
-
-<addon id="plugin.video.stoersendertv" name="stoersendertv" version="2.0.5" provider-name="don">
-	<requires>
-		<import addon="xbmc.python" version="2.14.0"/>
-		<import addon="plugin.video.youtube" version="6.3.0"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="de">Dieter Hildebrandt Stoersender.TV</summary>
-		<summary lang="en">Dieter Hildebrandt Stoersender.TV</summary>
-		<description lang="de">[COLOR red]- Addon-Support eingestellt ![CR]- Direktzugriff über Youtube-Addon realisierbar.[/COLOR]</description>
-		<description lang="en">[COLOR red]- Addon-Support discontinued ![CR]- Direct access via YouTube addon possible.[/COLOR]</description>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum></forum>
-		<website>http://www.stoersender.tv</website>
-		<email></email>
-		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.stoersendertv</source>
-		<assets>
-			<icon>icon.png</icon>
-			<fanart>fanart.jpg</fanart>
-		</assets>
-		<broken>
-- Addon-Support eingestellt ![CR]- Direktzugriff über Youtube-Addon realisierbar.
-		</broken>
-		<news>[B][COLOR orangered]Version 2.0.5 (18.01.2020)[/COLOR][/B] by realvito[CR]
-- Addon-Support eingestellt ![CR]- Direktzugriff über Youtube-Addon realisierbar.
 		</news>
 	</extension>
 </addon>
@@ -1369,41 +1196,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 - z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
 		</broken>
 		<news>[B][COLOR orangered]Version 1.2.0 (22.03.2020)[/COLOR][/B] by realvito[CR]
-- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
-		</news>
-	</extension>
-</addon>
-
-<addon id="plugin.video.L0RE.aftv" name="1. FC Union Berlin Mediathek" version="0.1.2" provider-name="L0RE">
-	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="script.module.requests" version="2.12.4"/>
-		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="de">1. FC Union Berlin Mediathek</summary>
-		<summary lang="en">1. FC Union Berlin Mediathek</summary>
-		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
-		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
-		<website></website>
-		<email></email>
-		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.L0RE.aftv</source>
-		<assets>
-			<icon>icon.png</icon>
-		</assets>
-		<broken>
-- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
-		</broken>
-		<news>[B][COLOR orangered]Version 0.1.2 (19.01.2020)[/COLOR][/B] by realvito[CR]
 - z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
 		</news>
 	</extension>
@@ -1836,42 +1628,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 		<news>[B][COLOR orangered]Version 3.0.6  (13.12.2019)[/COLOR][/B][CR]
 - fixed: Geoblocking Fehler durch Veränderung der URL
 - added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19+) :-)
-		</news>
-	</extension>
-</addon>
-
-<addon id="plugin.video.L0RE.3plus" name="3plus TV" version="0.2.2" provider-name="L0RE">
-	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="script.common.plugin.cache" version="2.6.0" optional="true"/>
-		<import addon="plugin.video.3plus_ch" version="1.0.1"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="de_DE">Videoportal von 3plus.tv</summary>
-		<summary lang="en_GB">Videoportal of 3plus.tv</summary>
-		<description lang="de_DE">[COLOR red]- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 1.0.1 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No. 0.2.2 DEINSTALLIEREN.[/COLOR]</description>
-		<description lang="en_GB">[COLOR red]- This Addon gets a new path in the KODI directory ![CR]- This restores the compatibility and the call by other addons.[CR][CR]- Please ACTIVATE the new Addon with the Version-No. 1.0.1.[CR]- After that UNINSTALL this Addon with the Version-No. 0.2.2.[/COLOR]</description>
-		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
-		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
-		<website>http://3plus.tv/</website>
-		<email></email>
-		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.L0RE.3plus</source>
-		<assets>
-			<icon>icon.png</icon>
-			<fanart>fanart.jpg</fanart>
-		</assets>
-		<broken>
-- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 1.0.1 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No. 0.2.2 DEINSTALLIEREN.
-		</broken>
-		<news>[B][COLOR orangered]Version 0.2.2 (19.01.2020)[/COLOR][/B] by realvito[CR]
-- Dieses Addon bekommt einen neuen Pfad im KODI-Verzeichnis ![CR]- Damit wird die Kompatibilität und der Aufruf durch andere Addons wiederhergestellt.[CR][CR]- Bitte das neue Addon mit der Version-No. 1.0.1 AKTIVIEREN.[CR]- Danach dieses Addon mit der Version-No. 0.2.2 DEINSTALLIEREN.
 		</news>
 	</extension>
 </addon>
@@ -2391,76 +2147,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="plugin.video.jim_panse_gamer" name="JimPanseGamer" version="2.0.4" provider-name="zero">
-	<requires>
-		<import addon="xbmc.python" version="2.14.0"/>
-		<import addon="plugin.video.youtube" version="6.3.0"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="de">JimPanseGamer</summary>
-		<summary lang="en">JimPanseGamer</summary>
-		<description lang="de">[COLOR red]- Addon-Support eingestellt ![CR]- Direktzugriff über Youtube-Addon realisierbar.[/COLOR]</description>
-		<description lang="en">[COLOR red]- Addon-Support discontinued ![CR]- Direct access via YouTube addon possible.[/COLOR]</description>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum></forum>
-		<website></website>
-		<email></email>
-		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.jim_panse_gamer</source>
-		<assets>
-			<icon>icon.png</icon>
-			<fanart>fanart.jpg</fanart>
-		</assets>
-		<broken>
-- Addon-Support eingestellt ![CR]- Direktzugriff über Youtube-Addon realisierbar.
-		</broken>
-		<news>[B][COLOR orangered]Version 2.0.4 (19.01.2020)[/COLOR][/B] by realvito[CR]
-- Addon-Support eingestellt ![CR]- Direktzugriff über Youtube-Addon realisierbar.
-		</news>
-	</extension>
-</addon>
-
-<addon id="plugin.video.L0RE.fcstpauli" name="FC Stpauli Mediathek" version="0.2" provider-name="L0RE">
-	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="script.module.requests" version="2.12.4"/>
-		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="de">FC Stpauli Mediathek</summary>
-		<summary lang="en">FC Stpauli Mediathek</summary>
-		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
-		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
-		<website></website>
-		<email></email>
-		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.L0RE.fcstpauli</source>
-		<assets>
-			<icon>icon.png</icon>
-		</assets>
-		<broken>
-- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
-		</broken>
-		<news>[B][COLOR orangered]Version 0.2 (19.01.2020)[/COLOR][/B] by realvito[CR]
-- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
-		</news>
-	</extension>
-</addon>
-
 <addon id="plugin.video.L0RE.dmax" name="DMAX Mediathek" version="1.0.9" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
@@ -2853,42 +2539,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 		</assets>
 		<news>[B][COLOR orangered]Version 1.5.5  (01.04.2020)[/COLOR][/B][CR]
 - optimized: Wiedergabequalität-Aufbereitung von ZDF-Links (mp4) - neue Codes hinzugefügt
-		</news>
-	</extension>
-</addon>
-
-<addon id="plugin.video.dailymotion" name="DailyMotion" version="0.2.6" provider-name="L0RE">
-	<requires>
-		<import addon="xbmc.python" version="2.14.0"/>
-		<import addon="script.module.requests" version="2.9.1"/>
-		<import addon="script.module.youtube.dl" version="14.810.0"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="de">Filme, TV, Musik, User-Clips, und Livestreams</summary>
-		<summary lang="en">Movies, TV, Music, User-Clips, and Livestreams</summary>
-		<description lang="de">[COLOR red]- Es existiert eine aktuellere Version.[CR]- Siehe: https://github.com/Gujal00/plugin.video.dailymotion_com [CR]- Updates hier eingestellt ![/COLOR]</description>
-		<description lang="en">[COLOR red]- A more recent version exists.[CR]- See: https://github.com/Gujal00/plugin.video.dailymotion_com [CR]- Updates here discontinued ![/COLOR]</description>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum>https://forum.kodi.tv/showthread.php?tid=142626</forum>
-		<website>https://www.dailymotion.com</website>
-		<email></email>
-		<source>https://github.com/Gujal00/plugin.video.dailymotion_com</source>
-		<assets>
-			<icon>icon.png</icon>
-			<fanart>fanart.jpg</fanart>
-		</assets>
-		<broken>
-- Es existiert eine aktuellere Version.[CR]- Siehe: https://github.com/Gujal00/plugin.video.dailymotion_com [CR]- Updates hier eingestellt !
-		</broken>
-		<news>[B][COLOR orangered]Version 0.2.6 (18.01.2020)[/COLOR][/B] by realvito[CR]
-- Es existiert eine aktuellere Version.[CR]- Siehe: https://github.com/Gujal00/plugin.video.dailymotion_com [CR]- Updates hier eingestellt !
 		</news>
 	</extension>
 </addon>
@@ -3429,42 +3079,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="plugin.video.L0RE.kividoo" name="Kividoo" version="0.1.2" provider-name="L0RE">
-	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="script.module.requests" version="2.12.4"/>
-		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
-		<import addon="script.module.youtube.dl" version="14.810.0"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="de">http://www.kividoo.de/</summary>
-		<summary lang="en">http://www.kividoo.de/</summary>
-		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
-		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
-		<website>http://www.kividoo.de/</website>
-		<email></email>
-		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.L0RE.kividoo</source>
-		<assets>
-			<icon>icon.png</icon>
-		</assets>
-		<broken>
-- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
-		</broken>
-		<news>[B][COLOR orangered]Version 0.1.2 (18.01.2020)[/COLOR][/B] by realvito[CR]
-- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
-		</news>
-	</extension>
-</addon>
-
 <addon id="plugin.video.christtvradio" name="ChristTVRadio" version="0.2.2" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -3581,41 +3195,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="plugin.video.L0RE.comedycentral" name="Comedycentral" version="0.2.0" provider-name="L0RE">
-	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="script.module.requests" version="2.12.4"/>
-		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="de">Comedycentral Mediathek</summary>
-		<summary lang="en">Comedycentral Mediathek</summary>
-		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
-		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
-		<website></website>
-		<email></email>
-		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.L0RE.comedycentral</source>
-		<assets>
-			<icon>icon.png</icon>
-		</assets>
-		<broken>
-- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
-		</broken>
-		<news>[B][COLOR orangered]Version 0.2.0 (19.01.2020)[/COLOR][/B] by realvito[CR]
-- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
-		</news>
-	</extension>
-</addon>
-
 <addon id="script.module.future" name="future" version="0.16.0.1" provider-name="Ed Schofield">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
@@ -3630,41 +3209,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 		<license>Copyright 2013-2016 Python Charmers Pty Ltd, Australia. The software is distributed under an MIT licence. See LICENSE.txt</license>
 		<website>https://pypi.python.org/pypi/future</website>
 		<source>https://pypi.python.org/pypi/future/</source>
-	</extension>
-</addon>
-
-<addon id="plugin.video.L0RE.fohlentv" name="Fohlen TV (Borussia Mönchengladbach)" version="0.7.2" provider-name="L0RE">
-	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="script.module.requests" version="2.12.4"/>
-		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="de">Videoportal rund um Berussia</summary>
-		<summary lang="en">Videoportal rund um Berussia</summary>
-		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
-		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
-		<website></website>
-		<email></email>
-		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.L0RE.fohlentv</source>
-		<assets>
-			<icon>icon.png</icon>
-		</assets>
-		<broken>
-- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
-		</broken>
-		<news>[B][COLOR orangered]Version 0.7.2 (19.01.2020)[/COLOR][/B] by realvito[CR]
-- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
-		</news>
 	</extension>
 </addon>
 
@@ -3723,41 +3267,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
         </assets>
 		<reuselanguageinvoker>true</reuselanguageinvoker>		
     </extension>
-</addon>
-
-<addon id="plugin.video.L0RE.fck-tv" name="1. FC Kaiserslautern Mediathek" version="0.1.3" provider-name="L0RE">
-	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="script.module.requests" version="2.12.4"/>
-		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="de">1. FC Kaiserslautern Mediathek</summary>
-		<summary lang="en">1. FC Kaiserslautern Mediathek</summary>
-		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
-		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
-		<website></website>
-		<email></email>
-		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.L0RE.fck-tv</source>
-		<assets>
-			<icon>icon.png</icon>
-		</assets>
-		<broken>
-- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
-		</broken>
-		<news>[B][COLOR orangered]Version 0.1.3 (19.01.2020)[/COLOR][/B] by realvito[CR]
-- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
-		</news>
-	</extension>
 </addon>
 
 <addon id="plugin.video.7tv_live" name="7TV-Live" version="0.2.0" provider-name="dharry">
@@ -4129,41 +3638,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
         <email>[jin] at [xyz] dot [de]</email>
         <source>https://github.com/kodinerds/repo/tree/master/plugin.video.laola1tv</source>
   </extension>
-</addon>
-
-<addon id="plugin.video.nasa" name="Nasa" version="2.0.5" provider-name="L0RE">
-	<requires>
-		<import addon="xbmc.python" version="2.14.0"/>
-		<import addon="script.module.xbmcswift2" version="2.4.0"/>
-		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="addon.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="de">Video Plug-In für Inhalte von nasa.gov</summary>
-		<summary lang="en">Video plugin to access content from nasa.gov</summary>
-		<description lang="de">[COLOR red]- Es existiert eine aktuellere Version.[CR]- Siehe: https://github.com/XBMC-Addons/plugin.video.nasa [CR]- Updates hier eingestellt ![/COLOR]</description>
-		<description lang="en">[COLOR red]- A more recent version exists.[CR]- See: https://github.com/XBMC-Addons/plugin.video.nasa [CR]- Updates here discontinued ![/COLOR]</description>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum>https://forum.kodi.tv/showthread.php?tid=123001</forum>
-		<website>https://www.nasa.gov/</website>
-		<email></email>
-		<source>https://github.com/XBMC-Addons/plugin.video.nasa</source>
-		<assets>
-			<icon>icon.png</icon>
-		</assets>
-		<broken>
-- Es existiert eine aktuellere Version.[CR]- Siehe: https://github.com/XBMC-Addons/plugin.video.nasa [CR]- Updates hier eingestellt !
-		</broken>
-		<news>[B][COLOR orangered]Version 2.0.5 (18.01.2020)[/COLOR][/B] by realvito[CR]
-- Es existiert eine aktuellere Version.[CR]- Siehe: https://github.com/XBMC-Addons/plugin.video.nasa [CR]- Updates hier eingestellt !
-		</news>
-	</extension>
 </addon>
 
 <addon id="plugin.audio.soundcloud" name="SoundCloud" version="2.0.7" provider-name="bromix">
