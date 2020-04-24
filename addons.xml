@@ -4038,7 +4038,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattoo_hiq" version="2.0.13" name="Zattoo HiQ" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattoo_hiq" version="2.0.14" name="Zattoo HiQ" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.25.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
@@ -4078,7 +4078,7 @@ Zattoo Live TV, Aufnahmen und EPG
    <platform>all</platform>
     <language></language>
     <news>
-        Zattoo Video on Demand hinzugefügt
+        Settings.xml geändert
     </news>
     <license>GNU GENERAL PUBLIC LICENSEVersion 3, 29 June 2007</license>
     <source>https://github.com/rolapp/plugin.video.zattoo_hiq</source>
