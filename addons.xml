@@ -3343,7 +3343,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="repository.kodinerds" name="kodinerds.net Add-ons" version="6.19.2" provider-name="L0RE, Steffen Rolapp">
+<addon id="repository.kodinerds" name="kodinerds.net Add-ons" version="6.19.2" provider-name="Kodinerds">
 	<requires>
 		<import addon="xbmc.addon" version="12.0.0"/>
 	</requires>
