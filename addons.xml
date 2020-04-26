@@ -680,7 +680,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="plugin.video.ardundzdf" name="ARDundZDF" version="2.8.9" provider-name="rols1 (rols1@gmx.de)">
+<addon id="plugin.video.ardundzdf" name="ARDundZDF" version="2.9.0" provider-name="rols1 (rols1@gmx.de)">
   <requires>
    <import addon="xbmc.python" version="2.25.0"/>
    <import addon="script.module.kodi-six" />
@@ -700,7 +700,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
  	<email>rols1@gmx.de</email>
         <assets>
              <icon>icon.png</icon>
-            <fanart>fanart.png</fanart>           
+            <fanart>fanart.jpg</fanart>           
      </assets>
    </extension>
 </addon>
@@ -2708,43 +2708,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
-<addon id="plugin.video.doku-stream.org" name="Doku-Stream.org" version="1.0.2" provider-name="itouch5000">
-	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="plugin.video.youtube" version="6.3.0"/>
-		<import addon="script.module.requests" version="2.20.0"/>
-		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
-		<import addon="script.module.html5lib" version="0.999.0"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="de">DokuStream - Dokumentationen</summary>
-		<summary lang="en">DokuStream - documentaries</summary>
-		<description lang="de">[COLOR red]- Addon-Support eingestellt ![CR]- Webseite abgeschaltet ![/COLOR]</description>
-		<description lang="en">[COLOR red]- Addon-Support discontinued ![CR]- Website switched off ![/COLOR]</description>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GPL 2.0</license>
-		<forum></forum>
-		<website></website>
-		<email></email>
-		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.doku-stream.org</source>
-		<assets>
-			<icon>icon.png</icon>
-		</assets>
-		<broken>
-- Addon-Support eingestellt ![CR]- Webseite abgeschaltet !
-		</broken>
-		<news>[B][COLOR orangered]Version 1.0.2 (25.01.2020)[/COLOR][/B] by realvito[CR]
-- Addon-Support eingestellt ![CR]- Webseite abgeschaltet !
-		</news>
-	</extension>
-</addon>
-
 <addon id="plugin.video.L0RE.mtv" name="MTV Mediathek" version="0.2.3" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
@@ -3483,45 +3446,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="plugin.video.doku5.com" name="Doku5" version="1.0.4" provider-name="itouch5000">
-	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="plugin.video.youtube" version="6.3.0"/>
-		<import addon="script.module.requests" version="2.20.0"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="de">Doku5 - Dokumentationen</summary>
-		<summary lang="en">Doku5 - documentaries</summary>
-		<description lang="de">[COLOR red]- Addon-Support eingestellt ![CR]- Webseite abgeschaltet ![/COLOR]</description>
-		<description lang="en">[COLOR red]- Addon-Support discontinued ![CR]- Website switched off ![/COLOR]</description>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GPL 2.0</license>
-		<forum></forum>
-		<website></website>
-		<email></email>
-		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.doku5.com</source>
-		<assets>
-			<icon>resources\icon.png</icon>
-			<fanart>resources\fanart.jpg</fanart>
-			<screenshot>resources\screenshot-01.jpg</screenshot>
-			<screenshot>resources\screenshot-02.jpg</screenshot>
-			<screenshot>resources\screenshot-03.jpg</screenshot>
-		</assets>
-		<broken>
-- Addon-Support eingestellt ![CR]- Webseite abgeschaltet !
-		</broken>
-		<news>[B][COLOR orangered]Version 1.0.4 (25.01.2020)[/COLOR][/B] by realvito[CR]
-- Addon-Support eingestellt ![CR]- Webseite abgeschaltet !
-		</news>
-	</extension>
-</addon>
-
 <addon id="plugin.video.steamcommunity" name="Steam Community" version="0.2.2" provider-name="MrKrabat">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
@@ -3999,43 +3923,6 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
     <email></email>
     <source></source>
   </extension>
-</addon>
-
-<addon id="plugin.video.dokumonster" name="dokumonster.de" version="0.1.5" provider-name="mdmdmdmdmd">
-	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="script.module.simplejson" version="2.0.10"/>
-		<import addon="script.module.requests" version="2.20.0"/>
-		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
-		<import addon="script.module.xbmcswift2" version="1.2.0"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="addon.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="de">Dokumonster - Dokumentationen</summary>
-		<summary lang="en">Dokumonster - documentaries</summary>
-		<description lang="de">[COLOR red]- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt ![/COLOR]</description>
-		<description lang="en">[COLOR red]- Currently there is no developer to continue this addon.[CR]- Updates for this addon discontinued for the time being ![/COLOR]</description>
-		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum></forum>
-		<website>http://dokumonster.de/</website>
-		<email></email>
-		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.dokumonster</source>
-		<assets>
-			<icon>icon.png</icon>
-		</assets>
-		<broken>
-- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
-		</broken>
-		<news>[B][COLOR orangered]Version 0.1.4 (25.01.2020)[/COLOR][/B] by realvito[CR]
-- z.Zt. gibt es keinen Developer für die Fortführung dieses Addons.[CR]- Updates für dieses Addon vorerst eingestellt !
-		</news>
-	</extension>
 </addon>
 
 <addon id="plugin.video.zattoo_hiq" version="2.0.14" name="Zattoo HiQ" provider-name="Steffen Rolapp">

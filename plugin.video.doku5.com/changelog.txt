@@ -1,4 +1,0 @@
-﻿
-1.0.4 (25.01.2020)
-- Addon-Support eingestellt !
-- Webseite abgeschaltet !
