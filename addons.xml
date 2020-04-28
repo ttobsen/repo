@@ -2644,7 +2644,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 
 <addon id="plugin.video.mediathekdirekt" name="Mediathek Direkt" version="0.0.14" provider-name="P_Aeh">
   <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="xbmc.python" version="2.25.0"/>
     <import addon="script.module.requests" version="2.9.1"/>
   </requires>
   <extension point="xbmc.python.pluginsource" library="addon.py">
