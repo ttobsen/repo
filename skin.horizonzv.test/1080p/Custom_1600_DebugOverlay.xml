@@ -482,7 +482,7 @@
             <left>0</left>
             <top>45</top>
             <include>PathID</include>
-            <label>Container.FolderPath: $INFO[Container.FolderPath]</label>
+            <label>Container.FolderPath: $INFO[Container.FolderPath] | Container.FolderName: $INFO[Container.FolderName]</label>
             <visible>Skin.HasSetting(DebugInfo)</visible>
         </control>
         <control type="label">

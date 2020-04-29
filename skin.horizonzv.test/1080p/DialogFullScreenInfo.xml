@@ -120,7 +120,7 @@
                             <width>750</width>
                             <height>45</height>
                             <font>ubuntu-r16b</font>
-                            <label>[COLOR=grey1]$LOCALIZE[31049]: [/COLOR]$INFO[Player.FinishTime]</label>
+                            <label>$VAR[SeekTimeRemainingLabelVar]</label>
                             <align>right</align>
                             <shadowcolor/>
                         </control>

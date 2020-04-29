@@ -3537,6 +3537,15 @@
                 <align>left</align>
                 <textcolor>red</textcolor>
                 <shadowcolor>black</shadowcolor>
+                <label>WidgetTarget: $VAR[WidgetTarget]</label>
+            </control>
+            <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>red</textcolor>
+                <shadowcolor>black</shadowcolor>
                 <label>ListItem.Art(banner): $INFO[ListItem.Art(banner)]</label>
             </control>
             <control type="label">

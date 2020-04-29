@@ -207,7 +207,7 @@
         <height>18</height>
         <texturesliderbackground border="1">ScrollBarBackground.png</texturesliderbackground>
         <texturesliderbar border="3">ScrollBar.png</texturesliderbar>
-        <texturesliderbarfocus colordiffuse="red" border="3">ScrollBar.png</texturesliderbarfocus>
+        <texturesliderbarfocus colordiffuse="selectedcolor" border="3">ScrollBar.png</texturesliderbarfocus>
         <textureslidernib/>
         <textureslidernibfocus/>
         <showonepage>true</showonepage>

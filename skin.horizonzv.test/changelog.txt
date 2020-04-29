@@ -1,4 +1,7 @@
-﻿v 1.18.0.44
+﻿v 1.18.0.45
+- Bugfix Widget Onclick
+
+v 1.18.0.44
 - Code aufgeräumt
 - Bugfix Fanart Diashow (Musik, Filme, Serien)
 
