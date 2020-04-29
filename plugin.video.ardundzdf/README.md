@@ -102,8 +102,8 @@ Funktionen:
 - Kodi-Favoriten lassen sich einblenden und im Addon aufrufen
 - interne Merkliste
 
-#### Update-Modul
-- nach der Erst-Installation können weitere Updates durch das Plugin installiert werden
+#### Updates
+- entweder mit dem integrierten <b>Updatemodul</b> oder via <b>kodinerds-Repo</b>
 
 #### weitere Module
 - ZDFmobile
