@@ -1383,14 +1383,13 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
-<addon id="plugin.video.skygo.de" name="Sky Go" version="1.13.21" provider-name="jojo, frankr612, Maven, Linkinsoldier">
+<addon id="plugin.video.skygo.de" name="Sky Go" version="1.13.22" provider-name="jojo, frankr612, Maven, Linkinsoldier">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.requests" version="2.9.1"/>
         <import addon="script.module.routing" version="0.2.0"/>
-        <import addon="script.module.cryptopy" version="1.2.6"/>
+        <import addon="script.module.pycryptodome" version="3.4.3"/>
         <import addon="script.common.plugin.cache" version="2.5.8"/>
-        <import addon="script.module.pydes" version="2.0.1"/>
         <import addon="inputstream.adaptive" version="2.2.27"/>
         <import addon="script.module.inputstreamhelper" version="0.2.2"/>
         <import addon="script.module.kodi-six" version="0.1.0"/>
@@ -1416,6 +1415,8 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
             <icon>icon.png</icon>
         </assets>
         <news>
+1.13.22[CR]- Module 'cryptopy' und 'pydes' durch 'pycryptodome' ersetzt[CR][CR]
+1.13.21[CR]- Assets-Tag in addon.xml hinzugefügt[CR][CR]
 1.13.20[CR]- Änderung der Python-ABI-Version[CR][CR]
 1.13.19[CR]- Einstiegspunkt cachen[CR]- Auflistung nach Anfangsbuchstaben behoben
         </news>
