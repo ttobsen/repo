@@ -1,3 +1,5 @@
+1.13.22
+- Module 'cryptopy' und 'pydes' durch 'pycryptodome' ersetzt
 1.13.21
 - Assets-Tag in addon.xml hinzugefügt
 1.13.20
