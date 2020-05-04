@@ -16,17 +16,12 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-import os, re
-import xbmcaddon, xbmc
+import os
+import re
 
-import utils
-from . import cache
-from . import moduleUtil
-from . import jsonUtils
-
-addon = xbmcaddon.Addon()
-folder_medialistentry_movie = addon.getSetting('folder_medialistentry_movie')
-folder_movie = addon.getSetting('folder_movie')
+from .common import Globals, Settings, jsonrpc
+from .moduleUtil import getModule
+from .utils import multiple_replace, multiple_reSub
 
 
 def cleanString(string):
@@ -44,7 +39,7 @@ def uncleanString(string):
     return newstr
 
 
-def cleanLabels(text, formater=''):
+def cleanLabels(text, formater='', keep_year=False):
     dictresub = {'\[COLOR (.+?)\]' : '', '\[/COLOR\]' : '', '\[COLOR=(.+?)\]' : '', '\[color (.+?)\]': '',
                  '\[/color\]': '', '\[Color=(.+?)\]': '', '\[/Color\]': ''}
 
@@ -66,18 +61,19 @@ def cleanLabels(text, formater=''):
                    ('//', '/'), ('plugin.video.', ''),
                    ('plugin.audio.', ''))
 
-    text = utils.multiple_reSub(text, dictresub)
-    text = utils.multiple_replace(text, *replacements)
+    text = multiple_reSub(text, dictresub)
+    text = multiple_replace(text, *replacements)
     text = cleanStrmFilesys(text)
-    text = re.sub('\(.\d*\)', '', text)
+    if not keep_year:
+        text = re.sub('\(.\d*\)', '', text)
     if formater == 'title':
         text = text.title().replace('\'S', '\'s')
     elif formater == 'upper':
         text = text.upper()
     elif formater == 'lower':
         text = text.lower()
-    else:
-        text = text
+
+    text = re.sub('\s\s+', ' ', text)
 
     return text.strip()
 
@@ -162,15 +158,16 @@ def cleanByDictReplacements(string):
                         'Movie': '', '\'.\'': ' ', '\(\)': '',
                         '"?"': '', '"':''}
 
-    return utils.multiple_reSub(string, dictReplacements)
+    return multiple_reSub(string, dictReplacements)
 
 
 def getMovieStrmPath(strmTypePath, mediaListEntry_name, movie_name=None):
-    if folder_medialistentry_movie == 'true':
+    settings = Settings()
+    if settings.FOLDER_MEDIALISTENTRY_MOVIE:
         mediaListEntry_name = cleanByDictReplacements(getStrmname(mediaListEntry_name))
         mediaListEntry_name = cleanStrmFilesys(mediaListEntry_name)
         strmTypePath = os.path.join(strmTypePath, mediaListEntry_name)
-    if movie_name and folder_movie == 'true':
+    if movie_name and settings.FOLDER_MOVIE:
         movie_name = cleanByDictReplacements(getStrmname(movie_name))
         movie_name = cleanStrmFilesys(movie_name)
         strmTypePath = os.path.join(strmTypePath, movie_name)
@@ -207,7 +204,7 @@ def completePath(filepath):
 
 
 def getAddonname(addonid):
-    result = jsonUtils.jsonrpc('Addons.GetAddonDetails', dict(addonid=addonid, properties=['name']))
+    result = jsonrpc('Addons.GetAddonDetails', dict(addonid=addonid, properties=['name']))
     if len(result) > 0:
         return result['addon']['name']
     else:
@@ -219,7 +216,7 @@ def getProviderId(url):
     plugin_id = re.search('plugin:\/\/([^\/\?]*)', url)
 
     if plugin_id:
-        module = moduleUtil.getModule(plugin_id.group(1))
+        module = getModule(plugin_id.group(1))
         if module and hasattr(module, 'getProviderId'):
             providerId = module.getProviderId(plugin_id.group(1), url)
         else:
@@ -234,10 +231,10 @@ def getProvidername(url):
     provider = getProviderId(url)
 
     if provider:
-        module = moduleUtil.getModule(provider.get('plugin_id'))
+        pid = provider.get('plugin_id')
+        provider = Globals().CACHE_ADDONNAME.cacheFunction(getAddonname, pid)
+        module = getModule(pid)
         if module and hasattr(module, 'getProvidername'):
-            provider = module.getProvidername(provider.get('plugin_id'), url)
-        else:
-            provider = cache.getAddonnameCache().cacheFunction(getAddonname, provider.get('plugin_id'))
+            provider = module.getProvidername(provider, url)
 
     return provider

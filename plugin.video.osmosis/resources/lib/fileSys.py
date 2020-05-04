@@ -19,58 +19,55 @@ from __future__ import unicode_literals
 from kodi_six.utils import py2_encode, py2_decode
 import fileinput
 import os
-import sys
 import re
 import shutil
 import codecs
 import errno
 import xbmc
-import xbmcplugin, xbmcgui, xbmcaddon, xbmcvfs
+import xbmcgui
+import xbmcvfs
 
-import utils
-from . import kodiDB
-from . import jsonUtils
-from . import stringUtils
+from .common import Globals, Settings, jsonrpc
+from .kodiDB import delStream
+from .l10n import getString
+from .stringUtils import cleanByDictReplacements, cleanStrmFilesys, completePath, \
+    getMovieStrmPath, getProviderId, getStrmname, multiRstrip, parseMediaListURL, replaceStringElem
+from .utils import addon_log, addon_log_notice
 
-addon = xbmcaddon.Addon()
-ADDON_PATH = py2_decode(xbmc.translatePath(addon.getAddonInfo('path')))
-profile = py2_decode(xbmc.translatePath(addon.getAddonInfo('profile')))
-STRM_LOC = py2_decode(xbmc.translatePath(addon.getSetting('STRM_LOC')))
-MEDIALIST_PATH = addon.getSetting('MediaList_LOC')
-MediaList_LOC = py2_decode(xbmc.translatePath(os.path.join(MEDIALIST_PATH, 'MediaList.xml')))
-addonList = {}
+globals = Globals()
+settings = Settings()
 
 
 def writeSTRM(path, file, url):
-    utils.addon_log('writeSTRM')
+    addon_log('writeSTRM')
     return makeSTRM(path, file, url)
 
 
 def makeSTRM(filepath, filename, url):
-    utils.addon_log('makeSTRM')
-    name_orig, plugin_url = stringUtils.parseMediaListURL(url)
+    addon_log('makeSTRM')
+    name_orig, plugin_url = parseMediaListURL(url)
 
     mtime = None
 
-    filepath = stringUtils.multiRstrip(filepath)
-    filepath = stringUtils.completePath(os.path.join(STRM_LOC, filepath))
+    filepath = multiRstrip(filepath)
+    filepath = completePath(os.path.join(settings.STRM_LOC, filepath))
 
     if not xbmcvfs.exists(filepath):
-        dirs = filepath.replace(STRM_LOC, '').split('\\') if filepath.find('\\') != -1 else filepath.replace(STRM_LOC, '').split('/')
+        dirs = filepath.replace(settings.STRM_LOC, '').split('\\') if filepath.find('\\') != -1 else filepath.replace(settings.STRM_LOC, '').split('/')
         dirs = filter(None, dirs)
 
-        filepath = STRM_LOC
+        filepath = settings.STRM_LOC
         for dir in dirs:
-            filepath = stringUtils.completePath(os.path.join(filepath, dir))
+            filepath = completePath(os.path.join(filepath, dir))
             if not xbmcvfs.exists(filepath):
                 xbmcvfs.mkdir(filepath)
 
-    if not STRM_LOC.startswith('smb:') and not STRM_LOC.startswith('nfs:'):
+    if not settings.STRM_LOC.startswith('smb:') and not settings.STRM_LOC.startswith('nfs:'):
         fullpath = '{0}.strm'.format(py2_decode(os.path.normpath(xbmc.translatePath(os.path.join(filepath, filename)))))
     else:
         fullpath = '{0}{1}.strm'.format(filepath, filename)
 #        if xbmcvfs.exists(fullpath):
-#            if addon.getSetting('Clear_Strms') == 'true':
+#            if settings.CLEAR_STRMS == 'true':
 #                x = 0 #xbmcvfs.delete(fullpath)
 #            else:
 #                return fullpath
@@ -103,32 +100,20 @@ def makeSTRM(filepath, filename, url):
     return fullpath, mtime
 
 
-def updateStream(strm_Fullpath, replace_text):
-    utils.addon_log('updateStream')
-    for line in fileinput.input(strm_Fullpath, inplace=1):
-        if not line == replace_text:
-            line = line.replace(line, replace_text)
-            utils.addon_log('Updated: {0}'.format(strm_Fullpath))
-
-    while os.stat(strm_Fullpath).st_size == 0:
-        with open(strm_Fullpath, 'w') as newF:
-            newF.write(replace_text)
-
-
 def isInMediaList(mediaTitle, url, cType='Other'):
-    utils.addon_log('isInMediaList')
+    addon_log('isInMediaList')
     existInList = False
 
-    if not xbmcvfs.exists(profile):
-        xbmcvfs.mkdirs(profile)
-    if not xbmcvfs.exists(MediaList_LOC):
-        xbmcvfs.File(MediaList_LOC, 'a').close()
+    if not xbmcvfs.exists(globals.DATA_PATH):
+        xbmcvfs.mkdirs(globals.DATA_PATH)
+    if not xbmcvfs.exists(settings.MEDIALIST_FILENNAME_AND_PATH):
+        xbmcvfs.File(settings.MEDIALIST_FILENNAME_AND_PATH, 'a').close()
 
     thelist = readMediaList()
     if len(thelist) > 0:
         for i in thelist:
             splits = i.strip().split('|')
-            if stringUtils.getStrmname(splits[1]) == stringUtils.getStrmname(mediaTitle):
+            if getStrmname(splits[1]) == getStrmname(mediaTitle):
                 splitPlugin = re.search('plugin:\/\/([^\/\?]*)', splits[2])
                 mediaPlugin = re.search('plugin:\/\/([^\/\?]*)', url)
                 if mediaPlugin and splitPlugin and mediaPlugin.group(1) == splitPlugin.group(1):
@@ -141,13 +126,14 @@ def isInMediaList(mediaTitle, url, cType='Other'):
 
 
 def writeMediaList(url, name, cType='Other', cleanName=True, albumartist=None):
-    utils.addon_log('writeMediaList')
+    addon_log('writeMediaList')
     existInList = False
+    replaced = False
 
-    if not xbmcvfs.exists(profile):
-        xbmcvfs.mkdirs(profile)
-    if not xbmcvfs.exists(MediaList_LOC):
-        xbmcvfs.File(MediaList_LOC, 'w').close()
+    if not xbmcvfs.exists(globals.DATA_PATH):
+        xbmcvfs.mkdirs(globals.DATA_PATH)
+    if not xbmcvfs.exists(settings.MEDIALIST_FILENNAME_AND_PATH):
+        xbmcvfs.File(settings.MEDIALIST_FILENNAME_AND_PATH, 'w').close()
 
     thelist = readMediaList()
 
@@ -155,7 +141,7 @@ def writeMediaList(url, name, cType='Other', cleanName=True, albumartist=None):
     if len(thelist) > 0 :
         for entry in thelist:
             splits = entry.strip().split('|')
-            if stringUtils.getStrmname(splits[1]).lower() == stringUtils.getStrmname(name).lower():
+            if getStrmname(splits[1]).lower() == getStrmname(name).lower():
                 existInList = True
                 splits[0] = cType
                 splits[1] = name
@@ -163,7 +149,7 @@ def writeMediaList(url, name, cType='Other', cleanName=True, albumartist=None):
                 name_orig = re.sub('(?:name_orig=([^;]*);)(plugin:\/\/[^<]*)', '\g<1>', url)
 
                 replaced = False
-                splits2 = filter(None, splits[2].split('<next>'))
+                splits2 = list(filter(None, splits[2].split('<next>')))
                 for s, split2 in enumerate(splits2):
                     split2_plugin = re.sub('.*(plugin:\/\/[^<]*)', '\g<1>', split2)
                     split2_name_orig = re.sub('(?:name_orig=([^;]*);)(plugin:\/\/[^<]*)', '\g<1>', split2)
@@ -172,10 +158,10 @@ def writeMediaList(url, name, cType='Other', cleanName=True, albumartist=None):
                         replaced = True
                 if replaced == True:
                     splits[2] = '<next>'.join(set(splits2))
-                    utils.addon_log_notice('writeMediaList: replace {0} in {1}'.format(name_orig, name))
+                    addon_log_notice('writeMediaList: replace {0} in {1}'.format(name_orig, name))
                 else:
                     splits[2] = '{0}<next>{1}'.format(splits[2], url) if splits[2].strip() != '' else '{0}'.format(url)
-                    utils.addon_log_notice('writeMediaList: append {0} to {1}'.format(name_orig, name))
+                    addon_log_notice('writeMediaList: append {0} to {1}'.format(name_orig, name))
                 if albumartist:
                     if len(splits) == 5:
                         splits[4] = albumartist
@@ -183,31 +169,31 @@ def writeMediaList(url, name, cType='Other', cleanName=True, albumartist=None):
                         splits.append(albumartist)
 
                 newentry = '|'.join(splits)
-                xbmcgui.Dialog().notification(entry, 'Adding to MediaList', os.path.join(ADDON_PATH, 'resources/media/representerIcon.png'), 5000)
-                thelist = stringUtils.replaceStringElem(thelist, entry, newentry)
+                thelist = replaceStringElem(thelist, entry, newentry)
 
-    if existInList != True:
+    if not existInList:
         newentry = [cType, name, url]
         if albumartist:
             newentry.append(albumartist)
         newentry = ('|'.join(newentry))
         thelist.append(newentry)
 
-    output_file = xbmcvfs.File(MediaList_LOC, 'w')
-    for index, linje in enumerate(thelist):
-        entry = ('{0}\n' if index < len(thelist) - 1 else '{0}').format(linje.strip())
-        output_file.write(py2_encode(entry))
+    output_file = xbmcvfs.File(settings.MEDIALIST_FILENNAME_AND_PATH, 'w')
+    output_file.write(bytearray('\n'.join(thelist).strip(), 'utf-8'))
+
+    if not existInList or not replaced:
+        globals.dialog.notification(getString(39141, globals.addon), getStrmname(name), globals.MEDIA_ICON, 5000)
 
 
 def writeTutList(step):
-    utils.addon_log('writeTutList')
+    addon_log('writeTutList')
     existInList = False
     thelist = []
-    thefile = os.path.join(profile, 'firstTimeTut.xml')
+    thefile = os.path.join(globals.DATA_PATH, 'firstTimeTut.xml')
     theentry = '{0}\n'.format(step)
 
-    if not xbmcvfs.exists(profile):
-        xbmcvfs.mkdirs(profile)
+    if not xbmcvfs.exists(globals.DATA_PATH):
+        xbmcvfs.mkdirs(globals.DATA_PATH)
     if not xbmcvfs.exists(thefile):
         open(thefile, 'a').close()
 
@@ -248,7 +234,7 @@ def make_sure_path_exists(path):
     if theentry not in thelist:
         thelist.append(theentry)
     else:
-        thelist = stringUtils.replaceStringElem(thelist, theentry, theentry)
+        thelist = replaceStringElem(thelist, theentry, theentry)
 
     with open(thefile, 'w') as output_file:
         for linje in thelist:
@@ -259,10 +245,10 @@ def make_sure_path_exists(path):
 
 
 def removeMediaList(delList):
-    utils.addon_log('Removing items')
+    addon_log('Removing items')
 
-    if xbmcvfs.exists(MediaList_LOC):
-        delNotInMediaList(delList)
+    if xbmcvfs.exists(settings.MEDIALIST_FILENNAME_AND_PATH):
+        removeStreamsFromDatabaseAndFilesystem(delList)
 
         thelist = readMediaList()
 
@@ -286,21 +272,23 @@ def removeMediaList(delList):
             if additem:
                 newlist.append(entry)
 
-        fle = xbmcvfs.File(MediaList_LOC, 'w')
+        fle = xbmcvfs.File(settings.MEDIALIST_FILENNAME_AND_PATH, 'w')
         fle.write(bytearray('\n'.join(newlist).strip(), 'utf-8'))
         fle.close()
         del fle
 
 
 def readMediaList():
-    if xbmcvfs.exists(MediaList_LOC):
-        fle = xbmcvfs.File(MediaList_LOC, 'r')
+    if xbmcvfs.exists(settings.MEDIALIST_FILENNAME_AND_PATH):
+        fle = xbmcvfs.File(settings.MEDIALIST_FILENNAME_AND_PATH, 'r')
         thelist = py2_decode(fle.read()).splitlines()
         fle.close()
         return thelist
+    else:
+        return list()
 
 
-def delNotInMediaList(delList):
+def removeStreamsFromDatabaseAndFilesystem(delList):
     for item in delList:
         try:
             splits = item.get('entry').split('|')
@@ -308,42 +296,42 @@ def delNotInMediaList(delList):
             isAudio = True if type.lower().find('audio') > -1 else False
 
             if type.lower().find('movies') > -1:
-                path = xbmc.translatePath(os.path.join(STRM_LOC, stringUtils.getMovieStrmPath(type, splits[1])))
+                path = xbmc.translatePath(os.path.join(settings.STRM_LOC, getMovieStrmPath(type, splits[1])))
             else:
-                path = os.path.join(STRM_LOC, type)
+                path = os.path.join(settings.STRM_LOC, type)
 
                 if isAudio and len(splits) > 3:
-                    path = os.path.join(path, stringUtils.cleanByDictReplacements(splits[3]))
+                    path = os.path.join(path, cleanByDictReplacements(splits[3]))
 
-                itemPath = stringUtils.getStrmname(splits[1])
-                path = xbmc.translatePath(os.path.join(path, stringUtils.cleanStrmFilesys(itemPath)))
+                itemPath = getStrmname(splits[1])
+                path = xbmc.translatePath(os.path.join(path, cleanStrmFilesys(itemPath)))
 
-            path = stringUtils.completePath(py2_decode(path))
+            path = completePath(py2_decode(path))
 
-            utils.addon_log('remove: {0}'.format(path))
+            addon_log('remove: {0}'.format(path))
 
             deleteFromFileSystem = True
             for split2 in splits[2].split('<next>'):
                 streams = None
                 if type.lower().find('tv-shows') > -1 or type.lower().find('movies') > -1:
                     deleteFromFileSystem = False
-                    streams = [py2_decode(stream[0]) for stream in kodiDB.delStream(path[len(STRM_LOC) + 1:len(path)], stringUtils.getProviderId(item.get('url')).get('providerId'), type.lower().find('tv-shows') > -1)]
+                    streams = [stream[0] for stream in delStream(path[len(settings.STRM_LOC) + 1:len(path)], getProviderId(item.get('url')).get('providerId'), type.lower().find('tv-shows') > -1)]
                     if len(streams) > 0:
                         dirs, files = xbmcvfs.listdir(path)
                         for file in files:
                             if py2_decode(file).replace('.strm', '') in streams:
                                 filePath = os.path.join(py2_encode(path), file)
-                                utils.addon_log_notice('delNotInMediaList: delete file = \'{0}\''.format(py2_decode(filePath)))
+                                addon_log_notice('removeStreamsFromDatabaseAndFilesystem: delete file = \'{0}\''.format(py2_decode(filePath)))
                                 xbmcvfs.delete(xbmc.translatePath(filePath))
                     dirs, files = xbmcvfs.listdir(path)
                     if not files and not dirs:
                         deleteFromFileSystem = True
-                        utils.addon_log_notice('delNotInMediaList: delete empty directory = {0}'.format(path))
+                        addon_log_notice('removeStreamsFromDatabaseAndFilesystem: delete empty directory = {0}'.format(path))
 
             if deleteFromFileSystem:
                 xbmcvfs.rmdir(path, force=True)
 
             if isAudio:
-                jsonUtils.jsonrpc('AudioLibrary.Clean')
+                jsonrpc('AudioLibrary.Clean')
         except OSError:
                 print ('Unable to remove: {0}'.format(path))

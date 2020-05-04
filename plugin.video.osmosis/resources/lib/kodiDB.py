@@ -17,97 +17,30 @@
 
 from __future__ import unicode_literals
 from kodi_six.utils import py2_decode
-import os
-import sys
-import datetime
-import xbmc
-import xbmcplugin, xbmcgui, xbmcaddon, xbmcvfs
-import sqlite3
+from datetime import datetime
 import mysql.connector
+import os
+import sqlite3
+import xbmc
+import xbmcvfs
 
-import utils
-from . import stringUtils
+from .common import Globals, Settings
+from .stringUtils import cleanStrmFilesys, cleanTitle, completePath, invCommas
+from .utils import addon_log
 
-addon = xbmcaddon.Addon()
-profile = py2_decode(xbmc.translatePath(addon.getAddonInfo('profile')))
-MusicDB_LOC = os.path.join(profile, 'Musik.db')
-MODBPATH = os.path.join(profile, 'Movies.db')
-SHDBPATH = os.path.join(profile, 'Shows.db')
-MODBPATH_MYSQL = os.path.join(profile, 'Movies')
-SHDBPATH_MYSQL = os.path.join(profile, 'TVShows')
-STRM_LOC = py2_decode(xbmc.translatePath(addon.getSetting('STRM_LOC')))
-DATABASE_MYSQL = addon.getSetting('USE_MYSQL')
-
-# Databases
-KMDBUSERNAME = addon.getSetting('KMusic-DB username')
-KMDBPASSWORD = addon.getSetting('KMusic-DB password')
-KMDBNAME = addon.getSetting('KMusic-DB name')
-KMDBPATH = py2_decode(xbmc.translatePath(addon.getSetting('KMusic-DB path')))
-KMDBIP = addon.getSetting('KMusic-DB IP')
-KMDBPORT = addon.getSetting('KMusic-DB port')
-
-KMODBUSERNAME = addon.getSetting('KMovie-DB username')
-KMODBPASSWORD = addon.getSetting('KMovie-DB password')
-KMODBNAME = addon.getSetting('KMovie-DB name')
-KMODBPATH = py2_decode(xbmc.translatePath(addon.getSetting('KMovie-DB path')))
-KMODBIP = addon.getSetting('KMovie-DB IP')
-KMODBPORT = addon.getSetting('KMovie-DB port')
-
-MOVDBUSERNAME = addon.getSetting('Movies-DB username')
-MOVDBPASSWORD = addon.getSetting('Movies-DB password')
-MOVDBNAME = addon.getSetting('Movies-DB name')
-MOVDBIP = addon.getSetting('Movies-DB IP')
-MOVDBPORT = addon.getSetting('Movies-DB port')
-
-TVSDBUSERNAME = addon.getSetting('TV-Show-DB username')
-TVSDBPASSWORD = addon.getSetting('TV-Show-DB password')
-TVSDBNAME = addon.getSetting('TV-Show-DB name')
-TVSDBIP = addon.getSetting('TV-Show-DB IP')
-TVSDBPORT = addon.getSetting('TV-Show-DB port')
-
-MDBUSERNAME = addon.getSetting('Music-DB username')
-MDBPASSWORD = addon.getSetting('Music-DB password')
-MDBNAME = addon.getSetting('Music-DB name')
-MDBIP = addon.getSetting('Music-DB IP')
-MDBPORT = addon.getSetting('Music-DB port')
-
-kodi_version = int(xbmc.getInfoLabel('System.BuildVersion')[:2])
+globals = Globals()
+settings = Settings()
 
 
 class Config(object):
     '''Configure me so examples work
-    
+
     Use me like this:
-    
+
         mysql.connector.Connect(**Config.dbinfo())
     '''
 
-    if DATABASE_MYSQL == 'false':
-        DATABASE = 'Shows.db'
-        USER = 'kodi'
-        PASSWORD = 'admin'
-        PORT = 3306
-
-        CHARSET = 'utf8'
-        UNICODE = True
-        WARNINGS = True
-
-
-        @classmethod
-        def dbinfo(cls):
-            return {
-                'host': cls.HOST,
-                'port': cls.PORT,
-                'database': cls.DATABASE,
-                'user': cls.USER,
-                'password': cls.PASSWORD,
-                'charset': cls.CHARSET,
-                'use_unicode': cls.UNICODE,
-                'get_warnings': cls.WARNINGS,
-                }
-
-
-    else:
+    if settings.USE_MYSQL:
         DATABASETYPE = ''
         CHARSET = 'utf8'
         UNICODE = True
@@ -119,60 +52,152 @@ class Config(object):
         @classmethod
         def dataBaseVal(cls):
 
-            DBValuses = ['SERNAME', 'PASSWORD', 'NAME', 'IP', 'PORT']
+            DBValues = ['USERNAME', 'PASSWORD', 'NAME', 'IP', 'PORT']
 
             if cls.DATABASETYPE == 'KMovies':
-                DBValuses = [KMODBUSERNAME, KMODBPASSWORD, KMODBNAME, KMODBIP, KMODBPORT]
+                DBValues = [
+                    settings.DATABASE_MYSQL_KODI_VIDEO_USERNAME,
+                    settings.DATABASE_MYSQL_KODI_VIDEO_PASSWORD,
+                    settings.DATABASE_MYSQL_KODI_VIDEO_DATABASENAME,
+                    settings.DATABASE_MYSQL_KODI_VIDEO_IP,
+                    settings.DATABASE_MYSQL_KODI_VIDEO_PORT
+                ]
             elif cls.DATABASETYPE == 'KMusic':
-                DBValuses = [KMDBUSERNAME, KMDBPASSWORD, KMDBNAME, KMDBIP, KMDBPORT]
+                DBValues = [
+                    settings.DATABASE_MYSQL_KODI_MUSIC_USERNAME,
+                    settings.DATABASE_MYSQL_KODI_MUSIC_PASSWORD,
+                    settings.DATABASE_MYSQL_KODI_MUSIC_DATABASENAME,
+                    settings.DATABASE_MYSQL_KODI_MUSIC_IP,
+                    settings.DATABASE_MYSQL_KODI_MUSIC_PORT
+                ]
             elif cls.DATABASETYPE == 'Movies':
-                DBValuses = [MOVDBUSERNAME, MOVDBPASSWORD, MOVDBNAME, MOVDBIP, MOVDBPORT]
+                DBValues = [
+                    settings.DATABASE_MYSQL_OSMOSIS_MOVIE_USERNAME,
+                    settings.DATABASE_MYSQL_OSMOSIS_MOVIE_PASSWORD,
+                    settings.DATABASE_MYSQL_OSMOSIS_MOVIE_DATABASENAME,
+                    settings.DATABASE_MYSQL_OSMOSIS_MOVIE_IP,
+                    settings.DATABASE_MYSQL_OSMOSIS_MOVIE_PORT
+                ]
             elif cls.DATABASETYPE == 'TVShows':
-                DBValuses = [TVSDBUSERNAME, TVSDBPASSWORD, TVSDBNAME, TVSDBIP, TVSDBPORT]
+                DBValues = [
+                    settings.DATABASE_MYSQL_OSMOSIS_TVSHOW_USERNAME,
+                    settings.DATABASE_MYSQL_OSMOSIS_TVSHOW_PASSWORD,
+                    settings.DATABASE_MYSQL_OSMOSIS_TVSHOW_DATABASENAME,
+                    settings.DATABASE_MYSQL_OSMOSIS_TVSHOW_IP,
+                    settings.DATABASE_MYSQL_OSMOSIS_TVSHOW_PORT
+                ]
             elif cls.DATABASETYPE == 'Music':
-                DBValuses = [MDBUSERNAME, MDBPASSWORD, MDBNAME, MDBIP, MDBPORT]
+                DBValues = [
+                    settings.DATABASE_MYSQL_OSMOSIS_MUSIC_USERNAME,
+                    settings.DATABASE_MYSQL_OSMOSIS_MUSIC_PASSWORD,
+                    settings.DATABASE_MYSQL_OSMOSIS_MUSIC_DATABASENAME,
+                    settings.DATABASE_MYSQL_OSMOSIS_MUSIC_IP,
+                    settings.DATABASE_MYSQL_OSMOSIS_MUSIC_PORT
+                ]
 
             return {
-                'user': DBValuses[0],
-                'password': DBValuses[1],
-                'database': DBValuses[2],
-                'host': DBValuses[3],
-                'port': DBValuses[4],
+                'user': DBValues[0],
+                'password': DBValues[1],
+                'database': DBValues[2],
+                'host': DBValues[3],
+                'port': DBValues[4],
                 'charset': cls.CHARSET,
                 'use_unicode': cls.UNICODE,
                 'get_warnings': cls.WARNINGS,
                 'buffered': cls.BUFFERED,
-                }
+            }
 
 
-def musicDatabase(strAlbumName, strArtistName, strSongTitle, strPath, strURL, iTrack, iDuration, strArtPath, tFileModTime=None):
-    strPath = stringUtils.completePath(os.path.join(STRM_LOC, strPath))
+def initDatabase():
+    for database in globals.DATABASES:
+        if database.get('dbtype') == 'movies': database.get('db')['sqliteDB'] = settings.DATABASE_SQLLITE_OSMOSIS_MOVIE_FILENAME_AND_PATH
+        elif database.get('dbtype') == 'tvshows': database.get('db')['sqliteDB'] = settings.DATABASE_SQLLITE_OSMOSIS_TVSHOW_FILENAME_AND_PATH
+        elif database.get('dbtype') == 'music': database.get('db')['sqliteDB'] = settings.DATABASE_SQLLITE_OSMOSIS_MUSIC_FILENAME_AND_PATH
+
+    if not settings.USE_MYSQL:
+        if not xbmcvfs.exists(settings.DATABASE_SQLLITE_OSMOSIS_MOVIE_FILENAME_AND_PATH):
+            createMovDB()
+        elif not valDB(settings.DATABASE_SQLLITE_OSMOSIS_MOVIE_FILENAME_AND_PATH, 'Movies'):
+            xbmcvfs.delete(settings.DATABASE_SQLLITE_OSMOSIS_MOVIE_FILENAME_AND_PATH)
+            createMovDB()
+
+        if not xbmcvfs.exists(settings.DATABASE_SQLLITE_OSMOSIS_TVSHOW_FILENAME_AND_PATH):
+            createShowDB()
+        elif not valDB(settings.DATABASE_SQLLITE_OSMOSIS_TVSHOW_FILENAME_AND_PATH, 'TVShows'):
+            xbmcvfs.delete(settings.DATABASE_SQLLITE_OSMOSIS_TVSHOW_FILENAME_AND_PATH)
+            createShowDB()
+
+        if not xbmcvfs.exists(settings.DATABASE_SQLLITE_OSMOSIS_MUSIC_FILENAME_AND_PATH):
+            createMusicDB()
+        elif not valDB(settings.DATABASE_SQLLITE_OSMOSIS_MUSIC_FILENAME_AND_PATH, 'Music'):
+            xbmcvfs.delete(settings.DATABASE_SQLLITE_OSMOSIS_MUSIC_FILENAME_AND_PATH)
+            createMusicDB()
+    else:
+        if not valDB(settings.DATABASE_SQLLITE_OSMOSIS_MOVIE_FILENAME_AND_PATH, 'Movies'):
+            createMovDB()
+
+        if not valDB(settings.DATABASE_SQLLITE_OSMOSIS_TVSHOW_FILENAME_AND_PATH, 'TVShows'):
+            createShowDB()
+
+        if not valDB(settings.DATABASE_SQLLITE_OSMOSIS_MUSIC_FILENAME_AND_PATH, 'Music'):
+            createMusicDB()
+
+    createSchemaVersionTable()
+
+
+def updateDatabase():
+    dirs, files = xbmcvfs.listdir(globals.DATABASE_SQLLITE_OSMOSIS_SCHEMA_VERSION_FILES_PATH)
+    for dir in dirs:
+        dbtype = dir.lower()
+        dir_path = os.path.join(globals.DATABASE_SQLLITE_OSMOSIS_SCHEMA_VERSION_FILES_PATH, dir)
+        subdirs, subfiles = xbmcvfs.listdir(dir_path)
+        for subfile in subfiles:
+            file_path = os.path.join(dir, subfile)
+            if not checkSchemaVersion(file_path, dbtype):
+                complete_file_path = os.path.join(dir_path, subfile)
+                file = xbmcvfs.File(complete_file_path, 'r')
+                query = file.read()
+                file.close()
+                con, cursor = None, None
+                try:
+                    for database in globals.DATABASES:
+                        if database.get('dbtype') == dbtype:
+                            con, cursor = openDB(database.get('db').get('sqliteDB'), database.get('db').get('mysqlDBType'))
+                            cursor.execute(query)
+                finally:
+                    if cursor:
+                        cursor.close()
+                    if con:
+                        con.close()
+
+                writeSchemaVersion(os.path.join(dir, subfile), datetime.now(), 1, dbtype)
+
+
+def musicDatabase(strAlbumName, strArtistName, strSongTitle, strPath, strURL, iTrack, iDuration, strArtPath, listGenre, iYear, tFileModTime=None):
+    strPath = completePath(os.path.join(settings.STRM_LOC, strPath))
 
     # Write to music db and get id's
     iRoleID = writeRole('Artist')
     iPathID = writePath(strPath)
     iArtistID = writeArtist(strArtistName)
-    iGenreID = writeGenre('osmosis')
     iAlbumID = writeAlbums(strAlbumName, strArtistName)
-    iSongID = writeSong(iPathID, iAlbumID, strArtistName, strSongTitle, iDuration, iTrack, tFileModTime)
+    iSongID = writeSong(iPathID, iAlbumID, strArtistName, strSongTitle, iDuration, iTrack, listGenre, iYear, tFileModTime)
     iSongArtistID = writeSongArtist(iArtistID, iSongID, 1, strArtistName, 0)
-    writeSongGenre(iGenreID, iSongID)
+    if listGenre:
+        for strGenre in listGenre:
+            iGenreID = writeGenre(strGenre)
+            writeSongGenre(iGenreID, iSongID)
     writeAlbumArtist(iArtistID, iAlbumID, strArtistName)
-    writeThump(iArtistID, 'artist', 'thumb', strArtPath)
-    writeThump(iAlbumID, 'album', 'thumb', strArtPath)
-
-    if DATABASE_MYSQL == 'false':
-        if not xbmcvfs.exists(MusicDB_LOC):
-            createMusicDB()
-    elif not valDB('Music'):
-        createMusicDB()
+    if strArtPath and strArtPath != '':
+        writeThump(iArtistID, 'artist', 'thumb', strArtPath)
+        writeThump(iAlbumID, 'album', 'thumb', strArtPath)
 
     writeIntoSongTable(strSongTitle, iSongID, strArtistName, strAlbumName, iAlbumID, strPath, iPathID, strURL, iRoleID, iArtistID, iSongArtistID, 'F')
 
 
 def createMusicDB():
     try:
-        con, cursor = openDB(MusicDB_LOC, 'Music')
+        con, cursor = openDB(settings.DATABASE_SQLLITE_OSMOSIS_MUSIC_FILENAME_AND_PATH, 'Music')
 
         query = 'CREATE TABLE songs (id INTEGER PRIMARY KEY{}, \
                 strSongTitle VARCHAR(255), \
@@ -188,7 +213,7 @@ def createMusicDB():
                 songArtistRel INTEGER, \
                 delSong CHAR(1));'
 
-        query = query.format('' if DATABASE_MYSQL == 'false' else ' AUTO_INCREMENT')
+        query = query.format('' if not settings.USE_MYSQL else ' AUTO_INCREMENT')
 
         cursor.execute(query)
         con.commit()
@@ -207,8 +232,8 @@ def writeRole(strRole):
 
 
 def writePath(strPath):
-    selectStrPath = strPath if DATABASE_MYSQL == 'false' else strPath.replace('\\', '\\\\\\\\')
-    insertStrPath = strPath if DATABASE_MYSQL == 'false' else strPath.replace('\\', '\\\\')
+    selectStrPath = strPath if not settings.USE_MYSQL else strPath.replace('\\', '\\\\\\\\')
+    insertStrPath = strPath if not settings.USE_MYSQL else strPath.replace('\\', '\\\\')
 
     selectQuery = 'SELECT idPath FROM path WHERE strPath LIKE \'{}\';'
     selectArgs = (selectStrPath,)
@@ -237,7 +262,7 @@ def writeGenre(strGenre):
 
 
 def writeAlbums(strAlbum, strArtist, strReleaseType='album'):
-    artistCol = 'strArtistDisp' if kodi_version >= 18 else 'strArtists'
+    artistCol = 'strArtistDisp' if globals.KODI_VERSION >= 18 else 'strArtists'
 
     selectQuery = 'SELECT idAlbum FROM album WHERE strAlbum LIKE \'{}\';'
     selectArgs = (strAlbum,)
@@ -247,22 +272,38 @@ def writeAlbums(strAlbum, strArtist, strReleaseType='album'):
     return manageDbRecord(selectQuery, selectArgs, insertQuery, insertArgs)
 
 
-def writeSong(iPathID, iAlbumID, strArtist, strTitle, iDuration, iTrack, tFileModTime):
-    tDateAdded = datetime.datetime.fromtimestamp(tFileModTime) if tFileModTime else datetime.datetime.now()
+def writeSong(iPathID, iAlbumID, strArtist, strTitle, iDuration, iTrack, listGenre, iYear, tFileModTime):
+    tDateAdded = datetime.fromtimestamp(tFileModTime) if tFileModTime else datetime.now()
     strDateAdded = tDateAdded.strftime('%Y-%m-%d %H:%M:%S')
-    iYear = int(datetime.datetime.now().strftime('%Y'))
-    artistCol = 'strArtistDisp' if kodi_version >= 18 else 'strArtists'
-    strTitle = stringUtils.invCommas(strTitle)
-    strFileName = stringUtils.cleanStrmFilesys(strTitle)
+    strTitle = invCommas(strTitle)
+    strFileName = cleanStrmFilesys(strTitle)
     strFileName = '{0}.strm'.format(strFileName)
 
-    selectQuery = 'SELECT idSong FROM song WHERE {} LIKE \'{}\' AND strTitle LIKE \'{}\';'
-    selectArgs = (artistCol, strArtist, strTitle)
-    insertQuery = 'INSERT INTO song (iYear, dateAdded, idAlbum, idPath, ' + artistCol + ', strTitle, strFileName, iTrack, strGenres, iDuration, iTimesPlayed, iStartOffset, iEndOffset, userrating, comment, mood, votes)'
-    insertQuery += ' VALUES ({}, \'{}\', {}, {}, \'{}\', \'{}\', \'{}\', {}, \'{}\', {}, {}, {}, {}, {}, \'{}\', \'{}\', {});'
-    insertArgs = (iYear, strDateAdded, iAlbumID, iPathID, strArtist, strTitle, strFileName, iTrack, 'osmosis', iDuration, 0, 0, 0, 0, 'osmosis', 'osmosis', 0)
+    selectQuery = 'SELECT idSong FROM song WHERE strArtistDisp LIKE \'{}\' AND strTitle LIKE \'{}\';'
+    selectArgs = (strArtist, strTitle)
+    insertQuery = 'INSERT INTO song (dateAdded, idAlbum, idPath, strArtistDisp, strTitle, strFileName, iTrack, iDuration, iTimesPlayed, iStartOffset, iEndOffset, userrating, comment, mood, votes'
+    insertQueryValue = ' VALUES (\'{}\', {}, {}, \'{}\', \'{}\', \'{}\', {}, {}, {}, {}, {}, {}, \'{}\', \'{}\', {}'
+    insertArgs = (strDateAdded, iAlbumID, iPathID, strArtist, strTitle, strFileName, iTrack, iDuration, 0, 0, 0, 0, 'osmosis', 'osmosis', 0)
+    updateQuery = 'UPDATE song SET idAlbum = {}, idPath = {}, strFileName = \'{}\', iTrack = {}, iDuration = {} WHERE strArtistDisp LIKE \'{}\' AND strTitle LIKE \'{}\';'
+    updateArgs = (iAlbumID, iPathID, strFileName, iTrack, iDuration, strArtist, strTitle)
+    if listGenre:
+        strGenres = ', '.join(genre.strip() for genre in listGenre)
+        insertQuery += ', strGenres'
+        insertQueryValue += ', \'{}\''
+        insertArgs += (strGenres,)
+    if iYear:
+        if globals.KODI_VERSION == 18:
+            insertQuery += ', iYear'
+            insertQueryValue += ', {}'
+        else:
+            insertQuery += ', strReleaseDate'
+            insertQueryValue += ', \'{}\''
+        insertArgs += (iYear,)
 
-    return manageDbRecord(selectQuery, selectArgs, insertQuery, insertArgs)
+    insertQuery += ')'
+    insertQueryValue += ');'
+
+    return manageDbRecord(selectQuery, selectArgs, '{0}{1}'.format(insertQuery, insertQueryValue), insertArgs, updateQuery, updateArgs)
 
 
 def writeSongArtist(iArtistID, iSongID, iRoleID, strArtist, iOrderID):
@@ -302,7 +343,7 @@ def writeThump(iMediaID, strMediaType, strImageType, strArtPath):
 
 
 def writeIntoSongTable (strSongTitle, iSongID, strArtistName, strAlbumName, iAlbumID, strPath, iPathID, strURL, iRoleID, iArtistID, iSongArtistID, strDelSong):
-    strPath = strPath if DATABASE_MYSQL == 'false' else strPath.replace('\\', '\\\\')
+    strPath = strPath if not settings.USE_MYSQL else strPath.replace('\\', '\\\\')
     strSongTitle = strSongTitle.replace('\'', '\'\'')
 
     selectQuery = 'SELECT id FROM songs WHERE songID = {} AND artistID = {} AND albumID = {};'
@@ -310,13 +351,13 @@ def writeIntoSongTable (strSongTitle, iSongID, strArtistName, strAlbumName, iAlb
     insertQuery = 'INSERT INTO songs (strSongTitle, songID, strArtistName, strAlbumName, albumID, strPath, pathID, strURL, roleID, artistID, songArtistRel, delSong) VALUES (\'{}\', {}, \'{}\', \'{}\', {}, \'{}\', {}, \'{}\', {}, {}, \'{}\', \'{}\');'
     insertArgs = (strSongTitle, iSongID, strArtistName, strAlbumName, iAlbumID, strPath, iPathID, strURL, iRoleID, iArtistID, iSongArtistID, strDelSong)
 
-    return manageDbRecord(selectQuery, selectArgs, insertQuery, insertArgs, MusicDB_LOC)
+    return manageDbRecord(selectQuery, selectArgs, insertQuery, insertArgs, database=settings.DATABASE_SQLLITE_OSMOSIS_MUSIC_FILENAME_AND_PATH)
 
 
-def manageDbRecord(selectQuery, selectArgs, insertQuery, insertArgs, database=KMDBPATH):
+def manageDbRecord(selectQuery, selectArgs, insertQuery, insertArgs, updateQuery=None, updateArgs=None, database=settings.DATABASE_SQLLITE_KODI_MUSIC_FILENAME_AND_PATH):
     dID = None
     try:
-        con, cursor = openDB(database, 'KMusic' if database == KMDBPATH else 'Music')
+        con, cursor = openDB(database, 'KMusic' if database == settings.DATABASE_SQLLITE_KODI_MUSIC_FILENAME_AND_PATH else 'Music')
 
         if selectArgs:
             selectQuery = selectQuery.format(*selectArgs)
@@ -332,6 +373,13 @@ def manageDbRecord(selectQuery, selectArgs, insertQuery, insertArgs, database=KM
             con.commit()
             dID = cursor.lastrowid
         else:
+            if updateQuery:
+                if updateArgs:
+                    updateQuery = updateQuery.format(*updateArgs)
+                    cursor.execute(updateQuery)
+                else:
+                    cursor.execute(updateQuery)
+                con.commit()
             dID = searchResult[0]
     finally:
         cursor.close()
@@ -340,21 +388,25 @@ def manageDbRecord(selectQuery, selectArgs, insertQuery, insertArgs, database=KM
     return dID
 
 
-def valDB(database):
-    con, cursor = openDB(database, database)
+def valDB(dbpath, dbtype):
+    con, cursor = openDB(dbpath, dbtype)
 
-    if DATABASE_MYSQL == 'false':
-        cursor.execute('SELECT * FROM sqlite_master WHERE name LIKE \'stream_ref\' and type LIKE \'table\';')
+    if dbtype == 'Music':
+        table = 'songs'
+    else:
+        table = 'stream_ref'
+
+    if not settings.USE_MYSQL:
+        query = 'SELECT * FROM sqlite_master WHERE name LIKE \'{0}\' and type LIKE \'table\';'.format(table)
+
+        cursor.execute(query)
         result = cursor.fetchall()
 
         cursor.close()
         con.close()
         return True if len(result) == 1 else False
     else:
-        if database == 'Music':
-            query = 'SHOW TABLES LIKE \'songs\';'
-        else:
-            query = 'SHOW TABLES LIKE \'stream_ref\';'
+        query = 'SHOW TABLES LIKE \'{0}\';'.format(table)
 
         cursor.execute(query)
         result = cursor.fetchone()
@@ -366,16 +418,6 @@ def valDB(database):
 
 def writeMovie(movieList):
     dbMovieList = []
-
-    if DATABASE_MYSQL == 'false':
-        if not xbmcvfs.exists(MODBPATH):
-            createMovDB()
-        elif not valDB(MODBPATH):
-            xbmcvfs.delete(MODBPATH)
-            createMovDB()
-    else:
-        if not valDB('Movies'):
-            createMovDB()
 
     for entry in movieList:
         kmovName = kmovieExists(entry.get('title'), entry.get('imdbnumber'))
@@ -390,20 +432,10 @@ def writeMovie(movieList):
 def writeShow(episode):
     dbEpisode = None
 
-    if DATABASE_MYSQL == 'false':
-        if not xbmcvfs.exists(SHDBPATH):
-            createShowDB()
-        elif not valDB(SHDBPATH):
-            xbmcvfs.delete(SHDBPATH)
-            createShowDB()
-    else:
-        if not valDB('TVShows'):
-            createShowDB()
-
     if episode is not None:
         showID = showExists(episode.get('tvShowTitle'), episode.get('path'))
         if showID is not None:
-            episodeStreamExists(showID, episode.get('strSeasonEpisode'), episode.get('provider'), episode.get('url'))
+            episodeStreamExists(showID, episode.get('strSeasonEpisode'), episode.get('provider'), episode.get('url'), episode.get('metadata'))
             dbEpisode = {'path': episode.get('path'), 'tvShowTitle': episode.get('tvShowTitle'), 'showID': showID, 'strSeasonEpisode': episode.get('strSeasonEpisode')}
 
     return dbEpisode
@@ -411,13 +443,13 @@ def writeShow(episode):
 
 def createMovDB():
     try:
-        con, cursor = openDB(MODBPATH, 'Movies')
+        con, cursor = openDB(settings.DATABASE_SQLLITE_OSMOSIS_MOVIE_FILENAME_AND_PATH, 'Movies')
 
         sql_strm_ref = 'CREATE TABLE stream_ref (id INTEGER PRIMARY KEY{}, mov_id INTEGER NOT NULL, provider TEXT NOT NULL, url TEXT NOT NULL);'
         sql_movtable = 'CREATE TABLE movies (id INTEGER PRIMARY KEY{}, title TEXT NOT NULL, filePath TEXT NOT NULL);'
 
-        sql_strm_ref = sql_strm_ref.format('' if DATABASE_MYSQL == 'false' else ' AUTO_INCREMENT')
-        sql_movtable = sql_movtable.format('' if DATABASE_MYSQL == 'false' else ' AUTO_INCREMENT')
+        sql_strm_ref = sql_strm_ref.format('' if not settings.USE_MYSQL else ' AUTO_INCREMENT')
+        sql_movtable = sql_movtable.format('' if not settings.USE_MYSQL else ' AUTO_INCREMENT')
 
         cursor.execute(sql_strm_ref)
         cursor.execute(sql_movtable)
@@ -429,13 +461,13 @@ def createMovDB():
 
 def createShowDB():
     try:
-        con, cursor = openDB(SHDBPATH, 'TVShows')
+        con, cursor = openDB(settings.DATABASE_SQLLITE_OSMOSIS_TVSHOW_FILENAME_AND_PATH, 'TVShows')
 
         sql_strm_ref = 'CREATE TABLE stream_ref (id INTEGER PRIMARY KEY{}, show_id INTEGER NOT NULL, seasonEpisode TEXT NOT NULL, provider TEXT NOT NULL, url TEXT NOT NULL);'
         sql_showtable = 'CREATE TABLE shows (id INTEGER PRIMARY KEY{}, showTitle TEXT NOT NULL, filePath TEXT NOT NULL);'
 
-        sql_strm_ref = sql_strm_ref.format('' if DATABASE_MYSQL == 'false' else ' AUTO_INCREMENT')
-        sql_showtable = sql_showtable.format('' if DATABASE_MYSQL == 'false' else ' AUTO_INCREMENT')
+        sql_strm_ref = sql_strm_ref.format('' if not settings.USE_MYSQL else ' AUTO_INCREMENT')
+        sql_showtable = sql_showtable.format('' if not settings.USE_MYSQL else ' AUTO_INCREMENT')
 
         cursor.execute(sql_strm_ref)
         cursor.execute(sql_showtable)
@@ -445,12 +477,36 @@ def createShowDB():
         con.close()
 
 
+def createSchemaVersionTable():
+    for database in globals.DATABASES:
+        try:
+            con, cursor = openDB(database.get('db').get('sqliteDB'), database.get('db').get('mysqlDBType'))
+
+            if not settings.USE_MYSQL:
+                query = 'SELECT * FROM sqlite_master WHERE name LIKE \'schema_version\' and type LIKE \'table\';'
+                cursor.execute(query)
+                result = cursor.fetchone()
+            else:
+                query = 'SHOW TABLES LIKE \'schema_version\';'
+                cursor.execute(query)
+                result = cursor.fetchone()
+
+            if not result:
+                query = 'CREATE TABLE schema_version (installed_rank INTEGER PRIMARY KEY{0}, filename TEXT NOT NULL, installed_on TIMESTAMP NOT NULL, success TINYINT NOT NULL);'
+                query = query.format('' if not settings.USE_MYSQL else ' AUTO_INCREMENT')
+                cursor.execute(query)
+                con.commit()
+        finally:
+            cursor.close()
+            con.close()
+
+
 def kmovieExists(title, imdbnumber):
     dbMovieName = None
     try:
-        con, cursor = openDB(KMODBPATH, 'KMovies')
+        con, cursor = openDB(settings.DATABASE_SQLLITE_KODI_VIDEO_FILENAME_AND_PATH, 'KMovies')
 
-        # title = stringUtils.invCommas(title)
+        # title = invCommas(title)
         cursor.execute('SELECT strFileName FROM movie_view WHERE uniqueid_value LIKE \'{}\';'.format(imdbnumber))
 
         dbMovieName = cursor.fetchone()
@@ -459,7 +515,7 @@ def kmovieExists(title, imdbnumber):
             dbMovieName = title
         else:
             dbMovieName = dbMovieName[0]
-        dbMovieName = stringUtils.cleanTitle(dbMovieName)
+        dbMovieName = cleanTitle(dbMovieName)
     finally:
         cursor.close()
         con.close()
@@ -470,15 +526,15 @@ def kmovieExists(title, imdbnumber):
 def movieExists(title, path):
     dbMovieID = None
     try:
-        con, cursor = openDB(MODBPATH, 'Movies')
+        con, cursor = openDB(settings.DATABASE_SQLLITE_OSMOSIS_MOVIE_FILENAME_AND_PATH, 'Movies')
 
-        title = stringUtils.invCommas(title)
+        title = invCommas(title)
 
         cursor.execute('SELECT id, title, filePath FROM movies WHERE title LIKE \'{}\';'.format(title))
         dbMovie = cursor.fetchone()
 
-        path = stringUtils.completePath(path) if DATABASE_MYSQL == 'false' else stringUtils.completePath(path).replace('\\', '\\\\')
-        path = stringUtils.invCommas(path)
+        path = completePath(path) if not settings.USE_MYSQL else completePath(path).replace('\\', '\\\\')
+        path = invCommas(path)
         if dbMovie is None:
             cursor.execute('INSERT INTO movies (title, filePath) VALUES (\'{}\', \'{}\');'.format(title, path))
             con.commit()
@@ -497,7 +553,7 @@ def movieExists(title, path):
 
 def movieStreamExists(movieID, provider, url):
     try:
-        con, cursor = openDB(MODBPATH, 'Movies')
+        con, cursor = openDB(settings.DATABASE_SQLLITE_OSMOSIS_MOVIE_FILENAME_AND_PATH, 'Movies')
 
         if url.find('?url=plugin') != -1:
             url = url.strip().replace('?url=plugin', 'plugin', 1)
@@ -510,11 +566,11 @@ def movieStreamExists(movieID, provider, url):
             dbMovie = []
 
         if len(dbMovie) == 0:
-            cursor.execute('INSERT INTO stream_ref (mov_id, provider, url) VALUES ({}, \'{}\', \'{}\');'.format(movieID, provider, stringUtils.invCommas(url)))
+            cursor.execute('INSERT INTO stream_ref (mov_id, provider, url) VALUES ({}, \'{}\', \'{}\');'.format(movieID, provider, invCommas(url)))
             con.commit()
         else:
             if py2_decode(dbMovie[0][1]) != url:
-                cursor.execute('UPDATE stream_ref SET url=\'{}\' WHERE mov_id = {};'.format(stringUtils.invCommas(url), movieID))
+                cursor.execute('UPDATE stream_ref SET url=\'{}\' WHERE mov_id = {};'.format(invCommas(url), movieID))
                 con.commit()
     finally:
         cursor.close()
@@ -524,16 +580,16 @@ def movieStreamExists(movieID, provider, url):
 def showExists(title, path):
     dbShowID = None
     try:
-        con, cursor = openDB(SHDBPATH, 'TVShows')
+        con, cursor = openDB(settings.DATABASE_SQLLITE_OSMOSIS_TVSHOW_FILENAME_AND_PATH, 'TVShows')
 
-        title = stringUtils.invCommas(title)
+        title = invCommas(title)
 
         cursor.execute('SELECT id, showTitle FROM shows WHERE showTitle LIKE \'{}\';'.format(title))
         dbShow = cursor.fetchone()
 
         if dbShow is None:
-            path = stringUtils.completePath(path) if DATABASE_MYSQL == 'false' else stringUtils.completePath(path).replace('\\', '\\\\')
-            path = stringUtils.invCommas(path)
+            path = completePath(path) if not settings.USE_MYSQL else completePath(path).replace('\\', '\\\\')
+            path = invCommas(path)
             cursor.execute('INSERT INTO shows (showTitle, filePath) VALUES (\'{}\', \'{}\');'.format(title, path))
             con.commit()
             dbShowID = cursor.lastrowid
@@ -546,26 +602,27 @@ def showExists(title, path):
     return dbShowID
 
 
-def episodeStreamExists(showID, seEp, provider, url):
+def episodeStreamExists(showID, seEp, provider, url, metadata):
     try:
-        con, cursor = openDB(SHDBPATH, 'TVShows')
+        con, cursor = openDB(settings.DATABASE_SQLLITE_OSMOSIS_TVSHOW_FILENAME_AND_PATH, 'TVShows')
 
         if url.find('?url=plugin') > -1:
             url = url.strip().replace('?url=plugin', 'plugin', 1)
 
-        cursor.execute('SELECT show_id, url FROM stream_ref WHERE show_id = {} AND seasonEpisode LIKE \'{}\' AND provider LIKE \'{}\';'.format(showID, seEp, provider))
+        cursor.execute('SELECT show_id, url, metadata FROM stream_ref WHERE show_id = {0} AND seasonEpisode LIKE \'{1}\' AND provider LIKE \'{2}\';'.format(showID, seEp, provider))
         dbShow = cursor.fetchall()
 
         if len(dbShow) > 1:
-            cursor.execute('DELETE FROM stream_ref WHERE show_id = {} AND seasonEpisode LIKE \'{}\' AND provider LIKE \'{}\';'.format(showID, seEp, provider))
+            cursor.execute('DELETE FROM stream_ref WHERE show_id = {0} AND seasonEpisode LIKE \'{1}\' AND provider LIKE \'{2}\';'.format(showID, seEp, provider))
             dbShow = []
 
         if len(dbShow) == 0:
-            cursor.execute('INSERT INTO stream_ref (show_id, seasonEpisode, provider, url) VALUES ({}, \'{}\', \'{}\', \'{}\');'.format(showID, seEp, provider, stringUtils.invCommas(url)))
+            query = 'INSERT INTO stream_ref (show_id, seasonEpisode, provider, url, metadata) VALUES ({0}, \'{1}\', \'{2}\', \'{3}\', \'{4}\');'.format(showID, seEp, provider, invCommas(url), invCommas(metadata))
+            cursor.execute(query)
             con.commit()
         else:
-            if py2_decode(dbShow[0][1]) != url:
-                cursor.execute('UPDATE stream_ref SET url = \'{}\' WHERE show_id = {} AND seasonEpisode LIKE \'{}\' AND provider LIKE \'{}\';'.format(stringUtils.invCommas(url), showID, seEp, provider))
+            if py2_decode(dbShow[0][1]) != url or not dbShow[0][2]:
+                cursor.execute('UPDATE stream_ref SET url = \'{0}\', metadata = \'{1}\' WHERE show_id = {2} AND seasonEpisode LIKE \'{3}\' AND provider LIKE \'{4}\';'.format(invCommas(url), invCommas(metadata), showID, seEp, provider))
                 con.commit()
     finally:
         cursor.close()
@@ -576,14 +633,15 @@ def getVideo(ID, seasonEpisode=None):
     provList = None
 
     try:
-        args = {'sqliteDB': MODBPATH, 'mysqlDB': 'Movies'} if seasonEpisode is None else {'sqliteDB': SHDBPATH, 'mysqlDB': 'TVShows'}
+        args = {'sqliteDB': settings.DATABASE_SQLLITE_OSMOSIS_MOVIE_FILENAME_AND_PATH, 'mysqlDBType': 'Movies'} if not seasonEpisode \
+                else {'sqliteDB': settings.DATABASE_SQLLITE_OSMOSIS_TVSHOW_FILENAME_AND_PATH, 'mysqlDBType': 'TVShows'}
         con, cursor = openDB(**args)
 
         if seasonEpisode is None:
-            query = 'SELECT url, provider FROM stream_ref WHERE mov_id = {};'
+            query = 'SELECT stream_ref.url, stream_ref.provider, movies.filePath FROM stream_ref INNER JOIN movies ON stream_ref.mov_id = movies.id WHERE stream_ref.mov_id = {};'
             args = (ID,)
         else:
-            query = 'SELECT url, provider FROM stream_ref WHERE show_id = {} AND seasonEpisode LIKE \'{}\';'
+            query = 'SELECT stream_ref.url, stream_ref.provider, shows.filePath, stream_ref.metadata FROM stream_ref INNER JOIN shows ON stream_ref.show_id = shows.id WHERE stream_ref.show_id = {} AND stream_ref.seasonEpisode LIKE \'{}\';'
             args = (ID, seasonEpisode)
 
         cursor.execute(query.format(*args))
@@ -598,18 +656,19 @@ def getVideo(ID, seasonEpisode=None):
 def delStream(path, provider, isShow):
     streams = []
 
-    utils.addon_log('delStream: path = {0}, provider = {1}, isShow = {2}'.format(py2_decode(path), py2_decode(provider), isShow))
+    addon_log('delStream: path = {0}, provider = {1}, isShow = {2}'.format(py2_decode(path), py2_decode(provider), isShow))
     try:
-        args = {'sqliteDB': MODBPATH, 'mysqlDB': 'Movies'} if not isShow or isShow == False else {'sqliteDB': SHDBPATH, 'mysqlDB': 'TVShows'}
+        args = {'sqliteDB': settings.DATABASE_SQLLITE_OSMOSIS_MOVIE_FILENAME_AND_PATH, 'mysqlDBType': 'Movies'} if not isShow \
+                else {'sqliteDB': settings.DATABASE_SQLLITE_OSMOSIS_TVSHOW_FILENAME_AND_PATH, 'mysqlDBType': 'TVShows'}
         con, cursor = openDB(**args)
 
-        path = stringUtils.invCommas(path)
+        path = invCommas(path)
         if isShow == False:
             query = 'SELECT movies.title FROM movies WHERE movies.id IN (SELECT stream_ref.mov_id FROM stream_ref WHERE stream_ref.mov_id IN (SELECT movies.id FROM movies WHERE movies.filePath like \'{0}\') and stream_ref.provider like \'{1}\');'
         else:
             query = 'SELECT stream_ref.seasonEpisode FROM stream_ref WHERE stream_ref.show_id IN (SELECT shows.id FROM shows WHERE shows.filePath like \'{0}\') and stream_ref.provider like \'{1}\';'
         args = [path, provider]
-        utils.addon_log('delStream: query{0} = {1}'.format('{args}', query.format(*args)))
+        addon_log('delStream: query = {0}'.format(query.format(*args)))
         cursor.execute(query.format(*args))
         streams_delete = cursor.fetchall()
 
@@ -617,7 +676,7 @@ def delStream(path, provider, isShow):
             query = 'DELETE FROM stream_ref WHERE stream_ref.mov_id IN (SELECT movies.id FROM movies WHERE movies.filePath like \'{0}\') and stream_ref.provider like \'{1}\';'
         else:
             query = 'DELETE FROM stream_ref WHERE stream_ref.show_id IN (SELECT shows.id FROM shows WHERE shows.filePath like \'{0}\') and stream_ref.provider like \'{1}\';'
-        utils.addon_log('delStream: query{0} = {1}'.format('{args}', query.format(*args)))
+        addon_log('delStream: query = {0}'.format(query.format(*args)))
         cursor.execute(query.format(*args))
         con.commit()
 
@@ -625,7 +684,7 @@ def delStream(path, provider, isShow):
             query = 'SELECT movies.title FROM movies WHERE movies.id IN (SELECT stream_ref.mov_id FROM stream_ref WHERE stream_ref.mov_id IN (SELECT movies.id FROM movies WHERE movies.filePath like \'{0}\'));'
         else:
             query = 'SELECT stream_ref.seasonEpisode FROM stream_ref WHERE stream_ref.show_id IN (SELECT shows.id FROM shows WHERE shows.filePath like \'{0}\');'
-        utils.addon_log('delStream: query{0} = {1}'.format('{args}', query.format(*args)))
+        addon_log('delStream: query = {0}'.format(query.format(*args)))
         cursor.execute(query.format(*args))
         streams_keep = cursor.fetchall()
 
@@ -639,33 +698,9 @@ def delStream(path, provider, isShow):
     return streams
 
 
-def getPlayedURLResumePoint(args):
-    urlResumePoint = None
-
-    try:
-        con, cursor = openDB(KMODBPATH, 'KMovies')
-
-        query = 'SELECT timeInSeconds, totalTimeInSeconds, idBookmark FROM bookmark INNER JOIN files on files.idFile = bookmark.idFile'
-        if(args.get('url', None)):
-            url = stringUtils.invCommas(args.get('url'))
-            query = '{0}  WHERE files.strFilename LIKE \'{1}\';'.format(query, url)
-        else:
-            filename = stringUtils.invCommas(args.get('filename'))
-            path = stringUtils.invCommas(args.get('path'))
-            query = '{0} INNER JOIN path on path.idPath = files.idPath WHERE files.strFilename LIKE \'{1}\' AND path.strPath LIKE \'{2}\';'.format(query, filename, path)
-
-        cursor.execute(query)
-        urlResumePoint = cursor.fetchone()
-    finally:
-        cursor.close()
-        con.close()
-
-    return urlResumePoint
-
-
 def delBookMark(bookmarkID, fileID):
     try:
-        con, cursor = openDB(KMODBPATH, 'KMovies')
+        con, cursor = openDB(settings.DATABASE_SQLLITE_KODI_VIDEO_FILENAME_AND_PATH, 'KMovies')
 
         selectquery = 'SELECT idBookmark FROM bookmark WHERE {} = {};'
         deletequery = 'DELETE FROM bookmark WHERE {} = {};'
@@ -690,17 +725,19 @@ def delBookMark(bookmarkID, fileID):
         con.close()
 
 
-def getKodiMovieID(sTitle):
+def getKodiMovieID(sFilePath):
     dbMovie = None
 
     try:
-        con, cursor = openDB(KMODBPATH, 'KMovies')
+        con, cursor = openDB(settings.DATABASE_SQLLITE_KODI_VIDEO_FILENAME_AND_PATH, 'KMovies')
 
-        sTitle = stringUtils.invCommas(sTitle)
+        sFilePath = invCommas(sFilePath)
 
-        # c00 = title; c14 = genre
-        cursor.execute('SELECT movie.idMovie, movie.idFile, movie.premiered, movie.c14 FROM movie INNER JOIN files on files.idFile = movie.idFile WHERE files.strFilename LIKE \'{}.strm\';'.format(sTitle))
+        # movie.c00 = title; movie.c14 = genre; movie.c22 = filepath
+        cursor.execute('SELECT movie.idMovie, movie.idFile, movie.premiered, movie.c14, movie.c22 FROM movie WHERE movie.c22 LIKE \'%{0}%\';'.format(sFilePath))
         dbMovie = cursor.fetchone()
+        if dbMovie:
+            dbMovie = {'id': dbMovie[0], 'fileid': dbMovie[1], 'premiered': dbMovie[2], 'genre': dbMovie[3], 'filepath': dbMovie[4]}
     finally:
         cursor.close()
         con.close()
@@ -708,18 +745,20 @@ def getKodiMovieID(sTitle):
     return dbMovie
 
 
-def getKodiEpisodeID(sTVShowTitle, iSeason, iEpisode):
+def getKodiEpisodeID(sFilePath, iSeason, iEpisode):
     dbEpisode = None
 
     try:
-        con, cursor = openDB(KMODBPATH, 'KMovies')
+        con, cursor = openDB(settings.DATABASE_SQLLITE_KODI_VIDEO_FILENAME_AND_PATH, 'KMovies')
 
-        sTVShowTitle = stringUtils.invCommas(sTVShowTitle)
+        sFilePath = invCommas(sFilePath)
 
-        # episode.c00 = title; episode.c05 = aired; episode.c06 = thumb; episode.c12 = season; episode.c13 = episode; tvshow.c00 = title
-        query = 'SELECT episode.idEpisode, episode.idFile, episode.c00, episode.c05, episode.c06 FROM episode INNER JOIN tvshow ON tvshow.idShow = episode.idShow WHERE episode.c12 = {0} and episode.c13 = {1} and tvshow.c00 LIKE \'{2}\';'
-        cursor.execute(query.format(iSeason, iEpisode, sTVShowTitle))
+        # episode.c00 = title; episode.c05 = aired; episode.c06 = thumb; episode.c12 = season; episode.c13 = episode; episode.c18 = filepath;
+        query = 'SELECT episode.idEpisode, episode.idFile, episode.c00, episode.c05, episode.c06, episode.c18 FROM episode WHERE episode.c12 = {0} and episode.c13 = {1} and episode.c18 LIKE \'%{2}%\';'
+        cursor.execute(query.format(iSeason, iEpisode, sFilePath))
         dbEpisode = cursor.fetchone()
+        if dbEpisode:
+            dbEpisode = {'id': dbEpisode[0], 'fileid': dbEpisode[1], 'title': dbEpisode[2], 'aired': dbEpisode[3], 'thumb': dbEpisode[4], 'filepath': dbEpisode[5]}
     finally:
         cursor.close()
         con.close()
@@ -727,16 +766,51 @@ def getKodiEpisodeID(sTVShowTitle, iSeason, iEpisode):
     return dbEpisode
 
 
-def openDB(sqliteDB, mysqlDB):
-    if DATABASE_MYSQL == 'false':
-        con = sqlite3.connect(str(os.path.join(sqliteDB)))
-        con.text_factory = str
+def openDB(sqliteDB, mysqlDBType):
+    if not settings.USE_MYSQL:
+        con = sqlite3.connect(sqliteDB)
         cursor = con.cursor()
     else:
-        Config.DATABASETYPE = mysqlDB
+        Config.DATABASETYPE = mysqlDBType
         Config.BUFFERED = True
         config = Config.dataBaseVal().copy()
         con = mysql.connector.Connect(**config)
         cursor = con.cursor()
 
     return con, cursor
+
+
+def checkSchemaVersion(filename, dbtype):
+    con, cursor, entry = None, None, None
+
+    try:
+        for database in globals.DATABASES:
+            if database.get('dbtype') == dbtype:
+                con, cursor = openDB(database.get('db').get('sqliteDB'), database.get('db').get('mysqlDBType'))
+                query = 'SELECT * FROM schema_version WHERE schema_version.filename = \'{0}\';'.format(filename)
+                cursor.execute(query)
+                entry = cursor.fetchone()
+    finally:
+        if cursor:
+            cursor.close()
+        if con:
+            con.close()
+
+    return entry
+
+
+def writeSchemaVersion(filename, installed_on, success, dbtype):
+    con, cursor, entry = None, None, None
+
+    try:
+        for database in globals.DATABASES:
+            if database.get('dbtype') == dbtype:
+                con, cursor = openDB(database.get('db').get('sqliteDB'), database.get('db').get('mysqlDBType'))
+                query = 'INSERT INTO schema_version (filename, installed_on, success) VALUES (\'{0}\', \'{1}\', {2});'.format(filename, installed_on, success)
+                cursor.execute(query)
+                con.commit()
+    finally:
+        if cursor:
+            cursor.close()
+        if con:
+            con.close()

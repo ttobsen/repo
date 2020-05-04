@@ -21,76 +21,70 @@ import os, sys
 import time
 import re
 import xbmc
-import xbmcplugin, xbmcgui, xbmcaddon
+import xbmcgui
+import xbmcplugin
 
-import utils
-from . import fileSys
-from . import jsonUtils
-from . import stringUtils
-from . import xmldialogs
+from .common import Globals, jsonrpc
+from .fileSys import readMediaList
+from .l10n import getString
+from .stringUtils import getProvidername, getStrmname
+from .utils import addon_log, key_natural_sort, zeitspanne
+from .xmldialogs import show_modal_dialog, Skip
 
 try:
     import urllib.parse as urllib
 except:
     import urllib
 
-addon = xbmcaddon.Addon()
-addon_id = addon.getAddonInfo('id')
-ADDON_NAME = addon.getAddonInfo('name')
-home = py2_decode(xbmc.translatePath(addon.getAddonInfo('path')))
-icon = os.path.join(home, 'resources/media/icon.png')
-iconRemove = os.path.join(home, 'resources/media/iconRemove.png')
-FANART = os.path.join(home, 'resources/media/fanart.jpg')
-folderIcon = os.path.join(home, 'resources/media/folderIcon.png')
-updateIcon = os.path.join(home, 'resources/media/updateIcon.png')
+globals = Globals()
 
 
 def addItem(label, mode, icon):
-    utils.addon_log('addItem')
-    u = 'plugin://{0}/?{1}'.format(addon_id, urllib.urlencode({'mode': mode, 'fanart': icon}))
+    addon_log('addItem')
+    u = 'plugin://{0}/?{1}'.format(globals.PLUGIN_ID, urllib.urlencode({'mode': mode, 'fanart': icon}))
     liz = xbmcgui.ListItem(label)
     liz.setInfo(type='Video', infoLabels={'Title': label})
-    liz.setArt({'icon': icon, 'thumb': icon, 'fanart': FANART})
+    liz.setArt({'icon': icon, 'thumb': icon, 'fanart': globals.MEDIA_FANART})
 
     xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=False)
 
 
 def addFunction(labels):
-    utils.addon_log('addItem')
-    u = 'plugin://{0}/?{1}'.format(addon_id, urllib.urlencode({'mode': 666, 'fanart': updateIcon}))
+    addon_log('addItem')
+    u = 'plugin://{0}/?{1}'.format(globals.PLUGIN_ID, urllib.urlencode({'mode': 666, 'fanart': globals.MEDIA_UPDATE}))
     liz = xbmcgui.ListItem(labels)
     liz.setInfo(type='Video', infoLabels={'Title': labels})
-    liz.setArt({'icon': updateIcon, 'thumb': updateIcon, 'fanart':  FANART})
+    liz.setArt({'icon': globals.MEDIA_UPDATE, 'thumb': globals.MEDIA_UPDATE, 'fanart':  globals.MEDIA_FANART})
 
     xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=False)
 
 
 def addDir(name, url, mode, art, plot=None, genre=None, date=None, credits=None, showcontext=False, name_parent='', type=None):
-    utils.addon_log('addDir: {0} ({1})'.format(py2_decode(name), py2_decode(name_parent)))
+    addon_log('addDir: {0} ({1})'.format(py2_decode(name), py2_decode(name_parent)))
     u = '{0}?{1}'.format(sys.argv[0], urllib.urlencode({'url': url, 'name': py2_encode(name), 'type': type, 'name_parent': py2_encode(name_parent), 'fanart': art.get('fanart', '')}))
     contextMenu = []
     liz = xbmcgui.ListItem(name)
     liz.setInfo(type='Video', infoLabels={'Title': name, 'Plot': plot, 'Genre': genre, 'dateadded': date, 'credits': credits})
     liz.setArt(art)
     if type == 'tvshow':
-        contextMenu.append(('Add TV-Show to MediaList', 'XBMC.RunPlugin({0}&mode={1})'.format(u, 200)))
-        contextMenu.append(('Add seasons individually to MediaList', 'XBMC.RunPlugin({0}&mode={1})'.format(u, 202)))
+        contextMenu.append((getString(39102, globals.addon), 'RunPlugin({0}&mode={1})'.format(u, 200)))
+        contextMenu.append((getString(39104, globals.addon), 'RunPlugin({0}&mode={1})'.format(u, 202)))
         xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
     elif re.findall('( - |, )*([sS](taffel|eason|erie[s]{0,1})|[pP]art|[tT]eil) \d+.*', name):
-        contextMenu.append(('Add Season to MediaList', 'XBMC.RunPlugin({0}&mode={1})'.format(u, 200)))
+        contextMenu.append((getString(39103, globals.addon), 'RunPlugin({0}&mode={1})'.format(u, 200)))
         xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
-    elif type == 'movie':  # ???
-        contextMenu.append(('Add Movie to MediaList', 'XBMC.RunPlugin({0}&mode={1})'.format(u, 200)))
+    elif type == 'movie':
+        contextMenu.append((getString(39101, globals.addon), 'RunPlugin({0}&mode={1})'.format(u, 200)))
         xbmcplugin.setContent(int(sys.argv[1]), 'movies')
     else:
-        contextMenu.append(('Create Strms', 'XBMC.RunPlugin({0}&mode={1})'.format(u, 200)))
+        contextMenu.append((getString(39100, globals.addon), 'RunPlugin({0}&mode={1})'.format(u, 200)))
     liz.addContextMenuItems(contextMenu)
 
     xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url='{0}&mode={1}'.format(u, mode), listitem=liz, isFolder=True)
 
 
 def addLink(name, url, mode, art, plot, genre, date, showcontext, playlist, regexs, total, setCookie='', type=None, year=None):
-    utils.addon_log('addLink: {0}'.format(py2_decode(name)))
+    addon_log('addLink: {0}'.format(py2_decode(name)))
     u = '{0}?{1}'.format(sys.argv[0], urllib.urlencode({'url': url, 'name': py2_encode(name), 'fanart': art.get('fanart', ''), 'type': type, 'year': year}))
     contextMenu = []
     liz = xbmcgui.ListItem(name)
@@ -98,10 +92,10 @@ def addLink(name, url, mode, art, plot, genre, date, showcontext, playlist, rege
     liz.setArt(art)
     liz.setProperty('IsPlayable', 'true')
     if type == 'movie':
-        contextMenu.append(('Add Movie to MediaList', 'XBMC.RunPlugin({0}&mode={1}&filetype=file)'.format(u, 200)))
+        contextMenu.append((getString(39101, globals.addon), 'RunPlugin({0}&mode={1}&filetype=file)'.format(u, 200)))
         xbmcplugin.setContent(int(sys.argv[1]), 'movies')
     else:
-        contextMenu.append(('Create Strm', 'XBMC.RunPlugin({0}&mode={1}&filetype=file)'.format(u, 200)))
+        contextMenu.append((getString(39100, globals.addon), 'RunPlugin({0}&mode={1}&filetype=file)'.format(u, 200)))
 
     liz.addContextMenuItems(contextMenu)
 
@@ -109,200 +103,113 @@ def addLink(name, url, mode, art, plot, genre, date, showcontext, playlist, rege
 
 
 def getSources():
-    utils.addon_log('getSources')
+    addon_log('getSources')
     xbmcplugin.setContent(int(sys.argv[1]), 'files')
-    art = {'fanart': FANART, 'thumb': folderIcon}
-    addDir('Video Plugins', 'video', 1, art)
-    addDir('Music Plugins', 'audio', 1, art)
-    addDir('Video Favoriten', '', 102, {'thumb': 'DefaultFavourites.png'}, type='video')
-    addItem('Update', 4, updateIcon)
-    addItem('Update (with removal of unused .strm files)', 42, updateIcon)
-    addFunction('Update all')
-    addItem('Rename', 41, updateIcon)
-    addItem('Remove Media', 5, iconRemove)
-    addItem('Remove Shows from TVDB cache', 51, iconRemove)
-    addItem('Remove all Shows from TVDB cache', 52, iconRemove)
+    art = {'fanart': globals.MEDIA_FANART, 'thumb': globals.MEDIA_FOLDER}
+    addDir(getString(39000, globals.addon), 'video', 1, art)
+    addDir(getString(39001, globals.addon), 'audio', 1, art)
+    addDir(getString(39002, globals.addon), '', 102, {'thumb': 'DefaultFavourites.png'}, type='video')
+    addItem(getString(39003, globals.addon), 4, globals.MEDIA_UPDATE)
+    addItem(getString(39004, globals.addon), 42, globals.MEDIA_UPDATE)
+    addFunction(getString(39005, globals.addon))
+    addItem(getString(39006, globals.addon), 41, globals.MEDIA_UPDATE)
+    addItem(getString(39007, globals.addon), 5, globals.MEDIA_REMOVE)
+    addItem(getString(39008, globals.addon), 51, globals.MEDIA_REMOVE)
+    addItem(getString(39009, globals.addon), 52, globals.MEDIA_REMOVE)
     if xbmc.getCondVisibility('System.HasAddon(service.watchdog)') != 1:
-        addon_details = jsonUtils.jsonrpc('Addons.GetAddonDetails', dict(addonid='service.watchdog', properties=['enabled', 'installed'])).get('addon')
+        addon_details = jsonrpc('Addons.GetAddonDetails', dict(addonid='service.watchdog', properties=['enabled', 'installed'])).get('addon')
         if addon_details and addon_details.get('installed'):
-            addItem('Activate Watchdog', 7, icon)
+            addItem(getString(39010, globals.addon), 7, globals.MEDIA_ICON)
         else:
-            addItem('Install Watchdog', 6, icon)
-    # ToDo Add label
+            addItem(getString(39011, globals.addon), 6, globals.MEDIA_ICON)
 
 
 def getType(url):
     if url.find('plugin.audio') != -1:
-        Types = ['YouTube', 'Audio-Album', 'Audio-Single', 'Other']
+        types = [dict(id='YouTube', string_id=39116), dict(id='Audio-Album', string_id=39114), dict(id='Audio-Single', string_id=39115), dict(id='Other', string_id=39117)]
     else:
-        Types = ['Movies', 'TV-Shows', 'YouTube', 'Other']
+        types = [dict(id='Movies', string_id=39111), dict(id='TV-Shows', string_id=39112), dict(id='YouTube', string_id=39116), dict(id='Other', string_id=39117)]
 
-    selectType = selectDialog('Select category', Types)
+    selectType = selectDialog(getString(39109, globals.addon), [getString(type.get('string_id')) for type in types])
 
     if selectType == -1:
         return -1
 
     if selectType == 3:
-        subType = ['(Music)', '(Movies)', '(TV-Shows)']
-        selectOption = selectDialog('Select Video type:', subType)
-
+        subtypes = [dict(id='(Music)', string_id=39113), dict(id='(Movies)', string_id=39111), dict(id='(TV-Shows)', string_id=39112)]
+        selectOption = selectDialog(getString(39109, globals.addon), [getString(subtype.get('string_id')) for subtype in subtypes])
     else:
-        subType = ['(en)', '(de)', '(sp)', '(tr)', 'Other']
-        selectOption = selectDialog('Select language tag', subType)
+        subtypes = [dict(id='(de)', string_id=39118), dict(id='(en)', string_id=39119), dict(id='(sp)', string_id=39120), dict(id='(tr)', string_id=39121), dict(id='Other', string_id=39117)]
+        selectOption = selectDialog(getString(39110, globals.addon), [getString(subtype.get('string_id')) for subtype in subtypes])
 
     if selectOption == -1:
         return -1
 
     if selectType >= 0 and selectOption >= 0:
-        return Types[selectType] + subType[selectOption]
+        return '{0}{1}'.format(types[selectType].get('id'), subtypes[selectOption].get('id'))
 
 
 def getTypeLangOnly(Type):
-    lang = ['(en)', '(de)', '(sp)', '(tr)', 'Other']
-    selectOption = selectDialog('Select language tag', lang)
+    langs = [dict(id='(de)', string_id=39118), dict(id='(en)', string_id=39119), dict(id='(sp)', string_id=39120), dict(id='(tr)', string_id=39121), dict(id='Other', string_id=39117)]
+    selectOption = selectDialog(getString(39110, globals.addon), [getString(lang.get('string_id')) for lang in langs])
 
     if selectOption == -1:
         return -1
 
-    return Type + lang[selectOption]
+    return '{0}{1}'.format(Type, langs[selectOption].get('id'))
 
 
 def selectDialog(header, list, autoclose=0, multiselect=False, useDetails=False, preselect=None):
     if multiselect:
         if preselect:
-            return xbmcgui.Dialog().multiselect(header, list, autoclose=autoclose, useDetails=useDetails, preselect=preselect)
+            return globals.dialog.multiselect(header, list, autoclose=autoclose, useDetails=useDetails, preselect=preselect)
         else:
-            return xbmcgui.Dialog().multiselect(header, list, autoclose=autoclose, useDetails=useDetails)
+            return globals.dialog.multiselect(header, list, autoclose=autoclose, useDetails=useDetails)
     else:
         if preselect:
-            return xbmcgui.Dialog().select(header, list, autoclose, useDetails=useDetails, preselect=preselect)
+            return globals.dialog.select(header, list, autoclose, useDetails=useDetails, preselect=preselect)
         else:
-            return xbmcgui.Dialog().select(header, list, autoclose, useDetails=useDetails)
+            return globals.dialog.select(header, list, autoclose, useDetails=useDetails)
 
 
 def editDialog(nameToChange):
-    return py2_decode(xbmcgui.Dialog().input(nameToChange, type=xbmcgui.INPUT_ALPHANUM, defaultt=nameToChange))
+    return py2_decode(globals.dialog.input(nameToChange, type=xbmcgui.INPUT_ALPHANUM, defaultt=nameToChange))
 
 
-# Before executing the code below we need to know the movie original title (string variable originaltitle) and the year (string variable year). They can be obtained from the infolabels of the listitem. The code filters the database for items with the same original title and the same year, year-1 and year+1 to avoid errors identifying the media.
-def markMovie(movID, pos, total, done):
-    if done:
-        try:
-            jsonUtils.jsonrpc('VideoLibrary.SetMovieDetails', dict(movieid=movID, playcount=1))
-            xbmc.executebuiltin('XBMC.Container.Refresh')
-        except:
-            print('markMovie: Movie not in DB!?')
-            pass
-    else:
-        if xbmc.getCondVisibility('Library.HasContent(Movies)') and pos > 0 and total > 0:
-            try:
-                jsonUtils.jsonrpc('VideoLibrary.SetMovieDetails', dict(movieid=movID, resume=dict(position=pos, total=total)))
-                xbmc.executebuiltin('XBMC.Container.Refresh')
-            except:
-                print('markMovie: Movie not in DB!?')
-                pass
+def resumePointDialog(resume, dialog, playback_rewind):
+    if resume and resume.get('position') > 0.0:
+        position = int(resume.get('position')) - playback_rewind
+        resumeLabel = getString(12022).format(time.strftime("%H:%M:%S", time.gmtime(position)))
+        if dialog == 0:
+            sel = globals.dialog.contextmenu([resumeLabel, xbmc.getLocalizedString(12021)])
+            if sel == 0:
+                return position
+        elif dialog == 1:
+            skip = show_modal_dialog(Skip,
+                'plugin-video-osmosis-resume.xml',
+                globals.PLUGIN_PATH,
+                minutes=0,
+                seconds=15,
+                skip_to=position,
+                label=resumeLabel
+            )
+            if skip:
+                return position
+
+    return 0
 
 
-def markSeries(epID, pos, total, done):
-    if done:
-        try:
-            jsonUtils.jsonrpc('VideoLibrary.SetEpisodeDetails', dict(episodeid=epID, playcount=1))
-            xbmc.executebuiltin('XBMC.Container.Refresh')
-        except:
-            print('markMovie: Episode not in DB!?')
-            pass
-    else:
-        if xbmc.getCondVisibility('Library.HasContent(TVShows)') and pos > 0 and total > 0:
-            try:
-                jsonUtils.jsonrpc('VideoLibrary.SetEpisodeDetails', dict(episodeid=epID, resume=dict(position=pos, total=total)))
-                xbmc.executebuiltin('XBMC.Container.Refresh')
-            except:
-                print('markSeries: Show not in DB!?')
-                pass
-
-
-# Functions not in usee yet:
-def handle_wait(time_to_wait, header, title):
-    dlg = xbmcgui.DialogProgress()
-    dlg.create('OSMOSIS', header)
-    secs = 0
-    percent = 0
-    increment = int(100 / time_to_wait)
-    cancelled = False
-    while secs < time_to_wait:
-        secs += 1
-        percent = increment * secs
-        secs_left = str((time_to_wait - secs))
-        remaining_display = 'Starts In {0} seconds, Cancel Channel Change?'.format(secs_left)
-        dlg.update(percent, title, remaining_display)
-        xbmc.sleep(1000)
-        if (dlg.iscanceled()):
-            cancelled = True
-            break
-    if cancelled == True:
-        return False
-    else:
-        dlg.close()
-        return True
-
-
-def show_busy_dialog():
-    xbmc.executebuiltin('ActivateWindow(busydialog)')
-
-
-def hide_busy_dialog():
-    xbmc.executebuiltin('Dialog.Close(busydialog)')
-    while xbmc.getCondVisibility('Window.IsActive(busydialog)'):
-        time.sleep(.1)
-
-
-def Error(header, line1='', line2='', line3=''):
-    dlg = xbmcgui.Dialog()
-    dlg.ok(header, line1, line2, line3)
-    del dlg
-
-
-def infoDialog(str, header=ADDON_NAME, time=10000):
-    try: xbmcgui.Dialog().notification(header, str, icon, time, sound=False)
-    except: xbmc.executebuiltin('Notification({0}, {1}, {2}, {3})'.format(header, str, time, THUMB))
-
-
-def okDialog(str1, str2='', header=ADDON_NAME):
-    xbmcgui.Dialog().ok(header, str1, str2)
-
-
-def yesnoDialog(str1, str2='', header=ADDON_NAME, yes='', no=''):
-    answer = xbmcgui.Dialog().yesno(header, str1, str2, '', yes, no)
-    return answer
-
-
-def browse(type, heading, shares, mask='', useThumbs=False, treatAsFolder=False, path='', enableMultiple=False):
-    retval = xbmcgui.Dialog().browse(type, heading, shares, mask, useThumbs, treatAsFolder, path, enableMultiple)
-    return retval
-
-
-def resumePointDialog(resumePoint):
-    if resumePoint:
-        xmldialogs.show_modal_dialog(xmldialogs.Skip,
-            'plugin-video-osmosis-continue.xml',
-            addon.getAddonInfo('path'),
-            minutes=0,
-            seconds=15,
-            skip_to=int(resumePoint[0]) - 5,
-            label=addon.getLocalizedString(39000).format(utils.zeitspanne(int(resumePoint[0]))[5]))
-
-
-def mediaListDialog(multiselect=True, expand=True, cTypeFilter=None, header_prefix=ADDON_NAME, preselect_name=None):
-    thelist = fileSys.readMediaList()
+def mediaListDialog(multiselect=True, expand=True, cTypeFilter=None, header_prefix=globals.PLUGIN_NAME, preselect_name=None):
+    thelist = readMediaList()
     items = []
     if not cTypeFilter:
-        selectAction = ['Movies', 'TV-Shows', 'Audio', 'All']
-        choice = selectDialog('{0}: Select which Media Types to show'.format(header_prefix), selectAction)
+        selectActions = [dict(id='Movies', string_id=39111), dict(id='TV-Shows', string_id=39112), dict(id='Audio', string_id=39113), dict(id='All', string_id=39122)]
+        choice = selectDialog('{0}: {1}'.format(header_prefix, getString(39109, globals.addon)), [getString(selectAction.get('string_id')) for selectAction in selectActions])
         if choice != -1:
             if choice == 3:
                 cTypeFilter = None
             else:
-                cTypeFilter = selectAction[choice]
+                cTypeFilter = selectActions[choice].get('id')
         else:
             return
 
@@ -310,7 +217,7 @@ def mediaListDialog(multiselect=True, expand=True, cTypeFilter=None, header_pref
         splits = entry.strip().split('|')
         if cTypeFilter and not re.findall(cTypeFilter, splits[0]):
             continue
-        name = stringUtils.getStrmname(splits[1])
+        name = getStrmname(splits[1])
         cType = splits[0].replace('(', '/').replace(')', '')
         matches = re.findall('(?:name_orig=([^;]*);)*(plugin:\/\/[^<]*)', splits[2])
         iconImage = ''
@@ -327,7 +234,8 @@ def mediaListDialog(multiselect=True, expand=True, cTypeFilter=None, header_pref
                 indent_text = ''
                 indent_text2 = ''
                 if len(matches) > 1:
-                    items.append({'index': index, 'entry': entry, 'name': name, 'text': '{0} [{1}]'.format(name, cType), 'url': splits[2], 'iconImage': 'DefaultVideoPlaylists.png'})
+                    items.append({'index': index, 'entry': entry, 'name': name, 'text': '{0} [{1}]'.format(name, cType), 'text2': '', \
+                                  'url': splits[2], 'iconImage': 'DefaultVideoPlaylists.png'})
                     indent_text = '    '
                     indent_text2 = '{0} '.format(indent_text)
                 for match in matches:
@@ -335,18 +243,18 @@ def mediaListDialog(multiselect=True, expand=True, cTypeFilter=None, header_pref
                     url = match[1]
                     item_entry = '|'.join([splits[0], name, 'name_orig={0};{1}'.format(name_orig, url) if name_orig else url])
                     items.append({'index': index, 'entry': item_entry, 'name': name, 'text': '{2}{0} [{1}]'.format(name, cType, indent_text), \
-                                  'text2': ('{2}{1}\n{2}[{0}]' if name_orig else '{2}[{0}]').format(stringUtils.getProvidername(url), name_orig, indent_text2), \
+                                  'text2': ('{2}{1}\n{2}[{0}]' if name_orig else '{2}[{0}]').format(getProvidername(url), name_orig, indent_text2), \
                                   'iconImage': iconImage, 'url': url, 'name_orig': name_orig})
 
             else:
-                pluginnames = sorted(set([stringUtils.getProvidername(match[1]) for match in matches]), key=lambda k: k.lower())
+                pluginnames = sorted(set([getProvidername(match[1]) for match in matches]), key=lambda k: k.lower())
                 items.append({'index': index, 'entry': entry, 'name': name, 'text': '{0} ({1}: {2})'.format(name, cType, ', '.join(pluginnames)), 'url': splits[2]})
         else:
             items.append({'index': index, 'entry': entry, 'name': name, 'text': '{0} ({1})'.format(name, cType), 'url': splits[2]})
 
     preselect_idx = None
     if expand == False:
-        sItems = sorted([item.get('text') for item in items], key=lambda k: utils.key_natural_sort(k.lower()))
+        sItems = sorted([item.get('text') for item in items], key=lambda k: key_natural_sort(k.lower()))
         if preselect_name:
             preselect_idx = [i for i, item in enumerate(sItems) if item.find(preselect_name) != -1 ]
     else:
@@ -357,9 +265,9 @@ def mediaListDialog(multiselect=True, expand=True, cTypeFilter=None, header_pref
             liz.append(li)
         sItems = sorted(liz,
             key=lambda k: (re.sub('.* \[([^/]*)/.*\]', '\g<1>', py2_decode(k.getLabel())),
-                            utils.key_natural_sort(re.sub('^ *', '', py2_decode(k.getLabel().lower()))),
-                            utils.key_natural_sort(re.sub('( - |, )*([sS](taffel|eason|erie[s]{0,1})|[pP]art|[tT]eil) (?P<number>\d+).*', '\g<number>', py2_decode(k.getLabel2().lower()))),
-                            utils.key_natural_sort(re.sub('^ *', '', py2_decode(k.getLabel2().lower())))
+                            key_natural_sort(re.sub('^ *', '', py2_decode(k.getLabel().lower()))),
+                            key_natural_sort(re.sub('( - |, )*([sS](taffel|eason|erie[s]{0,1})|[pP]art|[tT]eil) (?P<number>\d+).*', '\g<number>', py2_decode(k.getLabel2().lower()))),
+                            key_natural_sort(re.sub('^ *', '', py2_decode(k.getLabel2().lower())))
                             )
                         )
         if preselect_name:
@@ -368,7 +276,7 @@ def mediaListDialog(multiselect=True, expand=True, cTypeFilter=None, header_pref
     if multiselect == False and preselect_idx and isinstance(preselect_idx, list) and len(preselect_idx) > 0:
         preselect_idx = preselect_idx[0]
 
-    selectedItemsIndex = selectDialog('{0}: Select items'.format(header_prefix), sItems, multiselect=multiselect, useDetails=expand, preselect=preselect_idx)
+    selectedItemsIndex = selectDialog('{0}: {1}'.format(header_prefix, getString(39124, globals.addon)), sItems, multiselect=multiselect, useDetails=expand, preselect=preselect_idx)
     if multiselect:
         if expand == False:
             return [item for item in items for index in selectedItemsIndex if item.get('text') == py2_decode(sItems[index])] if selectedItemsIndex and len(selectedItemsIndex) > 0 else None
