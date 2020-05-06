@@ -5,13 +5,12 @@ from kodi_six.utils import py2_decode
 import json
 import time
 import base64
+from Cryptodome.Cipher import AES
 
 try:
     from urllib.parse import urlencode
-    from Cryptodome.Cipher import AES
 except:
     from urllib import urlencode
-    from Crypto.Cipher import AES
 
 
 class Clips:
