@@ -18,15 +18,13 @@ import xbmc
 import xbmcgui
 import xbmcplugin
 from inputstreamhelper import Helper
+from Cryptodome.Cipher import DES3
+from Cryptodome.Util.Padding import pad, unpad
 
 try:
     from urllib.parse import urlencode
-    from Cryptodome.Cipher import DES3
-    from Cryptodome.Util.Padding import pad, unpad
 except:
     from urllib import urlencode
-    from Crypto.Cipher import DES3
-    from Crypto.Util.Padding import pad, unpad
 
 
 class SkyGo:
