@@ -2,6 +2,9 @@
 
 [logo]: repository.kodinerds/icon.png
 
-Official Repository of the german Community [Kodinerds.net](http://kodinerds.net)
+..The repository has a new address [repo.kodinerds.net](https://repo.kodinerds.net)
+
+No Support or merge here!
+Support: [Kodinerds.net](http://kodinerds.net)
 .
 .
