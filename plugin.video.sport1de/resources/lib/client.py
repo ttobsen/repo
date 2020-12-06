@@ -11,7 +11,7 @@ class Client:
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
             'Referer': video_base,
-            'Host': 'video.sport1.de'
+            'Host': 'www.sport1.de'
         }
         self.cookie = cookie
 
